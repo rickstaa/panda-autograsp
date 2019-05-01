@@ -1,0 +1,105 @@
+# Ros kinetic panda_auto_grasp singularity container recipe
+Bootstrap: docker
+From: osrf/ros:kinetic-desktop-full-xenial
+
+%help
+    singularity container with Ros kinetic, gazebo7 and all the other packages needed for the panda_auto_grasp package. Since the panda_auto_grasp package is still under development it is set to private. You thus need the right git permissions for the singularity image to work.
+
+%labels
+    Maintainer: Rick Staa
+    Github: https://github.com/rickstaa
+    Version v1.0
+    Protection: Includes private repositories
+
+%post
+    echo "Setting up the panda_auto_grasp container."
+
+    ## Create catkin workspace folder and clone panda_auto_grasp_ws repository
+    bash -c "mkdir -p /panda_grasp_solutions_ws \
+        && cd /panda_grasp_solutions_ws \
+        && git clone https://github.com/rickstaa/panda_autograsp_ws.git src"
+
+    ## Setup ros source list ##
+	sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+    apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+    bash -c "source /opt/ros/kinetic/setup.sh"
+
+    ## Install packages ##
+    apt-get update
+    apt-get install -q -y\
+        wget \
+        lsb-release \
+        man \
+        less \
+        vim \
+        git \
+        make \
+        htop \
+        ssh \
+		tar \
+		libevent-dev \
+        libncurses-dev \
+        tmux \
+		nautilus \
+        gedit \
+        x11-xserver-utils \
+        ssh
+    apt-get clean
+
+    ## Install libfranca from source ##
+    bash -c "cd / \
+        && apt-get install -q -y ros-kinetic-libfranka ros-kinetic-franka-ros \
+        && apt-get install -q -y build-essential cmake libpoco-dev libeigen3-dev \
+        && apt remove -y "*libfranka*" \
+        && git clone --recursive https://github.com/frankaemika/libfranka.git \
+        && cd /libfranka \
+        && mkdir build \
+        && cd build \
+        && cmake -DCMAKE_BUILD_TYPE=Release .. \
+        && cmake --build ."
+
+    ## Install MoveIt and check for panda_auto_grasp package dependencies
+    rosdep update
+    apt-get update
+    apt-get dist-upgrade -y
+    apt-get install -q -y ros-kinetic-catkin python-catkin-tools
+    apt-get install -q -y ros-kinetic-moveit
+    apt-get install -q -y \
+       ros-kinetic-moveit-ros-move-group \
+       ros-kinetic-controller-manager* \
+       ros-kinetic-moveit* \
+       ros-kinetic-effort-controllers \
+       ros-kinetic-joint-trajectory-controller \
+       ros-kinetic-gazebo-ros* \
+       ros-kinetic-rviz* \
+       ros-kinetic-joint-state-controller* \
+       libboost-filesystem-dev \
+       libjsoncpp-dev
+
+    ## Build panda_auto_grasp project packages
+    bash -c "cd /panda_grasp_solutions_ws \
+        && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
+        && source /opt/ros/kinetic/setup.sh \
+        && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=~/libfranka/build"
+
+	### Clone .singularity_bashrc repository file ##
+    bash -c "cd / \
+        && git clone git@github.com:rickstaa/panda_autograsp_singularity_recipes.git \
+        && cp /pandasim_singularity_recipes/.singularity_bashrc . \
+        && rm -rf pandasim_singularity_recipes"
+
+    ## Remove unused packages ##
+    apt-get auto-remove -y
+
+%runscript
+
+	## Run custom entrypoint BASH script ##
+	OCI_CMD='/bin/bash'
+	OCI_ARGS='-rcfile /.singularity_bashrc'
+	SINGULARITY_OCI_RUN="${OCI_CMD} ${OCI_ARGS}"
+	exec $SINGULARITY_OCI_RUN
+
+%environment
+
+    ## Change floating point format ##
+    LC_NUMERIC="en_US.UTF-8"
