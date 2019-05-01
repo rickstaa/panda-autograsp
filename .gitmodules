@@ -1,0 +1,19 @@
+[submodule "franka_ros"]
+	path = franka_ros
+	url = git@github.com:rickstaa/franka_ros.git
+[submodule "moveit_tutorials"]
+	path = moveit_tutorials
+	url = https://github.com/ros-planning/moveit_tutorials.git
+	branch = kinetic-devel
+[submodule "panda_moveit_config"]
+	path = panda_moveit_config
+	url = git@github.com:rickstaa/panda_moveit_config.git
+	branch = kinetic-devel
+[submodule "panda_simulation"]
+	path = panda_simulation
+	url = https://github.com/rickstaa/panda_simulation
+	branch = kinetic-devel
+[submodule "panda_autograsp_ws"]
+	path = panda_autograsp_ws
+	url = git@github.com:rickstaa/panda_autograsp_ws.git
+	branch = kinetic-devel
