@@ -37,3 +37,6 @@ Following you can run the container by using one of the following `run` commands
 Additionally you can also add the `--writable` parameter to the `run command` to receive write premissions. For in order of this to work you need to have the right system permissions.
 
 For more documentation on how to install and use singularity one is reffered to the [the singularity documentation](https://www.sylabs.io/docs/).
+
+## Git authentication note
+In order to have the right permissions to clone the repository while building you need to create a [ssh-key](https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key) for your root user `.ssh` folder. Following you have to add this key to your github account. 
