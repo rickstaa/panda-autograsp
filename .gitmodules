@@ -1,0 +1,12 @@
+[submodule "franka_ros"]
+	path = franka_ros
+	url = git@github.com:rickstaa/franka_ros.git
+[submodule "panda_moveit_config"]
+	path = panda_moveit_config
+	url = git@github.com:rickstaa/panda_moveit_config.git
+[submodule "panda_simulation"]
+	path = panda_simulation
+	url = git@github.com:rickstaa/panda_simulation.git
+[submodule "moveit_tutorials"]
+	path = moveit_tutorials
+	url = https://github.com/ros-planning/moveit_tutorials.git
