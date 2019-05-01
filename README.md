@@ -1,5 +1,5 @@
 # Panda_autograsp_ws
-This repository contains all the ros packages that are needed to use the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package. This repository can be cloned in your `catkin workspace` after which the `catkin_make` or `catkin build` module can be used to build the ROS packages.
+This repository contains all the ros packages that are needed to use the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package. This repository can be cloned in your `catkin workspace` after which the `catkin_make` or `catkin build` modules can be used to build the ROS packages it contains.
 
 ## Build instructions
 
