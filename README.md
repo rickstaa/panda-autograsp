@@ -11,7 +11,7 @@ After these packages are installed you then need to build the *libfranka* librar
 
     bash -c "mkdir -p /panda_grasp_solutions_ws \
         && cd /panda_grasp_solutions_ws \
-        && source /opt/ros/${ROS_DISTRO}/setup.sh \
+        && source /opt/ros/kinetic/setup.sh \
         && git clone git@github.com:rickstaa/panda_autograsp_ws.git src \
         && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
         && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=~/libfranka/build"
