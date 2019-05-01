@@ -29,8 +29,13 @@ As the `panda_autograsp` ROS package is still under development the *singurity r
 ### How to use
 You can build the singularity container using one of the following `build` commands:
 
-- Normal singularity container:  `$sudo singularity build <YOUR_IMAGE_NAME> <PATH_TO_SINGULARITY_RECIPE_FILE>/panda_autograsp_solution.def`
-- For development: `$sudo singularity build --sandbox <YOUR_IMAGE_NAME> PATH_TO_SINGULARITY_RECIPE_FILE>/panda_autograsp_solution.def`
+- Normal singularity container:  
+
+    `$sudo singularity build <YOUR_IMAGE_NAME> <PATH_TO_SINGULARITY_RECIPE_FILE>/panda_autograsp_solution.def`
+    
+- Development container: 
+
+    `$sudo singularity build --sandbox <YOUR_IMAGE_NAME> PATH_TO_SINGULARITY_RECIPE_FILE>/panda_autograsp_solution.def`
 
 Following you can run the container by using one of the following `run` commands:
 
