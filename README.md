@@ -24,7 +24,7 @@ You can then use the package by sourcing the `~/panda_grasp_solutions_ws/devel/s
 Alternatively a *singularity recipe* is also available on [this repository](https://github.com/rickstaa/panda_autograsp_singularity_recipes). This recipe creates a container in which all the needed packages are already set up correctly. This container also contains a [.singularity_bashrc](https://github.com/rickstaa/panda_autograsp_singularity_recipes/blob/master/.singularity_bashrc) file to automatically source the `panda_autograsp` workspace when you `run` the container.
 
 ## How to use
-As the `panda_autograsp` ROS package is still under development the *singurity recipe* can not be uploaded yet to [singularity-hub.org](https://www.singularity-hub.org). You therefore currently have to download the `panda_grasp_solutions.def` singularity recipe file from [this PRIVATE repository](https://github.com/rickstaa/panda_autograsp_singularity_recipes). As a result you also need to be added as a contributor to the `panda_autograsp_ws` an the `panda_autograsp` repositories before your able to build the current container. You can build the singularity container using one of the following `build` commands:
+As the `panda_autograsp` ROS package is still under development the *singurity recipe* can not be uploaded yet to [singularity-hub.org](https://www.singularity-hub.org). You therefore currently have to download the `panda_grasp_solutions.def` singularity recipe file from [this PRIVATE repository](https://github.com/rickstaa/panda_autograsp_singularity_recipes). As a result at the start of the container building process you github credentials. You can build the singularity container using one of the following `build` commands:
 
 - Normal singularity container: `$sudo singularity build <YOUR_IMAGE_NAME> <SINGULARITY_RECIPE_FILE>`
 - Development container: `$sudo singularity build --sandbox <YOUR_IMAGE_NAME> <SINGULARITY_RECIPE_FILE>`
@@ -37,6 +37,3 @@ Following you can run the container by using one of the following `run` commands
 Additionally you can also add the `--writable` parameter to the `run command` to receive write premissions. For in order of this to work you need to have the right system permissions.
 
 For more documentation on how to install and use singularity one is reffered to the [the singularity documentation](https://www.sylabs.io/docs/).
-
-## Git authentication note
-In order to have the right permissions to clone the repository while building you need to create a [ssh-key](https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key) for your root user `.ssh` folder. Following you have to add this key to your github account. 
