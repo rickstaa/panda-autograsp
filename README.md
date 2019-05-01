@@ -13,7 +13,7 @@ After these packages are installed you then need to build the *libfranka* librar
     bash -c "mkdir -p /panda_grasp_solutions_ws \
         && cd /panda_grasp_solutions_ws \
         && source /opt/ros/${ROS_DISTRO}/setup.sh \
-        && git clone https://github.com/sferik/sign-in-with-twitter.git src \
+        && git clone git@github.com:rickstaa/panda_autograsp_ws.git src \
         && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
         && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=~/libfranka/build"
 
@@ -21,7 +21,10 @@ You can then use the package by sourcing the `~/panda_grasp_solutions_ws/devel/s
 
 ## Singularity image
 
-Alternatively a *singularity recipe* is also available on [singularity-hub.org](https://www.singularity-hub.org/collections/2739). This recipe creates a container in which all the needed packages are already set up correctly. This container also contains a [.singularity_bashrc](https://github.com/rickstaa/panda_autograsp_singularity_recipes/blob/master/.singularity_bashrc) file to automatically source the `panda_autograsp` workspace when you `run` the container.
+Alternatively a *singularity recipe* is also available on [this repository](https://github.com/rickstaa/panda_autograsp_singularity_recipes). This recipe creates a container in which all the needed packages are already set up correctly. This container also contains a [.singularity_bashrc](https://github.com/rickstaa/panda_autograsp_singularity_recipes/blob/master/.singularity_bashrc) file to automatically source the `panda_autograsp` workspace when you `run` the container.
+
+### NOTE
+As the `panda_autograsp` ROS package is still under development the *singurity recipe* can not be uploaded yet to [singularity-hub.org](https://www.singularity-hub.org). You therefore currently have to download the singularity recipe file from [this PRIVATE repository](https://github.com/rickstaa/panda_autograsp_singularity_recipes. As a result you also need to be added to the `panda_autograsp_ws` an the `panda_autograsp` repositories before your able to build the current container.
 
 ### How to use
 You can build the singularity container using one of the following `build` commands:
@@ -37,6 +40,3 @@ Following you can run the container by using one of the following `run` commands
 Additionally you can also add the `--writable` parameter to the `run command` to receive write premissions. For in order of this to work you need to have the right system permissions.
 
 For more documentation on how to install and use singularity one is reffered to the [the singularity documentation](https://www.sylabs.io/docs/).
-
-### Additional Remark
-As the `panda_autograsp` ROS package is still under development you first need to be added as a collaborator to both the `panda_autograsp_ws` an the `panda_autograsp` repositories. The singularity recipe will therefore currently fail when you don't have the right credentials. If you run into problems please mail me on [rick.staa@outlook.com](mailto:rick.staa@outlook.com)
