@@ -9,8 +9,8 @@ The [panda_autograsp](https://github.com/rickstaa/panda_autograsp) contained in 
 
 After these packages are installed, you first need to build the *libfranka* library from source. Following you have to pass the *libfranka* library to *catkin_make* or *catkin build* while building the packages. A guide on how to build the *libfranka* library from source can be found [here](https://frankaemika.github.io/docs/installation.html#building-from-source). After the *libfranka* library has been built the `panda_grasp` package together with its dependencies can be build by running the following code in your terminal:
 
-    bash -c "mkdir -p /panda_grasp_solutions_ws \
-        && cd /panda_grasp_solutions_ws \
+    bash -c "mkdir -p /panda_autograsp_ws \
+        && cd /panda_autograsp_ws \
         && source /opt/ros/kinetic/setup.sh \
         && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
         && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
