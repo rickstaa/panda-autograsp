@@ -18,3 +18,6 @@
 	path = panda_autograsp
 	url = git@github.com:rickstaa/panda_autograsp.git
 	branch = kinetic-devel
+[submodule "panda_autograsp_singularity_recipes"]
+	path = panda_autograsp_singularity_recipes
+	url = https://github.com/rickstaa/panda_autograsp_singularity_recipes
