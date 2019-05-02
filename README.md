@@ -20,6 +20,8 @@ You can then use the package by sourcing the `~/panda_grasp_solutions_ws/devel/s
 
 ## Singularity image
 
+[![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/2739)
+
 Alternatively a *singularity recipe* can be found in the [panda_autograsp_singularity_recipes repository](https://github.com/rickstaa/panda_autograsp_singularity_recipes). This repository contains the singularity recipes which can be used to run the panda_autograsp ROS package. These recipe files can be used to create a singularity container in which all the packages and libraries that are needed to run the panda_autograsp package are set up correctly. This repository currently contains the following recipe file:
 
 - **panda_autograsp_kinetic.def:** Recipe file that allows running the panda_autograsp ROS kinetic package under Ubuntu 16.04.
