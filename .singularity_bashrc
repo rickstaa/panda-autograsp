@@ -71,8 +71,8 @@ fi
 # echo "Pandasim singularity contrainer opened."
 
 # Setup Panda_simulation enviroment (chained to franka_ros and moveit)
-if [ -f "/pandasim_ws/devel/setup.bash" ]; then
-	source "/pandasim_ws/devel/setup.bash"
+if [ -f "/panda_autograsp_ws/devel/setup.bash" ]; then
+	source "/panda_autograsp_ws/devel/setup.bash"
 	#echo "Panda_simulation setup bash file sourced."
 fi
 
