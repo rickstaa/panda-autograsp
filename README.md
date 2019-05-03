@@ -20,6 +20,8 @@ After these packages are installed, you first need to build the *libfranka* libr
 
 You can then use the package by sourcing the `~/panda_grasp_solutions_ws/devel/setup.bash` file.
 
+:warning: As two of the submodules contained in this repository are private you will be asked for your github credentials two times when cloning this repository.
+
 ### Singularity image
 
 [![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/2739)
