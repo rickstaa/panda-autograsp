@@ -18,7 +18,7 @@ After these packages are installed, you first need to build the *libfranka* libr
         && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
         && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build"
 
-You can then use the package by sourcing the `~/panda_grasp_solutions_ws/devel/setup.bash` file.
+You can then use the package by sourcing the `~/panda_autograsp_ws/devel/setup.bash` file.
 
 :warning: As two of the submodules contained in this repository are private you will be asked for your github credentials two times when cloning this repository.
 
