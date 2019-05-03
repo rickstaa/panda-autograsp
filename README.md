@@ -1,9 +1,9 @@
 # Panda_autograsp_ws
 This repository contains all the ROS packages that are needed to use the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package. 
 
-## Build instrucutions
+## Build instructions
 
-### Catkin Build instructions
+### Catkin Build
 
 The [panda_autograsp](https://github.com/rickstaa/panda_autograsp) contained in this branch was built for ROS kinetic running under Ubuntu 16.04. First you therefore need to run the following command to make sure that all additional packages are installed:
 
