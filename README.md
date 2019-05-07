@@ -1,7 +1,9 @@
 # Panda_autograsp_ws
 This repository contains all the ROS packages that are needed to use the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package. 
 
-## Catkin Build instructions
+## Build instructions
+
+### Catkin Build
 
 The [panda_autograsp](https://github.com/rickstaa/panda_autograsp) contained in this branch was built for ROS kinetic running under Ubuntu 16.04. First you therefore need to run the following command to make sure that all additional packages are installed:
 
@@ -14,11 +16,13 @@ After these packages are installed, you first need to build the *libfranka* libr
         && source /opt/ros/kinetic/setup.sh \
         && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
         && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
-        && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=~/libfranka/build"
+        && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build"
 
-You can then use the package by sourcing the `~/panda_grasp_solutions_ws/devel/setup.bash` file.
+You can then use the package by sourcing the `~/panda_autograsp_ws/devel/setup.bash` file.
 
-## Singularity image
+:warning: As two of the submodules contained in this repository are private you will be asked for your github credentials two times when cloning this repository.
+
+### Singularity image
 
 [![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/2739)
 
