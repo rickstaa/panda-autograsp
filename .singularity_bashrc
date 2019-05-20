@@ -76,5 +76,8 @@ if [ -f "/panda_autograsp_ws/devel/setup.bash" ]; then
 	#echo "Panda_simulation setup bash file sourced."
 fi
 
+# Set container home directory cd command
+alias pcd='cd $SINGULARITY_CONTAINER'
+
 # Allow user to acces desktop
 xhost local:${whoami} > /dev/null
