@@ -20,3 +20,6 @@
 	path = moveit_tutorials
 	url = https://github.com/ros-planning/moveit_tutorials.git
 	branch = kinetic-devel
+[submodule "gqcnn"]
+	path = gqcnn
+	url = https://github.com/rickstaa/gqcnn.git
