@@ -73,7 +73,11 @@ fi
 # Setup Panda_simulation enviroment (chained to franka_ros and moveit)
 if [ -f "/panda_autograsp_ws/devel/setup.bash" ]; then
 	source "/panda_autograsp_ws/devel/setup.bash"
-	#echo "Panda_simulation setup bash file sourced."
+fi
+
+# Source git bash completion
+if [ -f "/usr/share/bash-completion/completions/git" ]; then
+	source /usr/share/bash-completion/completions/git
 fi
 
 # Set container home directory cd command
