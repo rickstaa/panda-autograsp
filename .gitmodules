@@ -23,3 +23,6 @@
 [submodule "gqcnn"]
 	path = gqcnn
 	url = https://github.com/rickstaa/gqcnn.git
+[submodule "autolab_core"]
+	path = autolab_core
+	url = https://github.com/rickstaa/autolab_core.git
