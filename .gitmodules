@@ -26,3 +26,6 @@
 [submodule "autolab_core"]
 	path = autolab_core
 	url = https://github.com/rickstaa/autolab_core.git
+[submodule "perception"]
+	path = perception
+	url = https://github.com/rickstaa/perception.git
