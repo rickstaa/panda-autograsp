@@ -29,3 +29,6 @@
 [submodule "perception"]
 	path = perception
 	url = https://github.com/rickstaa/perception.git
+[submodule "meshrender"]
+	path = meshrender
+	url = https://github.com/rickstaa/meshrender.git
