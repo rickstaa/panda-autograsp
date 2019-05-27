@@ -81,8 +81,10 @@ if [ -f "/usr/share/bash-completion/completions/git" ]; then
 fi
 
 # Set container home directory cd command
-alias pcd='cd $SINGULARITY_CONTAINER/panda_autograsp_ws/src'
+alias pcd='cd /panda_autograsp_ws/src'
+
+# Add user defined aliases
 alias rsource='. /opt/ros/kinetic/setup.bash'
 alias pbuild='. /opt/ros/kinetic/setup.bash; catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build'
 alias code='code-insiders'
-alias pauto-changelog='bash -c "cd /home/ricks/singularity/containers/panda_autograsp/panda_autograsp_ws/src && auto-changelog && cd ./franka_ros && auto-changelog && cd ../panda_autograsp && auto-changelog && cd ../panda_autograsp_singularity_recipes && auto-changelog && cd ../panda_moveit_config && auto-changelog && cd ../panda_simulation && auto-changelog"'
+alias pauto-changelog='bash -c "cd /panda_autograsp_ws/src && auto-changelog && cd ./franka_ros && auto-changelog && cd ../panda_autograsp && auto-changelog && cd ../panda_autograsp_singularity_recipes && auto-changelog && cd ../panda_moveit_config && auto-changelog && cd ../panda_simulation && auto-changelog"'
