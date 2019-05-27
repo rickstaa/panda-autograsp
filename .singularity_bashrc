@@ -84,3 +84,4 @@ fi
 alias pcd='cd $SINGULARITY_CONTAINER'
 alias rsource='. /opt/ros/kinetic/setup.bash'
 alias pbuild='. /opt/ros/kinetic/setup.bash; catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build'
+alias code='code-insiders'
