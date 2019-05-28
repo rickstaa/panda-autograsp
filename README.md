@@ -41,7 +41,7 @@ bash -c "mkdir -p /panda_autograsp_ws \
 
 ### Singularity image
 
-[![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/2739)
+[![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/2876)
 
 Alternatively, a *singularity recipe* containing all the necessary packages and dependencies can be found on the [panda_autograsp_singularity_recipes repository](https://github.com/rickstaa/panda_autograsp_singularity_recipes) or on the [singularity-hub.org website](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/2739). This repository currently contains the following recipe file:
 
