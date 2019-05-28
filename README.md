@@ -1,32 +1,21 @@
 # Panda_autograsp_ws
 This repository contains all the ROS packages that are needed to use the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package. 
 
-## Build instructions
+## Prerequisites
 
-### Catkin Build
-
-The [panda_autograsp](https://github.com/rickstaa/panda_autograsp) contained in this branch was built for ROS kinetic running under Ubuntu 16.04. First you therefore need to run the following command to make sure that all additional packages are installed:
+The [panda_autograsp](https://github.com/rickstaa/panda_autograsp) contained in this branch was built for ROS kinetic running under Ubuntu 16.04. First, you need to make sure you installed `ros-kinetic-desktop-full` and that you have all the necessary dependencies installed. These dependencies can be installed by running the following command:
 
     sudo apt-get install ros-kinetic-moveit-ros-move-group ros-kinetic-controller-manager* ros-kinetic-moveit* ros-kinetic-effort-controllers ros-kinetic-joint-trajectory-controller ros-kinetic-gazebo-ros* ros-kinetic-rviz* libboost-filesystem-dev libjsoncpp-dev
 
-After these packages are installed, you first need to build the *libfranka* library from source. Following you have to pass the *libfranka* library to *catkin_make* or *catkin build* while building the packages. A guide on how to build the *libfranka* library from source can be found [here](https://frankaemika.github.io/docs/installation.html#building-from-source). After the *libfranka* library has been built the `panda_grasp` package together with its dependencies can be built. This can be done using the panda_autograsp catkin workspace repository [(panda_autograsp_ws)](https://github.com/rickstaa/panda_autograsp_ws) is available for the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package. However, since the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package is still under development you need to be added as a contributor before you can clone it. For access to the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package please email [rick.staa@outlook.com](mailto:rick.staa@outlook.com). After obtaining the right permissions the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package can be cloned and build.
+After these packages are installed, you then need to build the *libfranka* library from source. This needs the be done since you have to pass the *libfranka* library to *catkin_make* or *catkin build* while building the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package. A guide on how to build the *libfranka* library from source can be found [here](https://frankaemika.github.io/docs/installation.html#building-from-source). 
 
-**Build the package using the https protocol**
+## Build instructions
 
-If you did not add a ssh key to your github account you can use the following bash command:
+After the *libfranka* library has been built the `panda_grasp` package together with its dependencies can be built. This can be done using the panda_autograsp catkin workspace repository [(panda_autograsp_ws)](https://github.com/rickstaa/panda_autograsp_ws) is available for the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package. However, since the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package is still under development you need to be added as a contributor before you can clone it. For access to the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package please email [rick.staa@outlook.com](mailto:rick.staa@outlook.com). After obtaining the right permissions the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package can be cloned using the `ssh` or `https` protocol:
 
-```
-bash -c "mkdir -p /panda_autograsp_ws \
-        && cd /panda_autograsp_ws \
-        && source /opt/ros/kinetic/setup.sh \
-        && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
-        && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
-        && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build"
-```
+**Clone and build the package using the https protocol**
 
-**Build the package using the ssh protocol**
-
-If you added a ssh key to your github account you can also use the following bash command.
+If you did not add an ssh key to your GitHub account you can use the following bash command:
 
 ```
 bash -c "mkdir -p /panda_autograsp_ws \
@@ -37,13 +26,24 @@ bash -c "mkdir -p /panda_autograsp_ws \
         && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build"
 ```
 
-:warning: If you want the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) catkin workspace to be automatically sourced when you run the container you have to make sure that the `panda_autograsp_ws` catkin workspace is cloned on the singularity root folder `/`.
+**Clone and build the package using the ssh protocol**
+
+If you added an ssh key to your GitHub account you can also use the following bash command.
+
+```
+bash -c "mkdir -p /panda_autograsp_ws \
+        && cd /panda_autograsp_ws \
+        && source /opt/ros/kinetic/setup.sh \
+        && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
+        && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
+        && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build"
+```
 
 ### Singularity image
 
 [![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/2739)
 
-Alternatively a *singularity recipe* can be found in the [panda_autograsp_singularity_recipes repository](https://github.com/rickstaa/panda_autograsp_singularity_recipes). This repository contains the singularity recipes which can be used to run the panda_autograsp ROS package. These recipe files can be used to create a singularity container in which all the packages and libraries that are needed to run the panda_autograsp package are set up correctly. This repository currently contains the following recipe file:
+Alternatively, a *singularity recipe* containing all the necessary packages and dependencies can be found on the [panda_autograsp_singularity_recipes repository](https://github.com/rickstaa/panda_autograsp_singularity_recipes) or on the [singularity-hub.org website](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/2739). This repository currently contains the following recipe file:
 
 - **panda_autograsp_kinetic.def:** Recipe file that allows running the panda_autograsp ROS kinetic package under Ubuntu 16.04.
 
