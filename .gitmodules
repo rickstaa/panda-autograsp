@@ -31,3 +31,6 @@
 [submodule "panda_autograsp"]
 	path = panda_autograsp
 	url = ../panda_autograsp.git
+[submodule "visualization"]
+	path = visualization
+	url = ../visualization.git
