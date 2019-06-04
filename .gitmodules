@@ -34,3 +34,6 @@
 [submodule "visualization"]
 	path = visualization
 	url = ../visualization.git
+[submodule "meshrender"]
+	path = meshrender
+	url = ../meshrender.git
