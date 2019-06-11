@@ -88,9 +88,10 @@ bash -c "mkdir -p /panda_autograsp_ws \
 
 ### Singularity image
 
-[![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/2876)
+[![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/3134)
 
-Alternatively, a *singularity recipe* (panda-autograsp-ros_kinetic.def)for this package containing all the necessary packages and dependencies can be found on in the [deep_robotics_singularity_recipes repository](https://github.com/rickstaa/deep_robotics_singularity_recipes) or on the [singularity-hub.org website](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://www.singularity-hub.org/collections/3134).
+
+Alternatively, a *singularity recipe* (panda-autograsp-ros_kinetic.def)for this package containing all the necessary packages and dependencies can be found on in the [deep_robotics_singularity_recipes repository](https://github.com/rickstaa/deep_robotics_singularity_recipes) or on the [singularity-hub.org website](https://www.singularity-hub.org/collections/3134).
 
 ## How to use
 
