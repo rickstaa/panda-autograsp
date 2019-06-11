@@ -6,9 +6,6 @@
 	path = panda_moveit_config
 	url = ../panda_moveit_config.git
 	branch = kinetic-devel
-[submodule "panda_autograsp_singularity_recipes"]
-	path = panda_autograsp_singularity_recipes
-	url = ../panda_autograsp_singularity_recipes.git
 [submodule "panda_simulation"]
 	path = panda_simulation
 	url = ../panda_simulation.git
@@ -37,3 +34,6 @@
 [submodule "meshrender"]
 	path = meshrender
 	url = ../meshrender.git
+[submodule "deep_robotics_singularity_recipes"]
+	path = deep_robotics_singularity_recipes
+	url = git@github.com:rickstaa/deep_robotics_singularity_recipes.git
