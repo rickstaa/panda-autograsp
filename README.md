@@ -58,8 +58,6 @@ See the [tensorflow documentation](https://www.tensorflow.org/install/) if you w
 
 ### Panda-autograsp package
 
-#### Build instructions
-
 After all the dependencies are installed you can build the `panda_autograsp` package using its catkin workspace repository [(panda_autograsp_ws)](https://github.com/rickstaa/panda_autograsp_ws)Note however, that since the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package is still under development you need to be added as a contributor before you can clone it. For access to the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package please email [rick.staa@outlook.com](mailto:rick.staa@outlook.com). After obtaining the right permissions the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package can be cloned using the `ssh` or `https` protocol:
 
 **Clone and build the package using the https protocol**
