@@ -1,9 +1,11 @@
 # Panda_autograsp (v0.0.1)
-[![](https://travis-ci.com/rickstaa/panda_autograsp.svg?token=khBpAzuAEsiEMbLE5tHM&branch=kinetic-devel)](https://travis-ci.com/rickstaa/panda_autograsp)
-[![](https://api.codacy.com/project/badge/Grade/d7bc3ceaf48a4f878d0fc8dbda5b3002)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rickstaa/panda_autograsp&amp;utm_campaign=Badge_Grade)
-[![Ros kinetic supported](https://img.shields.io/badge/ROS%20Kinetic-recommended-brightgreen.svg)](https://wiki.ros.org/kinetic)
-[![Ros melodic not tested](https://img.shields.io/badge/ROS%20Melodic-not%20tested-yellow.svg)](https://wiki.ros.org/melodic)
-[![Python: v3.7, v3.6, v3.5](https://img.shields.io/badge/Python-3.7%20%7C%203.6%20%7C%203.5-informational.svg)](https://www.python.org/)
+[![Build status](https://travis-ci.com/rickstaa/panda_autograsp.svg?token=khBpAzuAEsiEMbLE5tHM&branch=kinetic-devel)](https://travis-ci.com/rickstaa/panda_autograsp)
+![GitHub release](https://img.shields.io/github/release/rickstaa/panda_autograsp.svg)
+[![Codacy code quality](https://api.codacy.com/project/badge/Grade/d7bc3ceaf48a4f878d0fc8dbda5b3002)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rickstaa/panda_autograsp&amp;utm_campaign=Badge_Grade)
+[![Ros kinetic](https://img.shields.io/badge/ROS%20Kinetic-recommended-brightgreen.svg)](https://wiki.ros.org/kinetic)
+[![Ros melodic](https://img.shields.io/badge/ROS%20Melodic-not%20tested-yellow.svg)](https://wiki.ros.org/melodic)
+[![Python 3](https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-green.svg)](https://www.python.org/)
+[![Python 2](https://img.shields.io/badge/python-2.7-red.svg)]
 
 Panda_autograsp is an autonomous ROS based grasping solution that works with the [Panda Emika Franka robot](https://www.franka.de/panda/). In this grasping solution a number of opensource grasping solutions are implemented on the [Panda Emika Franka robots](https://www.franka.de/panda/) robot. The grasping solutions present in this package both work with the physical panda robot as well as a simulated verison of the panda robot. A simulated version of the panda robot is shiped with the panda_autograsp package. The panda_autograsp package currently contains the following grasping algorithms:
 
