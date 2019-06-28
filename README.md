@@ -88,18 +88,11 @@ bash -c "mkdir -p /panda_autograsp_ws \
 ```
 
 #### Build the panda_autograsp documentation
-Building panda_autograsp’s documentation requires a few extra dependencies – specifically, sphinx and a few plugins.
+Building panda_autograsp’s documentation requires a few extra dependencies (see dependencies above). To install the documentation dependencies, simply change directories into the panda_autograsp source and run
 
-To install the dependencies required, simply change directories into the autolab_core source and run
+`pip install .[docs]`
 
-$ pip install .[docs]
-
-Then, go to the docs directory and run make with the appropriate target. For example,
-
-$ cd docs/
-$ make html
-
-will generate a set of web pages. Any documentation files generated in this manner can be found in docs/build.
+Then go into the `docs/` directory and make the documentation using the `make html` command. After the make command has finished the documentation files generated in this manner can be found in docs/build.
 
 ### Use the supplied singularity image
 
