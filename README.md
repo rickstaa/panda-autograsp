@@ -1,11 +1,18 @@
-# Panda_autograsp_ws
-This repository contains all the ROS packages that are needed to use the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package.
+# Panda_autograsp
+Panda_autograsp is an autonomous ROS based grasping solution that works with the [Panda Emika Franka robot](https://www.franka.de/panda/). In this grasping solution a number of opensource grasping solutions are implemented on the [Panda Emika Franka robots](https://www.franka.de/panda/) robot. The grasping solutions present in this package both work with the physical panda robot as well as a simulated verison of the panda robot. A simulated version of the panda robot is shiped with the panda_autograsp package. The panda_autograsp package currently contains the following grasping algorithms:
 
-## Prerequisites
+- [BerkleyAutomation/gqcnn](https://github.com/BerkeleyAutomation/gqcnn)
+
+## Instalation instructions
+There are two ways to use this package. You can build the package from source or use the supplied singularity image.
+
+### Build from source
+
+#### Prerequisites
 
 The [panda_autograsp](https://github.com/rickstaa/panda_autograsp) contained in this branch was built for ROS kinetic running under Ubuntu 16.04. First, you need to make sure you installed `ros-kinetic-desktop-full` and that you have all the necessary dependencies installed.
 
-## Dependencies
+#### Dependencies
 
 - A number of ROS packages
 - [Latest stable tensorflow release](https://www.tensorflow.org)
@@ -17,15 +24,15 @@ The [panda_autograsp](https://github.com/rickstaa/panda_autograsp) contained in 
 - [panda_autograsp package](https://github.com/rickstaa/panda_autograsp_ws)
 
 
-### ROS Packages
+#### ROS Packages
 For the package to work you will need the following dependencies can be installed by running the following command:
 
     sudo apt-get install ros-kinetic-moveit-ros-move-group ros-kinetic-controller-manager* ros-kinetic-moveit* ros-kinetic-effort-controllers ros-kinetic-joint-trajectory-controller ros-kinetic-gazebo-ros* ros-kinetic-rviz* libboost-filesystem-dev libjsoncpp-dev
 
-### Libfranka
+#### Libfranka
 After these packages are installed, you also need to build the *libfranka* library from source. This needs the be done since you have to pass the *libfranka* library to *catkin_make* or *catkin build* while building the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package. A guide on how to build the *libfranka* library from source can be found [here](https://frankaemika.github.io/docs/installation.html#building-from-source).
 
-### Libfreenect2
+#### Libfreenect2
 In order to use the package together with the Kinect camera, we need to install the [libfreenect2](https://github.com/OpenKinect/libfreenect2.git) library. The library [libfreenect2](https://github.com/OpenKinect/libfreenect2.git) library can be installed by running the following commands:
 
     apt-get update
@@ -49,16 +56,17 @@ In order to use the package together with the Kinect camera, we need to install 
         && mkdir -p /etc/udev/rules.d/ \
         && cp ../platform/linux/udev/90-kinect2.rules /etc/udev/rules.d/"
 
-### Install python 3.6 and tensorflow-gpu
+#### Install python 3.6 and tensorflow-gpu
 You are advised to use the conda *tensorflow-gpu* package as this package already contains the necessary drivers for the GPU computing to work. After you [installed conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) you can install this package by running the following command:
 
     conda install tensorflow-gpu
 
 See the [tensorflow documentation](https://www.tensorflow.org/install/) if you want to use another package manger.
 
-### Panda-autograsp package
+#### Panda-autograsp package
 
-After all the dependencies are installed you can build the `panda_autograsp` package using its catkin workspace repository [(panda_autograsp_ws)](https://github.com/rickstaa/panda_autograsp_ws)Note however, that since the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package is still under development you need to be added as a contributor before you can clone it. For access to the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package please email [rick.staa@outlook.com](mailto:rick.staa@outlook.com). After obtaining the right permissions the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package can be cloned using the `ssh` or `https` protocol:
+After all the dependencies are installed you can build the `panda_autograsp` package as follows:
+
 
 **Clone and build the package using the https protocol**
 
@@ -86,12 +94,12 @@ bash -c "mkdir -p /panda_autograsp_ws \
         && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build"
 ```
 
-### Singularity image
+### Use the supplied singularity image
 
 [![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/3134)
 
 
-Alternatively, a *singularity recipe* (panda-autograsp-ros_kinetic.def)for this package containing all the necessary packages and dependencies can be found on in the [deep_robotics_singularity_recipes repository](https://github.com/rickstaa/deep_robotics_singularity_recipes) or on the [singularity-hub.org website](https://www.singularity-hub.org/collections/3134).
+Alternatively, a *singularity recipe* (panda-autograsp-tensorflow-gpu-miniconda3-ros_kinetic-xenial.def.def) for this package containing all the necessary packages and dependencies can be found on in the [deep_robotics_singularity_recipes repository](https://github.com/rickstaa/deep_robotics_singularity_recipes) or on the [singularity-hub.org website](https://www.singularity-hub.org/collections/3134).
 
 ## How to use
 
