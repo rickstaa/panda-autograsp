@@ -18,4 +18,4 @@
 	url = ../deep_robotics_singularity_recipes.git
 [submodule "gqcnn"]
 	path = gqcnn
-	url = ../BerkeleyAutomation/gqcnn
+	url = https://github.com/BerkeleyAutomation/gqcnn.git
