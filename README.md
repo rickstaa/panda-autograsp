@@ -1,4 +1,5 @@
 # Panda_autograsp
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d7bc3ceaf48a4f878d0fc8dbda5b3002)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rickstaa/panda_autograsp&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.com/rickstaa/panda_autograsp.svg?token=khBpAzuAEsiEMbLE5tHM&branch=kinetic-devel)](https://travis-ci.com/rickstaa/panda_autograsp)
 [![Ros kinetic](https://img.shields.io/badge/ROS%20Kinetic-recommended-brightgreen.svg)](https://wiki.ros.org/kinetic)
 [![Ros melodic](https://img.shields.io/badge/ROS%20Melodic-not%20tested-yellow.svg)](https://wiki.ros.org/melodic)
