@@ -1,1 +1,5 @@
-This repository contains the collection of submodules needed to run the `panda_autograsp` package. While using this workspace repository the original LICENCES of the submodules do hold.
+Copyright (C) Rick Staa - All Rights Reserved
+    * Unauthorized copying of this main repository, via any medium is strictly prohibited.
+    * If a LICENCE is present in a submodule this licence has to be respected but ONLY for the files contained in this submodule.
+    * Proprietary and confidential.
+    * Written by Rick Staa <Rick.Staa@outlook.com>, April 2019.
