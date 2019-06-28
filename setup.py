@@ -19,11 +19,13 @@ from setuptools.command.develop import develop
 from setuptools.command.install import install
 import subprocess
 import sys
+import re
 
 # Setup.py parameters
-sub_mod_bash_command = "git config --file "+os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
-bash_output = subprocess.check_output(['bash','-c', sub_mod_bash_command])
-SUB_MODS=bash_output.decode("utf-8").split("\n")
+sub_mod_bash_command = "git config --file " + \
+    os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
+bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
+SUB_MODS = bash_output.decode("utf-8").split("\n")
 TF_MAX_VERSION = "1.13.1"
 
 # Package requirements
@@ -35,6 +37,8 @@ logger = logging.getLogger("setup.py")
 logger.setLevel(logging.INFO)
 
 # Get GPU information
+
+
 def get_tf_dep():
     # Check whether or not the Nvidia driver and GPUs are available and add the
     # corresponding Tensorflow dependency.
@@ -125,23 +129,25 @@ class InstallCmd(install, object):
 
         # Install submodule dependencies
         for sub_mod in SUB_MODS:
-            sub_mod_setup_str = os.getcwd()+"/"+sub_mod+"/setup.py" # Get submod setup.py script
-            subprocess.Popen([sys.executable, "-m", sub_mod_setup_str, "install"]).wait()
+            sub_mod_setup_str = os.getcwd()+"/"+sub_mod+"/setup.py"  # Get submod setup.py script
+            subprocess.Popen(
+                [sys.executable, "-m", sub_mod_setup_str, "install"]).wait()
 
         # Run installation.
         install.run(self)
 
+
 # Get current package version
-exec(
-    open(
-        os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                     "panda_autograsp/version.py")).read())
+__version__ = re.sub(r'[^\d.]', '', open(
+    os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                 "panda_autograsp/version.py")).read())
 
 # Run python setup
 setup(
     name="panda_autograsp",
     version=__version__,
-    description=("Project code for the panda_autograsp automatic grasping solution."),
+    description=(
+        "Project code for the panda_autograsp automatic grasping solution."),
     author="Rick Staa",
     author_email="rick.staa@outlook.com",
     license="Rick Staa Copyright",
