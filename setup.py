@@ -23,7 +23,7 @@ import re
 # Setup.py parameters
 sub_mod_bash_command = "git config --file " + \
     os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
-bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command], shell=False)
+bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
 SUB_MODS = bash_output.decode("utf-8").split("\n")
 TF_MAX_VERSION = "1.13.1"
 
@@ -45,7 +45,7 @@ def get_tf_dep():
     try:
         gpus = subprocess.check_output(
             ["nvidia-smi", "--query-gpu=gpu_name",
-             "--format=csv"], shell=False).decode().strip().split("\n")[1:]
+             "--format=csv"]).decode().strip().split("\n")[1:]
         if len(gpus) > 0:
             tf_dep = "tensorflow-gpu<={}".format(TF_MAX_VERSION)
         else:
@@ -80,7 +80,7 @@ class DevelopCmd(develop):
         if not self.docker:
             tf_dep = get_tf_dep()
             subprocess.Popen([sys.executable, "-m", "pip", "install",
-                              tf_dep], shell=False).wait()
+                              tf_dep]).wait()
         else:
             # If we're using Docker, this will already have been installed
             # explicitly through the correct `{cpu/gpu}_requirements.txt`;
@@ -116,7 +116,7 @@ class InstallCmd(install, object):
         if not self.docker:
             tf_dep = get_tf_dep()
             subprocess.Popen([sys.executable, "-m", "pip", "install",
-                              tf_dep], shell=False).wait()
+                              tf_dep]).wait()
         else:
             # If we're using Docker, this will already have been installed
             # explicitly through the correct `{cpu/gpu}_requirements.txt`;
@@ -130,7 +130,7 @@ class InstallCmd(install, object):
         for sub_mod in SUB_MODS:
             sub_mod_setup_str = os.getcwd()+"/"+sub_mod+"/setup.py"  # Get submod setup.py script
             subprocess.Popen(
-                [sys.executable, "-m", sub_mod_setup_str, "install"], shell=False).wait()
+                [sys.executable, "-m", sub_mod_setup_str, "install"]).wait()
 
         # Run installation.
         install.run(self)
