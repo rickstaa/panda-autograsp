@@ -16,24 +16,9 @@
 [submodule "gqcnn"]
 	path = gqcnn
 	url = ../gqcnn.git
-[submodule "autolab_core"]
-	path = autolab_core
-	url = ../autolab_core.git
-[submodule "perception"]
-	path = perception
-	url = ../perception.git
-[submodule "gpd"]
-	path = gpd
-	url = ../gpd.git
 [submodule "panda_autograsp"]
 	path = panda_autograsp
 	url = ../panda_autograsp.git
-[submodule "visualization"]
-	path = visualization
-	url = ../visualization.git
-[submodule "meshrender"]
-	path = meshrender
-	url = ../meshrender.git
 [submodule "deep_robotics_singularity_recipes"]
 	path = deep_robotics_singularity_recipes
 	url = ../deep_robotics_singularity_recipes.git
