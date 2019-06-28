@@ -1,4 +1,4 @@
-# Panda_autograsp (v0.0.1)
+# Panda_autograsp
 [![Build status](https://travis-ci.com/rickstaa/panda_autograsp.svg?token=khBpAzuAEsiEMbLE5tHM&branch=kinetic-devel)](https://travis-ci.com/rickstaa/panda_autograsp)
 ![GitHub release](https://img.shields.io/github/release/rickstaa/panda_autograsp.svg)
 [![Codacy code quality](https://api.codacy.com/project/badge/Grade/d7bc3ceaf48a4f878d0fc8dbda5b3002)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rickstaa/panda_autograsp&amp;utm_campaign=Badge_Grade)
