@@ -14,6 +14,8 @@ The [panda_autograsp](https://github.com/rickstaa/panda_autograsp) contained in 
 
 #### Dependencies
 
+##### Essential
+The following packages are essential for using the panda_autograsp package.
 - A number of ROS packages
 - [Latest stable tensorflow release](https://www.tensorflow.org)
 - [ROS kinetic](https://wiki.ros.org/kinetic)
@@ -23,6 +25,16 @@ The [panda_autograsp](https://github.com/rickstaa/panda_autograsp) contained in 
 - [libfranka](https://github.com/frankaemika/libfranka)
 - [panda_autograsp package](https://github.com/rickstaa/panda_autograsp_ws)
 
+##### Recommended
+For optimal performance you are advices to install the following packages.
+- [CUDA Toolkit 10.0](https://developer.nvidia.com/cuda-10.0-download-archive)
+- [CuDNN 7.6.1](https://developer.nvidia.com/cudnn)
+- [Cuda Samples](https://docs.nvidia.com/cuda/cuda-samples/index.html)
+
+##### Optional
+The documentation of this package was created using [the sphinx framework](http://www.sphinx-doc.org/en/stable/) in order to build the documentation you will need to installt he following packages:
+- [sphinx package](http://www.sphinx-doc.org/en/stable/)
+- [sphinx_rtd_theme](https://sphinx-rtd-theme.readthedocs.io/en/stable/)
 
 #### ROS Packages
 For the package to work you will need the following dependencies can be installed by running the following command:
@@ -33,28 +45,10 @@ For the package to work you will need the following dependencies can be installe
 After these packages are installed, you also need to build the *libfranka* library from source. This needs the be done since you have to pass the *libfranka* library to *catkin_make* or *catkin build* while building the [panda_autograsp](https://github.com/rickstaa/panda_autograsp) package. A guide on how to build the *libfranka* library from source can be found [here](https://frankaemika.github.io/docs/installation.html#building-from-source).
 
 #### Libfreenect2
-In order to use the package together with the Kinect camera, we need to install the [libfreenect2](https://github.com/OpenKinect/libfreenect2.git) library. The library [libfreenect2](https://github.com/OpenKinect/libfreenect2.git) library can be installed by running the following commands:
+In order to use the package together with the Kinect camera, we need to install the [libfreenect2](https://github.com/OpenKinect/libfreenect2.git) library. The documentation for installing the [libfreenect2](https://github.com/OpenKinect/libfreenect2.git) can be found [in the readme of the repository](https://github.com/OpenKinect/libfreenect2).
 
-    apt-get update
-    apt-get install -q -y \
-        build-essential \
-        cmake \
-        pkg-config \
-        libusb-1.0-0-dev \
-        libturbojpeg \
-        libjpeg-turbo8-dev \
-        libglfw3-dev \
-        libopenni2-dev
-    bash -c "git clone https://github.com/OpenKinect/libfreenect2.git \
-        && cd libfreenect2 \
-        && pwd \
-        && mkdir build \
-        && cd build \
-        && cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/freenect2 \
-        && make \
-        && make install \
-        && mkdir -p /etc/udev/rules.d/ \
-        && cp ../platform/linux/udev/90-kinect2.rules /etc/udev/rules.d/"
+#### Pylibfreenect2
+In order to communicate with the [libfreenect2](https://github.com/OpenKinect/libfreenect2.git) library through the python programming language we need to install the [Pylibfreenect2 package](https://github.com/r9y9/pylibfreenect2). The documentation for installing the [pylibfreenect2](https://github.com/r9y9/pylibfreenect2) can be found [in the readme of the repository](https://github.com/r9y9/pylibfreenect2).
 
 #### Install python 3.6 and tensorflow-gpu
 You are advised to use the conda *tensorflow-gpu* package as this package already contains the necessary drivers for the GPU computing to work. After you [installed conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) you can install this package by running the following command:
@@ -63,10 +57,9 @@ You are advised to use the conda *tensorflow-gpu* package as this package alread
 
 See the [tensorflow documentation](https://www.tensorflow.org/install/) if you want to use another package manger.
 
-#### Panda-autograsp package
+#### Build the Panda-autograsp package
 
 After all the dependencies are installed you can build the `panda_autograsp` package as follows:
-
 
 **Clone and build the package using the https protocol**
 
@@ -93,6 +86,20 @@ bash -c "mkdir -p /panda_autograsp_ws \
         && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
         && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build"
 ```
+
+#### Build the panda_autograsp documentation
+Building panda_autograsp’s documentation requires a few extra dependencies – specifically, sphinx and a few plugins.
+
+To install the dependencies required, simply change directories into the autolab_core source and run
+
+$ pip install .[docs]
+
+Then, go to the docs directory and run make with the appropriate target. For example,
+
+$ cd docs/
+$ make html
+
+will generate a set of web pages. Any documentation files generated in this manner can be found in docs/build.
 
 ### Use the supplied singularity image
 
