@@ -13,9 +13,6 @@
 	path = moveit_tutorials
 	url = https://github.com/ros-planning/moveit_tutorials.git
 	branch = kinetic-devel
-[submodule "panda_autograsp"]
-	path = panda_autograsp
-	url = ../panda_autograsp.git
 [submodule "deep_robotics_singularity_recipes"]
 	path = deep_robotics_singularity_recipes
 	url = ../deep_robotics_singularity_recipes.git
