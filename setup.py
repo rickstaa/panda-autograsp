@@ -20,7 +20,6 @@ from setuptools.command.install import install
 import subprocess
 import sys
 import re
-
 # Setup.py parameters
 sub_mod_bash_command = "git config --file " + \
     os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
