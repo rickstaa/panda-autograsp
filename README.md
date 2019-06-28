@@ -1,5 +1,6 @@
 # Panda_autograsp
 [![Build Status](https://travis-ci.com/rickstaa/panda_autograsp.svg?token=khBpAzuAEsiEMbLE5tHM&branch=kinetic-devel)](https://travis-ci.com/rickstaa/panda_autograsp)
+![https://img.shields.io/badge/ROS_Kinetic-success-brightgreen.svg]
 
 Panda_autograsp is an autonomous ROS based grasping solution that works with the [Panda Emika Franka robot](https://www.franka.de/panda/). In this grasping solution a number of opensource grasping solutions are implemented on the [Panda Emika Franka robots](https://www.franka.de/panda/) robot. The grasping solutions present in this package both work with the physical panda robot as well as a simulated verison of the panda robot. A simulated version of the panda robot is shiped with the panda_autograsp package. The panda_autograsp package currently contains the following grasping algorithms:
 
