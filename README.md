@@ -88,7 +88,7 @@ See the [tensorflow documentation](https://www.tensorflow.org/install/) if you w
 
 After all the dependencies are installed you can build the `panda_autograsp` package as follows:
 
-**Clone and build the package using the https protocol**
+##### Clone and build the package using the https protocol
 
 If you did not add an ssh key to your GitHub account you can use the following bash command:
 
@@ -99,7 +99,7 @@ If you did not add an ssh key to your GitHub account you can use the following b
             && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
             && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build"
 
-**Clone and build the package using the ssh protocol**
+##### Clone and build the package using the ssh protocol
 
 If you added an ssh key to your GitHub account you can also use the following bash command.
 
