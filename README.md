@@ -3,6 +3,15 @@ Panda_autograsp is an autonomous ROS based grasping solution that works with the
 
 - [BerkleyAutomation/gqcnn](https://github.com/BerkeleyAutomation/gqcnn)
 
+## Submodules contained in this package
+The panda_autograsp package contains the following submodules:
+- [deep_robotics_singularity_recipes](https://github.com/rickstaa/deep_robotics_singularity_recipes)
+- [franka_ros](https://github.com/rickstaa/franka_ros)
+- [gqcnn](https://github.com/BerkeleyAutomation/gqcnn)
+- [movit_tutorials](https://github.com/ros-planning/moveit_tutorials)
+- [panda_movit_config](https://github.com/rickstaa/panda_moveit_config)
+- [panda_simulation](https://github.com/rickstaa/panda_simulation)
+
 ## Instalation instructions
 There are two ways to use this package. You can build the package from source or use the supplied singularity image.
 
@@ -23,7 +32,6 @@ The following packages are essential for using the panda_autograsp package.
 - [Miniconda3](https://docs.conda.io/en/latest/miniconda.html)
 - [conda tensorflow-gpu](https://anaconda.org/anaconda/tensorflow-gpu)
 - [libfranka](https://github.com/frankaemika/libfranka)
-- [panda_autograsp package](https://github.com/rickstaa/panda_autograsp_ws)
 
 ##### Recommended
 For optimal performance you are advices to install the following packages.
