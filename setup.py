@@ -129,8 +129,9 @@ class InstallCmd(install, object):
         # Install submodule dependencies
         for sub_mod in SUB_MODS:
             sub_mod_setup_str = os.getcwd()+"/"+sub_mod+"/setup.py"  # Get submod setup.py script
-            subprocess.Popen(
-                [sys.executable, "-m", sub_mod_setup_str, "install"]).wait()
+            if os.path.exists(sub_mod_setup_str):
+                subprocess.Popen(
+                    [sys.executable, "-m", sub_mod_setup_str, "install"]).wait()
 
         # Run installation.
         install.run(self)

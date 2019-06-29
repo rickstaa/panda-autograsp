@@ -1,0 +1,5 @@
+
+[docs]
+sphinx
+sphinxcontrib-napoleon
+sphinx_rtd_theme
