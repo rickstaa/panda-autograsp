@@ -21,8 +21,8 @@ matrix:
 install:
   - pip install .
 
-#script:
-#  - python -c "import gqcnn"
+script:
+  - python -c "import gqcnn"
 
 notifications:
   email: false
