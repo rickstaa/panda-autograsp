@@ -18,5 +18,11 @@ matrix:
       python: 3.7
       dist: xenial
 
+install:
+  - pip install .
+
+#script:
+#  - python -c "import gqcnn"
+
 notifications:
   email: false
