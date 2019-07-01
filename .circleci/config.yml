@@ -35,8 +35,8 @@ jobs: # A basic unit of work in a run
 
       # Perform import test
       - run: |
-        . py35venv/bin/activate
-        import gqcnn
+          . py35venv/bin/activate
+          python -c "import gqcnn"
 
   ## Python 3.5 build_test ##
   python3_6:
@@ -62,8 +62,8 @@ jobs: # A basic unit of work in a run
 
       # Perform import test
       - run: |
-        . py36venv/bin/activate
-        import gqcnn
+          . py36venv/bin/activate
+          python -c "import gqcnn"
 
   ## Python 3.5 build_test ##
   python3_7:
@@ -89,8 +89,8 @@ jobs: # A basic unit of work in a run
 
       # Perform import test
       - run: |
-        . py37venv/bin/activate
-        import gqcnn
+          . py37venv/bin/activate
+          python -c "import gqcnn"
 
 workflows:
   version: 2.1
