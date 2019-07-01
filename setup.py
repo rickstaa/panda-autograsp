@@ -28,7 +28,8 @@ SUB_MODS = bash_output.decode("utf-8").split("\n")
 TF_MAX_VERSION = "1.13.1"
 
 # Package requirements
-requirements = []
+with open('requirements/requirements.txt') as f:
+    requirements = f.read().splitlines()
 
 # Set up logger.
 logging.basicConfig()  # Configure the root logger.

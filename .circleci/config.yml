@@ -15,32 +15,82 @@ jobs: # A basic unit of work in a run
   python3_5:
     executor: python
     steps: # steps that comprise the `python3.5` job
+      
+      # restore virtual enviroment dependencies from chache #
+      - restore_cache: 
+          key: depspy35-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+
+      # install dependencies #
       - checkout
-      - run: echo "python3.5 test"
       - run: pwd
       - run: ls
+      - run: | # Create virtual env
+            python3 -m venv py35venv
+            . py35venv/bin/activate
+            pip install .
+      - save_cache: # Save virtual enviroment dependencies in chache
+          key: depspy35-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+          paths:
+            - "py35venv"
+
+      # Perform import test
+      - run: |
+        . py35venv/bin/activate
+        import gqcnn
 
   ## Python 3.5 build_test ##
   python3_6:
-    docker:
-      - image: circleci/python:3.6
     executor: python
     steps: # steps that comprise the `python3.5` job
-      - checkout
-      - run: echo "python3.6 test"
-      - run: pwd
-      - run: ls
+      
+      # restore virtual enviroment dependencies from chache #
+      - restore_cache: 
+          key: depspy36-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
 
-  ## Python 3.7 build_test ##
-  python3_7:
-    docker:
-      - image: circleci/python:3.7
-    executor: python
-    steps: # steps that comprise the `python3.5` job
+      # install dependencies #
       - checkout
-      - run: echo "python3.7 test"
       - run: pwd
       - run: ls
+      - run: | # Create virtual env
+            python3 -m venv py35venv
+            . py36venv/bin/activate
+            pip install .
+      - save_cache: # Save virtual enviroment dependencies in chache
+          key: depspy36-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+          paths:
+            - "py36venv"
+
+      # Perform import test
+      - run: |
+        . py36venv/bin/activate
+        import gqcnn
+
+  ## Python 3.5 build_test ##
+  python3_7:
+    executor: python
+    steps: # steps that comprise the `python3.5` job
+      
+      # restore virtual enviroment dependencies from chache #
+      - restore_cache: 
+          key: depspy37-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+
+      # install dependencies #
+      - checkout
+      - run: pwd
+      - run: ls
+      - run: | # Create virtual env
+            python3 -m venv py35venv
+            . py37venv/bin/activate
+            pip install .
+      - save_cache: # Save virtual enviroment dependencies in chache
+          key: depspy37-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+          paths:
+            - "py37venv"
+
+      # Perform import test
+      - run: |
+        . py37venv/bin/activate
+        import gqcnn
 
 workflows:
   version: 2.1
