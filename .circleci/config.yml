@@ -99,7 +99,7 @@ jobs: # A basic unit of work in a run
             python3 -m pip install --upgrade pip
             sudo python3 setup.py install
             #sudo python3 -m pip install gqcnn/
-            ls
+            ls gqcnn/
 
       # Save virtual environment dependencies in cache
       - save_cache:
