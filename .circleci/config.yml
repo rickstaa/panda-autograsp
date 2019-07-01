@@ -31,9 +31,7 @@ jobs: # A basic unit of work in a run
       - run: |
             . py35venv/bin/activate
             sudo apt -y -q install curl
-            curl -O https://bootstrap.pypa.io/get-pip.py && \
-              sudo python3 get-pip.py && \
-              rm get-pip.py
+            python3 -m pip install --upgrade pip
             sudo python3 setup.py install
 
       # Save virtual environment dependencies in cache
