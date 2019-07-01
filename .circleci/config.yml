@@ -23,8 +23,6 @@ jobs: # A basic unit of work in a run
           key: depspy35-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
 
       # install dependencies #
-      - run: pwd
-      - run: ls
       - run: | # Create virtual env, upgrade pip and get dependencies
             sudo apt -y -q install curl
             curl -O https://bootstrap.pypa.io/get-pip.py && \
@@ -32,7 +30,7 @@ jobs: # A basic unit of work in a run
               rm get-pip.py
             python3 -m venv py35venv
             . py37venv/bin/activate
-            pip install .
+            sudo pip install .
       - save_cache: # Save virtual environment dependencies in cache
           key: depspy35-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
           paths:
@@ -54,8 +52,6 @@ jobs: # A basic unit of work in a run
           key: depspy36-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
 
       # install dependencies #
-      - run: pwd
-      - run: ls
       - run: | # Create virtual env, upgrade pip and get dependencies
             sudo apt -y -q install curl
             curl -O https://bootstrap.pypa.io/get-pip.py && \
@@ -63,7 +59,7 @@ jobs: # A basic unit of work in a run
               rm get-pip.py
             python3 -m venv py35venv
             . py37venv/bin/activate
-            pip install .
+            sudo pip install .
       - save_cache: # Save virtual environment dependencies in cache
           key: depspy36-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
           paths:
@@ -85,8 +81,6 @@ jobs: # A basic unit of work in a run
           key: depspy37-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
 
       # install dependencies #
-      - run: pwd
-      - run: ls
       - run: | # Create virtual env, upgrade pip and get dependencies
             sudo apt -y -q install curl
             curl -O https://bootstrap.pypa.io/get-pip.py && \
@@ -94,7 +88,7 @@ jobs: # A basic unit of work in a run
               rm get-pip.py
             python3 -m venv py35venv
             . py37venv/bin/activate
-            pip install .
+            sudo pip install .
       - save_cache: # Save virtual environment dependencies in cache
           key: depspy37-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
           paths:
