@@ -101,6 +101,7 @@ jobs: # A basic unit of work in a run
             curl -O https://bootstrap.pypa.io/get-pip.py && \
               sudo python3 get-pip.py && \
               rm get-pip.py
+            ls
             sudo python3 /panda_autograsp/setup.py install
 
       # Save virtual environment dependencies in cache
