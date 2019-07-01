@@ -3,8 +3,8 @@
 [![CircleCI](https://circleci.com/gh/rickstaa/panda_autograsp.svg?style=svg&circle-token=9001e9eddb1769e874d2c473393f329218f303b7)](https://circleci.com/gh/rickstaa/panda_autograsp)
 ![GitHub release](https://img.shields.io/github/release/rickstaa/panda_autograsp.svg)
 [![Codacy code quality](https://api.codacy.com/project/badge/Grade/d7bc3ceaf48a4f878d0fc8dbda5b3002)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rickstaa/panda_autograsp&amp;utm_campaign=Badge_Grade)
-[![Python 3](https://img.shields.io/badge/python3-3.5%20%7C%203.6%20%7C%203.7-green.svg)](https://www.python.org/)
-[![Python 2](https://img.shields.io/badge/python-2.7%20(not%20supported)-red.svg)](https://www.python.org/)
+[![Python 3](https://img.shields.io/badge/python%203-3.5%20%7C%203.6%20%7C%203.7-green.svg)](https://www.python.org/)
+[![Python 2](https://img.shields.io/badge/python%202-not%20supported-red.svg)](https://www.python.org/)
 [![Ros kinetic](https://img.shields.io/badge/ROS%20Kinetic-recommended-brightgreen.svg)](https://wiki.ros.org/kinetic)
 [![Ros melodic](https://img.shields.io/badge/ROS%20Melodic-not%20tested-yellow.svg)](https://wiki.ros.org/melodic)
 
