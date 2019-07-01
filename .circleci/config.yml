@@ -15,6 +15,7 @@ jobs: # A basic unit of work in a run
   python3_5:
     executor: python
     steps: # steps that comprise the `python3.5` job
+      - checkout
       - run: echo "python3.5 test"
       - run: pwd
       - run: ls
@@ -25,9 +26,10 @@ jobs: # A basic unit of work in a run
       - image: circleci/python:3.6
     executor: python
     steps: # steps that comprise the `python3.5` job
+      - checkout
       - run: echo "python3.6 test"
       - run: pwd
-      - run: ls ../
+      - run: ls
 
   ## Python 3.7 build_test ##
   python3_7:
@@ -35,10 +37,10 @@ jobs: # A basic unit of work in a run
       - image: circleci/python:3.7
     executor: python
     steps: # steps that comprise the `python3.5` job
+      - checkout
       - run: echo "python3.7 test"
       - run: pwd
-      - run: ls ../../..
-
+      - run: ls
 
 workflows:
   version: 2.1
