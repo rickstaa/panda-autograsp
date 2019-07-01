@@ -27,7 +27,7 @@ jobs: # A basic unit of work in a run
       - run: | # Create virtual env
             python3 -m venv py35venv
             . py35venv/bin/activate
-            pip install -U .
+            pip install --user .
       - save_cache: # Save virtual environment dependencies in cache
           key: depspy35-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
           paths:
@@ -54,7 +54,7 @@ jobs: # A basic unit of work in a run
       - run: | # Create virtual env
             python3 -m venv py35venv
             . py36venv/bin/activate
-            pip install -U .
+            pip install --user .
       - save_cache: # Save virtual environment dependencies in cache
           key: depspy36-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
           paths:
@@ -81,7 +81,7 @@ jobs: # A basic unit of work in a run
       - run: | # Create virtual env
             python3 -m venv py35venv
             . py37venv/bin/activate
-            pip install -U .
+            pip install --user .
       - save_cache: # Save virtual environment dependencies in cache
           key: depspy37-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
           paths:
