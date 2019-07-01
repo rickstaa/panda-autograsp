@@ -111,10 +111,6 @@ jobs: # A basic unit of work in a run
       # upgrade pip and install dependencies
       - run: |
 
-            # Before install
-            sudo apt-get update
-            sudo apt-get install -y python-opengl
-
             # Install dependencies
             . py37venv/bin/activate
             python3 setup.py install # Install panda_autograsp requirements
