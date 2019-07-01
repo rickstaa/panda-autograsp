@@ -29,6 +29,7 @@ jobs: # A basic unit of work in a run
 
       # upgrade pip and install dependencies
       - run: |
+            . py35venv/bin/activate
             sudo apt -y -q install curl
             curl -O https://bootstrap.pypa.io/get-pip.py && \
               sudo python3 get-pip.py && \
@@ -63,6 +64,7 @@ jobs: # A basic unit of work in a run
 
       # upgrade pip and install dependencies
       - run: |
+            . py36venv/bin/activate
             sudo apt -y -q install curl
             curl -O https://bootstrap.pypa.io/get-pip.py && \
               sudo python3 get-pip.py && \
@@ -100,6 +102,7 @@ jobs: # A basic unit of work in a run
 
       # upgrade pip and install dependencies
       - run: |
+            . py37venv/bin/activate
             sudo apt -y -q install curl
             curl -O https://bootstrap.pypa.io/get-pip.py && \
               sudo python3 get-pip.py && \
