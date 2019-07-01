@@ -1,1 +1,2 @@
-import gqcnn
+import sys
+print(sys.path)
