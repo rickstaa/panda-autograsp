@@ -37,7 +37,7 @@ jobs: # A basic unit of work in a run
     steps: # steps that comprise the `python3.5` job
       - run: echo "python3.7 test"
       - run: pwd
-      - run: ls ../
+      - run: ls ../../
 
 
 workflows:
