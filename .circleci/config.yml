@@ -69,8 +69,8 @@ jobs: # A basic unit of work in a run
               rm get-pip.py
             pwd
             ls
-            ls panda_autograsp
-            sudo python3 panda_autograsp/setup.py install
+            ls panda_autograsp/src
+            sudo python3 panda_autograsp/src/setup.py install
 
       # Save virtual environment dependencies in cache
       - save_cache:
