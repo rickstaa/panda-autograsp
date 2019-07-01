@@ -111,11 +111,17 @@ jobs: # A basic unit of work in a run
       # upgrade pip and install dependencies
       - run: |
 
-            # Install requirements
+            # Before install
+            sudo apt-get update
+            sudo apt-get install -y python-opengl
+
+            # Install dependencies
             . py37venv/bin/activate
+            python3 -m pip install .  # Install panda_autograsp
             python3 -m pip install -r requirements/requirements.txt # Install panda_autograsp requirements
-            python3 -m pip install -r requirements/docs_requirements.txt # Install documentation requirements
-            python3 -m pip install -r gqcnn/requirements/p3/gpu_requirements.txt # Install gqcnn requirements (Needed in free circle-ci version)
+            python3 -m pip install -r requirements/docs_requirements.txt # Install panda_autograsp requirements
+            python3 -m pip install gqcnn/. # Install gqcnn
+            python3 -m pip install -r gqcnn/requirements/p3/gpu_requirements.txt # Install gqcnn requirements
 
       # Save virtual environment dependencies in cache
       - save_cache:
