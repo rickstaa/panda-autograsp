@@ -15,13 +15,13 @@ jobs: # A basic unit of work in a run
   python3_5:
     executor: python
     steps: # steps that comprise the `python3.5` job
-      
+      - checkout
+
       # restore virtual enviroment dependencies from chache #
       - restore_cache: 
           key: depspy35-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
 
       # install dependencies #
-      - checkout
       - run: pwd
       - run: ls
       - run: | # Create virtual env
@@ -33,7 +33,7 @@ jobs: # A basic unit of work in a run
           paths:
             - "py35venv"
 
-      # Perform import test
+      # Perform package build succesfull test
       - run: |
           . py35venv/bin/activate
           python -c "import gqcnn"
@@ -42,13 +42,13 @@ jobs: # A basic unit of work in a run
   python3_6:
     executor: python
     steps: # steps that comprise the `python3.5` job
+      - checkout
       
       # restore virtual enviroment dependencies from chache #
       - restore_cache: 
           key: depspy36-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
 
       # install dependencies #
-      - checkout
       - run: pwd
       - run: ls
       - run: | # Create virtual env
@@ -60,7 +60,7 @@ jobs: # A basic unit of work in a run
           paths:
             - "py36venv"
 
-      # Perform import test
+      # Perform package build succesfull test
       - run: |
           . py36venv/bin/activate
           python -c "import gqcnn"
@@ -69,13 +69,13 @@ jobs: # A basic unit of work in a run
   python3_7:
     executor: python
     steps: # steps that comprise the `python3.5` job
-      
+      - checkout
+
       # restore virtual enviroment dependencies from chache #
       - restore_cache: 
           key: depspy37-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
 
       # install dependencies #
-      - checkout
       - run: pwd
       - run: ls
       - run: | # Create virtual env
@@ -87,11 +87,12 @@ jobs: # A basic unit of work in a run
           paths:
             - "py37venv"
 
-      # Perform import test
+      # Perform package build succesfull test
       - run: |
           . py37venv/bin/activate
           python -c "import gqcnn"
 
+## Ci workflow ##
 workflows:
   version: 2.1
   build_test:
