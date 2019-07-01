@@ -129,6 +129,7 @@ jobs: # A basic unit of work in a run
       # Perform package build successful test
       - run: |
           . py37venv/bin/activate
+          python3 -m pip list
           python3 tests/test_gqcnn.py
 
 ## Ci workflow ##
