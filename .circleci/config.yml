@@ -104,9 +104,11 @@ jobs: # A basic unit of work in a run
 
       # install dependencies #
       - run: | # Create virtual env
-            python3 -m pip install --user --upgrade pip
-            python3 -m pip install --user virtualenv
+          python3 -m pip install --user --upgrade pip
+          python3 -m pip install --user virtualenv
+          if [ ! -d "py37venv" ]; then
             virtualenv -p python3 py37venv
+          fi
 
       # upgrade pip and install dependencies
       - run: |
