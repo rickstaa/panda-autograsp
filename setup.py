@@ -131,10 +131,8 @@ class InstallCmd(install, object):
         for sub_mod in SUB_MODS:
             sub_mod_setup_str = os.getcwd()+"/"+sub_mod+"/setup.py"  # Get submod setup.py script
             if os.path.exists(sub_mod_setup_str):
-                #subprocess.Popen(
-                #    [sys.executable, sub_mod_setup_str, "install"]).wait() # Run setup.py
                 subprocess.Popen(
-                    [sys.executable, "-m", "pip", "install" , os.getcwd()+"/"+sub_mod+"/"]) # Run pip install .
+                    [sys.executable, "-m", "pip", "install" , os.getcwd()+"/"+sub_mod+"/."]) # Run pip install .
 
         # Run installation.
         install.run(self)

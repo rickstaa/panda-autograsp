@@ -83,8 +83,8 @@ jobs: # A basic unit of work in a run
     executor: python
     steps: # steps that comprise the `python3.5` job
       - checkout
-      - run: git submodule sync --recursive
-      - run: git submodule update --recursive --init
+      - run: git submodule sync --recursive gqcnn
+      - run: git submodule update --recursive --init gqcnn
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
