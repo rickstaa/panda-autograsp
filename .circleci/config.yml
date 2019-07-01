@@ -31,8 +31,8 @@ jobs: # A basic unit of work in a run
       - run: |
             . py35venv/bin/activate
             python3 -m pip install --upgrade pip
-            sudo python3 setup.py install
-            sudo python3 -m pip install gqcnn/
+            python3 setup.py install # Install panda_autograsp requirements
+            python3 -m pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -64,8 +64,9 @@ jobs: # A basic unit of work in a run
       - run: |
             . py36venv/bin/activate
             python3 -m pip install --upgrade pip
-            sudo python3 setup.py install
-            sudo python3 -m pip install gqcnn/
+            python3 setup.py install # Install panda_autograsp requirements
+            python3 -m pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
+
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -100,7 +101,7 @@ jobs: # A basic unit of work in a run
             . py37venv/bin/activate
             python3 -m pip install --upgrade pip
             python3 setup.py install # Install panda_autograsp requirements
-            python3 -m pip install gqcnn/. # Install gqcnn requirements
+            python3 -m pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
 
       # Save virtual environment dependencies in cache
       - save_cache:
