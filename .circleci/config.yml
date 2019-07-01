@@ -8,7 +8,7 @@ jobs:
       - run: echo "A first hello"
   two:
     docker:
-      - image: circleci/node:4.0.2
+      - image: circleci/node:4.8.2
     steps:
       - checkout
       - run: echo "A more familiar hi"
