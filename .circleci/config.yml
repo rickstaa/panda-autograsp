@@ -29,10 +29,16 @@ jobs: # A basic unit of work in a run
 
       # upgrade pip and install dependencies
       - run: |
+
+            # Before install
+            sudo apt-get update
+            sudo apt-get install -y python-opengl
+
+            # Install dependencies
             . py35venv/bin/activate
-            python3 -m pip install --upgrade pip
-            python3 setup.py install # Install panda_autograsp requirements
-            python3 -m pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
+            sudo python3 -m pip install --upgrade pip
+            sudo python3 setup.py install # Install panda_autograsp requirements
+            sudo pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -62,11 +68,16 @@ jobs: # A basic unit of work in a run
 
       # upgrade pip and install dependencies
       - run: |
-            . py36venv/bin/activate
-            python3 -m pip install --upgrade pip
-            python3 setup.py install # Install panda_autograsp requirements
-            python3 -m pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
 
+            # Before install
+            sudo apt-get update
+            sudo apt-get install -y python-opengl
+
+            # Install dependencies
+            . py36venv/bin/activate
+            sudo python3 -m pip install --upgrade pip
+            sudo python3 setup.py install # Install panda_autograsp requirements
+            sudo pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -118,7 +129,7 @@ jobs: # A basic unit of work in a run
       # Perform package build successful test
       - run: |
           . py37venv/bin/activate
-          python -c "import gqcnn"
+          python3 tests/test_gqcnn.py
 
 ## Ci workflow ##
 workflows:
