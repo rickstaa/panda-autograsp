@@ -98,6 +98,7 @@ jobs: # A basic unit of work in a run
 
       # upgrade pip and install dependencies
       - run: |
+            sudo apt-get install libpng-dev
             . py37venv/bin/activate
             sudo python3 -m pip install --upgrade pip
             sudo python3 setup.py install # Install panda_autograsp requirements
