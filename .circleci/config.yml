@@ -7,6 +7,12 @@ executors:
       - image: circleci/python:3.5
     shell: /bin/bash
     working_directory: ~/project
+    steps:
+
+      # Install system packages
+      run: |
+        sudo apt install -q -y\
+          curl
 
 ## Ci jobs ##
 jobs: # A basic unit of work in a run
@@ -24,7 +30,7 @@ jobs: # A basic unit of work in a run
       # install dependencies #
       - run: pwd
       - run: ls
-      - run: | # Create virtual env
+      - run: | # Create virtual env, upgrade pip and get dependencies
             python3 -m venv py35venv
             . py35venv/bin/activate
             pip install --user .
@@ -51,7 +57,7 @@ jobs: # A basic unit of work in a run
       # install dependencies #
       - run: pwd
       - run: ls
-      - run: | # Create virtual env
+      - run: | # Create virtual env, upgrade pip and get dependencies
             python3 -m venv py35venv
             . py36venv/bin/activate
             pip install --user .
