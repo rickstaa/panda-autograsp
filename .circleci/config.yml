@@ -98,11 +98,16 @@ jobs: # A basic unit of work in a run
 
       # upgrade pip and install dependencies
       - run: |
-            sudo apt-get install libpng-dev
+
+            # Before install
+            sudo apt-get update
+            sudo apt-get install -y python-opengl
+
+            # Install dependencies
             . py37venv/bin/activate
-            sudo python3 -m pip install --upgrade pip
-            sudo python3 setup.py install # Install panda_autograsp requirements
-            sudo python3 -m pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
+            python3 -m pip install --upgrade pip
+            python3 setup.py install # Install panda_autograsp requirements
+            pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -113,7 +118,7 @@ jobs: # A basic unit of work in a run
       # Perform package build successful test
       - run: |
           . py37venv/bin/activate
-          python3 tests/test_gqcnn.py
+          python -c "import gqcnn"
 
 ## Ci workflow ##
 workflows:
