@@ -17,7 +17,7 @@ package. The panda_autograsp package currently contains the
 following grasping algorithms:
 
 
--   [BerkleyAutomation/gqcnn](https://github.com/BerkeleyAutomation/gqcnn)
+-   `BerkleyAutomation/gqcnn <https://github.com/BerkeleyAutomation/gqcnn>`_
 
 .. toctree::
    :maxdepth: 2
@@ -29,3 +29,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+* :ref:`api`
