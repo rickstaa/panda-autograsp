@@ -1,0 +1,7 @@
+README.md
+setup.py
+gqcnn.egg-info/PKG-INFO
+gqcnn.egg-info/SOURCES.txt
+gqcnn.egg-info/dependency_links.txt
+gqcnn.egg-info/requires.txt
+gqcnn.egg-info/top_level.txt

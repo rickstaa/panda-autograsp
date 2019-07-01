@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: gqcnn
+Version: 1.1.0
+Summary: Project code for running Grasp Quality Convolutional Neural Networks
+Home-page: https://github.com/BerkeleyAutomation/gqcnn
+Author: Vishal Satish
+Author-email: vsatish@berkeley.edu
+License: Berkeley Copyright
+Description: UNKNOWN
+Keywords: robotics grasping vision deep learning
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Natural Language :: English
+Classifier: Topic :: Scientific/Engineering
+Provides-Extra: docs

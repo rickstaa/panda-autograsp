@@ -39,7 +39,7 @@ jobs: # A basic unit of work in a run
       # Perform package build successful test
       - run: |
           . py35venv/bin/activate
-          python3 tests/test_import.py
+          python3 tests/test_gqcnn.py
 
   ## Python 3.5 build_test ##
   python3_6:
@@ -68,7 +68,7 @@ jobs: # A basic unit of work in a run
       # Perform package build successful test
       - run: |
           . py36venv/bin/activate
-          python3 tests/test_import.py
+          python3 tests/test_gqcnn.py
 
   ## Python 3.5 build_test ##
   python3_7:
@@ -97,7 +97,7 @@ jobs: # A basic unit of work in a run
       # Perform package build successful test
       - run: |
           . py37venv/bin/activate
-          python3 tests/test_import.py
+          python3 tests/test_gqcnn.py
 
 ## Ci workflow ##
 workflows:

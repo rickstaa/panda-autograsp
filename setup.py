@@ -24,7 +24,7 @@ import re
 sub_mod_bash_command = "git config --file " + \
     os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
 bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
-SUB_MODS = bash_output.decode("utf-8").split("\n")
+SUB_MODS = [x for x in bash_output.decode("utf-8").split("\n") if x != '']
 TF_MAX_VERSION = "1.13.1"
 
 # Package requirements
@@ -132,7 +132,7 @@ class InstallCmd(install, object):
             sub_mod_setup_str = os.getcwd()+"/"+sub_mod+"/setup.py"  # Get submod setup.py script
             if os.path.exists(sub_mod_setup_str):
                 subprocess.Popen(
-                    [sys.executable, "-m", sub_mod_setup_str, "install"]).wait()
+                    [sys.executable, sub_mod_setup_str, "install"]).wait()
 
         # Run installation.
         install.run(self)
