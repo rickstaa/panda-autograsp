@@ -11,7 +11,7 @@ jobs:
       - persist_to_workspace:
           root: my_workspace
           paths:
-            - my_workspace/echo-output
+            - echo-output
   two:
     docker:
       - image: circleci/node:4.8.2
