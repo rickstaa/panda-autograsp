@@ -111,10 +111,11 @@ jobs: # A basic unit of work in a run
       # upgrade pip and install dependencies
       - run: |
 
-            # Install dependencies
+            # Install requirements
             . py37venv/bin/activate
-            python3 setup.py install # Install panda_autograsp requirements
-            #python3 -m pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
+            python3 -m pip install -r requirements/requirements.txt # Install panda_autograsp requirements
+            python3 -m pip install -r requirements/docs_requirements.txt # Install documentation requirements
+            python3 -m pip install -r gqcnn/requirements/p3/gpu_requirements.txt # Install gqcnn requirements (Needed in free circle-ci version)
 
       # Save virtual environment dependencies in cache
       - save_cache:
