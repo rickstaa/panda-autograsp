@@ -1,6 +1,6 @@
 # Panda_autograsp
 
-[![Build Status](https://travis-ci.com/rickstaa/panda_autograsp.svg?token=khBpAzuAEsiEMbLE5tHM&branch=kinetic-devel)](https://travis-ci.com/rickstaa/panda_autograsp)
+[![CircleCI](https://circleci.com/gh/rickstaa/panda_autograsp.svg?style=svg&circle-token=9001e9eddb1769e874d2c473393f329218f303b7)](https://circleci.com/gh/rickstaa/panda_autograsp)
 ![GitHub release](https://img.shields.io/github/release/rickstaa/panda_autograsp.svg)
 [![Codacy code quality](https://api.codacy.com/project/badge/Grade/d7bc3ceaf48a4f878d0fc8dbda5b3002)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rickstaa/panda_autograsp&amp;utm_campaign=Badge_Grade)
 [![Python 2](https://img.shields.io/badge/python-2.7-red.svg)](https://www.python.org/)
