@@ -114,7 +114,7 @@ jobs: # A basic unit of work in a run
             # Install dependencies
             . py37venv/bin/activate
             python3 setup.py install # Install panda_autograsp requirements
-            python3 -m pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
+            #python3 -m pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
 
       # Save virtual environment dependencies in cache
       - save_cache:
