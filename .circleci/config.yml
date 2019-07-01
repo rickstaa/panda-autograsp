@@ -9,11 +9,6 @@ executors:
     working_directory: ~/project
     steps:
 
-      # Install system packages
-      run: |
-        sudo apt install -q -y\
-          curl
-
 ## Ci jobs ##
 jobs: # A basic unit of work in a run
 
@@ -31,6 +26,10 @@ jobs: # A basic unit of work in a run
       - run: pwd
       - run: ls
       - run: | # Create virtual env, upgrade pip and get dependencies
+            sudo apt -y -q install curl
+            curl -O https://bootstrap.pypa.io/get-pip.py && \
+              python3 get-pip.py && \
+              rm get-pip.py
             python3 -m venv py35venv
             . py35venv/bin/activate
             pip install --user .
@@ -58,8 +57,12 @@ jobs: # A basic unit of work in a run
       - run: pwd
       - run: ls
       - run: | # Create virtual env, upgrade pip and get dependencies
-            python3 -m venv py35venv
-            . py36venv/bin/activate
+            sudo apt -y -q install curl
+            curl -O https://bootstrap.pypa.io/get-pip.py && \
+              python3 get-pip.py && \
+              rm get-pip.py
+            python3 -m venv py36venv
+            . py35venv/bin/activate
             pip install --user .
       - save_cache: # Save virtual environment dependencies in cache
           key: depspy36-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
@@ -84,7 +87,11 @@ jobs: # A basic unit of work in a run
       # install dependencies #
       - run: pwd
       - run: ls
-      - run: | # Create virtual env
+      - run: | # Create virtual env, upgrade pip and get dependencies
+            sudo apt -y -q install curl
+            curl -O https://bootstrap.pypa.io/get-pip.py && \
+              python3 get-pip.py && \
+              rm get-pip.py
             python3 -m venv py35venv
             . py37venv/bin/activate
             pip install --user .
