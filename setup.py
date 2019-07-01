@@ -134,7 +134,7 @@ class InstallCmd(install, object):
                 #subprocess.Popen(
                 #    [sys.executable, sub_mod_setup_str, "install"]).wait() # Run setup.py
                 subprocess.Popen(
-                    [sys.executable, "-m", "pip", "install" , os.getcwd()+"/"+sub_mod]) # Run pip install .
+                    [sys.executable, "-m", "pip", "install" , sub_mod]) # Run pip install .
 
         # Run installation.
         install.run(self)
