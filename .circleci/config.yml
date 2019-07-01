@@ -33,7 +33,7 @@ jobs: # A basic unit of work in a run
             curl -O https://bootstrap.pypa.io/get-pip.py && \
               sudo python3 get-pip.py && \
               rm get-pip.py
-            sudo python3 panda_autograsp/setup.py install
+            sudo python3 setup.py install
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -70,7 +70,7 @@ jobs: # A basic unit of work in a run
             pwd
             ls
             ls panda_autograsp/src
-            sudo python3 panda_autograsp/src/setup.py install
+            sudo python3 setup.py install
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -104,7 +104,7 @@ jobs: # A basic unit of work in a run
             curl -O https://bootstrap.pypa.io/get-pip.py && \
               sudo python3 get-pip.py && \
               rm get-pip.py
-            sudo python3 panda_autograsp/setup.py install
+            sudo python3 setup.py install
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -122,6 +122,6 @@ workflows:
   version: 2.1
   build_test:
     jobs:
-      # - python3_5
+      - python3_5
       - python3_6
-      #- python3_7
+      - python3_7
