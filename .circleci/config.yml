@@ -122,6 +122,6 @@ workflows:
   version: 2.1
   build_test:
     jobs:
-      - python3_5
+      # - python3_5
       - python3_6
-      - python3_7
+      #- python3_7
