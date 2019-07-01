@@ -11,7 +11,6 @@ Welcome to panda_autograsp's documentation!
    :caption: Contents:
 
 
-
 Indices and tables
 ==================
 
