@@ -28,11 +28,11 @@ jobs: # A basic unit of work in a run
       - run: | # Create virtual env, upgrade pip and get dependencies
             sudo apt -y -q install curl
             curl -O https://bootstrap.pypa.io/get-pip.py && \
-              python3 get-pip.py && \
+              sudo python3 get-pip.py && \
               rm get-pip.py
             python3 -m venv py35venv
-            . py35venv/bin/activate
-            pip install --user .
+            . py37venv/bin/activate
+            pip install .
       - save_cache: # Save virtual environment dependencies in cache
           key: depspy35-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
           paths:
@@ -59,11 +59,11 @@ jobs: # A basic unit of work in a run
       - run: | # Create virtual env, upgrade pip and get dependencies
             sudo apt -y -q install curl
             curl -O https://bootstrap.pypa.io/get-pip.py && \
-              python3 get-pip.py && \
+              sudo python3 get-pip.py && \
               rm get-pip.py
-            python3 -m venv py36venv
-            . py35venv/bin/activate
-            pip install --user .
+            python3 -m venv py35venv
+            . py37venv/bin/activate
+            pip install .
       - save_cache: # Save virtual environment dependencies in cache
           key: depspy36-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
           paths:
@@ -90,11 +90,11 @@ jobs: # A basic unit of work in a run
       - run: | # Create virtual env, upgrade pip and get dependencies
             sudo apt -y -q install curl
             curl -O https://bootstrap.pypa.io/get-pip.py && \
-              python3 get-pip.py && \
+              sudo python3 get-pip.py && \
               rm get-pip.py
             python3 -m venv py35venv
             . py37venv/bin/activate
-            pip install --user .
+            pip install .
       - save_cache: # Save virtual environment dependencies in cache
           key: depspy37-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
           paths:
