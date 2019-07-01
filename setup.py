@@ -28,7 +28,7 @@ SUB_MODS = [x for x in bash_output.decode("utf-8").split("\n") if x != '']
 TF_MAX_VERSION = "1.13.1"
 
 # Package requirements
-with open('requirements/requirements.txt') as f:
+with open(os.path.dirname(os.path.abspath(__file__))+'/requirements/requirements.txt') as f:
     requirements = f.read().splitlines()
 
 # Set up logger.
