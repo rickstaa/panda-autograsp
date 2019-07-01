@@ -1,13 +1,39 @@
 version: 2 # use CircleCI 2.0
 jobs: # A basic unit of work in a run
 
-  ## Python 3.6 build_test ##
-  python3.6:
+  ## Python 3.5 build_test ##
+  python3.5:
+    working_directory: ~/panda_autograsp-circleci # directory where steps are run
+    docker: # run the steps with Docker
+      # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
+      - image: circleci/python:3.5
+    steps: # steps that comprise the `python3.5` job
+      - run: echo "python3.5 test"
+      - run: pwd
 
-    # directory where steps are run
-    working_directory: ~/panda_autograsp-circleci
+  ## Python 3.5 build_test ##
+  python3.6:
+    working_directory: ~/panda_autograsp-circleci # directory where steps are run
     docker: # run the steps with Docker
       # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
       - image: circleci/python:3.6
-    steps: # steps that comprise the `build_test` job
+    steps: # steps that comprise the `python3.5` job
+      - run: echo "python3.6 test"
       - run: pwd
+
+  ## Python 3.7 build_test ##
+  python3.7:
+    working_directory: ~/panda_autograsp-circleci # directory where steps are run
+    docker: # run the steps with Docker
+      # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
+      - image: circleci/python:3.7
+    steps: # steps that comprise the `python3.5` job
+      - run: echo "python3.7 test"
+      - run: pwd
+
+workflows:
+  build_test:
+    jobs:
+      - python3.5
+      - python3.6
+      - python3.7
