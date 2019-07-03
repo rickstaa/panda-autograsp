@@ -36,7 +36,8 @@ jobs: # A basic unit of work in a run
             sudo apt-get update
             sudo apt-get install -y\
               python-opengl \
-              vim
+              vim \
+              tmux
 
             # Install dependencies
             . py35venv/bin/activate
@@ -78,7 +79,8 @@ jobs: # A basic unit of work in a run
             sudo apt-get update
             sudo apt-get install -y\
               python-opengl \
-              vim
+              vim \
+              tmux
 
             # Install dependencies
             . py36venv/bin/activate
@@ -120,7 +122,8 @@ jobs: # A basic unit of work in a run
             sudo apt-get update
             sudo apt-get install -y\
               python-opengl \
-              vim
+              vim \
+              tmux
 
             # Install dependencies
             . py37venv/bin/activate
