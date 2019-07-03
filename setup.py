@@ -20,35 +20,22 @@ from setuptools.command.install import install
 import subprocess
 import sys
 import re
-import distutils.core
-
-## General setup.py parameters ##
+# Setup.py parameters
+sub_mod_bash_command = "git config --file " + \
+    os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
+bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
+SUB_MODS = [x for x in bash_output.decode("utf-8").split("\n") if x != '']
 TF_MAX_VERSION = "1.13.1"
 
-## Package requirements ##
-requirements = []
+# Package requirements
+requirements=[]
 
-## Set up logger. ##
+# Set up logger.
 logging.basicConfig()  # Configure the root logger.
 logger = logging.getLogger("setup.py")
 logger.setLevel(logging.INFO)
 
-## Append submodule requirements ##
-
-# Find git submodules
-#sub_mod_bash_command = "git config --file " + \
-#    os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
-#bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
-#sub_mods = [x for x in bash_output.decode("utf-8").split("\n") if x != '']
-
-# Extend requirements list with submodule requirements
-#for sub_mod in sub_mods:
-#    submod_setup_path = os.getcwd()+"/"+sub_mod+"/setup.py"
-#    if os.path.exists(submod_setup_path):
-#        submod_setup = distutils.core.run_setup(submod_setup_path, stop_after='init')
-#        requirements.extend(submod_setup.install_requires)
-
-## Get GPU information ##
+# Get GPU information
 def get_tf_dep():
     # Check whether or not the Nvidia driver and GPUs are available and add the
     # corresponding Tensorflow dependency.
@@ -70,7 +57,7 @@ def get_tf_dep():
     return tf_dep
 
 
-## Create develop cmd ##
+# Create develop cmd
 class DevelopCmd(develop):
     user_options_custom = [
         ("docker", None, "installing in Docker"),
@@ -105,7 +92,7 @@ class DevelopCmd(develop):
         develop.run(self)
 
 
-## Create install cmd ##
+# Create install cmd
 class InstallCmd(install, object):
     user_options_custom = [
         ("docker", None, "installing in Docker"),
@@ -137,15 +124,23 @@ class InstallCmd(install, object):
                            " installation.")
             logger.warning(skip_tf_msg)
 
+        # Install submodule dependencies
+        for sub_mod in SUB_MODS:
+            sub_mod_setup_str = os.getcwd()+"/"+sub_mod+"/setup.py"  # Get submod setup.py script
+            if os.path.exists(sub_mod_setup_str):
+                subprocess.Popen(
+                    [sys.executable, "-m", "pip", "install" , os.getcwd()+"/"+sub_mod+"/."]) # Run pip install .
+
         # Run installation.
         install.run(self)
 
-## Get current package version ##
+
+# Get current package version
 __version__ = re.sub(r'[^\d.]', '', open(
     os.path.join(os.path.dirname(os.path.realpath(__file__)),
                  "panda_autograsp/version.py")).read())
 
-## Run python setup ##
+# Run python setup
 setup(
     name="panda_autograsp",
     version=__version__,
