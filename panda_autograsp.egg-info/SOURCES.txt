@@ -1,7 +1,0 @@
-README.md
-setup.py
-panda_autograsp.egg-info/PKG-INFO
-panda_autograsp.egg-info/SOURCES.txt
-panda_autograsp.egg-info/dependency_links.txt
-panda_autograsp.egg-info/requires.txt
-panda_autograsp.egg-info/top_level.txt
