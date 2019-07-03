@@ -48,7 +48,7 @@ for sub_mod in sub_mods:
 
         # Generate requires.txt file for the submodule using the setuptools.egg_info module
         try:
-            subprocess.call(["python",submod_setup_path,"egg_info"])
+            subprocess.call([sys.executable, submod_setup_path,"egg_info"])
 
             # Open egg_info generated requires.txt file
             with open(os.getcwd()+"/gqcnn.egg-info/requires.txt") as file:
