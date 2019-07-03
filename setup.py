@@ -20,7 +20,7 @@ from setuptools.command.install import install
 import subprocess
 import sys
 import re
-import distutils
+import shutil
 
 ## General setup.py parameters ##
 TF_MAX_VERSION = "1.13.1"
@@ -28,25 +28,44 @@ TF_MAX_VERSION = "1.13.1"
 ## Package requirements ##
 requirements = []
 
-## Append submodule requirements ##
-
-# Find git submodules
-#sub_mod_bash_command = "git config --file " + \
-#   os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
-#bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
-#sub_mods = [x for x in bash_output.decode("utf-8").split("\n") if x != '']
-
-# Extend requirements list with submodule requirements
-#for sub_mod in sub_mods:
-#   submod_setup_path = os.getcwd()+"/"+sub_mod+"/setup.py"
-#   if os.path.exists(submod_setup_path):
-#       submod_setup = distutils.core.run_setup(submod_setup_path, stop_after='init')
-#      requirements.extend(submod_setup.install_requires)
-
 ## Set up logger. ##
 logging.basicConfig()  # Configure the root logger.
 logger = logging.getLogger("setup.py")
 logger.setLevel(logging.INFO)
+
+## Append submodule requirements ##
+
+# Find git submodules
+sub_mod_bash_command = "git config --file " + \
+   os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
+bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
+sub_mods = [x for x in bash_output.decode("utf-8").split("\n") if x != '']
+
+# Extend requirements list with submodule requirements
+for sub_mod in sub_mods:
+   submod_setup_path = os.getcwd()+"/"+sub_mod+"/setup.py"
+   if os.path.exists(submod_setup_path):
+
+        # Generate requires.txt file for the submodule using the setuptools.egg_info module
+        try:
+            subprocess.call(["python",submod_setup_path,"egg_info"])
+
+            # Open egg_info generated requires.txt file
+            with open(os.getcwd()+"/gqcnn.egg-info/requires.txt") as file:
+
+                # Read requires file up till empty line
+                for line in file:
+                    if line.strip() == "":
+
+                        ## Try to remove tree; if failed show an error using try...except on screen
+                        try:
+                            shutil.rmtree(os.getcwd()+"/gqcnn.egg-info")
+                        except OSError as e:
+                            print ("Error: %s - %s." % (e.filename, e.strerror))
+                        break
+                    requirements.append(line) # Append submodule requirement to package requirements
+        except Exception as e:
+            logger.warning("Submodule dependencies could not be imported. "+str(e))
 
 ## Get GPU information ##
 def get_tf_dep():
