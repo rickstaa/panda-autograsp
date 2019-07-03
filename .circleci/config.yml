@@ -75,6 +75,7 @@ jobs: # A basic unit of work in a run
 
             # Install dependencies
             . py36venv/bin/activate
+            sudo python3 -m pip install --upgrade pip
             pip install . # Install panda_autograsp requirements
 
       # Save virtual environment dependencies in cache
