@@ -1,0 +1,10 @@
+# This file makes sure that during installation on default the dependencies listed in the install_required
+# variable of the setup.py file are used. In defining my requirements, I used the convention of the pip documentation 
+# `(see this page) <https://packaging.python.org/discussions/install-requires-vs-requirements/>`_.
+#
+# CONVENTION:
+# - install_requirements: Lists the minimum needed requirements to use the package.
+# - requirement.txt: Lists specific combinations of requirements I'm sure will work.
+
+--index-url https://pypi.python.org/simple/
+-e .

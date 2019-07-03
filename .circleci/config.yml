@@ -20,10 +20,11 @@ jobs: # A basic unit of work in a run
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
-          key: depspy37-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+          key: depspy35-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
 
       # install dependencies #
       - run: | # Create virtual env
+            sudo python3 -m pip install --upgrade pip
             python3 -m venv py35venv
             . py35venv/bin/activate
 
@@ -36,9 +37,7 @@ jobs: # A basic unit of work in a run
 
             # Install dependencies
             . py35venv/bin/activate
-            sudo python3 -m pip install --upgrade pip
-            sudo python3 setup.py install # Install panda_autograsp requirements
-            sudo pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
+            pip install . # Install panda_autograsp requirements
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -63,6 +62,7 @@ jobs: # A basic unit of work in a run
 
       # install dependencies #
       - run: | # Create virtual env
+            sudo python3 -m pip install --upgrade pip
             python3 -m venv py36venv
             . py36venv/bin/activate
 
@@ -75,9 +75,7 @@ jobs: # A basic unit of work in a run
 
             # Install dependencies
             . py36venv/bin/activate
-            sudo python3 -m pip install --upgrade pip
-            sudo python3 setup.py install # Install panda_autograsp requirements
-            sudo pip install gqcnn/. # Install gqcnn requirements (Needed in free circle-ci version)
+            pip install . # Install panda_autograsp requirements
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -87,16 +85,14 @@ jobs: # A basic unit of work in a run
 
       # Perform package build successful test
       - run: |
-          . py37venv/bin/activate
+          . py36venv/bin/activate
           python3 tests/test_gqcnn.py
 
-  ## Python 3.5 build_test ##
+  ## Python 3.7 build_test ##
   python3_7:
     executor: python
     steps: # steps that comprise the `python3.5` job
       - checkout
-      - run: git submodule sync --recursive gqcnn
-      - run: git submodule update --recursive --init gqcnn
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
@@ -104,11 +100,9 @@ jobs: # A basic unit of work in a run
 
       # install dependencies #
       - run: | # Create virtual env
-          python3 -m pip install --user --upgrade pip
-          python3 -m pip install --user virtualenv
-          if [ ! -d "py37venv" ]; then
-            virtualenv -p python3 py37venv
-          fi
+            sudo python3 -m pip install --upgrade pip
+            python3 -m venv py37venv
+            . py37venv/bin/activate
 
       # upgrade pip and install dependencies
       - run: |
@@ -119,11 +113,7 @@ jobs: # A basic unit of work in a run
 
             # Install dependencies
             . py37venv/bin/activate
-            python3 -m pip install .  # Install panda_autograsp
-            python3 -m pip install -r requirements/requirements.txt # Install panda_autograsp requirements
-            python3 -m pip install -r requirements/docs_requirements.txt # Install panda_autograsp requirements
-            python3 -m pip install gqcnn/. # Install gqcnn
-            python3 -m pip install -r gqcnn/requirements/p3/gpu_requirements.txt # Install gqcnn requirements
+            pip install . # Install panda_autograsp requirements
 
       # Save virtual environment dependencies in cache
       - save_cache:
@@ -134,8 +124,6 @@ jobs: # A basic unit of work in a run
       # Perform package build successful test
       - run: |
           . py37venv/bin/activate
-          which python3
-          python3 -m pip list
           python3 tests/test_gqcnn.py
 
 ## Ci workflow ##
