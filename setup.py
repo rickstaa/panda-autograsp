@@ -48,22 +48,23 @@ for sub_mod in sub_mods:
 
         # Generate requires.txt file for the submodule using the setuptools.egg_info module
         try:
-            subprocess.call([sys.executable, submod_setup_path,"egg_info"])
+            subprocess.call(["pip", "install", os.getcwd()+"/"+sub_mod+"/"])
+            # subprocess.call([sys.executable, submod_setup_path,"egg_info"])
 
-            # Open egg_info generated requires.txt file
-            with open(os.getcwd()+"/gqcnn.egg-info/requires.txt") as file:
+            # # Open egg_info generated requires.txt file
+            # with open(os.getcwd()+"/gqcnn.egg-info/requires.txt") as file:
 
-                # Read requires file up till empty line
-                for line in file:
-                    if line.strip() == "":
+            #     # Read requires file up till empty line
+            #     for line in file:
+            #         if line.strip() == "":
 
-                        ## Try to remove tree; if failed show an error using try...except on screen
-                        try:
-                            shutil.rmtree(os.getcwd()+"/gqcnn.egg-info")
-                        except OSError as e:
-                            print ("Error: %s - %s." % (e.filename, e.strerror))
-                        break
-                    requirements.append(line.strip()) # Append submodule requirement to package requirements
+            #             ## Try to remove tree; if failed show an error using try...except on screen
+            #             try:
+            #                 shutil.rmtree(os.getcwd()+"/gqcnn.egg-info")
+            #             except OSError as e:
+            #                 print ("Error: %s - %s." % (e.filename, e.strerror))
+            #             break
+            #         requirements.append(line.strip()) # Append submodule requirement to package requirements
         except Exception as e:
             logger.warning("Submodule dependencies could not be imported. "+str(e))
 
