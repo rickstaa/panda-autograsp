@@ -17,6 +17,9 @@ jobs: # A basic unit of work in a run
     executor: python
     steps: # steps that comprise the `python3.5` job
       - checkout
+      - run: |
+          git submodules update init --recursive
+          git submodules update --recursive --remote
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
@@ -31,7 +34,9 @@ jobs: # A basic unit of work in a run
 
             # Before install
             sudo apt-get update
-            sudo apt-get install -y python-opengl
+            sudo apt-get install -y\
+              python-opengl \
+              vim
 
             # Install dependencies
             . py35venv/bin/activate
@@ -54,6 +59,9 @@ jobs: # A basic unit of work in a run
     executor: python
     steps: # steps that comprise the `python3.5` job
       - checkout
+      - run: |
+          git submodules update init --recursive
+          git submodules update --recursive --remote
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
@@ -68,7 +76,9 @@ jobs: # A basic unit of work in a run
 
             # Before install
             sudo apt-get update
-            sudo apt-get install -y python-opengl
+            sudo apt-get install -y\
+              python-opengl \
+              vim
 
             # Install dependencies
             . py36venv/bin/activate
@@ -91,6 +101,9 @@ jobs: # A basic unit of work in a run
     executor: python
     steps: # steps that comprise the `python3.5` job
       - checkout
+      - run: |
+          git submodules update init --recursive
+          git submodules update --recursive --remote
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
@@ -105,7 +118,9 @@ jobs: # A basic unit of work in a run
 
             # Before install
             sudo apt-get update
-            sudo apt-get install -y python-opengl
+            sudo apt-get install -y\
+              python-opengl \
+              vim
 
             # Install dependencies
             . py37venv/bin/activate
