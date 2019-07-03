@@ -18,7 +18,7 @@ jobs: # A basic unit of work in a run
     steps: # steps that comprise the `python3.5` job
       - checkout
       - run: |
-          git submodule update init --recursive
+          git submodule update --init --recursive
           git submodule update --recursive --remote
 
       # restore virtual environment dependencies from cache #
@@ -60,7 +60,7 @@ jobs: # A basic unit of work in a run
     steps: # steps that comprise the `python3.5` job
       - checkout
       - run: |
-          git submodule update init --recursive
+          git submodule update --init --recursive
           git submodule update --recursive --remote
 
       # restore virtual environment dependencies from cache #
@@ -102,7 +102,7 @@ jobs: # A basic unit of work in a run
     steps: # steps that comprise the `python3.5` job
       - checkout
       - run: |
-          git submodule update init --recursive
+          git submodule update --init --recursive
           git submodule update --recursive --remote
 
       # restore virtual environment dependencies from cache #
