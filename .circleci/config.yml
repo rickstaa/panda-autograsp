@@ -24,9 +24,7 @@ jobs: # A basic unit of work in a run
 
       # install dependencies #
       - run: | # Create virtual env
-            sudo python3 -m pip install --upgrade pip
             python3 -m venv py35venv
-            . py35venv/bin/activate
 
       # upgrade pip and install dependencies
       - run: |
@@ -37,6 +35,7 @@ jobs: # A basic unit of work in a run
 
             # Install dependencies
             . py35venv/bin/activate
+            sudo python3 -m pip install --upgrade pip
             pip install . # Install panda_autograsp requirements
 
       # Save virtual environment dependencies in cache
@@ -62,9 +61,7 @@ jobs: # A basic unit of work in a run
 
       # install dependencies #
       - run: | # Create virtual env
-            sudo python3 -m pip install --upgrade pip
             python3 -m venv py36venv
-            . py36venv/bin/activate
 
       # upgrade pip and install dependencies
       - run: |
@@ -101,9 +98,7 @@ jobs: # A basic unit of work in a run
 
       # install dependencies #
       - run: | # Create virtual env
-            sudo python3 -m pip install --upgrade pip
             python3 -m venv py37venv
-            . py37venv/bin/activate
 
       # upgrade pip and install dependencies
       - run: |
@@ -114,6 +109,7 @@ jobs: # A basic unit of work in a run
 
             # Install dependencies
             . py37venv/bin/activate
+            sudo python3 -m pip install --upgrade pip
             pip install . # Install panda_autograsp requirements
 
       # Save virtual environment dependencies in cache
