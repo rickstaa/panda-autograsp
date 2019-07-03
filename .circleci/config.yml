@@ -20,7 +20,7 @@ jobs: # A basic unit of work in a run
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
-          key: depspy35-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+          key: depspy35-{{ .Branch }}-{{ checksum "requirements/dev_requirements.txt" }}
 
       # install dependencies #
       - run: | # Create virtual env
@@ -41,7 +41,7 @@ jobs: # A basic unit of work in a run
 
       # Save virtual environment dependencies in cache
       - save_cache:
-          key: depspy35-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+          key: depspy35-{{ .Branch }}-{{ checksum "requirements/dev_requirements.txt" }}
           paths:
             - "py35venv"
 
@@ -58,7 +58,7 @@ jobs: # A basic unit of work in a run
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
-          key: depspy36-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+          key: depspy36-{{ .Branch }}-{{ checksum "requirements/dev_requirements.txt" }}
 
       # install dependencies #
       - run: | # Create virtual env
@@ -79,7 +79,7 @@ jobs: # A basic unit of work in a run
 
       # Save virtual environment dependencies in cache
       - save_cache:
-          key: depspy36-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+          key: depspy36-{{ .Branch }}-{{ checksum "requirements/dev_requirements.txt" }}
           paths:
             - "py36venv"
 
@@ -96,7 +96,7 @@ jobs: # A basic unit of work in a run
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
-          key: depspy37-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+          key: depspy37-{{ .Branch }}-{{ checksum "requirements/dev_requirements.txt" }}
 
       # install dependencies #
       - run: | # Create virtual env
@@ -117,7 +117,7 @@ jobs: # A basic unit of work in a run
 
       # Save virtual environment dependencies in cache
       - save_cache:
-          key: depspy37-{{ .Branch }}-{{ checksum "requirements/requirements.txt" }}
+          key: depspy37-{{ .Branch }}-{{ checksum "requirements/dev_requirements.txt" }}
           paths:
             - "py37venv"
 
