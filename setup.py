@@ -20,6 +20,7 @@ from setuptools.command.install import install
 import subprocess
 import sys
 import re
+import distutils
 
 ## General setup.py parameters ##
 TF_MAX_VERSION = "1.13.1"
