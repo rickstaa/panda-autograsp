@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 ## Setup python executor ##
 executors:
@@ -140,7 +140,7 @@ jobs: # A basic unit of work in a run
 
 ## Ci workflow ##
 workflows:
-  version: 2
+  version: 2.1
   build_test:
     jobs:
       #- python3_5
