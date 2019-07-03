@@ -29,18 +29,18 @@ requirements = []
 
 ## Append submodule requirements ##
 
-# Find git submodules
-#sub_mod_bash_command = "git config --file " + \
-#    os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
-#bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
-#sub_mods = [x for x in bash_output.decode("utf-8").split("\n") if x != '']
+Find git submodules
+sub_mod_bash_command = "git config --file " + \
+   os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
+bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
+sub_mods = [x for x in bash_output.decode("utf-8").split("\n") if x != '']
 
-# Extend requirements list with submodule requirements
-#for sub_mod in sub_mods:
-#    submod_setup_path = os.getcwd()+"/"+sub_mod+"/setup.py"
-#    if os.path.exists(submod_setup_path):
-#        submod_setup = distutils.core.run_setup(submod_setup_path, stop_after='init')
-#        requirements.extend(submod_setup.install_requires)
+Extend requirements list with submodule requirements
+for sub_mod in sub_mods:
+   submod_setup_path = os.getcwd()+"/"+sub_mod+"/setup.py"
+   if os.path.exists(submod_setup_path):
+       submod_setup = distutils.core.run_setup(submod_setup_path, stop_after='init')
+       requirements.extend(submod_setup.install_requires)
 
 ## Set up logger. ##
 logging.basicConfig()  # Configure the root logger.
