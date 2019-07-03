@@ -63,7 +63,7 @@ for sub_mod in sub_mods:
                         except OSError as e:
                             print ("Error: %s - %s." % (e.filename, e.strerror))
                         break
-                    requirements.append(line) # Append submodule requirement to package requirements
+                    requirements.append(line.strip()) # Append submodule requirement to package requirements
         except Exception as e:
             logger.warning("Submodule dependencies could not be imported. "+str(e))
 
