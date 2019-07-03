@@ -1,2 +1,4 @@
+# Folderslers to ignore #
 .vscode
 vscode_ws.code-workspace
+__pychache__
