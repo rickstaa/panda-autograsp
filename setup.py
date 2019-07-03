@@ -29,13 +29,13 @@ requirements = []
 
 ## Append submodule requirements ##
 
-Find git submodules
+# Find git submodules
 sub_mod_bash_command = "git config --file " + \
    os.getcwd()+"/.gitmodules --get-regexp path | awk '{ print $2 }'"
 bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
 sub_mods = [x for x in bash_output.decode("utf-8").split("\n") if x != '']
 
-Extend requirements list with submodule requirements
+# Extend requirements list with submodule requirements
 for sub_mod in sub_mods:
    submod_setup_path = os.getcwd()+"/"+sub_mod+"/setup.py"
    if os.path.exists(submod_setup_path):
