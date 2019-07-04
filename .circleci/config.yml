@@ -13,8 +13,6 @@ jobs: # A basic unit of work in a run
 
   ## Python 3.5 build_test ##
   python3_5:
-    docker:
-      - image: circleci/python:3.5
     executor: python
     steps: # steps that comprise the `python3.5` job
       - checkout
@@ -176,5 +174,5 @@ workflows:
   build_test:
     jobs:
       - python3_5
-      - python3_6
-      - python3_7
+      # - python3_6
+      # - python3_7
