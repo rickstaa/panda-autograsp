@@ -41,32 +41,13 @@ sub_mod_bash_command = "git config --file " + \
 bash_output = subprocess.check_output(['bash', '-c', sub_mod_bash_command])
 sub_mods = [x for x in bash_output.decode("utf-8").split("\n") if x != '']
 
-# Extend requirements list with submodule requirements
+# Install submodule and it's requirements
 for sub_mod in sub_mods:
    submod_setup_path = os.getcwd()+"/"+sub_mod+"/setup.py"
    if os.path.exists(submod_setup_path):
 
-        # Generate requires.txt file for the submodule using the setuptools.egg_info module
-        try:
-            subprocess.call(["pip", "install", os.getcwd()+"/"+sub_mod+"/"])
-            # subprocess.call([sys.executable, submod_setup_path,"egg_info"])
-
-            # # Open egg_info generated requires.txt file
-            # with open(os.getcwd()+"/gqcnn.egg-info/requires.txt") as file:
-
-            #     # Read requires file up till empty line
-            #     for line in file:
-            #         if line.strip() == "":
-
-            #             ## Try to remove tree; if failed show an error using try...except on screen
-            #             try:
-            #                 shutil.rmtree(os.getcwd()+"/gqcnn.egg-info")
-            #             except OSError as e:
-            #                 print ("Error: %s - %s." % (e.filename, e.strerror))
-            #             break
-            #         requirements.append(line.strip()) # Append submodule requirement to package requirements
-        except Exception as e:
-            logger.warning("Submodule dependencies could not be imported. "+str(e))
+        # Run submodule setup.py file
+        subprocess.call([sys.executable, "-m", "pip", "install", os.getcwd()+"/"+sub_mod+"/"])
 
 ## Get GPU information ##
 def get_tf_dep():
