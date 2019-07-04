@@ -50,11 +50,19 @@ jobs: # A basic unit of work in a run
           paths:
             - "py35venv"
 
-      # Perform package build successful test
-      - run: |
-          . py35venv/bin/activate
-          python3 tests/test_gqcnn.py
+      # Perform tests
+      - run:
+          name: run tests
+          command: |
+            . py35venv/bin/activate
+            mkdir test-reports
+            pytest --junitxml=test-reports/junit.xml
 
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
   ## Python 3.6 build_test ##
   python3_6:
     docker:
@@ -95,10 +103,19 @@ jobs: # A basic unit of work in a run
           paths:
             - "py36venv"
 
-      # Perform package build successful test
-      - run: |
-          . py36venv/bin/activate
-          python3 tests/test_gqcnn.py
+      # Perform tests
+      - run:
+          name: run tests
+          command: |
+            . py36venv/bin/activate
+            mkdir test-reports
+            pytest --junitxml=test-reports/junit.xml
+
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
 
   ## Python 3.7 build_test ##
   python3_7:
@@ -159,6 +176,6 @@ workflows:
   version: 2.1
   build_test:
     jobs:
-      #- python3_5
-      #- python3_6
+      - python3_5
+      - python3_6
       - python3_7
