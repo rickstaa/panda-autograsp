@@ -140,10 +140,19 @@ jobs: # A basic unit of work in a run
           paths:
             - "py37venv"
 
-      # Perform package build successful test
-      - run: |
-          . py37venv/bin/activate
-          python3 tests/test_gqcnn.py
+      # Perform tests
+      - run:
+          name: run tests
+          command: |
+            . py37venv/bin/activate
+            mkdir test-reports
+            pytest --junitxml=test-reports/junit.xml
+
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
 
 ## Ci workflow ##
 workflows:
