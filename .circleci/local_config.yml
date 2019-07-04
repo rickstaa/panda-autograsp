@@ -10,6 +10,9 @@ jobs: # A basic unit of work in a run
       - image: circleci/python:3.7
     shell: /bin/bash
     steps: # steps that comprise the `python3.5` job
+      - add_ssh_keys:
+          fingerprints:
+            - "1a:0c:3b:f4:69:3a:00:a8:4e:7a:74:54:68:b5:d7:0b"
       - checkout
       - run: |
           git submodule update --init --recursive

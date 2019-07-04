@@ -7,7 +7,6 @@ executors:
       - image: circleci/python:3.5
     shell: /bin/bash
     working_directory: ~/project
-    steps:
 
 ## Ci jobs ##
 jobs: # A basic unit of work in a run
