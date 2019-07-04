@@ -2,5 +2,6 @@
 .vscode
 vscode_ws.code-workspace
 __pychache__
+tests/__pycache__
 gqcnn.egg-info
 panda_autograsp.egg-info
