@@ -13,6 +13,8 @@ jobs: # A basic unit of work in a run
 
   ## Python 3.5 build_test ##
   python3_5:
+    docker:
+      - image: circleci/python:3.5
     executor: python
     steps: # steps that comprise the `python3.5` job
       - checkout
@@ -61,12 +63,13 @@ jobs: # A basic unit of work in a run
 
       - store_artifacts:
           path: test-reports
+
   ## Python 3.6 build_test ##
   python3_6:
     docker:
       - image: circleci/python:3.6
     executor: python
-    steps: # steps that comprise the `python3.5` job
+    steps: # steps that comprise the `python3.6` job
       - checkout
       - run: |
           git submodule update --init --recursive
