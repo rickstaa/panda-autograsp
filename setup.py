@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Setup of `panda_autograsp` Python codebase. This setup file was based upon the gqcnn setup.py file.
+Setup of `panda_autograsp` python package. This setup file was based upon the gqcnn setup.py file.
 
 Author
 ------
