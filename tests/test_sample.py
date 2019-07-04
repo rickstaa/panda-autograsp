@@ -1,6 +1,6 @@
+"""A sample test file to see if pytest is functioning correctly
 """
-Content of test_sample.py
-"""
+
 def func(x):
     """
     Function to be tested
