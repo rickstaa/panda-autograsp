@@ -23,7 +23,7 @@ jobs: # A basic unit of work in a run
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
-          key: depspy35-{{ .Branch }}-{{ checksum "setup.py" }}-{{checksum "gqcnn/setup.py"}}
+          key: depspy35-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
 
       # install dependencies #
       - run: | # Create virtual env
@@ -32,21 +32,15 @@ jobs: # A basic unit of work in a run
       # upgrade pip and install dependencies
       - run: |
 
-            # Before install
-            sudo apt-get update
-            sudo apt-get install -y\
-              python-opengl \
-              vim \
-              tmux
-
             # Install dependencies
             . py35venv/bin/activate
             pip install --upgrade pip
+            pip install pytest # Install testing framework
             pip install . # Install panda_autograsp requirements
 
       # Save virtual environment dependencies in cache
       - save_cache:
-          key: depspy35-{{ .Branch }}-{{ checksum "setup.py" }}-{{checksum "gqcnn/setup.py"}}
+          key: depspy35-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
           paths:
             - "py35venv"
 
@@ -76,7 +70,7 @@ jobs: # A basic unit of work in a run
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
-          key: depspy36-{{ .Branch }}-{{ checksum "setup.py" }}-{{checksum "gqcnn/setup.py"}}
+          key: depspy36-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
 
       # install dependencies #
       - run: | # Create virtual env
@@ -85,21 +79,15 @@ jobs: # A basic unit of work in a run
       # upgrade pip and install dependencies
       - run: |
 
-            # Before install
-            sudo apt-get update
-            sudo apt-get install -y\
-              python-opengl \
-              vim \
-              tmux
-
             # Install dependencies
             . py36venv/bin/activate
             pip install --upgrade pip
+            pip install pytest # Install testing framework
             pip install . # Install panda_autograsp requirements
 
       # Save virtual environment dependencies in cache
       - save_cache:
-          key: depspy36-{{ .Branch }}-{{ checksum "setup.py" }}-{{checksum "gqcnn/setup.py"}}
+          key: depspy36-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
           paths:
             - "py36venv"
 
@@ -130,7 +118,7 @@ jobs: # A basic unit of work in a run
 
       # restore virtual environment dependencies from cache #
       - restore_cache:
-          key: depspy37-{{ .Branch }}-{{ checksum "setup.py" }}-{{checksum "gqcnn/setup.py"}}
+          key: depspy37-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
 
       # install dependencies #
       - run: | # Create virtual env
@@ -139,21 +127,15 @@ jobs: # A basic unit of work in a run
       # upgrade pip and install dependencies
       - run: |
 
-            # Before install
-            sudo apt-get update
-            sudo apt-get install -y\
-              python-opengl \
-              vim \
-              tmux
-
             # Install dependencies
             . py37venv/bin/activate
             pip install --upgrade pip
+            pip install pytest # Install testing framework
             pip install . # Install panda_autograsp requirements
 
       # Save virtual environment dependencies in cache
       - save_cache:
-          key: depspy37-{{ .Branch }}-{{ checksum "setup.py" }}-{{checksum "gqcnn/setup.py"}}
+          key: depspy37-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
           paths:
             - "py37venv"
 
