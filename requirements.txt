@@ -1,5 +1,5 @@
 # This file makes sure that during installation on default the dependencies listed in the install_required
-# variable of the setup.py file are used. In defining my requirements, I used the convention of the pip documentation 
+# variable of the setup.py file are used. In defining my requirements, I used the convention of the pip documentation
 # `(see this page) <https://packaging.python.org/discussions/install-requires-vs-requirements/>`_.
 #
 # CONVENTION:
