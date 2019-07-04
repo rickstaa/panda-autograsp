@@ -1,0 +1,59 @@
+version: 2.0
+
+## Ci jobs ##
+jobs: # A basic unit of work in a run
+
+  ## Python 3.7 build_test ##
+  build:
+    working_directory: ~/project
+    docker:
+      - image: circleci/python:3.7
+    shell: /bin/bash
+    steps: # steps that comprise the `python3.5` job
+      - add_ssh_keys:
+          fingerprints:
+            - "1a:0c:3b:f4:69:3a:00:a8:4e:7a:74:54:68:b5:d7:0b"
+      - checkout
+      - run: |
+          git submodule update --init --recursive
+          git submodule update --recursive --remote
+
+      # restore virtual environment dependencies from cache #
+      - restore_cache:
+          key: depspy37-{{ .Branch }}-{{ checksum "requirements/dev_requirements.txt" }}
+
+      # install dependencies #
+      - run: | # Create virtual env
+            python3 -m venv py37venv
+
+      # upgrade pip and install dependencies
+      - run: |
+
+            # Before install
+            sudo apt-get update
+            sudo apt-get install -y\
+              python-opengl \
+              vim
+
+            # Install dependencies
+            . py37venv/bin/activate
+            pip install --upgrade pip
+            pip install . # Install panda_autograsp requirements
+
+      # Save virtual environment dependencies in cache
+      - save_cache:
+          key: depspy37-{{ .Branch }}-{{ checksum "requirements/dev_requirements.txt" }}
+          paths:
+            - "py37venv"
+
+      # Perform package build successful test
+      - run: |
+          . py37venv/bin/activate
+          python3 tests/test_gqcnn.py
+
+## Ci workflow ##
+workflows:
+  version: 2.0
+  build_test:
+    jobs:
+      - localpytest

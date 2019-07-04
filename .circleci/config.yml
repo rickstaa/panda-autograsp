@@ -1,0 +1,181 @@
+version: 2.1
+
+## Setup python executor ##
+executors:
+  python:
+    docker:
+      - image: circleci/python:3.5
+    shell: /bin/bash
+    working_directory: ~/project
+
+## Ci jobs ##
+jobs: # A basic unit of work in a run
+
+  ## Python 3.5 build_test ##
+  python3_5:
+    executor: python
+    steps: # steps that comprise the `python3.5` job
+      - checkout
+      - run: |
+          git submodule update --init --recursive
+          git submodule update --recursive --remote
+
+      # Install system dependencies install
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y python-opengl
+
+      # restore virtual environment dependencies from cache #
+      #- restore_cache:
+      #    key: depspy35-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
+
+      # install dependencies #
+      - run: | # Create virtual env
+            python3 -m venv py35venv
+
+      # upgrade pip and install dependencies
+      - run: |
+
+            # Install dependencies
+            . py35venv/bin/activate
+            pip install --upgrade pip
+            pip install --upgrade setuptools # Done to solve pip install bug in py35 venv
+            pip install pytest # Install testing framework
+            pip install . # Install panda_autograsp requirements
+
+      # Save virtual environment dependencies in cache
+      - save_cache:
+          key: depspy35-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
+          paths:
+            - "py35venv"
+
+      # Perform tests
+      - run:
+          name: run tests
+          command: |
+            . py35venv/bin/activate
+            mkdir test-reports
+            pytest --junitxml=test-reports/junit.xml
+
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
+
+  ## Python 3.6 build_test ##
+  python3_6:
+    docker:
+      - image: circleci/python:3.6
+    executor: python
+    steps: # steps that comprise the `python3.6` job
+      - checkout
+      - run: |
+          git submodule update --init --recursive
+          git submodule update --recursive --remote
+
+      # Install system dependencies install
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y python-opengl
+
+      # restore virtual environment dependencies from cache #
+      - restore_cache:
+          key: depspy36-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
+
+      # install dependencies #
+      - run: | # Create virtual env
+            python3 -m venv py36venv
+
+      # upgrade pip and install dependencies
+      - run: |
+
+            # Install dependencies
+            . py36venv/bin/activate
+            pip install --upgrade pip
+            pip install --upgrade setuptools # Done to solve pip install bug in py35 venv
+            pip install pytest # Install testing framework
+            pip install . # Install panda_autograsp requirements
+
+      # Save virtual environment dependencies in cache
+      - save_cache:
+          key: depspy36-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
+          paths:
+            - "py36venv"
+
+      # Perform tests
+      - run:
+          name: run tests
+          command: |
+            . py36venv/bin/activate
+            mkdir test-reports
+            pytest --junitxml=test-reports/junit.xml
+
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
+
+  ## Python 3.7 build_test ##
+  python3_7:
+    docker:
+      - image: circleci/python:3.7
+    executor: python
+    steps: # steps that comprise the `python3.7` job
+      - checkout
+      - run: |
+          git submodule update --init --recursive
+          git submodule update --recursive --remote
+
+      # Install system dependencies install
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y python-opengl
+
+      # restore virtual environment dependencies from cache #
+      - restore_cache:
+          key: depspy37-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
+
+      # install dependencies #
+      - run: | # Create virtual env
+            python3 -m venv py37venv
+
+      # upgrade pip and install dependencies
+      - run: |
+
+            # Install dependencies
+            . py37venv/bin/activate
+            pip install --upgrade pip
+            pip install --upgrade setuptools # Done to solve pip install bug in py35 venv
+            pip install pytest # Install testing framework
+            pip install . # Install panda_autograsp requirements
+
+      # Save virtual environment dependencies in cache
+      - save_cache:
+          key: depspy37-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
+          paths:
+            - "py37venv"
+
+      # Perform tests
+      - run:
+          name: run tests
+          command: |
+            . py37venv/bin/activate
+            mkdir test-reports
+            pytest --junitxml=test-reports/junit.xml
+
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
+
+## Ci workflow s##
+workflows:
+  version: 2.1
+  build_test:
+    jobs:
+      - python3_5
+      - python3_6
+      - python3_7

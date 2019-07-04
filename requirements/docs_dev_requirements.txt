@@ -1,0 +1,6 @@
+# This file uses the install_requires variable that is present in the setup.py to install the 
+# Dependencies.
+
+sphinx
+sphinxcontrib-napoleon
+sphinx_rtd_theme
