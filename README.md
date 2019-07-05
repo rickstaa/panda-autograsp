@@ -141,3 +141,6 @@ After you set up the catkin workspace and sourced its `devel/setup.bash` file yo
 After you set up the catkin workspace and sourced its `devel/setup.bash` file you can launch the `panda autograsp solution` with the following command:
 
     roslaunch panda_autograsp simulation.launch
+
+# References
+- Icon created with svgs made by [@freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/authors/eucalyp)
