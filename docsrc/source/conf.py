@@ -58,4 +58,4 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 # HTML options
-html_logo = '_images/tno_logo_zwart_400.jpg'
+html_logo = '_images/panda_autograsp.svg'
