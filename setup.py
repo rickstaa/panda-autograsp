@@ -169,7 +169,7 @@ setup(
     packages=find_packages(),
     install_requires=requirements,
     extras_require={
-        "docs": ["sphinx", "sphinxcontrib-napoleon", "sphinx_rtd_theme"],
+        "docs": ["sphinx", "sphinxcontrib-napoleon", "sphinx_rtd_theme", "sphinx-navtree"],
         "dev": ["pytest", "bumpversion"]
     },
     cmdclass={
