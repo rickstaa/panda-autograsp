@@ -1,6 +1,6 @@
-"""This script is used to process the Kinect images and qeury them to the
-GQCNN algorithm.
-"""
+#"""This script is used to process the Kinect images and query them to the
+#GQCNN algorithm.
+#"""
 
 ## pylibfrenect imports
 import numpy as np
@@ -12,18 +12,32 @@ from pylibfreenect2 import createConsoleLogger, setGlobalLogger
 from pylibfreenect2 import LoggerLevel
 
 ## Other imports ##
+import os
+import time
 import logging
+
+## Get file path ##
+file_path = os.path.dirname(os.path.abspath(__file__))
+main_path = os.path.abspath(os.path.join(file_path, os.pardir))
+data_path = os.path.abspath(os.path.join(main_path, 'data'))
+
+## Create data/tmp folders if it does not exists ##
+if not os.path.exists(os.path.join(data_path, 'tmp')):
+    os.makedirs(os.path.join(data_path, 'tmp'))
+
+################################
+## Script settings #############
+################################
+# Other script parameters
+VISUALIZE = False
 
 ################################
 ## Kinect process settings #####
 ################################
 ## Optional parameters for registration. ##
 # Set true if you need.
-NEED_BIGDEPTH = False
+NEED_BIGDEPTH = True
 NEED_COLOR_DEPTH_MAP = False
-
-## Other settings ##
-DATA_SAVE_FOLDER = "../data/"
 
 ################################
 ## Initialize loggers ##########
@@ -34,12 +48,15 @@ logger = createConsoleLogger(LoggerLevel.Info)
 setGlobalLogger(logger)
 
 ## Create panda autograsp logger ##
-logging.addLevelName(logging.INFO, 'Info') # Capitalize INFO logger level
-logging.addLevelName(logging.ERROR, 'Error') # Capitalize ERROR logger level
-logging.addLevelName(logging.DEBUG, 'Debug') # Capitalize DEBUG logger level
-logging.addLevelName(logging.WARNING, 'Warning') # Capitalize WARNING logger level
-logging.addLevelName(logging.CRITICAL, 'Critical') # Capitalize CRITICAL logger level
-logging.addLevelName(logging.NOTSET, 'Notset') # Capitalize NOTSET logger level
+logging.addLevelName(logging.INFO, 'Info')  # Capitalize INFO logger level
+logging.addLevelName(logging.ERROR, 'Error')  # Capitalize ERROR logger level
+logging.addLevelName(logging.DEBUG, 'Debug')  # Capitalize DEBUG logger level
+# Capitalize WARNING logger level
+logging.addLevelName(logging.WARNING, 'Warning')
+# Capitalize CRITICAL logger level
+logging.addLevelName(logging.CRITICAL, 'Critical')
+# Capitalize NOTSET logger level
+logging.addLevelName(logging.NOTSET, 'Notset')
 logging.basicConfig(level=logging.INFO,
                     format='[%(levelname)s] [%(processName)s] %(message)s')
 panda_logger = logging.getLogger("panda_logger")
@@ -79,7 +96,7 @@ device.start()
 registration = Registration(device.getIrCameraParams(),
                             device.getColorCameraParams())
 
-## Setup frames format ##
+## Create frame objects ##
 undistorted = Frame(512, 424, 4)
 registered = Frame(512, 424, 4)
 bigdepth = Frame(1920, 1082, 4) if NEED_BIGDEPTH else None
@@ -92,18 +109,26 @@ color_depth_map = np.zeros((424, 512),  np.int32).ravel() \
 while True:
 
     ############################
-    ## Retreive frames        ##
+    ## Retrieve frames        ##
     ############################
-    ## Get frames ##
+
+    ## Retrieve frames ##
     frames = listener.waitForNewFrame()
     color = frames["color"]
     ir = frames["ir"]
     depth = frames["depth"]
 
-    ## Process frames ##
+    ## Map colour images on depth images ##
     registration.apply(color, depth, undistorted, registered,
                        bigdepth=bigdepth,
                        color_depth_map=color_depth_map)
+
+    ## Preprocess frame ##
+    depth_frame = depth.asarray() / 4500. # Normalize depth data
+    big_depth_frame = cv2.resize(bigdepth.asarray(np.float32), (int(1920 / 3), int(1082 / 3)))
+    depth_data  = np.resize(depth_frame, [depth_frame.shape[0],depth_frame.shape[1],1]) # Get depth data in right format for GQCNN algorithm
+    big_depth_data  = np.resize(big_depth_frame, [big_depth_frame.shape[0],big_depth_frame.shape[1],1]) # Get depth data in right format for GQCNN algorithm
+    color_frame = cv2.resize(color.asarray(), (int(1920 / 3), int(1080 / 3))) # Reduce image size by factor of 3
 
     ############################
     ## Visualize frames       ##
@@ -112,10 +137,9 @@ while True:
     # cv2.imshow without OpenGL backend seems to be quite slow to draw all
     # things below. Try commenting out some imshow if you don't have a fast
     # visualization backend.
-    cv2.imshow("ir", ir.asarray() / 65535.)
-    cv2.imshow("depth", depth.asarray() / 4500.)
-    cv2.imshow("color", cv2.resize(color.asarray(),
-                                   (int(1920 / 3), int(1080 / 3))))
+    # TODO: Create depth image colormap
+    cv2.imshow("depth", depth_frame)
+    cv2.imshow("color", color_frame)
     cv2.imshow("registered", registered.asarray(np.uint8))
     if NEED_BIGDEPTH:
         cv2.imshow("bigdepth", cv2.resize(bigdepth.asarray(np.float32),
@@ -134,8 +158,17 @@ while True:
     # user clicks ctrl + s
     if key == ord('s'):
 
+        ## Create image save names ##
+        timestamp = time.strftime("%H%M%S") # Create file timestamp
+        big_depth_save = os.path.join(data_path, 'tmp', 'depth_'+timestamp+'.npy')
+        color_save = os.path.join(data_path, 'tmp', 'color_'+timestamp+'.png')
+
         ## Save frames ##
         panda_logger.info("Saving frames to data folder")
+        np.save(big_depth_save, big_depth_data) # Save depth frame
+        cv2.imwrite(color_save, cv2.resize(color.asarray(), (int(1920/3), int(1080/3)))) # Save color frame
+        panda_logger.info("Frames saved to data folder")
+
 
 ################################
 ## Shutdown kinect processing ##
