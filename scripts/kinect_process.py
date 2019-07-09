@@ -92,6 +92,10 @@ device.setIrAndDepthFrameListener(listener)
 # NOTE: must be called after device.start()
 device.start()
 
+## Get camera intrinsic and extrinsic parameters ##
+color_intrinsics = device.getColorCameraParams()
+ir_intrinsics = device.getIrCameraParams()
+
 ## Combine IR and Color data ##
 registration = Registration(device.getIrCameraParams(),
                             device.getColorCameraParams())
@@ -138,14 +142,14 @@ while True:
     # things below. Try commenting out some imshow if you don't have a fast
     # visualization backend.
     # TODO: Create depth image colormap
-    cv2.imshow("depth", depth_frame)
+    #cv2.imshow("depth", depth_frame)
     cv2.imshow("color", color_frame)
-    cv2.imshow("registered", registered.asarray(np.uint8))
-    if NEED_BIGDEPTH:
-        cv2.imshow("bigdepth", cv2.resize(bigdepth.asarray(np.float32),
-                                          (int(1920 / 3), int(1082 / 3))))
-    if NEED_COLOR_DEPTH_MAP:
-        cv2.imshow("color_depth_map", color_depth_map.reshape(424, 512))
+    #cv2.imshow("registered", registered.asarray(np.uint8))
+    #if NEED_BIGDEPTH:
+    #    cv2.imshow("bigdepth", cv2.resize(bigdepth.asarray(np.float32),
+    #                                      (int(1920 / 3), int(1082 / 3))))
+    #if NEED_COLOR_DEPTH_MAP:
+    #    cv2.imshow("color_depth_map", color_depth_map.reshape(424, 512))
     listener.release(frames)
     key = cv2.waitKey(delay=1)
     if key == ord('q'):
@@ -166,8 +170,56 @@ while True:
         ## Save frames ##
         panda_logger.info("Saving frames to data folder")
         np.save(big_depth_save, big_depth_data) # Save depth frame
-        cv2.imwrite(color_save, cv2.resize(color.asarray(), (int(1920/3), int(1080/3)))) # Save color frame
+        cv2.imwrite(color_save,color_frame) # Save color frame
         panda_logger.info("Frames saved to data folder")
+
+        ############################
+        ## Create segmask         ##
+        ############################
+        # Done with method of https://docs.opencv.org/3.1.0/d3/db4/tutorial_py_watershed.html
+
+        # Find approximate estimate of objects ##
+        gray = cv2.cvtColor(color_frame, cv2.COLOR_BGR2GRAY)
+        ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU) # Use otsu algorithm for finding treshhold
+        cv2.imshow("trash", gray)
+
+        # noise removal
+        kernel = np.ones((3,3), np.uint8)
+        closing = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel, iterations = 2)
+
+        # Background area using Dialation
+        sure_bg = cv2.dilate(closing, kernel, iterations = 1)
+
+        # Finding foreground area
+        dist_transform = cv2.distanceTransform(closing, cv2.DIST_L2, 0)
+        ret, fg = cv2.threshold(dist_transform, 0.02
+                        * dist_transform.max(), 255, 0)
+        cv2.imshow("image",fg)
+
+        # Finding unknown region
+        #sure_fg = np.uint8(sure_fg)
+        #unknown = cv2.subtract(sure_bg, sure_fg)
+
+        # Show sure foreground and background
+        #cv2.imshow("surefore", sure_fg)
+        #cv2.imshow("sureback", sure_bg)
+
+        # Make JET collormap
+        #imC = cv2.applyColorMap(unknown, cv2.COLORMAP_JET)
+        #cv2.imshow("test3", imC)
+
+        # Marker labelling
+        #ret, markers = cv2.connectedComponents(sure_fg)
+
+        # Add one to all labels so that sure background is not 0, but 1
+        #markers = markers+1
+
+        # Now, mark the region of unknown with zero
+        #markers[unknown==255] = 0
+
+        # Perform watershed algorithm
+#        markers = cv2.watershed(color_frame, markers)
+#        color_frame[markers == -1] = [255,0,0]
 
 
 ################################
