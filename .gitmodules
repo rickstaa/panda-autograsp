@@ -19,3 +19,6 @@
 [submodule "gqcnn"]
 	path = gqcnn
 	url = https://github.com/BerkeleyAutomation/gqcnn.git
+[submodule "perception"]
+	path = perception
+	url = git@github.com:rickstaa/perception.git
