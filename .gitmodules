@@ -11,14 +11,14 @@
 	url = ../panda_simulation.git
 [submodule "moveit_tutorials"]
 	path = moveit_tutorials
-    url = git@github.com/ros-planning/moveit_tutorials.git
+    url = git@github.com:ros-planning/moveit_tutorials.git
 	branch = kinetic-devel
 [submodule "deep_robotics_singularity_recipes"]
 	path = deep_robotics_singularity_recipes
 	url = ../deep_robotics_singularity_recipes.git
 [submodule "gqcnn"]
 	path = gqcnn
-	url = git@github.com/BerkeleyAutomation/gqcnn.git
+	url = git@github.com:BerkeleyAutomation/gqcnn.git
 [submodule "perception"]
 	path = perception
 	url = ../perception.git
