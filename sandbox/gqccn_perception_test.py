@@ -20,16 +20,12 @@ while True:
     bin_im = color_im.to_binary()
 
     # Create segmask
-    fg_detector = RgbdForegroundMaskDetector()
-    bg_detector = 
 
     # Create mask
     #bin_img = color_im.to_binary()
     #imgplot = plt.imshow(bin_img)
     cv2.imshow("color", color_im.data)
     cv2.imshow("depth", depth_im.data)
-    cv2.imshow("ir", ir_im.data)
-    cv2.imshow("bin_img", bin_im.data)
     key = cv2.waitKey(delay=1)
     if key == ord('q'):
         break
