@@ -1,12 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Implementation of the `GQCNN grasp detection algorithm <https://github.com/BerkeleyAutomation/gqcnn>`_ on the Franka Emika Panda Robots. This file is
+Implementation of the `GQCNN grasp detection algorithm <https://berkeleyautomation.github.io/gqcnn>`_ on the Franka Emika Panda Robots. This file is
 based on the grasp_planner_node.py file that was supplied with the GQCNN package.
-
-Author
------
-Rick Staa
 """
 
 ## Standard library imports ##
@@ -27,7 +23,7 @@ import cv2
 ## GQCNN module imports ##
 from autolab_core import YamlConfig
 from perception import (Kinect2Sensor, CameraIntrinsics, ColorImage, DepthImage, BinaryImage,
-                        RgbdImage)
+                        RgbdImage, RgbdDetector)
 from visualization import Visualizer2D as vis
 from gqcnn.grasping import (Grasp2D, SuctionPoint2D,
                             CrossEntropyRobustGraspingPolicy, RgbdImageState)
@@ -43,13 +39,12 @@ MODEL_NAME = "GQCNN-4.0-PJ"
 MODEL_DIR = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), "../gqcnn/models")
 
-
 #################################################
 ## GQCNN grasp class ############################
 #################################################
-## TODO: Update docstring
 class GQCNNGrasp(object):
-    """Class to store grasps in
+    """Class for storing the computed grasps. This class is a trimmed down version of the original
+    `gqcnn.grasping.policy.policy.GraspAction <https://berkeleyautomation.github.io/gqcnn/api/policies.html?highlight=grasp2d#graspaction>`_.
     """
     def __init__(self):
         self.pose = object()
@@ -58,6 +53,7 @@ class GQCNNGrasp(object):
         self.center_px = [0, 0]
         self.angle = 0.0
         self.depth = 0.0
+        self.thumbnail = object()
 
     @property
     def PARALLEL_JAW(self):
@@ -75,10 +71,14 @@ class GQCNNGrasp(object):
 ## Grasp planner Class ##########################
 #################################################
 class GraspPlanner(object):
+    """GraspPlanner class that interacts with a number of grasp detection algorithms to compute the optimal
+    grasp. Currently only the `GQCNN by berkeleyautomation <https://berkeleyautomation.github.io/gqcnn>`_ is
+    supported.
+    """
     def __init__(self, cfg, grasping_policy, sensor_type="kinectv2"):
         """
         Parameters
-        ----------
+        ----------------
         cfg : dict
             Dictionary of configuration parameters.
         grasping_policy: :obj:`GraspingPolicy`
@@ -115,7 +115,7 @@ class GraspPlanner(object):
             "crop_height"]
 
     def start(self):
-        """Starts grasp planning
+        """Starts the sensor and the grasp planner request handler.
         """
         start_msg = "Starting " + self.gqcnn_model + \
             " grasp planner for a " + self.gripper_mode + " robot."
@@ -123,16 +123,12 @@ class GraspPlanner(object):
         self._start_sensor()
 
     def _start_sensor(self):
-        """Start sensor
+        """Starts the sensor.
         """
         self.sensor.start()
 
-        ## Get intrinsic camera parameters ##
-        self.camera_intr = self.sensor.ir_intrinsics
-        self.camera_color_intr = self.sensor.color_intrinsics
-
     def read_images(self, skip_registration=False):
-        """Retrieves images from the sensor
+        """Retrieves data frames from the sensor using the `BerkeleyAutomation <https://github.com/BerkeleyAutomation/perception>`_ `pylibfreenect2 <https://github.com/r9y9/pylibfreenect2>` wrapper.
 
         Parameters
         ----------
@@ -151,7 +147,7 @@ class GraspPlanner(object):
         """
         ## Get color, depth and ir image frames ##
         if self.sensor_type == "kinectv2":
-            color_im, depth_im, ir_im = self.sensor.frames()
+            color_im, depth_im, ir_im = self.sensor.frames(skip_registration)
 
         ## Validate whether depth and color images are the same size ##
         if color_im.height != depth_im.height or \
@@ -172,21 +168,18 @@ class GraspPlanner(object):
         ## Return color and depth frames
         return color_im, depth_im, ir_im
 
-    # TODO: Update Docstring
     def plan_grasp(self):
-        """Grasp planner request handler.
+        """Gets the image frames from the sensor and computes possible grasps.
 
         Returns
         -------
-        [type]
-            [description]
+        :py:class:`.GQCNNGrasp`
+            Computed optimal grasp.
         """
-
         color_im, depth_im, _ = self.read_images()
-        return self._plan_grasp(color_im, depth_im, self.camera_intr)
-
+        return self._plan_grasp(color_im, depth_im, self.sensor.ir_intrinsics)
+    # TODO: DOCSTRING
     # TODO: Add bounding box functionality
-    # TODO: Update Docstring
     def plan_grasp_bb(self, bounding_box):
         """Grasp planner request handler.
 
@@ -197,29 +190,34 @@ class GraspPlanner(object):
 
         Returns
         -------
-        [type]
-            [description]
+        :py:class:`.GQCNNGrasp`
+            Computed optimal grasp.
         """
         color_im, depth_im, _ = self.read_images()
         return self._plan_grasp(color_im,
                                 depth_im,
-                                self.camera_intr,
+                                self.sensor.ir_intrinsics,
                                 bounding_box=bounding_box)
 
-    # TODO: Update Docstring
+    # TODO: Add segmask
     def plan_grasp_segmask(self, segmask):
         """Grasp planner request handler.
 
         Parameters
-        ---------
-        req: :obj:`ROS ServiceRequest`
-            ROS `ServiceRequest` for grasp planner service.
+        ----------
+        segmask : `perception.BinaryImage <https://berkeleyautomation.github.io/perception/api/image.html#binaryimage>`_
+            Binary segmask of detected object
+
+        Returns
+        -------
+        :py:class::`.GQCNNGrasp`
+            Computed optimal grasp.
         """
         color_im, depth_im, _ = self.read_images()
         raw_segmask = segmask
         try:
             segmask = BinaryImage(raw_segmask,
-                                  frame=self.camera_intr.frame)
+                                  frame=self.sensor.ir_intrinsics.frame)
         except Exception as plan_grasp_segmask_exception:
             main_logger.warning(plan_grasp_segmask_exception)
 
@@ -234,10 +232,9 @@ class GraspPlanner(object):
 
         return self._plan_grasp(color_im,
                                 depth_im,
-                                self.camera_intr,
+                                self.sensor.ir_intrinsics,
                                 segmask=segmask)
 
-    # TODO: Update Docstring
     # TODO: Check if threshold is good enough
     def _plan_grasp(self,
                     color_im,
@@ -247,26 +244,36 @@ class GraspPlanner(object):
                     segmask=None):
         """Grasp planner request handler.
 
-        Parameters
-        ---------
-        req: :obj:`ROS ServiceRequest`
-            ROS `ServiceRequest` for grasp planner service.
+        Returns
+        -------
+        :py:class::`.GQCNNGrasp`
+            Computed optimal grasp.
         """
         main_logger.info("Planning Grasp")
 
-        # Inpaint images.
+        ## Inpaint images. ##
         color_im = color_im.inpaint(
             rescale_factor=self.cfg["inpaint_rescale_factor"])
         depth_im = depth_im.inpaint(
             rescale_factor=self.cfg["inpaint_rescale_factor"])
 
-        # Init segmask.
+        ## TODO: Make seperate function
+        ## TODO: Change camera parameters to calibrated parameters
+        ## Create detector object
+        # detector = RgbdDetector(color_im, depth_im, self.cfg, camera_intr)
+
+        ## DEBUG: Testing segmask creation function
+        # First with interinsic parameters then calibration
+
+        ##--DEBUG--
+
+        ## Init segmask. ##
         if segmask is None:
             segmask = BinaryImage(255 *
                                   np.ones(depth_im.shape).astype(np.uint8),
                                   frame=color_im.frame)
 
-        # Visualize.
+        ## Visualize. ##
         if self.cfg["vis"]["color_image"]:
             vis.imshow(color_im)
             vis.title("Color image")
@@ -280,11 +287,11 @@ class GraspPlanner(object):
             vis.title("Segmask image")
             vis.show()
 
-        # Aggregate color and depth images into a single
-        # BerkeleyAutomation/perception `RgbdImage`.
+        ## Aggregate color and depth images into a single
+        # BerkeleyAutomation/perception `RgbdImage`. ##
         rgbd_im = RgbdImage.from_color_and_depth(color_im, depth_im)
 
-        # Mask bounding box.
+        ## Mask bounding box. #
         if bounding_box is not None:
             # Calc bb parameters.
             min_x = bounding_box.minX
@@ -303,14 +310,14 @@ class GraspPlanner(object):
             if max_y > rgbd_im.height:
                 max_y = rgbd_im.height
 
-            # Mask.
+            # Mask whole image
             bb_segmask_arr = np.zeros([rgbd_im.height, rgbd_im.width])
             bb_segmask_arr[min_y:max_y, min_x:max_x] = 255
             bb_segmask = BinaryImage(bb_segmask_arr.astype(np.uint8),
                                      segmask.frame)
             segmask = segmask.mask_binary(bb_segmask)
 
-        # Visualize.
+        ## Visualize. ##
         if self.cfg["vis"]["rgbd_state"]:
             masked_rgbd_im = rgbd_im.mask_binary(segmask)
             vis.figure()
@@ -321,14 +328,14 @@ class GraspPlanner(object):
             vis.imshow(masked_rgbd_im.depth)
             vis.show()
 
-        # Create an `RgbdImageState` with the cropped `RgbdImage` and
-        # `CameraIntrinsics`.
-        rgbd_state = RgbdImageState(rgbd_im, self.camera_intr, segmask=segmask)
+        ## Create an `RgbdImageState` with the cropped `RgbdImage` and
+        # `CameraIntrinsics`. ##
+        rgbd_state = RgbdImageState(rgbd_im, self.sensor.ir_intrinsics, segmask=segmask)
 
-        # Execute policy.
+        ## Execute policy. ##
         try:
             return self.execute_policy(rgbd_state, self.grasping_policy,
-                                       self.camera_intr.frame)
+                                       self.sensor.ir_intrinsics.frame)
         except NoValidGraspsException:
             main_logger.error(
                 ("While executing policy found no valid grasps from sampled"
@@ -340,49 +347,51 @@ class GraspPlanner(object):
         Parameters
         ----------
         rgbd_image_state: :obj:`RgbdImageState`
-            `RgbdImageState` from BerkeleyAutomation/perception to encapsulate
+            `RgbdImageState` from `BerkeleyAutomation/perception <https://berkeleyautomation.github.io/perception/>`_ to encapsulate
             depth and color image along with camera intrinsics.
         grasping_policy: :obj:`GraspingPolicy`
             Grasping policy to use.
         pose_frame: :obj:`str`
             Frame of reference to publish pose in.
         """
-        # Execute the policy"s action.
+        ## Execute the policy"s action. ##
         grasp_planning_start_time = time.time()
-        grasp = grasping_policy(rgbd_image_state)
+        action = grasping_policy(rgbd_image_state)
+        main_logger.info("Total grasp planning time: " +
+                         str(time.time() - grasp_planning_start_time) + " secs.")
 
-        # Create `GQCNNGrasp` return msg and populate it.
+        ## Create `GQCNNGrasp` object and populate it.
         gqcnn_grasp = GQCNNGrasp()
-        gqcnn_grasp.q_value = grasp.q_value
-        gqcnn_grasp.pose = grasp.grasp.pose()
-        if isinstance(grasp.grasp, Grasp2D):
+        gqcnn_grasp.q_value = action.q_value
+        gqcnn_grasp.pose = action.grasp.pose()
+        if isinstance(action.grasp, Grasp2D):
             gqcnn_grasp.grasp_type = GQCNNGrasp.PARALLEL_JAW
-        elif isinstance(grasp.grasp, SuctionPoint2D):
+        elif isinstance(action.grasp, SuctionPoint2D):
             gqcnn_grasp.grasp_type = GQCNNGrasp.SUCTION
         else:
             main_logger.error("Grasp type not supported!")
 
         # Store grasp representation in image space.
-        gqcnn_grasp.center_px[0] = grasp.grasp.center[0]
-        gqcnn_grasp.center_px[1] = grasp.grasp.center[1]
-        gqcnn_grasp.angle = grasp.grasp.angle
-        gqcnn_grasp.depth = grasp.grasp.depth
-        # gqcnn_grasp.thumbnail = grasp.image.rosmsg
+        gqcnn_grasp.center_px[0] = action.grasp.center[0]
+        gqcnn_grasp.center_px[1] = action.grasp.center[1]
+        gqcnn_grasp.angle = action.grasp.angle
+        gqcnn_grasp.depth = action.grasp.depth
+        gqcnn_grasp.thumbnail = rgbd_image_state.rgbd_im.color
+        # TODO: Resize tumbnail down
 
-        # # Create and publish the pose alone for easy visualization of grasp
-        # # pose in Rviz.
-        # pose_stamped = PoseStamped()
-        # pose_stamped.pose = grasp.grasp.pose().pose_msg
-        # header = Header()
-        # header.stamp = rospy.Time.now()
-        # header.frame_id = pose_frame
-        # pose_stamped.header = header
-
-        # Return `GQCNNGrasp` msg.
-        main_logger.info("Total grasp planning time: " +
-                         str(time.time() - grasp_planning_start_time) + " secs.")
+        # TODO: Look at bounding box
+        # TODO: Fix with own config file if GQCNN_CNF or GQCNN
+        # Visualize result
+        if self.cfg["policy"]["vis"]["final_grasp"]:
+            vis.figure(size=(10, 10))
+            vis.imshow(rgbd_image_state.rgbd_im.color,
+                       vmin=self.cfg["policy"]["vis"]["vmin"],
+                       vmax=self.cfg["policy"]["vis"]["vmax"])
+            vis.grasp(action.grasp, scale=2.5, show_center=False, show_axis=True)
+            vis.title("Planned grasp at depth {0:.3f}m with Q={1:.3f}".format(
+                action.grasp.depth, action.q_value))
+            vis.show()
         return gqcnn_grasp
-
 
 #################################################
 ## Main script ##################################
@@ -419,6 +428,7 @@ if __name__ == "__main__":
 
     ## TODO: Update cfg file location
     ## NOTE WHY DO I NEED THIS?
+    ## TODO: Fix config file
     # Set config.
     config_filename = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                                    "..", "gqcnn/cfg/examples/ros/gqcnn_suction.yaml"))
@@ -445,20 +455,9 @@ if __name__ == "__main__":
     ## Start grasp planner ##
     grasp_planner.start()
     grasp = grasp_planner.plan_grasp()
-    print("Started")
 
-#################################################
-## Visualize ####################################
-#################################################
-    while True:
-
-        ## Get raw color iamge ##
-
-        # ## Get full color image ##
-        # ## Plot i
-        # color_im, depth_im, _ = grasp_planner.read_images()
-        # cv2.imshow("color", color_im.data)
-        # cv2.imshow("depth", depth_im.data)
-        # key = cv2.waitKey(delay=1)
-        if key == ord('q'):
-            break
+    # Visualise
+    vis.figure()
+    vis.imshow(grasp.thumbnail)
+    vis.show()
+    print("test")

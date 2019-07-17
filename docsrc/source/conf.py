@@ -12,10 +12,11 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('./panda_autograsp'))
+
+# -- Include module src paths --
+sys.path.insert(0, os.path.abspath("../.."))
 
 # -- Project information -----------------------------------------------------
-
 project = 'panda_autograsp'
 copyright = '2019, Rick Staa'
 author = 'Rick Staa'
@@ -28,7 +29,7 @@ release = '0.0.2'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.napoleon']
+extensions = ['sphinx.ext.napoleon', 'sphinx.ext.autodoc']
 
 # Napolean settigns
 napoleon_google_docstring = True
@@ -50,20 +51,6 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
-html_theme_options = {
-    'canonical_url': '',
-    'logo_only': False,
-    'display_version': True,
-    'prev_next_buttons_location': 'bottom',
-    'style_external_links': False,
-    'style_nav_header_background': 'white',
-    # Toc options
-    'collapse_navigation': True,
-    'sticky_navigation': True,
-    'navigation_depth': 4,
-    'includehidden': True,
-    'titles_only': False
-}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
