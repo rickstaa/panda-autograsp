@@ -35,13 +35,13 @@ sensors:
             num_transform_avg: 5
             num_images: 1
             color_image_rescale_factor: 0.6
-      kinect2:
-          sensor_config:
-            type: kinect2
-          registration_config:
-            num_transform_avg: 5
-            num_images: 1
-            color_image_rescale_factor: 0.6
+    kinect2:
+        sensor_config:
+          type: kinect2
+        registration_config:
+          num_transform_avg: 5
+          num_images: 1
+          color_image_rescale_factor: 0.6
 
 # CB TF FIX PARAMS
 fix_orientation_cb_to_world: 0

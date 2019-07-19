@@ -5,10 +5,13 @@ Implementation of the `GQCNN grasp detection algorithm <https://berkeleyautomati
 based on the grasp_planner_node.py file that was supplied with the GQCNN package.
 """
 
-## Standard library imports ##
+## Improve python 2 backcompatibility ##
+# NOTE: Python 2 is not officially supported
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
+
+## Standard library imports ##
 import json
 import math
 import os
@@ -16,14 +19,16 @@ import time
 import logging
 import sys
 
-## Related third party imports ##
+## Third party imports ##
 import numpy as np
 import cv2
+import skimage.transform as skt
 
 ## GQCNN module imports ##
 from autolab_core import YamlConfig
 from perception import (Kinect2Sensor, CameraIntrinsics, ColorImage, DepthImage, BinaryImage,
                         RgbdImage, RgbdDetector)
+from perception.image import imresize
 from visualization import Visualizer2D as vis
 from gqcnn.grasping import (Grasp2D, SuctionPoint2D,
                             CrossEntropyRobustGraspingPolicy, RgbdImageState)
@@ -46,6 +51,7 @@ class GQCNNGrasp(object):
     """Class for storing the computed grasps. This class is a trimmed down version of the original
     `gqcnn.grasping.policy.policy.GraspAction <https://berkeleyautomation.github.io/gqcnn/api/policies.html?highlight=grasp2d#graspaction>`_.
     """
+
     def __init__(self):
         self.pose = object()
         self.q_value = 0.0
@@ -75,6 +81,7 @@ class GraspPlanner(object):
     grasp. Currently only the `GQCNN by berkeleyautomation <https://berkeleyautomation.github.io/gqcnn>`_ is
     supported.
     """
+
     def __init__(self, cfg, grasping_policy, sensor_type="kinectv2"):
         """
         Parameters
@@ -180,6 +187,7 @@ class GraspPlanner(object):
         return self._plan_grasp(color_im, depth_im, self.sensor.ir_intrinsics)
     # TODO: DOCSTRING
     # TODO: Add bounding box functionality
+
     def plan_grasp_bb(self, bounding_box):
         """Grasp planner request handler.
 
@@ -330,7 +338,8 @@ class GraspPlanner(object):
 
         ## Create an `RgbdImageState` with the cropped `RgbdImage` and
         # `CameraIntrinsics`. ##
-        rgbd_state = RgbdImageState(rgbd_im, self.sensor.ir_intrinsics, segmask=segmask)
+        rgbd_state = RgbdImageState(
+            rgbd_im, self.sensor.ir_intrinsics, segmask=segmask)
 
         ## Execute policy. ##
         try:
@@ -371,13 +380,18 @@ class GraspPlanner(object):
         else:
             main_logger.error("Grasp type not supported!")
 
-        # Store grasp representation in image space.
+        ## Store grasp representation in image space. ##
         gqcnn_grasp.center_px[0] = action.grasp.center[0]
         gqcnn_grasp.center_px[1] = action.grasp.center[1]
         gqcnn_grasp.angle = action.grasp.angle
         gqcnn_grasp.depth = action.grasp.depth
-        gqcnn_grasp.thumbnail = rgbd_image_state.rgbd_im.color
-        # TODO: Resize tumbnail down
+
+        # Todo add tumbnail scale and include boolean to configuration
+        ## Create small tumbnail and add to the grasp ##
+        scale_factor = 0.5
+        resized_data = imresize(rgbd_image_state.rgbd_im.color.data.astype(np.float32), scale_factor, 'bilinear')
+        tumbnail = ColorImage(resized_data.astype(np.uint8), rgbd_image_state.rgbd_im.color._frame)
+        gqcnn_grasp.thumbnail = tumbnail
 
         # TODO: Look at bounding box
         # TODO: Fix with own config file if GQCNN_CNF or GQCNN
@@ -387,7 +401,8 @@ class GraspPlanner(object):
             vis.imshow(rgbd_image_state.rgbd_im.color,
                        vmin=self.cfg["policy"]["vis"]["vmin"],
                        vmax=self.cfg["policy"]["vis"]["vmax"])
-            vis.grasp(action.grasp, scale=2.5, show_center=False, show_axis=True)
+            vis.grasp(action.grasp, scale=2.5,
+                      show_center=False, show_axis=True)
             vis.title("Planned grasp at depth {0:.3f}m with Q={1:.3f}".format(
                 action.grasp.depth, action.q_value))
             vis.show()
