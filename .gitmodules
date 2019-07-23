@@ -18,7 +18,7 @@
 	url = ../deep_robotics_singularity_recipes.git
 [submodule "gqcnn"]
 	path = gqcnn
-	url = git@github.com:BerkeleyAutomation/gqcnn.git
+	url = git@github.com:rickstaa/gqcnn.git 
 [submodule "perception"]
 	path = perception
 	url = ../perception.git

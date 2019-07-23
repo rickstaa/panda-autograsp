@@ -5,50 +5,34 @@ Implementation of the `GQCNN grasp detection algorithm <https://berkeleyautomati
 based on the grasp_planner_node.py file that was supplied with the GQCNN package.
 """
 
-## Improve python 2 backcompatibility ##
-# NOTE: Python 2 is not officially supported
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 ## Standard library imports ##
-import json
 import math
 import os
 import time
-import logging
 import sys
+import subprocess
+import logging
 
 ## Third party imports ##
 import numpy as np
-import cv2
-import skimage.transform as skt
 
 ## GQCNN module imports ##
-from autolab_core import YamlConfig
 from perception import (Kinect2Sensor, CameraIntrinsics, ColorImage, DepthImage, BinaryImage,
                         RgbdImage, RgbdDetector, Kinect2PacketPipelineMode)
 from perception.image import imresize
 from visualization import Visualizer2D as vis
 from gqcnn.grasping import (Grasp2D, SuctionPoint2D,
                             CrossEntropyRobustGraspingPolicy, RgbdImageState)
-from gqcnn.utils import GripperMode, NoValidGraspsException
+from gqcnn.utils import NoValidGraspsException
 
-## Setup logger ##
-main_logger = logging.getLogger("GraspPlanner")
-
-#################################################
-## Script settings ##############################
-#################################################
-MODEL_NAME = "GQCNN-4.0-PJ"
-MODEL_DIR = os.path.join(os.path.dirname(
-    os.path.realpath(__file__)), "../gqcnn/models")
+## Setup PacketPipeline mode dictionary ##
+packet_modes = {}
+[packet_modes.update({value: attr}) for (
+    attr, value) in Kinect2PacketPipelineMode.__dict__.items() if "__" not in attr]
 
 #################################################
 ## GQCNN grasp class ############################
 #################################################
-
-
 class GQCNNGrasp(object):
     """Class for storing the computed grasps. This class is a trimmed down version of the original
     `gqcnn.grasping.policy.policy.GraspAction <https://berkeleyautomation.github.io/gqcnn/api/policies.html?highlight=grasp2d#graspaction>`_.
@@ -106,19 +90,9 @@ class GraspPlanner(object):
 
         ## Initiate sensor ##
         if self.sensor_type == "kinectv2":
-
-            ## Check if OpenGL is available and create sensor object ##
-            # try:
-            #     from pylibfreenect2 import OpenGLPacketPipeline
-            #     self.sensor = Kinect2Sensor(packet_pipeline_mode = Kinect2PacketPipelineMode.OPENGL)
-            #     main_logger.info("Packet pipeline: OpenGL")
-            # except:
-            #     self.sensor = Kinect2Sensor(packet_pipeline_mode = Kinect2PacketPipelineMode.CPU)
-            #     main_logger.info("Packet pipeline: CPU")
-            self.sensor = Kinect2Sensor(packet_pipeline_mode = Kinect2PacketPipelineMode.OPENCL)
-            main_logger.info("Packet pipeline: CPU")
+            self.sensor = Kinect2Sensor()
         else:
-            main_logger.error("Unfortunately the " +
+            logging.error("Unfortunately the " +
                               self.sensor_type+" camera is not yet supported.")
             sys.exit(0)  # Exit script
 
@@ -140,13 +114,17 @@ class GraspPlanner(object):
         """
         start_msg = "Starting " + self.gqcnn_model + \
             " grasp planner for a " + self.gripper_mode + " robot."
-        main_logger.info(start_msg)
+        logging.info(start_msg)
         self._start_sensor()
 
     def _start_sensor(self):
         """Starts the sensor.
         """
         self.sensor.start()
+
+        ## Print packet pipeline information ##
+        logging.info("Packet pipeline: " +
+                 packet_modes[self.sensor._packet_pipeline_mode])
 
     def read_images(self, skip_registration=False):
         """Retrieves data frames from the sensor using the `BerkeleyAutomation <https://github.com/BerkeleyAutomation/perception>`_ `pylibfreenect2 <https://github.com/r9y9/pylibfreenect2>` wrapper.
@@ -177,14 +155,14 @@ class GraspPlanner(object):
                    " is %d x %d but depth is %d x %d") % (
                        color_im.height, color_im.width, depth_im.height,
                        depth_im.width)
-            main_logger.warning(msg)
+            logging.warning(msg)
         if (color_im.height < self.min_height
                 or color_im.width < self.min_width):
             msg = ("Color image is too small! Must be at least %d x %d"
                    " resolution but the requested image is only %d x %d") % (
                        self.min_height, self.min_width, color_im.height,
                        color_im.width)
-            main_logger.warning(msg)
+            logging.warning(msg)
 
         ## Return color and depth frames
         return color_im, depth_im, ir_im
@@ -241,7 +219,7 @@ class GraspPlanner(object):
             segmask = BinaryImage(raw_segmask,
                                   frame=self.sensor.ir_intrinsics.frame)
         except Exception as plan_grasp_segmask_exception:
-            main_logger.warning(plan_grasp_segmask_exception)
+            logging.warning(plan_grasp_segmask_exception)
 
         ## Validate whether image and segmask are the same size ##
         if color_im.height != segmask.height or \
@@ -250,7 +228,7 @@ class GraspPlanner(object):
                    " %d x %d but segmask is %d x %d") % (
                        color_im.height, color_im.width, segmask.height,
                        segmask.width)
-            main_logger.warning(msg)
+            logging.warning(msg)
 
         return self._plan_grasp(color_im,
                                 depth_im,
@@ -271,7 +249,7 @@ class GraspPlanner(object):
         :py:class::`.GQCNNGrasp`
             Computed optimal grasp.
         """
-        main_logger.info("Planning Grasp")
+        logging.info("Planning Grasp")
 
         ## Inpaint images. ##
         color_im = color_im.inpaint(
@@ -360,7 +338,7 @@ class GraspPlanner(object):
             return self.execute_policy(rgbd_state, self.grasping_policy,
                                        self.sensor.ir_intrinsics.frame)
         except NoValidGraspsException:
-            main_logger.error(
+            logging.error(
                 ("While executing policy found no valid grasps from sampled"
                  " antipodal point pairs. Aborting Policy!"))
 
@@ -380,7 +358,7 @@ class GraspPlanner(object):
         ## Execute the policy"s action. ##
         grasp_planning_start_time = time.time()
         action = grasping_policy(rgbd_image_state)
-        main_logger.info("Total grasp planning time: " +
+        logging.info("Total grasp planning time: " +
                          str(time.time() - grasp_planning_start_time) + " secs.")
 
         ## Create `GQCNNGrasp` object and populate it.
@@ -392,7 +370,7 @@ class GraspPlanner(object):
         elif isinstance(action.grasp, SuctionPoint2D):
             gqcnn_grasp.grasp_type = GQCNNGrasp.SUCTION
         else:
-            main_logger.error("Grasp type not supported!")
+            logging.error("Grasp type not supported!")
 
         ## Store grasp representation in image space. ##
         gqcnn_grasp.center_px[0] = action.grasp.center[0]
@@ -424,92 +402,3 @@ class GraspPlanner(object):
             vis.show()
         return gqcnn_grasp
 
-
-#################################################
-## Main script ##################################
-#################################################
-if __name__ == "__main__":
-
-    #############################################
-    ## Get configuration values #################
-    #############################################
-
-    ## Get model dir path ##
-    model_name = MODEL_NAME
-    model_dir = os.path.abspath(os.path.join(MODEL_DIR, model_name))
-
-    ## Check if model folder exists and otherwise give a warning ##
-    cont_bool = False
-    if not os.path.exists(model_dir):
-        main_logger.warning("No pretrained CNN model found.")
-        prompt_result = input("A pretrained CNN model is required to continue."
-                              "These models can be downloaded from the berkeleyautomation/gqcnn repository. "
-                              "Do you want to download these models now? [Y/n] ")
-
-        # Check user input #
-        if prompt_result.lower() in ['y', 'yes']:  # If yes download sample
-            print("YESSSSS!!!")
-            cont_bool = True
-        elif prompt_result.lower() in ['n', 'no']:
-            print("NOOOOOO")
-            sys.exit(0)  # Terminate script
-        else:
-            print("OTHER!!!")
-        #     sys.exit(0) # Terminate script
-
-    ## Retrieve model related configuration values ##
-    model_config = json.load(open(os.path.join(model_dir, "config.json"), "r"))
-    try:
-        gqcnn_config = model_config["gqcnn"]
-        gripper_mode = gqcnn_config["gripper_mode"]
-    except KeyError:
-        gqcnn_config = model_config["gqcnn_config"]
-        input_data_mode = gqcnn_config["input_data_mode"]
-        if input_data_mode == "tf_image":
-            gripper_mode = GripperMode.LEGACY_PARALLEL_JAW
-        elif input_data_mode == "tf_image_suction":
-            gripper_mode = GripperMode.LEGACY_SUCTION
-        elif input_data_mode == "suction":
-            gripper_mode = GripperMode.SUCTION
-        elif input_data_mode == "multi_suction":
-            gripper_mode = GripperMode.MULTI_SUCTION
-        elif input_data_mode == "parallel_jaw":
-            gripper_mode = GripperMode.PARALLEL_JAW
-        else:
-            raise ValueError(
-                "Input data mode {} not supported!".format(input_data_mode))
-
-    ## Get the policy based config parameters ##
-    config_filename = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                                   "..", "cfg/gqcnn/gqcnn_suction.yaml"))
-    if (gripper_mode == GripperMode.LEGACY_PARALLEL_JAW
-            or gripper_mode == GripperMode.PARALLEL_JAW):
-        config_filename = os.path.abspath(os.path.join(
-            os.path.dirname(os.path.realpath(__file__)), "..",
-            "cfg/gqcnn/gqcnn_pj.yaml"))
-
-    ## Read config. ##
-    cfg = YamlConfig(config_filename)
-    policy_cfg = cfg["policy"]
-    policy_cfg["metric"]["gqcnn_model"] = model_dir
-
-    ## Add autograsp config parameters to the config dictionary ##
-
-    #############################################
-    ## Create grasp policy ######################
-    #############################################
-    main_logger.info("Creating Grasping Policy")
-    grasping_policy = CrossEntropyRobustGraspingPolicy(policy_cfg)
-
-    ## Create a grasp planner. ##
-    grasp_planner = GraspPlanner(cfg, grasping_policy)
-
-    ## Start grasp planner ##
-    grasp_planner.start()
-    grasp = grasp_planner.plan_grasp()
-
-    # # Visualise
-    # vis.figure()
-    # vis.imshow(grasp.thumbnail)
-    # vis.show()
-    # print("test")
