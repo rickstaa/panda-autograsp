@@ -27,7 +27,7 @@ import skimage.transform as skt
 ## GQCNN module imports ##
 from autolab_core import YamlConfig
 from perception import (Kinect2Sensor, CameraIntrinsics, ColorImage, DepthImage, BinaryImage,
-                        RgbdImage, RgbdDetector)
+                        RgbdImage, RgbdDetector, Kinect2PacketPipelineMode)
 from perception.image import imresize
 from visualization import Visualizer2D as vis
 from gqcnn.grasping import (Grasp2D, SuctionPoint2D,
@@ -97,12 +97,19 @@ class GraspPlanner(object):
         self.grasping_policy = grasping_policy
         self.sensor_type = sensor_type
         self.gqcnn_model = grasping_policy.grasp_quality_fn.config['gqcnn_model'].split(
-            "/")[-1]
-        self.gripper_mode = self.grasping_policy._grasp_quality_fn._gqcnn.gripper_mode
+            "/")[-1]   
 
         ## Initiate sensor ##
         if self.sensor_type == "kinectv2":
-            self.sensor = Kinect2Sensor()
+
+            ## Check if OpenGL is available and create sensor object ##
+            try:
+                from pylibfreenect2 import OpenGLPacketPipeline
+                self.sensor = Kinect2Sensor(packet_pipeline_mode = Kinect2PacketPipelineMode.OPENGL)
+                main_logger.info("Packet pipeline: OpenGL")
+            except:
+                self.sensor = Kinect2Sensor(packet_pipeline_mode = Kinect2PacketPipelineMode.CPU)
+                main_logger.info("Packet pipeline: CPU")
         else:
             main_logger.error("Unfortunately the " +
                               self.sensor_type+" camera is not yet supported.")
@@ -111,7 +118,7 @@ class GraspPlanner(object):
         ## Set minimum input dimensions. ##
         self.pad = max(
             math.ceil(
-                np.sqrt(2) *
+                np.sqrt(2) * 
                 (float(self.cfg["policy"]["metric"]["crop_width"]) / 2)),
             math.ceil(
                 np.sqrt(2) *
@@ -417,9 +424,30 @@ if __name__ == "__main__":
     ## Get configuration values #################
     #############################################
 
-    ## Get configs. ##
+    ## Get model dir path ##
     model_name = MODEL_NAME
     model_dir = os.path.abspath(os.path.join(MODEL_DIR, model_name))
+
+    ## Check if model folder exists and otherwise give a warning ##
+    cont_bool = False
+    if not os.path.exists(model_dir):
+        main_logger.warning("No pretrained CNN model found.")
+        prompt_result = input("A pretrained CNN model is required to continue." \
+            "These models can be downloaded from the berkeleyautomation/gqcnn repository. " \
+            "Do you want to download these models now? [Y/n] ")
+
+        # Check user input #
+        if prompt_result.lower() in ['y', 'yes']: # If yes download sample
+            print("YESSSSS!!!")
+            cont_bool = True
+        elif prompt_result.lower() in ['n', 'no']:
+            print("NOOOOOO")
+            sys.exit(0) # Terminate script
+        else:
+            print("OTHER!!!")
+        #     sys.exit(0) # Terminate script
+
+    ## Retrieve model related configuration values ##
     model_config = json.load(open(os.path.join(model_dir, "config.json"), "r"))
     try:
         gqcnn_config = model_config["gqcnn"]
@@ -441,22 +469,22 @@ if __name__ == "__main__":
             raise ValueError(
                 "Input data mode {} not supported!".format(input_data_mode))
 
-    ## TODO: Update cfg file location
-    ## NOTE WHY DO I NEED THIS?
-    ## TODO: Fix config file
-    # Set config.
+    ## Get the policy based config parameters ##
     config_filename = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                                   "..", "gqcnn/cfg/examples/ros/gqcnn_suction.yaml"))
+                                                   "..", "cfg/gqcnn/gqcnn_suction.yaml"))
     if (gripper_mode == GripperMode.LEGACY_PARALLEL_JAW
             or gripper_mode == GripperMode.PARALLEL_JAW):
         config_filename = os.path.abspath(os.path.join(
             os.path.dirname(os.path.realpath(__file__)), "..",
-            "gqcnn/cfg/examples/ros/gqcnn_pj.yaml"))
+            "cfg/gqcnn/gqcnn_pj.yaml"))
 
-    # Read config.
+    ## Read config. ##
     cfg = YamlConfig(config_filename)
     policy_cfg = cfg["policy"]
     policy_cfg["metric"]["gqcnn_model"] = model_dir
+
+    ## Add autograsp config parameters to the config dictionary ##
+
 
     #############################################
     ## Create grasp policy ######################
@@ -471,8 +499,8 @@ if __name__ == "__main__":
     grasp_planner.start()
     grasp = grasp_planner.plan_grasp()
 
-    # Visualise
-    vis.figure()
-    vis.imshow(grasp.thumbnail)
-    vis.show()
-    print("test")
+    # # Visualise
+    # vis.figure()
+    # vis.imshow(grasp.thumbnail)
+    # vis.show()
+    # print("test")
