@@ -97,7 +97,7 @@ class GraspPlanner(object):
         self.grasping_policy = grasping_policy
         self.sensor_type = sensor_type
         self.gqcnn_model = grasping_policy.grasp_quality_fn.config['gqcnn_model'].split(
-            "/")[-1]   
+            "/")[-1]
 
         ## Initiate sensor ##
         if self.sensor_type == "kinectv2":
