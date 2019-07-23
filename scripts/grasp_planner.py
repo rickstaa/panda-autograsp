@@ -47,6 +47,8 @@ MODEL_DIR = os.path.join(os.path.dirname(
 #################################################
 ## GQCNN grasp class ############################
 #################################################
+
+
 class GQCNNGrasp(object):
     """Class for storing the computed grasps. This class is a trimmed down version of the original
     `gqcnn.grasping.policy.policy.GraspAction <https://berkeleyautomation.github.io/gqcnn/api/policies.html?highlight=grasp2d#graspaction>`_.
@@ -76,6 +78,8 @@ class GQCNNGrasp(object):
 #################################################
 ## Grasp planner Class ##########################
 #################################################
+
+
 class GraspPlanner(object):
     """GraspPlanner class that interacts with a number of grasp detection algorithms to compute the optimal
     grasp. Currently only the `GQCNN by berkeleyautomation <https://berkeleyautomation.github.io/gqcnn>`_ is
@@ -98,18 +102,21 @@ class GraspPlanner(object):
         self.sensor_type = sensor_type
         self.gqcnn_model = grasping_policy.grasp_quality_fn.config['gqcnn_model'].split(
             "/")[-1]
+        self.gripper_mode = self.grasping_policy._grasp_quality_fn._gqcnn.gripper_mode
 
         ## Initiate sensor ##
         if self.sensor_type == "kinectv2":
 
             ## Check if OpenGL is available and create sensor object ##
-            try:
-                from pylibfreenect2 import OpenGLPacketPipeline
-                self.sensor = Kinect2Sensor(packet_pipeline_mode = Kinect2PacketPipelineMode.OPENGL)
-                main_logger.info("Packet pipeline: OpenGL")
-            except:
-                self.sensor = Kinect2Sensor(packet_pipeline_mode = Kinect2PacketPipelineMode.CPU)
-                main_logger.info("Packet pipeline: CPU")
+            # try:
+            #     from pylibfreenect2 import OpenGLPacketPipeline
+            #     self.sensor = Kinect2Sensor(packet_pipeline_mode = Kinect2PacketPipelineMode.OPENGL)
+            #     main_logger.info("Packet pipeline: OpenGL")
+            # except:
+            #     self.sensor = Kinect2Sensor(packet_pipeline_mode = Kinect2PacketPipelineMode.CPU)
+            #     main_logger.info("Packet pipeline: CPU")
+            self.sensor = Kinect2Sensor(packet_pipeline_mode = Kinect2PacketPipelineMode.OPENCL)
+            main_logger.info("Packet pipeline: CPU")
         else:
             main_logger.error("Unfortunately the " +
                               self.sensor_type+" camera is not yet supported.")
@@ -118,7 +125,7 @@ class GraspPlanner(object):
         ## Set minimum input dimensions. ##
         self.pad = max(
             math.ceil(
-                np.sqrt(2) * 
+                np.sqrt(2) *
                 (float(self.cfg["policy"]["metric"]["crop_width"]) / 2)),
             math.ceil(
                 np.sqrt(2) *
@@ -396,8 +403,10 @@ class GraspPlanner(object):
         # Todo add tumbnail scale and include boolean to configuration
         ## Create small tumbnail and add to the grasp ##
         scale_factor = 0.5
-        resized_data = imresize(rgbd_image_state.rgbd_im.color.data.astype(np.float32), scale_factor, 'bilinear')
-        tumbnail = ColorImage(resized_data.astype(np.uint8), rgbd_image_state.rgbd_im.color._frame)
+        resized_data = imresize(rgbd_image_state.rgbd_im.color.data.astype(
+            np.float32), scale_factor, 'bilinear')
+        tumbnail = ColorImage(resized_data.astype(
+            np.uint8), rgbd_image_state.rgbd_im.color._frame)
         gqcnn_grasp.thumbnail = tumbnail
 
         # TODO: Look at bounding box
@@ -414,6 +423,7 @@ class GraspPlanner(object):
                 action.grasp.depth, action.q_value))
             vis.show()
         return gqcnn_grasp
+
 
 #################################################
 ## Main script ##################################
@@ -432,17 +442,17 @@ if __name__ == "__main__":
     cont_bool = False
     if not os.path.exists(model_dir):
         main_logger.warning("No pretrained CNN model found.")
-        prompt_result = input("A pretrained CNN model is required to continue." \
-            "These models can be downloaded from the berkeleyautomation/gqcnn repository. " \
-            "Do you want to download these models now? [Y/n] ")
+        prompt_result = input("A pretrained CNN model is required to continue."
+                              "These models can be downloaded from the berkeleyautomation/gqcnn repository. "
+                              "Do you want to download these models now? [Y/n] ")
 
         # Check user input #
-        if prompt_result.lower() in ['y', 'yes']: # If yes download sample
+        if prompt_result.lower() in ['y', 'yes']:  # If yes download sample
             print("YESSSSS!!!")
             cont_bool = True
         elif prompt_result.lower() in ['n', 'no']:
             print("NOOOOOO")
-            sys.exit(0) # Terminate script
+            sys.exit(0)  # Terminate script
         else:
             print("OTHER!!!")
         #     sys.exit(0) # Terminate script
@@ -484,7 +494,6 @@ if __name__ == "__main__":
     policy_cfg["metric"]["gqcnn_model"] = model_dir
 
     ## Add autograsp config parameters to the config dictionary ##
-
 
     #############################################
     ## Create grasp policy ######################
