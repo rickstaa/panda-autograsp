@@ -23,6 +23,10 @@ following grasping algorithms:
    :maxdepth: 2
    :caption: Contents:
 
+   calibration
+   gqcnn
+
+
 Indices and tables
 ==================
 

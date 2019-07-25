@@ -1,0 +1,8 @@
+README.md
+setup.py
+autolab_perception.egg-info/PKG-INFO
+autolab_perception.egg-info/SOURCES.txt
+autolab_perception.egg-info/dependency_links.txt
+autolab_perception.egg-info/requires.txt
+autolab_perception.egg-info/top_level.txt
+perception/setup.py

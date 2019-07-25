@@ -1,0 +1,9 @@
+## Additional GQCNN grasp solution parameter configuration file
+# This file contains some additional parameters for the GQCNN grasping solution and
+# is included using pyyaml in the main_config.yaml file.
+
+## Some important paths ##
+cfg_path: ./gqcnn/cfg
+
+## Available models and policies
+available: {GQCNN-4.0-PJ: "cross_entropy", FC-GQCNN-4.0-PJ: "fully_conv"}

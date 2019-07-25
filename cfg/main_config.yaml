@@ -1,0 +1,40 @@
+## Main configuration file for the panda_autograsp solution
+# This file contains the configuration values used in the panda_autograsp solution
+
+## Panda_autograsp visualization settings ##
+vis:
+  rgbd_state: 0
+  cropped_rgbd_image: 0
+  color_image: 0
+  depth_image: 0
+  segmask: 0
+  final_grasp: 1
+
+## Panda_autograsp default values ##
+defaults:
+  solution: gqcnn
+  models_dir: ./models # Folder in which models are downloaded
+
+## Grasping detection solution settings ##
+grasp_detection_solutions:
+
+  ## GQCNN grasping solution settings ##
+  gqcnn:
+
+    ## GQCNN default values ##
+    defaults:
+      model: GQCNN-4.0-PJ # Default CNN model
+      policy: cross_entropy # Default policy
+
+    ## Important GQCNN paths ##
+    parameters:
+      !include ./_cfg/gqcnn_parms.yaml
+
+## Grasp detection solution output settings ##
+grasp_detection_result:
+
+  include_thumbnail: 0 # Include grasp photo thumbnail in output grasp object/
+  thumbnail_resize: 0.5 # Resize fraction of thumbnail compared to original sensor image (needs to be between 0 and 1).
+
+## Robot control settings
+control:

@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
@@ -9,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; panda_autograsp 0.0.2 documentation</title>
+  <title>scripts.plan_grasp &mdash; panda_autograsp 0.0.2 documentation</title>
   
 
   
@@ -18,25 +17,25 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
     
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,12 +49,12 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> panda_autograsp
+            <a href="../index.html" class="icon icon-home"> panda_autograsp
           
 
           
             
-            <img src="_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+            <img src="../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
           
           </a>
 
@@ -66,7 +65,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -85,8 +84,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="calibration.html">Sensor calibration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gqcnn.html">GQCNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gqcnn.html">GQCNN</a></li>
 </ul>
 
             
@@ -101,7 +99,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">panda_autograsp</a>
+          <a href="../index.html">panda_autograsp</a>
         
       </nav>
 
@@ -130,14 +128,16 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Index</li>
+      <li>scripts.plan_grasp</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
+            <a href="../_sources/_autosummary/scripts.plan_grasp.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -149,34 +149,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- <a href="#P"><strong>P</strong></a>
- | <a href="#S"><strong>S</strong></a>
- 
+  <div class="section" id="module-scripts.plan_grasp">
+<span id="scripts-plan-grasp"></span><h1>scripts.plan_grasp<a class="headerlink" href="#module-scripts.plan_grasp" title="Permalink to this headline">¶</a></h1>
+<p>Implementation of the <a class="reference external" href="https://berkeleyautomation.github.io/gqcnn">GQCNN grasp detection algorithm</a> on the Franka Emika Panda Robots. This file is
+based on the grasp_planner_node.py file that was supplied with the GQCNN package.</p>
 </div>
-<h2 id="P">P</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_autosummary/panda_autograsp.functions.html#module-panda_autograsp.functions">panda_autograsp.functions (module)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_autosummary/panda_autograsp.grasp_planner.html#module-panda_autograsp.grasp_planner">panda_autograsp.grasp_planner (module)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="S">S</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_autosummary/scripts.plan_grasp.html#module-scripts.plan_grasp">scripts.plan_grasp (module)</a>
-</li>
-  </ul></td>
-</tr></table>
-
 
 
            </div>
