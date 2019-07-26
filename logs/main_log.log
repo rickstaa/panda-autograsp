@@ -1,0 +1,61 @@
+07-26 14:28:57 panda_autograsp.grasp_planner INFO     Creating Grasping Policy
+07-26 14:28:57 GQCNNModelFactory INFO     Initializing GQ-CNN with Tensorflow as backend...
+07-26 14:28:57 tensorflow WARNING  From /opt/conda/envs/autograsp/lib/python3.7/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+07-26 14:28:57 GQCNNTF    INFO     Building Network...
+07-26 14:28:57 GQCNNTF    INFO     Building Image Stream...
+07-26 14:28:57 GQCNNTF    INFO     Building convolutional layer: conv1_1...
+07-26 14:28:57 GQCNNTF    INFO     Building convolutional layer: conv1_2...
+07-26 14:28:57 GQCNNTF    INFO     Building convolutional layer: conv2_1...
+07-26 14:28:57 GQCNNTF    INFO     Building convolutional layer: conv2_2...
+07-26 14:28:57 GQCNNTF    INFO     Building fully connected layer: fc3...
+07-26 14:28:57 tensorflow WARNING  From /home/ricks/panda_autograsp/gqcnn/gqcnn/model/tf/network_tf.py:1143: calling dropout (from tensorflow.python.ops.nn_ops) with keep_prob is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `rate` instead of `keep_prob`. Rate should be set to `rate = 1 - keep_prob`.
+07-26 14:28:57 GQCNNTF    INFO     Building Pose Stream...
+07-26 14:28:57 GQCNNTF    INFO     Building Fully Connected Pose Layer: pc1...
+07-26 14:28:57 GQCNNTF    INFO     Building Merge Stream...
+07-26 14:28:57 GQCNNTF    INFO     Building Merge Layer: fc4...
+07-26 14:28:57 GQCNNTF    INFO     Building fully connected layer: fc5...
+07-26 14:28:58 GQCNNTF    INFO     Building Softmax Layer...
+07-26 14:28:58 GQCNNTF    INFO     Initializing TF Session...
+07-26 14:28:58 panda_autograsp.grasp_planner INFO     Starting GQCNN-4.0-PJ grasp planner for a parallel_jaw robot.
+07-26 14:28:59 panda_autograsp.grasp_planner INFO     Packet pipeline: OPENGL
+07-26 14:29:00 panda_autograsp.grasp_planner INFO     Planning Grasp
+07-26 14:29:00 CrossEntropyRobustGraspingPolicy INFO     Sampling seed set
+07-26 14:29:06 CrossEntropyRobustGraspingPolicy INFO     Sampled 129 grasps
+07-26 14:29:06 CrossEntropyRobustGraspingPolicy INFO     Computing the seed set took 5.897 sec
+07-26 14:29:06 CrossEntropyRobustGraspingPolicy INFO     CEM iter 0
+07-26 14:29:06 GQCnnQualityFunction INFO     Image transformation took 0.210 sec
+07-26 14:29:07 GQCnnQualityFunction INFO     Inference took 1.073 sec
+07-26 14:29:07 CrossEntropyRobustGraspingPolicy INFO     Prediction took 1.285 sec
+07-26 14:29:07 CrossEntropyRobustGraspingPolicy INFO     Elite set computation took 0.021 sec
+07-26 14:29:07 CrossEntropyRobustGraspingPolicy INFO     GMM fitting with 14 components took 0.026 sec
+07-26 14:29:07 CrossEntropyRobustGraspingPolicy INFO     GMM sampling took 0.006 sec
+07-26 14:29:07 CrossEntropyRobustGraspingPolicy INFO     Resample loop took 0.014 sec
+07-26 14:29:07 CrossEntropyRobustGraspingPolicy INFO     Resampling took 0.063 sec
+07-26 14:29:07 CrossEntropyRobustGraspingPolicy INFO     CEM iter 1
+07-26 14:29:08 GQCnnQualityFunction INFO     Image transformation took 0.149 sec
+07-26 14:29:08 GQCnnQualityFunction INFO     Inference took 0.355 sec
+07-26 14:29:08 CrossEntropyRobustGraspingPolicy INFO     Prediction took 0.505 sec
+07-26 14:29:08 CrossEntropyRobustGraspingPolicy INFO     Elite set computation took 0.008 sec
+07-26 14:29:08 CrossEntropyRobustGraspingPolicy INFO     GMM fitting with 7 components took 0.014 sec
+07-26 14:29:08 CrossEntropyRobustGraspingPolicy INFO     GMM sampling took 0.002 sec
+07-26 14:29:08 CrossEntropyRobustGraspingPolicy INFO     Resample loop took 0.012 sec
+07-26 14:29:08 CrossEntropyRobustGraspingPolicy INFO     Resampling took 0.036 sec
+07-26 14:29:08 CrossEntropyRobustGraspingPolicy INFO     CEM iter 2
+07-26 14:29:08 GQCnnQualityFunction INFO     Image transformation took 0.149 sec
+07-26 14:29:08 GQCnnQualityFunction INFO     Inference took 0.344 sec
+07-26 14:29:08 CrossEntropyRobustGraspingPolicy INFO     Prediction took 0.494 sec
+07-26 14:29:09 CrossEntropyRobustGraspingPolicy INFO     Elite set computation took 0.008 sec
+07-26 14:29:09 CrossEntropyRobustGraspingPolicy INFO     GMM fitting with 7 components took 0.014 sec
+07-26 14:29:09 CrossEntropyRobustGraspingPolicy INFO     GMM sampling took 0.002 sec
+07-26 14:29:09 CrossEntropyRobustGraspingPolicy INFO     Resample loop took 0.012 sec
+07-26 14:29:09 CrossEntropyRobustGraspingPolicy INFO     Resampling took 0.036 sec
+07-26 14:29:09 GQCnnQualityFunction INFO     Image transformation took 0.125 sec
+07-26 14:29:09 GQCnnQualityFunction INFO     Inference took 0.383 sec
+07-26 14:29:09 CrossEntropyRobustGraspingPolicy INFO     Final prediction took 0.510 sec
+07-26 14:29:09 CrossEntropyRobustGraspingPolicy INFO     Sorting grasps
+07-26 14:29:09 panda_autograsp.grasp_planner INFO     Total grasp planning time: 8.845917701721191 secs.
+07-26 14:29:09 matplotlib.backends._backend_tk INFO     Could not load matplotlib icon: bad option "foobar": must be aspect, attributes, client, colormapwindows, command, deiconify, focusmodel, forget, frame, geometry, grid, group, iconbitmap, iconify, iconmask, iconname, iconphoto, iconposition, iconwindow, manage, maxsize, minsize, overrideredirect, positionfrom, protocol, resizable, sizefrom, stackorder, state, title, transient, or withdraw

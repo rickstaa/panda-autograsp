@@ -8,3 +8,6 @@ panda_autograsp.egg-info
 docsrc/_build/
 data/tmp
 models
+
+# files to ignore ##
+*.pyc

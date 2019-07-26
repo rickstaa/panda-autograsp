@@ -1,4 +1,5 @@
-"""Utility class for logging.
+"""Utility class for logging. This class is a wrapper around the original logging module and can
+be used to apply the panda_autograsp formatters, filters and handlers to the logging object.
 """
 
 ## Import system modules ##
@@ -27,8 +28,8 @@ def clear_root():
         if isinstance(hdlr, logging.StreamHandler):
             root_logger.removeHandler(hdlr)
 
-    # create nullhandler to suppress no handler warning
-    root_logger.addHandler(logging.NullHandler())
+    # # create nullhandler to suppress no handler warning
+    # root_logger.addHandler(logging.NullHandler())
 
     # Set root configured to true
     Logger.ROOT_CONFIGURED = False
@@ -36,7 +37,7 @@ def clear_root():
 #################################################
 ## Configure root logger function ###############
 #################################################
-def configure_root():
+def configure_root(log_level=ROOT_LOG_LEVEL):
     """Function used to configure the root logger."""
     root_logger = logging.getLogger()
 
@@ -47,7 +48,7 @@ def configure_root():
             root_logger.removeHandler(hdlr)
 
     # configure the root logger
-    root_logger.setLevel(ROOT_LOG_LEVEL)
+    root_logger.setLevel(log_level)
     hdlr = logging.StreamHandler(ROOT_LOG_STREAM)
     formatter = colorlog.ColoredFormatter(
                         '%(blue)s%(name)-10s %(log_color)s%(levelname)-8s%(reset)s %(white)s%(message)s',
@@ -65,11 +66,12 @@ def configure_root():
 
     # Set root configured to true
     Logger.ROOT_CONFIGURED = True
+    return root_logger
 
 #################################################
 ## Root Logger file handler add #################
 #################################################
-def add_root_log_file(log_file):
+def add_root_log_file(log_file, mode='a', encoding=None, delay=False):
     """
     Add a log file to the root logger.
 
@@ -77,15 +79,21 @@ def add_root_log_file(log_file):
     ----------
     log_file :obj:`str`
         The path to the log file.
+    mode :obj:`str`
+        Log file writing mode, by default 'a'.
+    encoding: :obj:`str`
+        File encoding used, by default None.
+    delay: :obj:`str`
+        If delay is true, then file opening is deferred until the first call to emit(), by default False.
     """
     root_logger = logging.getLogger()
 
     # add a file handle to the root logger
-    hdlr = logging.FileHandler(log_file)
+    hdlr = logging.FileHandler(log_file, mode, encoding, delay)
     formatter = logging.Formatter('%(asctime)s %(name)-10s %(levelname)-8s %(message)s', datefmt='%m-%d %H:%M:%S')
     hdlr.setFormatter(formatter)
-    root_logger.addHandler(hdlr)
     root_logger.info('Root logger now logging to {}'.format(log_file))
+    root_logger.addHandler(hdlr)
 
 #################################################
 ## Logger class #################################
@@ -104,80 +112,105 @@ class Logger(object):
         configure_root()
 
     @staticmethod
-    def get_logger(name, log_level=logging.INFO, log_file=None, global_log_file=False, silence=False):
+    def get_logger(name=None, log_level=logging.INFO, log_file=None, silence=False, mode='a', encoding=None, delay=False):
         """
         Build a logger. All logs will be propagated up to the root logger if not silenced. If log_file is provided, logs will be written out to
-        that file. If global_log_file is true, log_file will be handed the root logger, otherwise it will only be used by this particular logger.
+        that file. If no logger name is given, log_file will be handed the root logger, otherwise it will only be used by this particular logger.
 
         Parameters
         ----------
         name :obj:`str`
-            The name of the logger to be built.
+            The name of the logger to be built, by default "" thus formatting the root logger.
         log_level : `int`
             The log level. See the python logging module documentation for possible enum values.
         log_file :obj:`str`
             The path to the log file to log to.
-        global_log_file :obj:`bool`
-            Whether or not to use the given log_file for this particular logger or for the root logger.
         silence :obj:`bool`
             Whether or not to silence this logger. If it is silenced, the only way to get output from this logger is through a non-global log file.
+        mode :obj:`str`
+            Log file writing mode, by default 'a'.
+        encoding: :obj:`str`
+            File encoding used, by default None.
+        delay: :obj:`str`
+            If delay is true, then file opening is deferred until the first call to emit(), by default False.
 
         Returns
         -------
         :obj:`logging.Logger`
             A custom logger.
         """
-        no_op = False
-        # some checks for silencing/no-op logging
-        if silence and global_log_file:
-            raise ValueError("You can't silence a logger and log to a global log file!")
-        if silence and log_file is None:
-            logging.warning('You are creating a no-op logger!')
-            no_op = True
 
-        # build a logger
-        logger = logging.getLogger(name)
-        logger.setLevel(log_level)
+        ## Create a new logger object with the panda_autograsp formatting ##
+        if name == None: # Format the root logger
 
-        # silence the logger by preventing it from propagating upwards to the root
-        logger.propagate = not silence
+            # some checks for silencing/no-op logging
+            if silence:
+                raise ValueError("You can't silence a logger and log to a global log file!")
 
-        # configure the log file stream
-        if log_file is not None:
-            # if the log file is global, add it to the root logger
-            if global_log_file:
-                add_root_log_file(log_file)
-            # otherwise add it to this particular logger
-            else:
-                hdlr = logging.FileHandler(log_file)
-                formatter = logging.Formatter('%(asctime)s %(name)-10s %(levelname)-8s %(message)s', datefmt='%m-%d %H:%M:%S')
-                hdlr.setFormatter(formatter)
-                logger.addHandler(hdlr)
+            # Setup root_logger
+            if not Logger.ROOT_CONFIGURED:
+                root_logger = configure_root(log_level)
+            Logger.ROOT_CONFIGURED = True
 
-        # add a no-op handler to suppress warnings about there being no handlers
-        if no_op:
-            logger.addHandler(logging.NullHandler())
-        return logger
+            # configure the log file stream
+            if log_file is not None:
+                add_root_log_file(log_file, mode, encoding, delay)
+
+            # Return root logger
+            return root_logger
+        else: # Create new logger object
+            no_op = False
+
+            # some checks for silencing/no-op logging
+            if silence and log_file is None:
+                logging.warning('You are creating a no-op logger!')
+                no_op = True
+
+            # build a logger
+            logger = logging.getLogger(name)
+            logger.setLevel(log_level)
+
+            # silence the logger by preventing it from propagating upwards to the root
+            logger.propagate = not silence
+
+            # configure the log file stream
+            if log_file is not None:
+
+                    # Add logger file handler #
+                    hdlr = logging.FileHandler(log_file, mode, encoding, delay)
+                    formatter = logging.Formatter('%(asctime)s %(name)-10s %(levelname)-8s %(message)s', datefmt='%m-%d %H:%M:%S')
+                    hdlr.setFormatter(formatter)
+                    logger.addHandler(hdlr)
+
+            # add a no-op handler to suppress warnings about there being no handlers
+            if no_op:
+                logger.addHandler(logging.NullHandler())
+            return logger
 
     @staticmethod
-    def add_log_file(logger, log_file, global_log_file=False):
+    def add_log_file(log_file=None, logger=None, mode='a', encoding=None, delay=False):
         """
-        Add a log file to this logger. If global_log_file is true, log_file will be handed the root logger, otherwise it will only be used by this particular logger.
+        Add a log file to this logger. If no logger is given, log_file will be handed the root logger, otherwise it will only be used by this particular logger.
 
         Parameters
         ----------
-        logger :obj:`logging.Logger`
-            The logger.
         log_file :obj:`str`
             The path to the log file to log to.
-        global_log_file :obj:`bool`
-            Whether or not to use the given log_file for this particular logger or for the root logger.
+        logger :obj:`logging.Logger`
+            The logger.
+        mode :obj:`str`
+            Log file writing mode, by default 'a'.
+        encoding: :obj:`str`
+            File encoding used, by default None.
+        delay: :obj:`str`
+            If delay is true, then file opening is deferred until the first call to emit(), by default False.
         """
 
-        if global_log_file:
-            add_root_log_file(log_file)
-        else:
-            hdlr = logging.FileHandler(log_file)
+        ## Add logfile to logger
+        if logger == None: # Add to root logger
+            add_root_log_file(log_file, mode, encoding, delay)
+        else: # Add to specified logger
+            hdlr = logging.FileHandler(log_file, mode, encoding, delay)
             formatter = logging.Formatter('%(asctime)s %(name)-10s %(levelname)-8s %(message)s', datefmt='%m-%d %H:%M:%S')
             hdlr.setFormatter(formatter)
             logger.addHandler(hdlr)

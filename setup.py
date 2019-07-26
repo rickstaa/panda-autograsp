@@ -119,9 +119,9 @@ def install_submods(sub_mods, mode="install", install_dependencies=True):
            if os.path.exists(submod_setup_path):
                 if install_dependencies:  # Install submodule dependencies
                     subprocess.call(
-                        [sys.executable, "-m", "pip", "-v", "install", os.getcwd()+"/"+sub_mod+"/"])
+                        [sys.executable, "-m", "pip", "install", os.getcwd()+"/"+sub_mod+"/"])
                 else:  # Do not install submodule dependencies
-                    subprocess.call([sys.executable, "-m", "pip", "-v", "install",
+                    subprocess.call([sys.executable, "-m", "pip", "install",
                                      "--no-dependencies", os.getcwd()+"/"+sub_mod+"/"])
 
     ## Development mode installation ##
@@ -132,9 +132,9 @@ def install_submods(sub_mods, mode="install", install_dependencies=True):
            if os.path.exists(submod_setup_path):
                 if install_dependencies:  # Install submodule dependencies
                     subprocess.call(
-                        [sys.executable, "-m", "pip", "-v", "install", "-e", os.getcwd()+"/"+sub_mod+"/"])
+                        [sys.executable, "-m", "pip", "install", "-e", os.getcwd()+"/"+sub_mod+"/"])
                 else:  # Do not install submodule dependencies
-                    subprocess.call([sys.executable, "-m", "pip", "-v", "install",
+                    subprocess.call([sys.executable, "-m", "pip", "install",
                                      "--no-dependencies", "-e", os.getcwd()+"/"+sub_mod+"/"])
 
 
@@ -200,7 +200,7 @@ class DevelopCmd(develop):
             logger.warning(skip_tf_msg)
 
         ## Install submodules ##
-        install_submods(sub_mods, "develop")
+        install_submods(sub_mods, "develop", install_dependencies=False)
 
         ## Run parent run method ##
         develop.run(self)
@@ -244,7 +244,7 @@ class InstallCmd(install, object):
             logger.warning(skip_tf_msg)
 
         # Install submodules #
-        install_submods(sub_mods, "install")
+        install_submods(sub_mods, "install", install_dependencies=False)
 
         ## Run parent run method ##
         install.run(self)
