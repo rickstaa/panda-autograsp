@@ -9,7 +9,6 @@ import math
 import os
 import time
 import sys
-import subprocess
 import logging
 import json
 
@@ -18,7 +17,7 @@ import numpy as np
 
 ## GQCNN module imports ##
 from perception import (Kinect2Sensor, CameraIntrinsics, ColorImage, DepthImage, BinaryImage,
-                        RgbdImage, RgbdDetector, Kinect2PacketPipelineMode)
+                        RgbdImage, Kinect2PacketPipelineMode)
 from perception.image import imresize
 from visualization import Visualizer2D as vis
 from gqcnn.grasping import (Grasp2D, SuctionPoint2D,
@@ -32,7 +31,7 @@ from panda_autograsp import Logger
 Logger.clear_root() # Delete logger formatting that was created by the gqcnn.grasping module
 
 ## Create Logger ##
-mod_logger = logging.getLogger(__name__)
+mod_logger = Logger.get_logger(__name__)
 
 #################################################
 ## Script parameters ############################

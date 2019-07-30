@@ -5,15 +5,17 @@
 import os
 import sys
 import subprocess
-import warnings
-import logging
+import contextlib
 import io
 
 ## BerkeleyAutomation modules ##
 from autolab_core import YamlConfig
 
+## import custom modules ##
+from panda_autograsp import Logger
+
 ## Create logger ##
-func_log = logging.getLogger(__name__)
+func_log = Logger.get_logger(__name__)
 
 ## Read panda_autograsp configuration file ##
 main_cfg = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
@@ -120,3 +122,11 @@ def download_model(model):
         msg = model + " was already present and thus not downloaded."
         func_log.info(msg)
         return
+
+@contextlib.contextmanager
+def nostdout():
+    """Create contex to silence the stdout"""
+    save_stdout = sys.stdout
+    sys.stdout = io.BytesIO()
+    yield
+    sys.stdout = save_stdout

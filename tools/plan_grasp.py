@@ -7,9 +7,6 @@ based on the grasp_planner_node.py file that was supplied with the GQCNN package
 
 ## Standard library imports ##
 import os
-import json
-import logging
-import sys
 
 ## Import custom modules ##
 from panda_autograsp import GraspPlanner
@@ -21,13 +18,14 @@ root_logger = Logger.get_logger(log_file=os.path.abspath(os.path.join(os.path.di
 
 ## Create script logger ##
 main_logger = Logger.get_logger("plan_grasp.py")
+
 #################################################
 ## Script settings ##############################
 #################################################
 MODEL_NAME = "GQCNN-4.0-PJ"
 
 #################################################
-## Main script ##################################6
+## Main script ##################################
 #################################################
 if __name__ == "__main__":
 

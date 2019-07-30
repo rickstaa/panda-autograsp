@@ -26,8 +26,8 @@ jobs: # A basic unit of work in a run
           sudo apt-get install -y python-opengl
 
       # restore virtual environment dependencies from cache #
-      #- restore_cache:
-      #    key: depspy35-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
+      - restore_cache:
+          key: depspy35-{{ .Branch }}-{{ checksum "setup.py" }}-{{ checksum "gqcnn/setup.py" }}
 
       # install dependencies #
       - run: | # Create virtual env

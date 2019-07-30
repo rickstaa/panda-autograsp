@@ -3,11 +3,8 @@
 
 ## System imports ##
 import os
-import sys
 import subprocess
-import warnings
 import logging
-import io
 
 ## BerkeleyAutomation modules ##
 from autolab_core import YamlConfig

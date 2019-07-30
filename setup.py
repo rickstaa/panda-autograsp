@@ -27,7 +27,7 @@ import shutil
 TF_MAX_VERSION = "1.13.1"
 
 ## Package requirements ##
-requirements = []
+requirements = ["cython", "pylibfreenect2"]
 
 ## Set up logger. ##
 logger = logging.getLogger(__name__)
@@ -36,8 +36,6 @@ logger.setLevel(logging.INFO)
 #################################################
 ## Functions ####################################
 #################################################
-
-
 def add_submods_requirements(requirements):
     """Adds the submodule requirements to the requirements list.
 
@@ -131,12 +129,15 @@ def install_submods(sub_mods, mode="install", install_dependencies=True):
            submod_setup_path = os.getcwd()+"/"+sub_mod+"/setup.py"
            if os.path.exists(submod_setup_path):
                 if install_dependencies:  # Install submodule dependencies
+                    # subprocess.call(
+                    #     [sys.executable, "-m", "pip", "install", "-e", os.getcwd()+"/"+sub_mod+"/"])
                     subprocess.call(
-                        [sys.executable, "-m", "pip", "install", "-e", os.getcwd()+"/"+sub_mod+"/"])
+                        [sys.executable, "-m", "pip", "install", os.getcwd()+"/"+sub_mod+"/"])
                 else:  # Do not install submodule dependencies
+                    # subprocess.call([sys.executable, "-m", "pip", "install",
+                    #                  "--no-dependencies", "-e", os.getcwd()+"/"+sub_mod+"/"])
                     subprocess.call([sys.executable, "-m", "pip", "install",
-                                     "--no-dependencies", "-e", os.getcwd()+"/"+sub_mod+"/"])
-
+                                     "--no-dependencies", os.getcwd()+"/"+sub_mod+"/"])
 
 def get_tf_dep():
     """Function installs the right version of tensorflow meaning `tensorflow-gpu` when GPU is available and `tensorflow` otherwise."""
@@ -261,7 +262,7 @@ __version__ = re.sub(r'[^\d.]', '', open(
 
 ## Add submodule requirements to the requirements list ##
 requirements, sub_mods, sub_mods_egg_names = add_submods_requirements(requirements)
-requirements = [j for j in requirements if not any([i.replace("_","-") in j for i in sub_mods])] # Remove submodule packages from requirements
+# requirements = [j for j in requirements if not any([i.replace("_","-") in j for i in sub_mods])] # Remove submodule packages from requirements
 
 ## Run python setup ##
 setup(
@@ -275,7 +276,6 @@ setup(
     url="https://github.com/rickstaa/panda_autograsp",
     keywords="robotics grasping vision deep learning franka gqcnn gpd",
     classifiers=[
-        "Development Status :: 1 - Beta",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
@@ -283,10 +283,11 @@ setup(
         "Topic :: Scientific/Engineering"
     ],
     packages=find_packages(),
+    include_package_data=True,
     install_requires=requirements,
     extras_require={
         "docs": ["sphinx", "sphinxcontrib-napoleon", "sphinx_rtd_theme", "sphinx-navtree"],
-        "dev": ["pytest", "bumpversion"]
+        "dev": ["pytest", "bumpversion", "coverage", "codacy-coverage"]
     },
     cmdclass={
         "install": InstallCmd,

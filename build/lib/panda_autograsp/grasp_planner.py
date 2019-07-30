@@ -9,7 +9,6 @@ import math
 import os
 import time
 import sys
-import subprocess
 import logging
 import json
 
@@ -18,7 +17,7 @@ import numpy as np
 
 ## GQCNN module imports ##
 from perception import (Kinect2Sensor, CameraIntrinsics, ColorImage, DepthImage, BinaryImage,
-                        RgbdImage, RgbdDetector, Kinect2PacketPipelineMode)
+                        RgbdImage, Kinect2PacketPipelineMode)
 from perception.image import imresize
 from visualization import Visualizer2D as vis
 from gqcnn.grasping import (Grasp2D, SuctionPoint2D,
@@ -54,6 +53,8 @@ DEFAULT_POLICY = main_cfg["grasp_detection_solutions"][DEFAULT_SOLUTION]["defaul
 MODELS_PATH = os.path.abspath(os.path.join(
     os.path.dirname(os.path.realpath(__file__)), "..", main_cfg["defaults"]["models_dir"]))\
 
+# TODO DOCSTRINGS
+
 #################################################
 ## GQCNN grasp class ############################
 #################################################
@@ -70,6 +71,7 @@ class GQCNNGrasp(object):
         self.angle = 0.0
         self.depth = 0.0
         self.thumbnail = object()
+
 
     @property
     def PARALLEL_JAW(self):
@@ -260,7 +262,7 @@ class GraspPlanner(object):
         Parameters
         ----------
         skip_registration : bool
-            If True, the registration step is skipped.
+            If True, the registration step is skipped, by default False.
 
         Returns
         -------
@@ -309,7 +311,7 @@ class GraspPlanner(object):
 
     # TODO: DOCSTRING
     # TODO: Add bounding box functionality
-    def plan_grasp_bb(self, bounding_box):
+    def plan_grasp_bb(self, bounding_box=None):
         """Grasp planner request handler.
 
         Parameters

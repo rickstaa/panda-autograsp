@@ -3,7 +3,7 @@ Sensor calibration
 
 Calibration instructions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The kinect camera is calibrated using the 
+The kinect camera is calibrated using the :py:mod:`chessboard_calibration.py`.
 
 Checkerboard pattern
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -12,8 +12,8 @@ Checkerboard pattern
     :scale: 7%
     :alt: Calibration checkerboard
 
-The calibration ``checkerboard_A4.pdf`` was created using the `calib.io <https://calib.io/pages/camera-calibration-pattern-generator>`_
-checkerboard creation tool and can be found in the ``./data/calib`` folder.
+The calibration ``checkerboard_A3.svg`` were downloaded from  created using the `rgbdemo repository <https://github.com/rgbdemo/rgbdemo>`_
+and can be found in the ``./data/calib/checkerboard`` folder.
 
 Calibration configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
