@@ -4,20 +4,16 @@
 ## Standard library imports ##
 import numpy as np
 import cv2
-import glob
 import os
 import sys
-import argparse
 import logging
 import copy
 
 ## Third party imports ##
-import cv2
 logger = logging.getLogger()
 logger.disabled = True  # Done to suppress perception warnings
-from perception import (Kinect2Sensor, CameraIntrinsics)
+from perception import (Kinect2Sensor)
 logger.disabled = False
-import matplotlib.pyplot as plt
 
 ## Custom imports ##
 from panda_autograsp import Logger
@@ -269,11 +265,6 @@ if not factory:
     p_1 = dist[0][2]  # First tangential distortion coefficient
     p_2 = dist[0][3]  # Second ..
 
-    ##############################################
-    ## Compare with factory parameters ###########
-    ##############################################
-    pass
-
     ## Print information ##
     # NOTE: Skew is set to 0 in opencv2 https://stackoverflow.com/questions/23649477/how-to-get-skew-from-intrinics-distortion
     print("=== Calibration results ==")
@@ -285,10 +276,10 @@ if not factory:
 
     ## Calculate re-projection error ##
     tot_error = 0
-    for i in range(len(objpoints)):
+    for index, value in enumerate(objpoints):
         imgpoints2, _ = cv2.projectPoints(
-            objpoints[i], rvecs[i], tvecs[i], mtx, dist)
-        error = cv2.norm(imgpoints[i], imgpoints2, cv2.NORM_L2)/len(imgpoints2)
+            objpoints[index], rvecs[index], tvecs[index], mtx, dist)
+        error = cv2.norm(imgpoints[index], imgpoints2, cv2.NORM_L2)/len(imgpoints2)
         tot_error += error
     print("Mean error: ", tot_error/len(objpoints))
 

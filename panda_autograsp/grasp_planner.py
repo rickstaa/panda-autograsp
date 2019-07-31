@@ -9,7 +9,6 @@ import math
 import os
 import time
 import sys
-import logging
 import json
 
 ## Third party imports ##
@@ -39,8 +38,9 @@ mod_logger = Logger.get_logger(__name__)
 
 ## Setup PacketPipeline mode dictionary ##
 packet_modes = {}
-[packet_modes.update({value: attr}) for (
-    attr, value) in Kinect2PacketPipelineMode.__dict__.items() if "__" not in attr]
+for (attr, value) in Kinect2PacketPipelineMode.__dict__.items():
+    if "__" not in attr:
+        packet_modes.update({value: attr})
 
 ## Read panda_autograsp configuration file ##
 main_cfg = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(

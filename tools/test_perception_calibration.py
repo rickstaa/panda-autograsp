@@ -6,9 +6,9 @@ Script to test autolab calibration capabilities.
 
 import os
 
-from perception import CameraChessboardRegistration, ChessboardRegistrationResult
+from perception import CameraChessboardRegistration
 from perception import Kinect2Sensor
-from autolab_core import Point, PointCloud, RigidTransform, YamlConfig
+from autolab_core import Point, PointCloud, YamlConfig
 
 ## Create sensor object ##
 sensor = Kinect2Sensor()

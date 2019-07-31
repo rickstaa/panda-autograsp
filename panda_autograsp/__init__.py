@@ -2,7 +2,6 @@
 import logging
 from .loggers import Logger
 from .grasp_planner import GraspPlanner, GQCNNGrasp
-from .calibration import (ChessboardRegistrationResult, CameraChessboardRegistration)
 
 ## Import functions ##
 from .functions import (download_model, nostdout)
