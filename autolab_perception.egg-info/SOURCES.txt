@@ -1,0 +1,13 @@
+LICENCE
+MANIFEST.in
+README.md
+setup.py
+autolab_perception.egg-info/PKG-INFO
+autolab_perception.egg-info/SOURCES.txt
+autolab_perception.egg-info/dependency_links.txt
+autolab_perception.egg-info/requires.txt
+autolab_perception.egg-info/top_level.txt
+cfg/main_config.yaml
+cfg/_cfg/gqcnn_parms.yaml
+cfg/calib/register_sensor.yaml
+perception/setup.py

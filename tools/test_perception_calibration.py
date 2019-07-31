@@ -6,7 +6,7 @@ Script to test autolab calibration capabilities.
 
 import os
 
-from panda_autograsp import CameraChessboardRegistration, ChessboardRegistrationResult
+from perception import CameraChessboardRegistration, ChessboardRegistrationResult
 from perception import Kinect2Sensor
 from autolab_core import Point, PointCloud, RigidTransform, YamlConfig
 

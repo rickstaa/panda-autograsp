@@ -157,10 +157,7 @@ class CameraChessboardRegistration:
                 continue
 
             # average 3d points
-            # FIXME: Multiplication operation not working
-            # points_3d_plane = (k * points_3d_plane + points_3d[corner_ind]) / (k + 1)
-            points_3d_plane = (k * points_3d_plane + points_3d[corner_ind]).__div__(k + 1)
-
+            points_3d_plane = (k * points_3d_plane + points_3d[corner_ind]) / (k + 1)
 
             logging.info('Registration iteration %d of %d' %(k+1, config['num_transform_avg']))
             k += 1

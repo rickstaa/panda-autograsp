@@ -27,7 +27,8 @@ import shutil
 TF_MAX_VERSION = "1.13.1"
 
 ## Package requirements ##
-requirements = ["cython", "pylibfreenect2"]
+setup_requirements = []
+requirements = ["cython",  "pylibfreenect2"]
 
 ## Set up logger. ##
 logger = logging.getLogger(__name__)
@@ -284,6 +285,7 @@ setup(
     ],
     packages=find_packages(),
     include_package_data=True,
+    setup_requires=setup_requirements,
     install_requires=requirements,
     extras_require={
         "docs": ["sphinx", "sphinxcontrib-napoleon", "sphinx_rtd_theme", "sphinx-navtree"],

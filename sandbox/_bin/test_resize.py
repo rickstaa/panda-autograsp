@@ -20,7 +20,7 @@ color_im_small = color_im.resize(0.5)
 
 ## Visualize resized frame
 vis.figure()
-vis.imshow(color_im_small.data)
+vis.imshow(color_im_small)
 vis.show()
 
 ## Use the impaint function
