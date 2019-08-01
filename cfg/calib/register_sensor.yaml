@@ -8,7 +8,7 @@ chessboard_registration:
   point_order: row_major
 
   # VISUALIZATION PARAMS
-  vis: 0 # visualize registration
+  vis: 1 # visualize registration
   debug: 1 # show the final pose detection
   scale_amt: 0.1 # scale for vis axes
   y_points_left: 0
