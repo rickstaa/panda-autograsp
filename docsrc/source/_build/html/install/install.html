@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Prerequisites &mdash; panda_autograsp 0.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to use" href="../usage/usage.html" />
+    <link rel="prev" title="Package information" href="../info/info.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> panda_autograsp
+          
+
+          
+            
+            <img src="../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ubuntu">Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#virtualenv">Virtualenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#essential-dependencies">Essential dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ros-packages">ROS Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Libfreenect2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#build-the-panda-autograsp-package">Build the Panda-autograsp package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#singularity-installation">Singularity Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#recommended-dependencies">Recommended dependencies</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html">How to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html#sensor-calibration">Sensor calibration</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">Code API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license/license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">panda_autograsp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Prerequisites</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/install/install.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="prerequisites">
+<h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://github.com/BerkeleyAutomation/gqcnn">panda_autograsp</a> package has only been tested with <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">3.5</span></code>
+, <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">3.6</span></code>, and <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">3.7</span></code>.</p>
+</div>
+<div class="section" id="ubuntu">
+<h2>Ubuntu<a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://github.com/BerkeleyAutomation/gqcnn">panda_autograsp</a> package has only been tested with <cite>Ubuntu 12.04</cite>, <cite>Ubuntu 14.04</cite> and <cite>Ubuntu 16.04</cite>.</p>
+</div>
+<div class="section" id="virtualenv">
+<h2>Virtualenv<a class="headerlink" href="#virtualenv" title="Permalink to this headline">¶</a></h2>
+<p>We highly recommend using a Python environment management system like <a class="reference external" href="https://virtualenv.pypa.io/en/stable/">Virtualenv</a> or <a class="reference external" href="https://conda.io/en/latest/">conda</a> with the Pip and ROS installations.</p>
+</div>
+<div class="section" id="essential-dependencies">
+<h2>Essential dependencies<a class="headerlink" href="#essential-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>The following packages are essential for using the <a class="reference external" href="https://github.com/BerkeleyAutomation/gqcnn">panda_autograsp</a> package.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://wiki.ros.org/kinetic">ROS kinetic</a></p></li>
+<li><p><a class="reference external" href="#ROS-packages">A number of additional ROS packages</a></p></li>
+<li><p><a class="reference external" href="https://github.com/OpenKinect/libfreenect2">libfreenect2</a></p></li>
+</ul>
+<div class="section" id="ros-packages">
+<h3>ROS Packages<a class="headerlink" href="#ros-packages" title="Permalink to this headline">¶</a></h3>
+<p>For the package to work you will need the following dependencies can be
+installed by running the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-kinetic-moveit-ros-move-group ros-kinetic-controller-manager* ros-kinetic-moveit* ros-kinetic-effort-controllers ros-kinetic-joint-trajectory-controller ros-kinetic-gazebo-ros* ros-kinetic-rviz* libboost-filesystem-dev libjsoncpp-dev
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Libfreenect2<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>In order to use the package together with the Kinect camera, we need to install the
+<a class="reference external" href="https://github.com/OpenKinect/libfreenect2.git">libfreenect2</a> library. The documentation
+for installing the <a class="reference external" href="https://github.com/OpenKinect/libfreenect2.git">libfreenect2</a> can be
+found in the <a class="reference external" href="https://github.com/OpenKinect/libfreenect2">readme of the repository</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="build-the-panda-autograsp-package">
+<h1>Build the Panda-autograsp package<a class="headerlink" href="#build-the-panda-autograsp-package" title="Permalink to this headline">¶</a></h1>
+<p>After all the dependencies are installed you can build the <a class="reference external" href="https://github.com/BerkeleyAutomation/gqcnn">panda_autograsp</a>
+package as follows:</p>
+<p>If you did not add an ssh key to your GitHub account you can use the following
+bash command:</p>
+<p>code-block:: bash</p>
+<blockquote>
+<div><dl class="simple">
+<dt>bash -c “mkdir -p /panda_autograsp_ws </dt><dd><p>&amp;&amp; cd /panda_autograsp_ws &amp;&amp; source /opt/ros/kinetic/setup.sh &amp;&amp; git clone –recursive <a class="reference external" href="https://github.com/rickstaa/panda_autograsp_ws.git">https://github.com/rickstaa/panda_autograsp_ws.git</a> src &amp;&amp; rosdep install –from-paths src –ignore-src –rosdistro kinetic -y –skip-keys libfranka &amp;&amp; catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build”</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>##### Clone and build the package using the ssh protocol</p>
+<p>If you added an ssh key to your GitHub account you can also use the following
+bash command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash -c <span class="s2">&quot;mkdir -p /panda_autograsp_ws \</span>
+<span class="s2">        &amp;&amp; cd /panda_autograsp_ws \</span>
+<span class="s2">        &amp;&amp; source /opt/ros/kinetic/setup.sh \</span>
+<span class="s2">        &amp;&amp; git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \</span>
+<span class="s2">        &amp;&amp; rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \</span>
+<span class="s2">        &amp;&amp; catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="singularity-installation">
+<h1>Singularity Installation<a class="headerlink" href="#singularity-installation" title="Permalink to this headline">¶</a></h1>
+<p>We currently do provide a pre-built Docker images, but you can build them yourself. This will require you to have installed <a class="reference external" href="https://www.docker.com/">Docker</a> or <a class="reference external" href="https://github.com/NVIDIA/nvidia-docker">Nvidia-Docker</a> if you plan on using GPUs. Note that our provided build for GPUs uses CUDA 10.0 and cuDNN 7.0, so make sure that this is compatible with your GPU hardware. If you wish to use a different CUDA/cuDNN version, change the base image in <cite>docker/gpu/Dockerfile</cite> to the desired <a class="reference external" href="https://hub.docker.com/r/nvidia/cuda/">CUDA/cuDNN image distribution</a>. <strong>Note that other images have not yet been tested.</strong></p>
+<p>Clone or download the <a class="reference external" href="https://github.com/BerkeleyAutomation/gqcnn">project</a> from Github.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/BerkeleyAutomation/gqcnn.git
+</pre></div>
+</div>
+<p>Change directories into the <cite>gqcnn</cite> repository and run the build script.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./scripts/docker/build-docker.sh
+</pre></div>
+</div>
+<p>This will build the images <cite>gqcnn/cpu</cite> and <cite>gqcnn/gpu</cite>.</p>
+<p>To run <cite>gqcnn/cpu</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run --rm -it gqcnn/cpu
+</pre></div>
+</div>
+<p>To run <cite>gqcnn/gpu</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nvidia-docker run --rm -it gqcnn/gpu
+</pre></div>
+</div>
+<p>Note the use of <cite>nvidia-docker</cite> in the latter to enable the Nvidia runtime.</p>
+<p>You will then see an interactive shell like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ root@a96488604093:~/Workspace/gqcnn#
+</pre></div>
+</div>
+<p>Now you can proceed to run the examples and tutorial!</p>
+<p>For the package to work you will need the following dependencies can be installed by running the following command:</p>
+<div class="highlight-bash: notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-kinetic-moveit-ros-move-group ros-kinetic-controller-manager* ros-kinetic-moveit* ros-kinetic-effort-controllers ros-kinetic-joint-trajectory-controller ros-kinetic-gazebo-ros* ros-kinetic-rviz* libboost-filesystem-dev libjsoncpp-dev
+</pre></div>
+</div>
+<div class="section" id="recommended-dependencies">
+<h2>Recommended dependencies<a class="headerlink" href="#recommended-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>For optimal performance you are advices to install the following packages.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://developer.nvidia.com/cuda-10.0-download-archive">CUDA Toolkit 10.0</a></p></li>
+<li><p><a class="reference external" href="https://developer.nvidia.com/cudnn">CuDNN 7.6.1</a></p></li>
+<li><p><a class="reference external" href="https://docs.nvidia.com/cuda/cuda-samples/index.html">Cuda Samples</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../usage/usage.html" class="btn btn-neutral float-right" title="How to use" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../info/info.html" class="btn btn-neutral float-left" title="Package information" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Rick Staa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

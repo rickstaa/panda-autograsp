@@ -288,7 +288,7 @@ setup(
     setup_requires=setup_requirements,
     install_requires=requirements,
     extras_require={
-        "docs": ["sphinx", "sphinxcontrib-napoleon", "sphinx_rtd_theme", "sphinx-navtree"],
+        "docs": ["sphinx", "sphinxcontrib-napoleon", "sphinx_rtd_theme", "sphinx-navtree", "sphinx-autobuild", "docutils", "doc8"],
         "dev": ["pytest", "bumpversion", "coverage", "codacy-coverage"]
     },
     cmdclass={

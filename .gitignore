@@ -9,6 +9,8 @@ docsrc/_build/
 data/tmp
 models
 dist
+*eggs-info
+.eggs
 
 # files to ignore ##
 *.pyc

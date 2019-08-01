@@ -7,9 +7,13 @@ import sys
 import subprocess
 import contextlib
 import io
+import logging
 
 ## BerkeleyAutomation modules ##
+logger = logging.getLogger()
+logger.disabled = True  # Done to suppress perception warnings
 from autolab_core import YamlConfig
+logger.disabled = False
 
 ## import custom modules ##
 from panda_autograsp import Logger
@@ -122,11 +126,3 @@ def download_model(model):
         msg = model + " was already present and thus not downloaded."
         func_log.info(msg)
         return
-
-@contextlib.contextmanager
-def nostdout():
-    """Create contex to silence the stdout"""
-    save_stdout = sys.stdout
-    sys.stdout = io.BytesIO()
-    yield
-    sys.stdout = save_stdout

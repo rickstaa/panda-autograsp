@@ -10,14 +10,18 @@ import os
 import time
 import sys
 import json
+import logging
 
 ## Third party imports ##
 import numpy as np
 
 ## GQCNN module imports ##
+logger = logging.getLogger()
+logger.disabled = True  # Done to suppress perception warnings
 from perception import (Kinect2Sensor, CameraIntrinsics, ColorImage, DepthImage, BinaryImage,
                         RgbdImage, Kinect2PacketPipelineMode)
 from perception.image import imresize
+logger.disabled =False
 from visualization import Visualizer2D as vis
 from gqcnn.grasping import (Grasp2D, SuctionPoint2D,
                             CrossEntropyRobustGraspingPolicy, RgbdImageState, FullyConvolutionalGraspingPolicyParallelJaw, FullyConvolutionalGraspingPolicySuction)

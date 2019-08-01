@@ -7,6 +7,7 @@ SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = _build
+GH_PAGES_SOURCES = docs panda_autograsp tools
 
 # Put it first so that "make" without argument is like "make help".
 help:
