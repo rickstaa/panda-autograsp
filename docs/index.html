@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Sensor calibration" href="calibration.html" /> 
+    <link rel="next" title="Package information" href="info/info.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,6 +62,10 @@
           
             
             
+              <div class="version">
+                0.0
+              </div>
+            
           
 
           
@@ -83,10 +87,30 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="calibration.html">Sensor calibration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gqcnn.html">GQCNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install/install.html#build-the-package">Build the package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install/install.html#singularity-container">Singularity Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install/install.html#docker-container">Docker container</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/usage.html">How to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/usage.html#available-grasping-solutions">Available grasping solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/usage.html#sensor-calibration">Sensor calibration</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/api.html">Code API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license/license.html">License</a></li>
 </ul>
 
             
@@ -153,28 +177,78 @@
             
   <div class="section" id="welcome-to-panda-autograsp-s-documentation">
 <h1>Welcome to panda_autograsp’s documentation!<a class="headerlink" href="#welcome-to-panda-autograsp-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Panda_autograsp is an autonomous ROS based grasping solution that works with the
-<a class="reference external" href="https://www.franka.de/panda">Panda Emika Franka robot</a>. In this grasping solution
-a number of opensource grasping solutions are implemented on the
-<a class="reference external" href="https://www.franka.de/panda">Panda Emika Franka robots</a> robot.
-The grasping solutions present in this package both work with the
-physical panda robot as well as a simulated verison of the panda robot.
-A simulated version of the panda robot is shiped with the panda_autograsp
-package. The panda_autograsp package currently contains the
+<p><a class="reference external" href="https://github.com/BerkeleyAutomation/gqcnn">Panda_autograsp</a> is an autonomous ROS based grasping solution that works with the
+<a class="reference external" href="https://www.franka.de/panda">Panda Emika Franka robot</a>. It currently contains the
 following grasping algorithms:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/BerkeleyAutomation/gqcnn">BerkleyAutomation/gqcnn</a></p></li>
 </ul>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="calibration.html">Sensor calibration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="calibration.html#calibration-instructions">Calibration instructions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration.html#checkerboard-pattern">Checkerboard pattern</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration.html#calibration-configuration">Calibration configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="info/info.html">Package information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="info/info.html#package-flow-diagram">Package flow diagram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="info/info.html#grasping-solutions">Grasping solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="info/info.html#other-submodules-contained-in-this-package">Other submodules contained in this package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="gqcnn.html">GQCNN</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install/install.html">Prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#ros">ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#python">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#ubuntu">Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#virtualenv">Virtualenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#essential-dependencies">Essential dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/install.html#build-the-package">Build the package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#clone-the-repository-and-build-the-package">Clone the repository and build the package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#install-python-package-using-pip">Install python package using pip</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/install.html#singularity-container">Singularity Container</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#build-the-container">1. Build the container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#run-the-container">2. Run the container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#id4">3. Clone the repository and build the package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/install.html#docker-container">Docker container</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/usage.html">How to use</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/usage.html#physical-robot">Physical robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/usage.html#simulated-robot">Simulated robot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/usage.html#available-grasping-solutions">Available grasping solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/usage.html#sensor-calibration">Sensor calibration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/usage.html#calibration-instructions">Calibration instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/usage.html#checkerboard-pattern">Checkerboard pattern</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/api.html">Code API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/api.html#panda-autograsp-module">Panda autograsp module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/api.html#panda-autograsp-tools">Panda autograsp Tools</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license/license.html">License</a></li>
 </ul>
 </div>
 </div>
@@ -184,7 +258,6 @@ following grasping algorithms:</p>
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-<li><p><a class="reference internal" href="api.html#api"><span class="std std-ref">Code API</span></a></p></li>
 </ul>
 </div>
 
@@ -196,7 +269,7 @@ following grasping algorithms:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="calibration.html" class="btn btn-neutral float-right" title="Sensor calibration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="info/info.html" class="btn btn-neutral float-right" title="Package information" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

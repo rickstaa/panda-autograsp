@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>panda_autograsp.grasp_planner &mdash; panda_autograsp 0.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="tools.plan_grasp" href="tools.plan_grasp.html" />
+    <link rel="prev" title="panda_autograsp.functions" href="panda_autograsp.functions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> panda_autograsp
+          
+
+          
+            
+            <img src="../../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html#build-the-panda-autograsp-package">Build the Panda-autograsp package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html#singularity-installation">Singularity Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/usage.html">How to use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/usage.html#sensor-calibration">Sensor calibration</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Code API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#panda-autograsp-module">Panda autograsp module</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="panda_autograsp.functions.html">panda_autograsp.functions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">panda_autograsp.grasp_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#panda-autograsp-tools">Panda autograsp Tools</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../license/license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">panda_autograsp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">Code API</a> &raquo;</li>
+        
+      <li>panda_autograsp.grasp_planner</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/api/_autosummary/panda_autograsp.grasp_planner.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-panda_autograsp.grasp_planner">
+<span id="panda-autograsp-grasp-planner"></span><h1>panda_autograsp.grasp_planner<a class="headerlink" href="#module-panda_autograsp.grasp_planner" title="Permalink to this headline">¶</a></h1>
+<p>Implementation of the <a class="reference external" href="https://berkeleyautomation.github.io/gqcnn">GQCNN grasp detection algorithm</a> on the Franka Emika Panda Robots. This file is
+based on the grasp_planner_node.py file that was supplied with the GQCNN package.</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#panda_autograsp.grasp_planner.GQCNNGrasp" title="panda_autograsp.grasp_planner.GQCNNGrasp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GQCNNGrasp</span></code></a>()</p></td>
+<td><p>Class for storing the computed grasps.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#panda_autograsp.grasp_planner.GraspPlanner" title="panda_autograsp.grasp_planner.GraspPlanner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GraspPlanner</span></code></a>([model, sensor_type])</p></td>
+<td><p>GraspPlanner class that interacts with a number of grasp detection algorithms to compute the optimal grasp.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="panda_autograsp.grasp_planner.GQCNNGrasp">
+<em class="property">class </em><code class="sig-prename descclassname">panda_autograsp.grasp_planner.</code><code class="sig-name descname">GQCNNGrasp</code><a class="headerlink" href="#panda_autograsp.grasp_planner.GQCNNGrasp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for storing the computed grasps. This class is a trimmed down version of the original
+<a class="reference external" href="https://berkeleyautomation.github.io/gqcnn/api/policies.html?highlight=grasp2d#graspaction">gqcnn.grasping.policy.policy.GraspAction</a>.</p>
+<dl class="method">
+<dt id="panda_autograsp.grasp_planner.GQCNNGrasp.PARALLEL_JAW">
+<em class="property">property </em><code class="sig-name descname">PARALLEL_JAW</code><a class="headerlink" href="#panda_autograsp.grasp_planner.GQCNNGrasp.PARALLEL_JAW" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#panda_autograsp.grasp_planner.GQCNNGrasp.PARALLEL_JAW" title="panda_autograsp.grasp_planner.GQCNNGrasp.PARALLEL_JAW"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PARALLEL_JAW</span></code></a> Specifies parallel jaw gripper type information</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.grasp_planner.GQCNNGrasp.SUCTION">
+<em class="property">property </em><code class="sig-name descname">SUCTION</code><a class="headerlink" href="#panda_autograsp.grasp_planner.GQCNNGrasp.SUCTION" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#panda_autograsp.grasp_planner.GQCNNGrasp.SUCTION" title="panda_autograsp.grasp_planner.GQCNNGrasp.SUCTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SUCTION</span></code></a> Specifies suction jaw gripper type information</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="panda_autograsp.grasp_planner.GraspPlanner">
+<em class="property">class </em><code class="sig-prename descclassname">panda_autograsp.grasp_planner.</code><code class="sig-name descname">GraspPlanner</code><span class="sig-paren">(</span><em class="sig-param">model='GQCNN-4.0-PJ'</em>, <em class="sig-param">sensor_type='kinectv2'</em><span class="sig-paren">)</span><a class="headerlink" href="#panda_autograsp.grasp_planner.GraspPlanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>GraspPlanner class that interacts with a number of grasp detection algorithms to compute the optimal
+grasp. Currently only the <a class="reference external" href="https://berkeleyautomation.github.io/gqcnn">GQCNN by berkeleyautomation</a> is
+supported.</p>
+<dl class="method">
+<dt id="panda_autograsp.grasp_planner.GraspPlanner.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">model='GQCNN-4.0-PJ'</em>, <em class="sig-param">sensor_type='kinectv2'</em><span class="sig-paren">)</span><a class="headerlink" href="#panda_autograsp.grasp_planner.GraspPlanner.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cfg</strong> (<em>str</em>) – Name of the grasp detection model.</p></li>
+<li><p><strong>sensor_type</strong> (<em>str</em>) – The name of the RGBD sensor.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.grasp_planner.GraspPlanner.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#panda_autograsp.grasp_planner.GraspPlanner.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the sensor and the grasp planner request handler.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.grasp_planner.GraspPlanner.read_images">
+<code class="sig-name descname">read_images</code><span class="sig-paren">(</span><em class="sig-param">skip_registration=False</em><span class="sig-paren">)</span><a class="headerlink" href="#panda_autograsp.grasp_planner.GraspPlanner.read_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves data frames from the sensor using the <a class="reference external" href="https://github.com/BerkeleyAutomation/perception">BerkeleyAutomation</a> <cite>pylibfreenect2 &lt;https://github.com/r9y9/pylibfreenect2&gt;</cite> wrapper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>skip_registration</strong> (<em>bool</em>) – If True, the registration step is skipped, by default False.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The ColorImage, DepthImage, and IrImage of the current frame.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorImage</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">DepthImage</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">IrImage</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the Kinect stream is not running.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.grasp_planner.GraspPlanner.plan_grasp">
+<code class="sig-name descname">plan_grasp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#panda_autograsp.grasp_planner.GraspPlanner.plan_grasp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the image frames from the sensor and computes possible grasps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Computed optimal grasp.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#panda_autograsp.grasp_planner.GQCNNGrasp" title="panda_autograsp.grasp_planner.GQCNNGrasp"><code class="xref py py-class docutils literal notranslate"><span class="pre">GQCNNGrasp</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.grasp_planner.GraspPlanner.plan_grasp_bb">
+<code class="sig-name descname">plan_grasp_bb</code><span class="sig-paren">(</span><em class="sig-param">bounding_box=None</em><span class="sig-paren">)</span><a class="headerlink" href="#panda_autograsp.grasp_planner.GraspPlanner.plan_grasp_bb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grasp planner request handler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bounding_box</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – [description], by default None</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Computed optimal grasp.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#panda_autograsp.grasp_planner.GQCNNGrasp" title="panda_autograsp.grasp_planner.GQCNNGrasp"><code class="xref py py-class docutils literal notranslate"><span class="pre">GQCNNGrasp</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.grasp_planner.GraspPlanner.plan_grasp_segmask">
+<code class="sig-name descname">plan_grasp_segmask</code><span class="sig-paren">(</span><em class="sig-param">segmask</em><span class="sig-paren">)</span><a class="headerlink" href="#panda_autograsp.grasp_planner.GraspPlanner.plan_grasp_segmask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grasp planner request handler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>segmask</strong> (<a class="reference external" href="https://berkeleyautomation.github.io/perception/api/image.html#binaryimage">perception.BinaryImage</a>) – Binary segmask of detected object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Computed optimal grasp.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>py:class::<cite>.GQCNNGrasp</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.grasp_planner.GraspPlanner.execute_policy">
+<code class="sig-name descname">execute_policy</code><span class="sig-paren">(</span><em class="sig-param">rgbd_image_state</em>, <em class="sig-param">grasping_policy</em>, <em class="sig-param">pose_frame</em><span class="sig-paren">)</span><a class="headerlink" href="#panda_autograsp.grasp_planner.GraspPlanner.execute_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a grasping policy on an <cite>RgbdImageState</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rgbd_image_state</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">RgbdImageState</span></code>) – <cite>RgbdImageState</cite> from <a class="reference external" href="https://berkeleyautomation.github.io/perception/">BerkeleyAutomation/perception</a> to encapsulate
+depth and color image along with camera intrinsics.</p></li>
+<li><p><strong>grasping_policy</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">GraspingPolicy</span></code>) – Grasping policy to use.</p></li>
+<li><p><strong>pose_frame</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Frame of reference to publish pose in.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.grasp_planner.value">
+<code class="sig-prename descclassname">panda_autograsp.grasp_planner.</code><code class="sig-name descname">value</code><a class="headerlink" href="#panda_autograsp.grasp_planner.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tools.plan_grasp.html" class="btn btn-neutral float-right" title="tools.plan_grasp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="panda_autograsp.functions.html" class="btn btn-neutral float-left" title="panda_autograsp.functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Rick Staa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

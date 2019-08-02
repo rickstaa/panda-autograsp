@@ -6,11 +6,13 @@ tests/__pycache__
 gqcnn.egg-info
 panda_autograsp.egg-info
 docsrc/_build/
+docsrc/source/_build
 data/tmp
 models
 dist
 *eggs-info
 .eggs
+logs/*
 
 # files to ignore ##
 *.pyc
