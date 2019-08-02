@@ -104,7 +104,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
         && cp /deep_robotics_singularity_recipes/resources/.singularity_bashrc /.singularity_bashrc \
         && cp /deep_robotics_singularity_recipes/resources/.conda_init /.conda_init \
         && cp /deep_robotics_singularity_recipes/resources/.conda_wrapper /.conda_wrapper \
-        && cp /deep_robotics_singularity_recipes/resources/welcome_msgs/panda-autograsp-tensorflow-gpu-miniconda3-ros_kinetic-xenial.txt /.welcome_msg \
+        && cp /deep_robotics_singularity_recipes/resources/welcome_msgs/ros_kinect-cuda10-xenial.txt /.welcome_msg \
         && rm -rf /deep_robotics_singularity_recipes"
 
     ## Install miniconda3 ##
@@ -226,16 +226,6 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
         && mkdir -p /etc/udev/rules.d/ \
         && cp ../platform/linux/udev/90-kinect2.rules /etc/udev/rules.d/ \
         && make install-openni2"
-
-    ## Install pylibfreenect2 ##
-    export LIBFREENECT2_INSTALL_PREFIX=/opt/freenect2/
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/freenect2/lib
-    bash -c "cd /opt \
-        && git clone https://github.com/r9y9/pylibfreenect2.git \
-        && cd pylibfreenect2 \
-        && pip install Cython \
-        && git checkout v0.1.2 \
-        && python setup.py install"
 
     ## Install opencv ##
     conda install -y -c conda-forge opencv
