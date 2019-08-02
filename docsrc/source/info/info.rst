@@ -13,7 +13,7 @@ currently contains the following grasping algorithms:
 
 -   `BerkleyAutomation/gqcnn <https://github.com/BerkeleyAutomation/gqcnn>`_
 
-.. note:: All of these grasping algorithms can be used with both a real Franka Emika Panda robot as well as an included simulated version of the franka panda robot.
+.. note:: These solutions work both on a physical as well as a simulated version of the panda robot. A simulated version of the panda robot is shipped with this package.
 
 Package flow diagram
 ---------------------------
@@ -28,8 +28,8 @@ Package flow diagram
 Grasping solutions
 ---------------------------
 
-GQCNN
-^^^^^^^^^^^^
+GQ-CNN & F-GQ-CNN
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 GQ-CNNs are neural network architectures that take as input a depth image
 and grasp, and output the predicted probability that the grasp will
@@ -57,8 +57,7 @@ randomization for sim-to-real transfer. See the ongoing
 .. _Dex-Net 2.0: https://berkeleyautomation.github.io/dex-net/#dexnet_2
 .. _FC-GQ-CNN: https://berkeleyautomation.github.io/fcgqcnn
 
-
-.. note:: The text and the images above are taken from the original `GQCNN documentation <https://berkeleyautomation.github.io/gqcnn/>`_.
+.. note:: Currently only the parallel jaw variants of the GQ-CNN and FC-GQ-CNN networks are supported by the `panda_autograsp`_ package.
 
 Other submodules contained in this package
 -------------------------------------------------

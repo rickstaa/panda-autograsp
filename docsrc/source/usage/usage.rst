@@ -1,6 +1,8 @@
 .. usage:
 
 .. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
+.. _Dex-Net 4.0: https://berkeleyautomation.github.io/dex-net/#dexnet_4
+.. _FC-GQ-CNN: https://berkeleyautomation.github.io/fcgqcnn
 
 How to use
 ====================
@@ -16,7 +18,7 @@ the following command:
 
 .. code-block:: bash
 
-    roslaunch panda_autograsp autograsp.launch
+    roslaunch panda_autograsp autograsp.launch solution:=<GRASPING_SOLUTION>
 
 Simulated robot
 -------------------
@@ -25,9 +27,15 @@ To start the `panda_autograsp`_ solution with the simulation use this command:
 
 .. code-block:: bash
 
-    roslaunch panda_autograsp autograsp.launch real:=True
+    roslaunch panda_autograsp autograsp.launch real:=True solution:=<GRASPING_SOLUTIOn>
 
-.. calibration:
+Available grasping solutions
+=====================================
+
+Currently the following grasping solutions are supported:
+
+#. **GQCNN-4.0-PJ**: For `Dex-Net 4.0`_, trained on images of objects in clutter with parameters for a PhotoNeo PhoXi S.
+#. **FC-GQCNN-4.0-PJ**: For `FC-GQ-CNN`_, trained on images of objects in clutter with parameters for a PhotoNeo PhoXi S.
 
 Sensor calibration
 ========================

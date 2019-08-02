@@ -58,7 +58,7 @@ To use the package together with the Kinect camera, we need to install the
 for installing the `libfreenect2 <https://github.com/OpenKinect/libfreenect2.git>`_ can be
 found in the `readme of the repository <https://github.com/OpenKinect/libfreenect2>`_.
 
-Build the panda-autograsp package
+Build the package
 ========================================
 
 Clone the repository and build the package
