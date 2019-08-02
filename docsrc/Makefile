@@ -15,13 +15,28 @@ help:
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILDDIR)/*
+	@rm -rf $(BUILDDIR)/*
 
 .PHONY: gh-pages
 gh-pages:
-	@sphinx-apidoc -o "${BUILDDIR}/_modules" ".."
-	@make html
-	@cp -a "${BUILDDIR}"/html/. ../docs
+	@current_git_branch=$(git -C "$1" branch | sed  '/^\*/!d;s/\* //') && \
+	git checkout gh-pages && \
+	cd .. && \
+	git rm -rf . && git clean -fxd && \
+	git checkout $(current_git_branch) $(GH_PAGES_SOURCES) && \
+	git reset HEAD && \
+	cd docs && \
+	sphinx-apidoc -o "${BUILDDIR}/_modules" ".."
+	make html && \
+	cd .. && \
+	mv -fv docs/build/html/* ./ && \
+	touch .nojekyll && \
+	rm -rf $(GH_PAGES_SOURCES) && \
+	git add -A && \
+	git commit -m "Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`" && \
+	git push origin --delete gh-pages && \
+	git push origin gh-pages ; \
+	git checkout $(current_git_branch)
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
