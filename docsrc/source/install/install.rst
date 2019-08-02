@@ -106,7 +106,7 @@ the `singularity-hub <https://www.singularity-hub.org`_.
 
 .. code-block:: bash
 
-    sudo singularity build --sandbox <CONTAINER_NAME>.simg shub://rickstaa/deep-robotics-singularity-recipes:panda_autograsp-ros-kinetic-cuda10-xenial
+    sudo singularity build --sandbox <CONTAINER_NAME> shub://rickstaa/panda_autograsp/ros-kinetic-cuda10-xenial:latest
 
 2. Setup the right permissions
 -------------------------------------------
