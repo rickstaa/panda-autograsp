@@ -7,7 +7,7 @@ Prerequisites
 
 ROS
 -----------
-The `panda_autograsp`_ package has only been tested with ``ROS Kinetic``. If you experience problems running this package in ``ROS Melodic`` please `create an issue <https://github.com/rickstaa/panda_autograsp/issues>`_.
+The `panda_autograsp`_ package has only been tested with ``ROS Kinetic``.
 
 Python
 -----------
@@ -36,6 +36,10 @@ The following packages are essential for using the `panda_autograsp`_ package.
 - `A number of additional ROS packages <#ROS-packages>`_
 - `The libfreenect2 library <https://github.com/OpenKinect/libfreenect2>`_
 
+ROS Kinectic
+^^^^^^^^^^^^^^^^^^^^^^
+The ROS kinetic installation instructions can be found `here <https://wiki.ros.org/kinetic>`_.
+
 ROS Packages
 ^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -56,9 +60,6 @@ found in the `readme of the repository <https://github.com/OpenKinect/libfreenec
 
 Build the panda-autograsp package
 ========================================
-
-After all the dependencies are installed, you can build the `panda_autograsp`_
-package as follows:
 
 Clone the repository and build the package
 --------------------------------------------------------
@@ -90,46 +91,32 @@ Since the package is still under development, you need to install the
 Singularity Container
 ============================
 
-We currently provide the following Nvidia compatible singularity
-container for you to use with this package:
+We currently provide the a number of Nvidia compatible singularity
+container for you to use with this package.
+These container can be build using the recipe files found in the
+``panda_autograsp/containers/singularity`` folder or by
+pulling directly from the `singularity-hub.org <https://www.singularity-hub.org>`_ database.
 
-- **tensorflow-gpu-miniconda3-ros_kinetic-xenial.def**
-
-The recipe for this containers can be found in the
-`deep_robotics_singularity_containers repository <https://www.deep-robotics.dev>`_ or you can pull
-the repository directly from the from the `singularity-hub.org <https://www.singularity-hub.org>`_ website.
-
-1. Pull and build the container
+1. Build the container
 -------------------------------------------
 The containers in this repository can be pulled directly from
-the `singularity-hub <https://www.singularity-hub.org`_.
+the `singularity-hub <https://www.singularity-hub.org>`_ as follows:
 
 .. code-block:: bash
 
-    sudo singularity build --sandbox <CONTAINER_NAME> shub://rickstaa/panda_autograsp/ros-kinetic-cuda10-xenial:latest
+    build <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-kinetic-cuda10-xenial
 
-2. Setup the right permissions
--------------------------------------------
+It can also be build from the recipe file using the following command:
 
-If you also want to access the files in the container folder without
-having to use the root user you can change the ``<YOUR_CONTAINER_NAME>``
-folder permissions as follows:
+.. code-block:: bash
 
-#. Change the group owner to your user group.
+    sudo singularity <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-kinetic-cuda10-xenial
 
-    .. code-block:: bash
+You can also add the ``--sandbox`` argument to build the container as a writable folder.
 
-        sudo chgrp -R <YOUR_USER_NAME> ./<YOUR_CONTAINER_NAME>
+.. warning:: You need root access to build from a recipe file.
 
-#. Give your user group _read and write\_ access to the ``<YOUR_CONTAINER_NAME`` folder.
-
-    .. code-block:: bash
-
-        sudo chmod -R g+rwx  ./<YOUR_CONTAINER_NAME>
-
-#. If successful the lock above the folder now disappeared.
-
-3. Run the container
+2. Run the container
 -------------------------------------------
 
 After the container is built, you can use the singularity ``shell``,
@@ -144,12 +131,31 @@ container using one of the following `run` commands:
 
 .. note:: Additionally, you can also add the ``--writable`` parameter to the ``run command`` to receive write permissions.
 
-4. Clone the repository and build the package
+3. Clone the repository and build the package
 ------------------------------------------------
 
 After you are inside the singularity container, you have to build
 the `panda_autograsp`_
 `as explained above <#Build-the-panda-autograsp-package>`_.
+
+Additional permissions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you did build the singularity container as a writable folder
+you can give your user write and read access from outside the singularity
+container by:
+
+#. Changing the group owner to your user group.
+
+    .. code-block:: bash
+
+        sudo chgrp -R <YOUR_USER_NAME> ./<YOUR_CONTAINER_NAME>
+
+#. Giving your user group _read and write\_ access to the ``<YOUR_CONTAINER_NAME`` folder.
+
+    .. code-block:: bash
+
+        sudo chmod -R g+rwx  ./<YOUR_CONTAINER_NAME>
 
 Docker container
 ==============================

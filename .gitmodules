@@ -13,9 +13,6 @@
 	path = moveit_tutorials
     url = git@github.com:ros-planning/moveit_tutorials.git
 	branch = kinetic-devel
-[submodule "deep_robotics_singularity_recipes"]
-	path = deep_robotics_singularity_recipes
-	url = ../deep_robotics_singularity_recipes.git
 [submodule "perception"]
 	path = perception
 	url = ../perception.git
