@@ -11,17 +11,17 @@
 	url = ../panda_simulation.git
 [submodule "moveit_tutorials"]
 	path = moveit_tutorials
-    url = git@github.com:ros-planning/moveit_tutorials.git
+    url = https://github.com/ros-planning/moveit_tutorials.git 
 	branch = kinetic-devel
-[submodule "perception"]
-	path = perception
-	url = ../perception.git
 [submodule "gqcnn"]
 	path = gqcnn
-	url = git@github.com:BerkeleyAutomation/gqcnn.git
+	url = https://github.com/BerkeleyAutomation/gqcnn.git 
 [submodule "autolab_core"]
 	path = autolab_core
 	url = ../autolab_core.git
 [submodule "iai_kinect2"]
 	path = iai_kinect2
-	url = ../iai_kinect2.git
+	url = https://github.com/code-iai/iai_kinect2.git  
+[submodule "perception"]
+	path = perception
+	url = ./perception.git
