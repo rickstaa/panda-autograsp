@@ -24,4 +24,4 @@
 	url = git@github.com:code-iai/iai_kinect2.git 
 [submodule "perception"]
 	path = perception
-	url = ./perception.git
+	url = ../perception.git
