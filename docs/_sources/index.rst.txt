@@ -34,12 +34,6 @@ following grasping algorithms:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Development documentation
-
-   dev/doc_dev.rst
-
-.. toctree::
-   :maxdepth: 2
    :caption: API Documentation
    :glob:
 

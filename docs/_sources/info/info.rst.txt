@@ -7,8 +7,9 @@ Package information
 `Panda_autograsp`_ is an autonomous ROS based grasping solution that works with the
 `Panda Emika Franka robot <https://www.franka.de/panda>`_. In this grasping solution
 a number of opensource grasping solutions are implemented on the
-`Panda Emika Franka robot <https://www.franka.de/panda>`_ robot.The `panda_autograsp`_ package
+`Panda Emika Franka robots <https://www.franka.de/panda>`_ robot.The `panda_autograsp`_ package
 currently contains the following grasping algorithms:
+
 
 -   `BerkleyAutomation/gqcnn <https://github.com/BerkeleyAutomation/gqcnn>`_
 

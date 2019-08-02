@@ -1,6 +1,8 @@
 .. usage:
 
 .. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
+.. _Dex-Net 4.0: https://berkeleyautomation.github.io/dex-net/#dexnet_4
+.. _FC-GQ-CNN: https://berkeleyautomation.github.io/fcgqcnn
 
 How to use
 ====================
@@ -34,9 +36,6 @@ Currently the following grasping solutions are supported:
 
 #. **GQCNN-4.0-PJ**: For `Dex-Net 4.0`_, trained on images of objects in clutter with parameters for a PhotoNeo PhoXi S.
 #. **FC-GQCNN-4.0-PJ**: For `FC-GQ-CNN`_, trained on images of objects in clutter with parameters for a PhotoNeo PhoXi S.
-
-.. _Dex-Net 4.0: https://berkeleyautomation.github.io/dex-net/#dexnet_4
-.. _FC-GQ-CNN: https://berkeleyautomation.github.io/fcgqcnn
 
 Sensor calibration
 ========================
