@@ -8,7 +8,7 @@
 [![Ros melodic](https://img.shields.io/badge/ROS%20Melodic-not%20tested-yellow.svg)](https://wiki.ros.org/melodic)
 
 ## Package Overview
-Panda_autograsp is an autonomous ROS based grasping solution that works with the [Panda Emika Franka robot](https://www.franka.de/panda/). In this grasping solution a number of opensource grasping solutions are implemented on the [Panda Emika Franka robots](https://www.franka.de/panda/) robot. The grasping solutions present in this package both work with the physical panda robot as well as a simulated verison of the panda robot. A simulated version of the panda robot is shiped with the panda_autograsp package. The panda_autograsp package currently contains the following grasping algorithms:
+Panda_autograsp is an autonomous ROS based grasping solution that works with the [Panda Emika Franka robot](https://www.franka.de/panda/). In this grasping solution, several opensource grasping solutions are implemented on the [Panda Emika Franka robots](https://www.franka.de/panda/) robot. These solutions work both on a physical as well as a simulated version of the panda robot. A simulated version of the panda robot is already shipped with this package.
 
 -   [BerkleyAutomation/gqcnn](https://github.com/BerkeleyAutomation/gqcnn)
 
@@ -16,5 +16,5 @@ Panda_autograsp is an autonomous ROS based grasping solution that works with the
 Please see the [docs](https://rickstaa.github.io/panda_autograsp/) for installation and usage instructions.
 
 ## References
-- GQCNN designed and trained by [berkeleyautomation](https://berkeleyautomation.github.io/gqcnn) 
+- GQ-CNN and FC-GQ-CNN created by [@berkeleyautomation](https://berkeleyautomation.github.io/gqcnn) 
 - Icon created with svgs made by [@freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/authors/eucalyp)
