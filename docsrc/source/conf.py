@@ -36,7 +36,7 @@ extensions = ['sphinx.ext.napoleon',
               'sphinx.ext.autosummary']
 autoclass_content = "class"
 autodoc_member_order = "bysource"
-autodoc_default_flags = ["members", "show-inheritance"]
+autodoc_default_flags = ["members"] # , "show-inheritance"]
 autosummary_generate = True
 napoleon_include_special_with_doc = True
 napoleon_include_init_with_doc = True

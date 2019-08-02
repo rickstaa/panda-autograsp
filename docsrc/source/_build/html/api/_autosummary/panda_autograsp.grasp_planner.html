@@ -95,6 +95,7 @@
 <p class="caption"><span class="caption-text">Installation Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html#build-the-panda-autograsp-package">Build the Panda-autograsp package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../install/install.html#singularity-installation">Singularity Installation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Getting Started</span></p>
@@ -205,8 +206,7 @@ based on the grasp_planner_node.py file that was supplied with the GQCNN package
 <dl class="class">
 <dt id="panda_autograsp.grasp_planner.GQCNNGrasp">
 <em class="property">class </em><code class="sig-prename descclassname">panda_autograsp.grasp_planner.</code><code class="sig-name descname">GQCNNGrasp</code><a class="headerlink" href="#panda_autograsp.grasp_planner.GQCNNGrasp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class for storing the computed grasps. This class is a trimmed down version of the original
+<dd><p>Class for storing the computed grasps. This class is a trimmed down version of the original
 <a class="reference external" href="https://berkeleyautomation.github.io/gqcnn/api/policies.html?highlight=grasp2d#graspaction">gqcnn.grasping.policy.policy.GraspAction</a>.</p>
 <dl class="method">
 <dt id="panda_autograsp.grasp_planner.GQCNNGrasp.PARALLEL_JAW">
@@ -225,8 +225,7 @@ based on the grasp_planner_node.py file that was supplied with the GQCNN package
 <dl class="class">
 <dt id="panda_autograsp.grasp_planner.GraspPlanner">
 <em class="property">class </em><code class="sig-prename descclassname">panda_autograsp.grasp_planner.</code><code class="sig-name descname">GraspPlanner</code><span class="sig-paren">(</span><em class="sig-param">model='GQCNN-4.0-PJ'</em>, <em class="sig-param">sensor_type='kinectv2'</em><span class="sig-paren">)</span><a class="headerlink" href="#panda_autograsp.grasp_planner.GraspPlanner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>GraspPlanner class that interacts with a number of grasp detection algorithms to compute the optimal
+<dd><p>GraspPlanner class that interacts with a number of grasp detection algorithms to compute the optimal
 grasp. Currently only the <a class="reference external" href="https://berkeleyautomation.github.io/gqcnn">GQCNN by berkeleyautomation</a> is
 supported.</p>
 <dl class="method">

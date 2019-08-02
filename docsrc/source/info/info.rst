@@ -13,7 +13,17 @@ currently contains the following grasping algorithms:
 
 -   `BerkleyAutomation/gqcnn <https://github.com/BerkeleyAutomation/gqcnn>`_
 
-.. note:: All of these grasping algorithms can be used with both a real Franka Emika Panda robot as well as a as a (included) simulated version of the franka panda robot.
+.. note:: All of these grasping algorithms can be used with both a real Franka Emika Panda robot as well as an included simulated version of the franka panda robot.
+
+Package flow diagram
+---------------------------
+
+.. figure:: ../_images/algorithm_overview.svg
+    :width: 100%
+    :scale: 90%
+    :align: center
+
+    Flow diagram of the `panda_autograsp`_ system.
 
 Grasping solutions
 ---------------------------
@@ -22,8 +32,9 @@ GQCNN
 ^^^^^^^^^^^^
 
 GQ-CNNs are neural network architectures that take as input a depth image
-and grasp,and output the predicted probability that the grasp will successfully
-hold the object while lifting, transporting, and shaking the object.
+and grasp, and output the predicted probability that the grasp will
+successfully hold the object while lifting, transporting, and shaking
+the object.
 
 .. figure:: https://berkeleyautomation.github.io/gqcnn/_images/gqcnn1.png
    :width: 100%
@@ -38,9 +49,9 @@ hold the object while lifting, transporting, and shaking the object.
    Alternate faster GQ-CNN architecture from `FC-GQ-CNN`_.
 
 The GQ-CNN weights are trained on datasets of synthetic point clouds, parallel
-jaw grasps,and grasp metrics generated from physics-based models with domain
-randomization for sim-to-real transfer. See the ongoing `Dexterity Network (Dex-Net)`_
-project for more information.
+jaw grasps, and grasp metrics generated from physics-based models with domain
+randomization for sim-to-real transfer. See the ongoing
+`Dexterity Network (Dex-Net)`_ project for more information.
 
 .. _Dexterity Network (Dex-Net): https://berkeleyautomation.github.io/dex-net
 .. _Dex-Net 2.0: https://berkeleyautomation.github.io/dex-net/#dexnet_2

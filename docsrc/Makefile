@@ -1,21 +1,24 @@
-# Minimal makefile for Sphinx documentation
-#
+## Make file for the panda_autograsp sphinx documentation
 
 # You can set these variables from the command line, and also
 # from the environment for the first two.
-SPHINXOPTS    ?=
-SPHINXBUILD   ?= sphinx-build
+SPHINXOPTS    =
+SPHINXBUILD   = sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = _build
 GH_PAGES_SOURCES = docs panda_autograsp tools
 
 # Put it first so that "make" without argument is like "make help".
+.PHONY: help Makefile
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: help Makefile
+.PHONY: clean
+clean:
+	rm -rf $(BUILDDIR)/*
 
-github:
+.PHONY: gh-pages
+gh-pages:
 	@sphinx-apidoc -o "${BUILDDIR}/_modules" ".."
 	@make html
 	@cp -a "${BUILDDIR}"/html/. ../docs

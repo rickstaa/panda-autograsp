@@ -6,7 +6,7 @@ How to use
 ====================
 
 The panda_autograsp solution can be started both with a real physical system
-or with a simulated system.
+alternatively, with a simulated system.
 
 Physical robot
 --------------------
@@ -34,7 +34,8 @@ Sensor calibration
 
 Calibration instructions
 ------------------------------------
-The kinect camera is calibrated using the :py:mod:`tools.chessboard_calibration`.
+The Kinect camera is calibrated using the
+:py:mod:`tools.chessboard_calibration`.
 
 Checkerboard pattern
 ------------------------------------
