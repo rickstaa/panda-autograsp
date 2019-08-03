@@ -25,6 +25,7 @@ gh-pages:
 	git checkout master $(GH_PAGES_SOURCES) && \
 	git reset HEAD && \
 	cd docs && \
+	rm -rf build && \
 	sphinx-apidoc -o "${BUILDDIR}/_modules" ".." && \
 	make html && \
 	cd .. && \
