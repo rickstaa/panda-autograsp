@@ -1,4 +1,4 @@
-.. doc_dev:
+.. _doc_dev:
 
 .. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
 

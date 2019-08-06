@@ -1,4 +1,4 @@
-.. pre_prerequisites:
+.. _install:
 
 .. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
 

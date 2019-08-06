@@ -152,23 +152,15 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
     echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
     apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-    # install ROS bootstrap tools
+    ## Install ROS kinetic desktop full ##
     apt update
-    apt install --no-install-recommends -y\
-        python-rosdep \
-        python-rosinstall \
-        python-vcstools
-    rm -rf /var/lib/apt/lists/*
+    apt install -q -y ros-kinetic-desktop-full
 
     # bootstrap rosdep
     rosdep init
     rosdep update
 
-    ## Install ROS kinetic desktop full ##
-    apt update
-    apt install -q -y ros-kinetic-desktop-full
-
-    ## Install MoveIt and check for panda_auto_grasp package dependencies
+    ## Install MoveIt and ros building packages
     rosdep update
     apt update
     apt dist-upgrade -y
@@ -184,7 +176,11 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
        ros-kinetic-rviz* \
        ros-kinetic-joint-state-controller* \
        libboost-filesystem-dev \
-       libjsoncpp-dev
+       libjsoncpp-dev \
+       python-vcstools \
+       python-wstool \
+       python-rosinstall \
+       python-rosinstall-generator
 
     ## Install libfranca from source ##
     bash -c "cd / \

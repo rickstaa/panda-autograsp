@@ -1,4 +1,4 @@
-.. info:
+.. _info:
 
 .. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
 

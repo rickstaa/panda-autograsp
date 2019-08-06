@@ -1,4 +1,4 @@
-.. usage:
+.. _usage:
 
 .. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
 
