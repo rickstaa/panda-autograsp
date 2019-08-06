@@ -131,7 +131,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
     rm /.welcome_msg # Remove welcome message file
 
     ## Create tf-gpu enviroment ##
-    conda create -q -y --name tf-gpu python==3.7
+    conda create -q -y -n tf-gpu python=3.7
     conda activate tf-gpu
     pip install rospkg
 
@@ -231,9 +231,9 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
     conda install -y -c conda-forge opencv
 
     ## Upgrade packages and remove unused packages ##
-    apt -q -y upgrade
-    apt autoremove
-    apt autoclean
+    apt upgrade -y -q
+    apt autoremove -y -q
+    apt autoclean -y -q
     rm -rf /var/lib/apt/lists/*
 
 %runscript

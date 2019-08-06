@@ -5,8 +5,8 @@ __pychache__
 tests/__pycache__
 gqcnn.egg-info
 panda_autograsp.egg-info
-docsrc/build/
-docsrc/source/build
+docs/build/
+docs/source/build
 data/tmp
 models
 dist

@@ -1,7 +1,4 @@
-.. panda_autograsp documentation master file, created by
-   sphinx-quickstart on Mon Jul  1 16:05:31 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. panda_autograsp documentation master file
 
 .. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
 
@@ -31,8 +28,6 @@ following grasping algorithms:
    :caption: Getting Started
 
    usage/usage.rst
-
-
 
 .. toctree::
    :maxdepth: 2

@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 #################################################
-## Functions ####################################
+## Setup functions ##############################
 #################################################
 def add_submods_requirements(requirements):
     """Adds the submodule requirements to the requirements list.
@@ -163,7 +163,9 @@ def get_tf_dep():
         logger.warning(no_driver_msg)
     return tf_dep
 
-
+#################################################
+## Setup classes ################################
+#################################################
 class DevelopCmd(develop):
     """Overload :py:class:`setuptools.command.develop.develop` class."""
 
@@ -255,7 +257,6 @@ class InstallCmd(install, object):
 ## Setup script #################################
 #################################################
 
-
 ## Get current package version ##
 __version__ = re.sub(r'[^\d.]', '', open(
     os.path.join(os.path.dirname(os.path.realpath(__file__)),
@@ -289,7 +290,7 @@ setup(
     install_requires=requirements,
     extras_require={
         "docs": ["sphinx", "sphinxcontrib-napoleon", "sphinx_rtd_theme", "sphinx-navtree", "sphinx-autobuild", "docutils", "doc8"],
-        "dev": ["pytest", "bumpversion", "coverage", "codacy-coverage"]
+        "dev": ["pytest", "bumpversion"]
     },
     cmdclass={
         "install": InstallCmd,

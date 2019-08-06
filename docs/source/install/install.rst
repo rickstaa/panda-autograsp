@@ -95,12 +95,14 @@ We currently provide the a number of Nvidia compatible singularity
 container for you to use with this package.
 These container can be build using the recipe files found in the
 ``panda_autograsp/containers/singularity`` folder or by
-pulling directly from the `singularity-hub.org <https://www.singularity-hub.org>`_ database.
+pulling directly from the `singularity-hub.org <https://www.singularity-hub.org>`_
+container registry.
 
 1. Build the container
 -------------------------------------------
 The containers in this repository can be pulled directly from
-the `singularity-hub <https://www.singularity-hub.org>`_ as follows:
+the `singularity-hub <https://www.singularity-hub.org>`_ container
+registry as follows:
 
 .. code-block:: bash
 
