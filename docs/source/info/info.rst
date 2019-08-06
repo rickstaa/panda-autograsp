@@ -61,9 +61,11 @@ randomization for sim-to-real transfer. See the ongoing
 Other submodules contained in this package
 -------------------------------------------------
 
-- `deep_robotics_singularity_recipes <https://github.com/rickstaa/deep_robotics_singularity_recipes>`_
+- `autolab-core <https://github.com/rickstaa/autolab_core>`_
 - `franka_ros <https://github.com/rickstaa/franka_ros>`_
+- `gqcnn <https://github.com/BerkeleyAutomation/gqcnn>
+- `iai_kinect2 <https://github.com/code-iai/iai_kinect2>`_
 - `movit_tutorials <https://github.com/ros-planning/moveit_tutorials>`_
 - `panda_movit_config <https://github.com/rickstaa/panda_moveit_config>`_
 - `panda_simulation <https://github.com/rickstaa/panda_simulation>`_
-- `iai_kinect2 <https://github.com/code-iai/iai_kinect2>`_
+- `perception <https://github.com/rickstaa/perception>`_

@@ -36,7 +36,7 @@ The following packages are essential for using the `panda_autograsp`_ package.
 - `A number of additional ROS packages <#ROS-packages>`_
 - `The libfreenect2 library <https://github.com/OpenKinect/libfreenect2>`_
 
-ROS Kinectic
+ROS Kinetic
 ^^^^^^^^^^^^^^^^^^^^^^
 The ROS kinetic installation instructions can be found `here <https://wiki.ros.org/kinetic>`_.
 
@@ -91,9 +91,9 @@ Since the package is still under development, you need to install the
 Singularity Container
 ============================
 
-We currently provide the a number of Nvidia compatible singularity
+We currently provide  several Nvidia compatible singularity
 container for you to use with this package.
-These container can be build using the recipe files found in the
+These containers can be build using the recipe files found in the
 ``panda_autograsp/containers/singularity`` folder or by
 pulling directly from the `singularity-hub.org <https://www.singularity-hub.org>`_
 container registry.
@@ -108,13 +108,14 @@ registry as follows:
 
     build <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-kinetic-cuda10-xenial
 
-It can also be build from the recipe file using the following command:
+It can also be built from the recipe file using the following command:
 
 .. code-block:: bash
 
     sudo singularity <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-kinetic-cuda10-xenial
 
-You can also add the ``--sandbox`` argument to build the container as a writable folder.
+You can also add the ``--sandbox`` argument to build the container as
+a writeable folder.
 
 .. warning:: You need root access to build from a recipe file.
 
