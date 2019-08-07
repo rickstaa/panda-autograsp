@@ -7,12 +7,13 @@ Release documentation
 
 Building
 --------------------------
-Building `panda_autograsp`_'s documentation requires `sphinx <http://www.sphinx-doc.org/en/master>`_
-and a few plugins.
+Building `panda_autograsp`_'s documentation requires `sphinx <http://www.sphinx-doc.org/en/master>`_,
+the panda_autograsp package and several plugins.
 
 To install the required dependencies, go to the ``panda_autograsp``
 directory and run ::
 
+    $ pip install .
     $ pip install .[docs]
 
 Then, go to the ``docsrc`` directory and run ``make html``
