@@ -3,22 +3,29 @@ Bootstrap: docker
 From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
 
 %help
-    HPC Singularity container containing ros_kinetic, tensorflow_gpu & miniconda3. For more information see https://github.com/rickstaa/deep_robotics_singularity_recipes.
+    A HPC Singularity container containing the following packages:
+        - ros_kinetic
+        - moveit
+        - tensorflow_gpu
+        - miniconda3
+        - CUDA 10
+        - CUDNN 7
 
-    == Container aliases ==
-    ccd:      Cd to home path of singularity root container
-    rsource:  source ros kinetic setup file
-    atf:      Activate tensorflow gpu conda enviroment
-    dtf:      Deactivate tensorflow gpu conda enviroment
+    Container aliases:
+        - rsource:  Source the ROS kinetic setup file
+        - rossu:    Source a setup.bash file in ./devel/setup.bash
+        - agrasp:   Activate the autograsp conda enviroment
+        - dgrasp:   Deactivate autograsp conda enviroment
+        - dconda:   Deactivate conda enviroment
+        - pbuild:   Panda autograsp build build command.
 
+    For more information see https://deep-robotics.dev.
 %labels
     Maintainer: Rick Staa
     Github: https://github.com/rickstaa
     Version: v0.0.5
     Type: Private
-
 %environment
-
     ## Set language options ##
     LANG=C.UTF-8 LC_ALL=C.UTF-8
 
@@ -33,9 +40,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
 
     ## Freenect2 lib env var ##
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/freenect2/lib
-
 %post
-
     ## Install system package dependencies ##
     apt update --fix-missing
     apt install -q -y\
@@ -122,7 +127,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
     ## Add conda enviroment activation command to .singularity_bashrc ##
     echo "" >> /.singularity_bashrc
     echo "## Activate autograsp enviroment" >> /.singularity_bashrc
-    echo "conda activate tf-gpu" >> /.singularity_bashrc
+    echo "conda activate autograsp" >> /.singularity_bashrc
 
     ## Add container specific aliases to .singularity_bash_aliases ##
     echo "" >> /.singularity_bash_aliases
@@ -230,9 +235,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
     apt autoremove -y -q
     apt autoclean -y -q
     rm -rf /var/lib/apt/lists/*
-
 %runscript
-
 	## Execute the .singularity_bashrc file ##
 	OCI_CMD='/bin/bash'
 	OCI_ARGS='-rcfile /.singularity_bashrc'

@@ -27,17 +27,18 @@ Container .bashrc
 A ``.singularity_bashrc`` file is present inside the containers. This file is
 sourced when you run the container. You can overload all of the commands,
 aliases and settings contained in this ``.singularity_bashrc`` file by creating
-your own ``~/.singularity_bashrc`` file in your home folder. If such a ``~/.singularity_bashrc``
-file is present in your home folder, it will be sourced after the container its
+your own ``~/.singularity_bashrc`` file in your home folder. If
+such a ``~/.singularity_bashrc`` file is present in your home folder,
+it will be sourced after the container its
 ``~/.singularity_bashrc`` file.
 
 Container permissions
 --------------------------------
 
 By default your user can not write to the container folder when begin outside
-of the container. If you did build the singularity container as a writeable folder
-you can give your user write and read access from outside the singularity
-container by:
+of the container. If you did build the singularity container as a writeable
+folder you can give your user write and read access from outside the
+singularity container by:
 
 #. Changing the group owner to your user group.
 
@@ -68,3 +69,7 @@ easy code debugging. This is done as follows:
    sudo apt-get install apt-transport-https
    sudo apt-get update
    sudo apt-get install code # or code-insiders
+
+.. note::
+    Since visual code requires the /run folder you need to add the ``-B /run`` argument when running a singularity container.
+    For more information see `this issue <https://github.com/sylabs/singularity/issues/3609>`_.
