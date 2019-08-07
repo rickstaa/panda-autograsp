@@ -1,3 +1,4 @@
+.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
 
 Package use instructions
 ===================================

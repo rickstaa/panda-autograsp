@@ -1,7 +1,5 @@
 .. _usage:
 
-.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
-
 .. _package_instr:
 .. include:: package_instr.rst
 
