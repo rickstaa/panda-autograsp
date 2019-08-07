@@ -1,6 +1,6 @@
 .. panda_autograsp documentation master file
 
-.. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
+.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
 
 Welcome to panda_autograsp's documentation!
 ===========================================

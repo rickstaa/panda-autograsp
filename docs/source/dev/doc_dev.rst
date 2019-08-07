@@ -1,6 +1,6 @@
 .. _doc_dev:
 
-.. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
+.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
 
 Release documentation
 ===================================

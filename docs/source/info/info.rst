@@ -1,6 +1,6 @@
 .. _info:
 
-.. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
+.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
 
 Package information
 =========================
@@ -63,7 +63,7 @@ Other submodules contained in this package
 
 - `autolab-core <https://github.com/rickstaa/autolab_core>`_
 - `franka_ros <https://github.com/rickstaa/franka_ros>`_
-- `gqcnn <https://github.com/BerkeleyAutomation/gqcnn>
+- `gqcnn <https://github.com/BerkeleyAutomation/gqcnn>`_
 - `iai_kinect2 <https://github.com/code-iai/iai_kinect2>`_
 - `movit_tutorials <https://github.com/ros-planning/moveit_tutorials>`_
 - `panda_movit_config <https://github.com/rickstaa/panda_moveit_config>`_

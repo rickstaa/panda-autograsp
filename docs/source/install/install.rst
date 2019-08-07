@@ -1,6 +1,6 @@
 .. _install:
 
-.. _panda_autograsp: https://github.com/BerkeleyAutomation/gqcnn
+.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
 
 Prerequisites
 ==============================
@@ -8,6 +8,12 @@ Prerequisites
 ROS
 -----------
 The `panda_autograsp`_ package has only been tested with ``ROS Kinetic``.
+The ROS kinetic installation instructions can be found `here <https://wiki.ros.org/kinetic>`_.
+You further also need the following ROS packages:
+
+.. code-block:: bash
+
+    sudo apt-get install ros-kinetic-moveit-ros-move-group ros-kinetic-controller-manager* ros-kinetic-moveit* ros-kinetic-effort-controllers ros-kinetic-joint-trajectory-controller ros-kinetic-gazebo-ros* ros-kinetic-rviz* libboost-filesystem-dev libjsoncpp-dev
 
 Python
 -----------
@@ -22,43 +28,21 @@ Ubuntu
 The `panda_autograsp`_ package has only been tested with
 ``Ubuntu 12.04``, ``Ubuntu 14.04`` and ``Ubuntu 16.04``.
 
-Virtualenv
--------------------
 
-We highly recommend using a Python environment management system like `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_ or `conda <https://conda.io/en/latest/>`_ with the Pip and ROS installations.
-
-Essential dependencies
-------------------------------
-
-The following packages are essential for using the `panda_autograsp`_ package.
-
-- `ROS kinetic <https://wiki.ros.org/kinetic>`_
-- `A number of additional ROS packages <#ROS-packages>`_
-- `The libfreenect2 library <https://github.com/OpenKinect/libfreenect2>`_
-
-ROS Kinetic
-^^^^^^^^^^^^^^^^^^^^^^
-The ROS kinetic installation instructions can be found `here <https://wiki.ros.org/kinetic>`_.
-
-ROS Packages
-^^^^^^^^^^^^^^^^^^^^^^^
-
-For the package to work, you need the following dependencies can be
-installed by running the following command:
-
-.. code-block:: bash
-
-    sudo apt-get install ros-kinetic-moveit-ros-move-group ros-kinetic-controller-manager* ros-kinetic-moveit* ros-kinetic-effort-controllers ros-kinetic-joint-trajectory-controller ros-kinetic-gazebo-ros* ros-kinetic-rviz* libboost-filesystem-dev libjsoncpp-dev
-
-Libfreenect2
-^^^^^^^^^^^^^^^^^^^^^^^^
+Libfreenect2 library
+----------------------
 
 To use the package together with the Kinect camera, we need to install the
 `libfreenect2 <https://github.com/OpenKinect/libfreenect2.git>`_ library. The documentation
 for installing the `libfreenect2 <https://github.com/OpenKinect/libfreenect2.git>`_ can be
 found in the `readme of the repository <https://github.com/OpenKinect/libfreenect2>`_.
 
-Build the package
+Virtualenv
+-------------------
+
+We highly recommend using a Python environment management system like `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_ or `conda <https://conda.io/en/latest/>`_ with the Pip and ROS installations.
+
+Package build instructions
 ========================================
 
 Clone the repository and build the package
@@ -75,7 +59,7 @@ using the following command.
             && source /opt/ros/kinetic/setup.sh \
             && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
             && rosdep install --from-paths src --ignore-src --rosdistro kinetic -y --skip-keys libfranka \
-            && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build"
+            && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
 
 Install python package using pip
 ----------------------------------------
@@ -88,8 +72,8 @@ Since the package is still under development, you need to install the
     cd ~/panda_autograsp
     pip install -e .
 
-Singularity Container
-============================
+Singularity Container installation instructions
+==================================================
 
 We currently provide  several Nvidia compatible singularity
 container for you to use with this package.
@@ -122,17 +106,7 @@ a writeable folder.
 2. Run the container
 -------------------------------------------
 
-After the container is built, you can use the singularity ``shell``,
-``start`` and ``run`` commands to interact with the container.
-You are advised to use the `run` command since this also sources
-a ``.singularity_bashrc`` file that is present in each of the containers.
-This file can be used as a ``.bashrc`` file. You can run the singularity
-container using one of the following `run` commands:
-
-- **With Nvidia GPU:** ``$ singularity run --nv <YOUR_CONTAINER_NAME>``
-- **Without Nvidia GPU:** ``$ singularity run <YOUR_CONTAINER_NAME>``
-
-.. note:: Additionally, you can also add the ``--writable`` parameter to the ``run command`` to receive write permissions.
+After te container has been build run it using the ``singularity run --writable <YOUR_CONTAINER_NAME>`` command.
 
 3. Clone the repository and build the package
 ------------------------------------------------
@@ -141,8 +115,14 @@ After you are inside the singularity container, you have to build
 the `panda_autograsp`_
 `as explained above <#Build-the-panda-autograsp-package>`_.
 
-Additional permissions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. warning::
+    As explained in `issue <https://answers.ros.org/question/256886/conflict-anaconda-vs-ros-catking_pkg-not-found/>`_
+    there exist some conflicts between anaconda3 and ROS kinetic. As the singularity image provided above automatically starts the ``autograsp``
+    conda environment you first need to disable this anaconda environment before you can build the catkin package. After the
+    catkin package is build you can enable the anaconda environment again and install the ``autograsp`` package.
+
+4. Add additional permissions
+-------------------------------
 
 If you did build the singularity container as a writable folder
 you can give your user write and read access from outside the singularity
@@ -160,7 +140,7 @@ container by:
 
         sudo chmod -R g+rwx  ./<YOUR_CONTAINER_NAME>
 
-Docker container
-==============================
+Docker container installation instructions
+===========================================
 
 We do not yet provide a docker containers for this package.
