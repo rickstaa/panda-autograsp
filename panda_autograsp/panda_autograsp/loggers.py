@@ -5,6 +5,7 @@ be used to apply the panda_autograsp formatters, filters and handlers to the log
 ## Import system modules ##
 import logging
 import sys
+import os
 
 ## Third party imports ##
 import colorlog
@@ -22,16 +23,16 @@ def clear_root():
     """Function used to reset the root logger."""
     root_logger = logging.getLogger()
 
-    # clear any existing handles to streams because we don't want duplicate logs
+    ## clear any existing handles to streams because we don't want duplicate logs ##
     # NOTE: we assume that any stream handles we find are to ROOT_LOG_STREAM, which is usually the case(because it is stdout). This is fine because we will be re-creating that handle. Otherwise we might be deleting a handle that won't be re-created, which could result in dropped logs.
     for hdlr in root_logger.handlers:
         if isinstance(hdlr, logging.StreamHandler):
             root_logger.removeHandler(hdlr)
 
-    # # create nullhandler to suppress no handler warning
+    # ## create nullhandler to suppress no handler warning ##
     # root_logger.addHandler(logging.NullHandler())
 
-    # Set root configured to true
+    ## Set root configured to true ##
     Logger.ROOT_CONFIGURED = False
 
 #################################################
@@ -41,13 +42,13 @@ def configure_root(log_level=ROOT_LOG_LEVEL):
     """Function used to configure the root logger."""
     root_logger = logging.getLogger()
 
-    # clear any existing handles to streams because we don't want duplicate logs
+    ## clear any existing handles to streams because we don't want duplicate logs ##
     # NOTE: we assume that any stream handles we find are to ROOT_LOG_STREAM, which is usually the case(because it is stdout). This is fine because we will be re-creating that handle. Otherwise we might be deleting a handle that won't be re-created, which could result in dropped logs.
     for hdlr in root_logger.handlers:
         if isinstance(hdlr, logging.StreamHandler):
             root_logger.removeHandler(hdlr)
 
-    # configure the root logger
+    ## configure the root logger ##
     root_logger.setLevel(log_level)
     hdlr = logging.StreamHandler(ROOT_LOG_STREAM)
     formatter = colorlog.ColoredFormatter(
@@ -64,7 +65,7 @@ def configure_root(log_level=ROOT_LOG_LEVEL):
     hdlr.setFormatter(formatter)
     root_logger.addHandler(hdlr)
 
-    # Set root configured to true
+    ## Set root configured to true ##
     Logger.ROOT_CONFIGURED = True
     return root_logger
 
@@ -88,7 +89,16 @@ def add_root_log_file(log_file, mode='a', encoding=None, delay=False):
     """
     root_logger = logging.getLogger()
 
-    # add a file handle to the root logger
+    ## Create model folder if it does not exists ##
+    log_folder = os.path.abspath(os.path.join(log_file, os.pardir))
+    if not os.path.exists(log_folder):
+        try:
+            os.makedirs(log_folder)
+        except:
+            root_logger.info('Log file could not be created logger not logging to file {}'.format(log_file))
+            return
+
+    ## Add a file handle to the root logger ##
     hdlr = logging.FileHandler(log_file, mode, encoding, delay)
     formatter = logging.Formatter('%(asctime)s %(name)-10s %(levelname)-8s %(message)s', datefmt='%m-%d %H:%M:%S')
     hdlr.setFormatter(formatter)

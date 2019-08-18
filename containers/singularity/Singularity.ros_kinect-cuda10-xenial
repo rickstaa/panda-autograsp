@@ -7,6 +7,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
         - ros_kinetic
         - moveit
         - tensorflow_gpu
+        - opencv2
         - miniconda3
         - CUDA 10
         - CUDNN 7
@@ -71,7 +72,8 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
         unzip \
         cmake \
         pkg-config \
-        wget
+        wget \
+        tree
     apt clean
     rm -rf /var/lib/apt/lists/*
 
@@ -89,7 +91,12 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
         libxext6 \
         libglib2.0-0 \
         libxrender1 \
-	libgtk2.0-dev
+	    libgtk2.0-dev
+
+    ## Install opencl dependencies
+    apt install -q -y\
+        nvidia-modprobe \
+        opencl-headers
 
     ## Install pip (`apt-get install python-pip` causes trouble w/ networkx).
     curl -O https://bootstrap.pypa.io/get-pip.py && \
@@ -118,8 +125,8 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh
     /bin/bash /miniconda.sh -b -p /opt/conda
     rm /miniconda.sh
-    /opt/conda/bin/conda clean -tipsy
     . /opt/conda/etc/profile.d/conda.sh
+    conda clean -y --all
     conda install -q -y python=3
     conda update -y conda
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh
@@ -129,25 +136,21 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
     echo "## Activate autograsp enviroment" >> /.singularity_bashrc
     echo "conda activate autograsp" >> /.singularity_bashrc
 
-    ## Add container specific aliases to .singularity_bash_aliases ##
-    echo "" >> /.singularity_bash_aliases
-    cat /container_aliases.txt >> /.singularity_bash_aliases
-    rm /container_aliases.txt
-
     ## Create autograsp enviroment ##
     conda create -q -y -n autograsp python=3.7
     conda activate autograsp
-    pip install rospkg
+    chmod -R a+w /opt/conda/envs/autograsp # Make env available to all singularity users
 
     ## Install python packages ##
     conda install -y tensorflow-gpu
     #conda install -y jupyter
     conda update --all
 
-    ## Install pip (`apt-get install python-pip` causes trouble w/ networkx).
-    curl -O https://bootstrap.pypa.io/get-pip.py && \
-	    python get-pip.py && \
-        rm get-pip.py
+    ## Install opencv ##
+    pip uninstall opencv-python -y
+    conda install -y -c conda-forge opencv
+
+    ## Install pip in environment (`apt-get install python-pip` causes trouble w/ networkx).
     curl -O https://bootstrap.pypa.io/get-pip.py && \
 	    python3 get-pip.py && \
         rm get-pip.py
@@ -200,8 +203,15 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
 
     ## Download cuda10.0 samples and set cmake variables ##
     bash -c "cd /opt \
-        && git clone https://github.com/zchee/cuda-sample.git \
-        && mv cuda-sample NVIDIA_CUDA-10.0_Samples"
+        && git clone https://github.com/NVIDIA/cuda-samples \
+        && mv cuda-samples NVIDIA_CUDA-10.0_Samples \
+        && cd NVIDIA_CUDA-10.0_Samples \
+        && mv Samples samples \
+        && mv Common common \
+        && mkdir inc \
+        && mv common/* inc \
+        && mv inc common/inc \
+        && git checkout v10.0"
     export NVCUDASAMPLES_ROOT=/opt/NVIDIA_CUDA-10.0_Samples
 
     ## Install kinect2.0 Library ##
@@ -226,9 +236,6 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
         && mkdir -p /etc/udev/rules.d/ \
         && cp ../platform/linux/udev/90-kinect2.rules /etc/udev/rules.d/ \
         && make install-openni2"
-
-    ## Install opencv ##
-    conda install -y -c conda-forge opencv
 
     ## Upgrade packages and remove unused packages ##
     apt upgrade -y -q

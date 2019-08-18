@@ -12,8 +12,8 @@ models
 dist
 *eggs-info
 .eggs
-logs/*
 
 # files to ignore ##
 *.pyc
 microsoft.gpg
+*.log

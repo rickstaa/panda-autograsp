@@ -286,11 +286,11 @@ setup(
     ],
     packages=find_packages(),
     include_package_data=True,
-    setup_requires=setup_requirements,
+    # setup_requires=setup_requirements,
     install_requires=requirements,
     extras_require={
         "docs": ["sphinx", "sphinxcontrib-napoleon", "sphinx_rtd_theme", "sphinx-navtree", "sphinx-autobuild", "docutils", "doc8"],
-        "dev": ["pytest", "bumpversion"]
+        "dev": ["pytest", "bumpversion", "pylint"]
     },
     cmdclass={
         "install": InstallCmd,

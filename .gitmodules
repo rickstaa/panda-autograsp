@@ -19,9 +19,9 @@
 [submodule "autolab_core"]
 	path = autolab_core
 	url = ../autolab_core.git
-[submodule "iai_kinect2"]
-	path = iai_kinect2
-	url = git@github.com:code-iai/iai_kinect2.git 
 [submodule "perception"]
 	path = perception
 	url = ../perception.git
+[submodule "iai_kinect2"]
+	path = iai_kinect2
+	url = ../iai_kinect2.git
