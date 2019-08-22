@@ -28,7 +28,7 @@ TF_MAX_VERSION = "1.13.1"
 
 ## Package requirements ##
 setup_requirements = []
-requirements = ["cython",  "pylibfreenect2"]
+requirements = ["cython",  "pylibfreenect2", "empy", "ruamel.yaml"]
 
 ## Set up logger. ##
 logger = logging.getLogger(__name__)
