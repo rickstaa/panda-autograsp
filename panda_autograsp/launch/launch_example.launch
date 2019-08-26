@@ -1,0 +1,3 @@
+<launch>
+    <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner.py" output="screen"/>
+</launch>

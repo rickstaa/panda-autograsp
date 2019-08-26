@@ -1,0 +1,7 @@
+## Package requirements (GPU)
+# This file can be used to install the main package requirements of the panda_autograsp package
+# When you want to use your GPU.
+
+pylibfreenect2
+tensorflow-gpu==1.13.1
+tensorflow-estimator==1.13.0

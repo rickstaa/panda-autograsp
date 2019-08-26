@@ -15,7 +15,7 @@ from __future__ import print_function
 ## Standard library imports ##
 import logging
 import os
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, find_namespace_packages
 from setuptools.command.develop import develop
 from setuptools.command.install import install
 import subprocess
@@ -28,11 +28,14 @@ TF_MAX_VERSION = "1.13.1"
 
 ## Package requirements ##
 setup_requirements = []
-requirements = ["cython",  "pylibfreenect2", "empy", "ruamel.yaml"]
+requirements = ['rospkg']
 
 ## Set up logger. ##
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.INFO)
+logger.addHandler(handler)
 
 #################################################
 ## Setup functions ##############################
@@ -76,18 +79,18 @@ def add_submods_requirements(requirements):
                 # Open egg_info generated requires.txt file
                 with open(os.getcwd()+"/"+egg_name+".egg-info/requires.txt") as file:
 
-                    # Read requires file up till empty line
+                    # Read requires file up till empty line #
                     for line in file:
                         if line.strip() == "":
 
-                            ## Try to remove tree; if failed show an error using try...except on screen
+                            # Try to remove tree; if failed show an error using try...except on screen #
                             try:
                                 shutil.rmtree(os.getcwd()+"/"+egg_name+".egg-info")
                             except OSError as e:
                                 print("Error: %s - %s." %
                                       (e.filename, e.strerror))
                             break
-                        # Append submodule requirement to package requirements
+                        # Append submodule requirement to package requirements #
                         requirements.append(line.strip())
             except Exception as e:
                 logger.warning(
@@ -140,29 +143,6 @@ def install_submods(sub_mods, mode="install", install_dependencies=True):
                     subprocess.call([sys.executable, "-m", "pip", "install",
                                      "--no-dependencies", os.getcwd()+"/"+sub_mod+"/"])
 
-def get_tf_dep():
-    """Function installs the right version of tensorflow meaning `tensorflow-gpu` when GPU is available and `tensorflow` otherwise."""
-
-    ## Check driver and tf package ##
-    # Check whether or not the Nvidia driver and GPUs are available and add the
-    # corresponding Tensorflow dependency.
-    tf_dep = "tensorflow<={}".format(TF_MAX_VERSION)
-    try:
-        gpus = subprocess.check_output(
-            ["nvidia-smi", "--query-gpu=gpu_name",
-             "--format=csv"]).decode().strip().split("\n")[1:]
-        if len(gpus) > 0:
-            tf_dep = "tensorflow-gpu<={}".format(TF_MAX_VERSION)
-        else:
-            no_device_msg = ("Found Nvidia device driver but no"
-                             " devices...installing Tensorflow for CPU.")
-            logger.warning(no_device_msg)
-    except OSError:
-        no_driver_msg = ("Could not find Nvidia device driver...installing"
-                         " Tensorflow for CPU.")
-        logger.warning(no_driver_msg)
-    return tf_dep
-
 #################################################
 ## Setup classes ################################
 #################################################
@@ -179,7 +159,7 @@ class DevelopCmd(develop):
         """Initialize extra argument options."""
         develop.initialize_options(self)
 
-        # Initialize options.
+        ## Initialize options. ##
         self.docker = False
 
     def finalize_options(self):
@@ -189,26 +169,18 @@ class DevelopCmd(develop):
     def run(self):
         """Overload the :py:meth:`setuptools.command.develop.develop.run` method."""
 
-        ## Install Tensorflow dependency. ##
-        if not self.docker:
-            tf_dep = get_tf_dep()
-            subprocess.Popen([sys.executable, "-m", "pip", "install",
-                              tf_dep]).wait()
-        else:
-            # If we're using Docker, this will already have been installed
-            # explicitly through the correct `{cpu/gpu}_requirements.txt`;
-            # there is no way to check for CUDA/GPUs at Docker build time
-            # because there is no easy way to set the Nvidia runtime.
-            skip_tf_msg = ("Omitting Tensorflow dependency because of Docker"
-                           " installation.")
-            logger.warning(skip_tf_msg)
+        ## Install panda_autograsp module ##
+        subprocess.call([sys.executable, "-m", "pip", "install", os.getcwd()+"/panda_autograsp/"])
 
         ## Install submodules ##
         install_submods(sub_mods, "develop", install_dependencies=False)
 
         ## Run parent run method ##
-        develop.run(self)
+        develop.run(self) ## Disabled because no top level python packages are present
 
+        ## Print success message ##
+        logger.info("All the python packages in this catkin_ws and their requirements have"
+                    "been installed successfully.")
 
 class InstallCmd(install, object):
     """Overload :py:class:`setuptools.command.install.install` class"""
@@ -223,7 +195,7 @@ class InstallCmd(install, object):
         """Initialize extra argument options."""
         install.initialize_options(self)
 
-        # Initialize options.
+        ## Initialize options.
         self.docker = False
 
     def finalize_options(self):
@@ -233,25 +205,18 @@ class InstallCmd(install, object):
     def run(self):
         """Overload the :py:meth:`setuptools.command.install.install.run` method."""
 
-        ## Install Tensorflow dependency. ##
-        if not self.docker:
-            tf_dep = get_tf_dep()
-            subprocess.Popen([sys.executable, "-m", "pip", "install",
-                              tf_dep]).wait()
-        else:
-            # If we're using Docker, this will already have been installed
-            # explicitly through the correct `{cpu/gpu}_requirements.txt`;
-            # there is no way to check for CUDA/GPUs at Docker build time
-            # because there is no easy way to set the Nvidia runtime.
-            skip_tf_msg = ("Omitting Tensorflow dependency because of Docker"
-                           " installation.")
-            logger.warning(skip_tf_msg)
+        ## Install panda_autograsp module #
+        subprocess.call([sys.executable, "-m", "pip", "install", os.getcwd()+"/panda_autograsp/"])
 
-        # Install submodules #
+        ## Install submodules #
         install_submods(sub_mods, "install", install_dependencies=False)
 
         ## Run parent run method ##
-        install.run(self)
+        install.run(self) # Disabled because no top level python packages are present
+
+        ## Print success message ##
+        logger.info("All the python packages in this catkin_ws and their requirements have"
+                    "been installed successfully.")
 
 #################################################
 ## Setup script #################################
@@ -264,11 +229,11 @@ __version__ = re.sub(r'[^\d.]', '', open(
 
 ## Add submodule requirements to the requirements list ##
 requirements, sub_mods, sub_mods_egg_names = add_submods_requirements(requirements)
-# requirements = [j for j in requirements if not any([i.replace("_","-") in j for i in sub_mods])] # Remove submodule packages from requirements
+requirements = [j for j in requirements if not any([i.replace("_","-") in j for i in sub_mods])] # Remove submodule packages from requirements
 
 ## Run python setup ##
 setup(
-    name="panda_autograsp",
+    name="panda_autograsp_ws",
     version=__version__,
     description=(
         "Project code for the panda_autograsp automatic grasping solution."),
@@ -284,9 +249,8 @@ setup(
         "Natural Language :: English",
         "Topic :: Scientific/Engineering"
     ],
-    packages=find_packages(),
+    packages=find_namespace_packages(),
     include_package_data=True,
-    # setup_requires=setup_requirements,
     install_requires=requirements,
     extras_require={
         "docs": ["sphinx", "sphinxcontrib-napoleon", "sphinx_rtd_theme", "sphinx-navtree", "sphinx-autobuild", "docutils", "doc8"],

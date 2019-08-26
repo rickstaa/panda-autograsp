@@ -1,10 +1,12 @@
+## Panda_autograsp CMAKELIST.txt
+# For more info go to https://wiki.ros.org/catkin/CMakeLists.txt
 cmake_minimum_required(VERSION 2.8.3)
 project(panda_autograsp)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 
-## Find catkin macros and libraries
+## Find catkin macros and libraries (Build dependencies)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
@@ -13,14 +15,22 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
 )
 
+################################################
+## Python CMAKE arguments ######################
+################################################
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
+## or https://docs.ros.org/api/catkin/html/howto/format2/installing_python.html
 # catkin_python_setup()
+
+# ## Install ROS python scripts
+# catkin_install_python(PROGRAMS scripts/listener.py
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -47,9 +57,9 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 # Generate messages in the 'msg' folder
-add_message_files(
-  DEPENDENCIES sensor_msgs
-)
+# add_message_files(
+  # DEPENDENCIES sensor_msgs
+# )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -102,8 +112,8 @@ add_message_files(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES panda_autograsp
-#  CATKIN_DEPENDS roscpp rospy
+#  LIBRARIES ${PROJECT_NAME}
+   CATKIN_DEPENDS roscpp rospy sensor_msgs
 #  DEPENDS system_lib
 )
 
@@ -114,7 +124,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  # include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -138,6 +148,7 @@ include_directories(
 ## target back to the shorter version for ease of user use
 ## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
 # set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
+# set_target_properties(python_module_library PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION})
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above

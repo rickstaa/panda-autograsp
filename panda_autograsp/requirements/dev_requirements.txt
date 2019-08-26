@@ -1,0 +1,6 @@
+## Package development requirements
+# This file can be used to install the development requirements of the panda_autograsp package
+
+pytest
+bumpversion
+pylint

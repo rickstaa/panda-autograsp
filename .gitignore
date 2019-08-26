@@ -1,19 +1,17 @@
 # Folders to ignore #
-.vscode
-vscode_ws.code-workspace
-__pychache__
-tests/__pycache__
-gqcnn.egg-info
-panda_autograsp.egg-info
-docs/build/
-docs/source/_build
-data/tmp
-models
-dist
-*eggs-info
-.eggs
+.vscode/
+vscode_ws/
+__pychache__/
+.egg-info/
+build/
+_build/
+tmp/
+models/
+dist/
 
 # files to ignore ##
 *.pyc
 microsoft.gpg
 *.log
+*eggs-info
+.eggs

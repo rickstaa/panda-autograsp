@@ -1,0 +1,18 @@
+Metadata-Version: 2.1
+Name: panda-autograsp-ws
+Version: 0.0.4
+Summary: Project code for the panda_autograsp automatic grasping solution.
+Home-page: https://github.com/rickstaa/panda_autograsp
+Author: Rick Staa
+Author-email: rick.staa@outlook.com
+License: Rick Staa Copyright
+Description: UNKNOWN
+Keywords: robotics grasping vision deep learning franka gqcnn gpd
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Natural Language :: English
+Classifier: Topic :: Scientific/Engineering
+Provides-Extra: dev
+Provides-Extra: docs

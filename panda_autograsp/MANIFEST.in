@@ -1,0 +1,9 @@
+
+# Top folder includes
+include LICENCE
+include README.md
+
+# Global package includes
+graft cfg
+graft data
+global-exclude __pychache__ *.py[co]

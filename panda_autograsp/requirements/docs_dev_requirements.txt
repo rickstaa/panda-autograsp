@@ -1,0 +1,10 @@
+## Package documentation requirements (GPU)
+# This file can be used to install the documentation requirements of the panda_autograsp package
+
+sphinx
+sphinxcontrib-napoleon
+sphinx_rtd_theme
+sphinx-navtree
+sphinx-autobuild
+docutils
+doc8

@@ -33,7 +33,7 @@
 #
 # Revision $Id$
 
-## Simple talker demo that listens to std_msgs/Strings published 
+## Simple talker demo that listens to std_msgs/Strings published
 ## to the 'chatter' topic
 
 import rospy
