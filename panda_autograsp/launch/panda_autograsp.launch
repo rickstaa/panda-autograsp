@@ -1,0 +1,14 @@
+<!-- Panda Autograsp default launchfile-->
+
+<launch>
+
+    <!-- Set launchfile arguments -->
+    <arg name="ns" default="panda_autograsp" /> <!-- Namespace argument -->
+
+    <!-- Include sensor package and grasp detection package launch files-->
+    <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />
+    <!-- <include file="$(find gqcnn)/launch/grasp_planning_service.launch" /> -->
+
+    <!-- Load panda_autograsp package nodes -->
+    <!-- <node name="grasp_planner_client" pkg="panda_autograsp" type="grasp_planner_client.py" ns="$(arg ns)" output="screen" /> -->
+</launch>
