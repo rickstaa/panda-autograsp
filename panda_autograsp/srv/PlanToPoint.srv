@@ -1,0 +1,5 @@
+# Request a plan to the given point
+geometry_msgs/Pose target
+# All the other parameters are left out here. If you want to control them use the Moveit interface and script something
+---
+bool success

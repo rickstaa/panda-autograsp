@@ -2,13 +2,29 @@
 
 <launch>
 
-    <!-- Set launchfile arguments -->
-    <arg name="ns" default="panda_autograsp" /> <!-- Namespace argument -->
+    <!-- Set global args -->
+    <arg name="base_name"           default="kinect2"/>
+    <arg name="grasp_img_quality"   default="sd" /> <!-- The input image quality into the GQCNN [qhd or sd] -->
+    <arg name="grasp_detection_srv" default="/panda_autograsp/grasp_planner" /> <!-- Grasp planner service name -->
 
     <!-- Include sensor package and grasp detection package launch files-->
-    <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />
-    <!-- <include file="$(find gqcnn)/launch/grasp_planning_service.launch" /> -->
+    <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" >
+        <param name="output" value="log" />
+    </include>
 
     <!-- Load panda_autograsp package nodes -->
-    <!-- <node name="grasp_planner_client" pkg="panda_autograsp" type="grasp_planner_client.py" ns="$(arg ns)" output="screen" /> -->
+    <group ns="panda_autograsp">
+
+        <!-- Grasp planner service server -->
+        <node name="grasp_planner_server" pkg="panda_autograsp" type="grasp_planner_server.py" output="screen">
+            <param name="grasp_detection_srv" value="$(arg grasp_detection_srv)" />
+        </node>
+
+        <!-- Grasp planner service client -->
+        <!-- <node name="grasp_planner_client" pkg="panda_autograsp" type="grasp_planner_client.py" output="screen" >
+            <param name="grasp_img_quality" value="$(arg grasp_img_quality)" />
+            <param name="grasp_detection_srv" value="$(arg grasp_detection_srv)" />
+        </node> -->
+    </group>
+
 </launch>

@@ -8,7 +8,7 @@ based on the grasp_planner_node.py file that was supplied with the GQCNN package
 import os
 
 ## Import custom modules ##
-from panda_autograsp import GraspPlanner
+from panda_autograsp.grasp_planners.gqcnn_grasp_planner import GraspPlanner
 from panda_autograsp import Logger
 
 #################################################
@@ -29,8 +29,7 @@ if __name__ == "__main__":
     main_logger = Logger.get_logger("plan_grasp.py")
 
     ## Create a grasp planner. ##
-    grasp_planner = GraspPlanner()
-    # main_logger.info("test")
+    grasp_planner = GraspPlanner(model=MODEL_NAME)
 
     ## Start grasp planner ##
     grasp_planner.start()

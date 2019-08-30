@@ -3,7 +3,7 @@
 
 ## Panda_autograsp visualization settings ##
 vis:
-  rgbd_state: 0
+  rgbd_state: 1
   cropped_rgbd_image: 0
   color_image: 0
   depth_image: 0
@@ -23,7 +23,7 @@ grasp_detection_solutions:
 
     ## GQCNN default values ##
     defaults:
-      model: GQCNN-4.0-PJ # Default CNN model
+      model: GQCNN-2.0 # Default CNN model
       policy: cross_entropy # Default policy
 
     ## Important GQCNN paths ##

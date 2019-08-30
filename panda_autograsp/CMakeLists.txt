@@ -26,7 +26,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 ## or https://docs.ros.org/api/catkin/html/howto/format2/installing_python.html
-# catkin_python_setup()
+catkin_python_setup()
 
 # ## Install ROS python scripts
 # catkin_install_python(PROGRAMS scripts/listener.py

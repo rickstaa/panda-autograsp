@@ -24,18 +24,9 @@ from gqcnn.srv import (
 ## Script settings ##############################
 #################################################
 
-## Camera Topics ##
-KINECT_COLOR_TOPIC = "/kinect2/sd/image_color_rect"
-KINECT_DEPTH_TOPIC = "/kinect2/sd/image_depth"
-KINECT_CAMERA_INFO_TOPIC = "/kinect2/hd/camera_info"
-
 ## Message filter settings ##
 MSG_FILTER_QUEUE_SIZE = 5  # Max queue size
 MSG_FILTER_SLOP = 0.1  # Max sync delay (in seconds)
-
-## Grasp detection service settings ##
-# GRASP_DETECTION_SRV = "/gqcnn/grasp_planner"
-GRASP_DETECTION_SRV = "/grasp_planner"
 
 #################################################
 ## GraspPlannerClient Class #####################
@@ -45,19 +36,20 @@ class GraspPlannerClient():
     def __init__(self, grasp_detection_srv, color_topic, depth_topic, camera_info_topic, queue_size=5, slop=0.1):
 
         ## Initialize grasp_planning service ##
-        rospy.loginfo("Conneting to %s service" % grasp_detection_srv)
-        rospy.wait_for_service(GRASP_DETECTION_SRV)
+        rospy.loginfo("Conneting to %s service." % grasp_detection_srv)
+        rospy.wait_for_service(grasp_detection_srv)
         try:
             self.grasp_planner_service_handle = rospy.ServiceProxy(
-                GRASP_DETECTION_SRV, GQCNNGraspPlanner)
+                grasp_detection_srv, GQCNNGraspPlanner)
         except rospy.ServiceException as e:
             rospy.loginfo("Service initialization failed: %s" % e)
-            shutdown_msg = "Shutting down %s node because %s connection failed" % (
+            shutdown_msg = "Shutting down %s node because %s connection failed." % (
                 rospy.get_name(), self.grasp_planner_service_handle)
             rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+            return
 
         ## Create msg filter subscribers ##
-        rospy.loginfo("Creating camera sensor message_filter")
+        rospy.loginfo("Creating camera sensor message_filter.")
         color_image_sub = Subscriber(color_topic, sensor_msgs.msg.Image)
         depth_image_sub = Subscriber(depth_topic, sensor_msgs.msg.Image)
         camera_info_sub = Subscriber(
@@ -67,10 +59,10 @@ class GraspPlannerClient():
         ats = ApproximateTimeSynchronizer(
             [color_image_sub, depth_image_sub, camera_info_sub], queue_size, slop)
         ats.registerCallback(self.msg_filter_callback)
+        rospy.loginfo("Camera sensor message_filter created.")
 
     def msg_filter_callback(self, color_image, depth_image, camera_info):
-        print("got an Image and CameraInfo")
-        # six.moves.input()
+        raw_input("Click enter to compute a grasp.")
         self.grasp_planner_service_handle(color_image, depth_image, camera_info)
 
 #################################################
@@ -82,9 +74,25 @@ if __name__ == "__main__":
     rospy.loginfo("Initializing grasp_planner_client node")
     rospy.init_node('grasp_planner_client', anonymous=True)
 
+    ## Argument parser ##
+    try:
+        img_quality = rospy.get_param("~grasp_img_quality")
+    except KeyError:
+        img_quality = 'sd'
+    try:
+        grasp_detection_srv = rospy.get_param("~grasp_detection_srv")
+    except KeyError:
+        grasp_detection_srv = '/grasp_planner'
+
+    ## Create topics ##
+    kinect_color_topic="/kinect2/%s/image_color_rect" % img_quality
+    kinect_depth_topic = "/kinect2/%s/image_depth_rect_32FC1" % img_quality
+    kinect_camera_info_topic = "/kinect2/%s/camera_info" % img_quality
+
+
     ## Create GraspPlannerClient object ##
-    grasp_planner_client = GraspPlannerClient(GRASP_DETECTION_SRV, KINECT_COLOR_TOPIC,
-                                              KINECT_DEPTH_TOPIC, KINECT_CAMERA_INFO_TOPIC, MSG_FILTER_QUEUE_SIZE, MSG_FILTER_SLOP)
+    grasp_planner_client = GraspPlannerClient(grasp_detection_srv, kinect_color_topic,
+                                              kinect_depth_topic, kinect_camera_info_topic, MSG_FILTER_QUEUE_SIZE, MSG_FILTER_SLOP)
 
     ## Loop till the service is shutdown. ##
     rospy.spin()

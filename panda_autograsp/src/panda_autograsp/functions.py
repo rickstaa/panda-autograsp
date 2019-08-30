@@ -29,16 +29,17 @@ main_cfg = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
 
 ## Create script contants ##
 MODELS_PATH = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "..", main_cfg["defaults"]["models_dir"]))
-GQCNN_DOWNLOAD_SCRIPT_PATH = os.path.abspath(os.path.join(os.path.dirname(
+    os.path.dirname(os.path.realpath(__file__)), "../..", main_cfg["defaults"]["models_dir"]))
+DEFAULT_DOWNLOAD_SCRIPT_PATH = os.path.abspath(os.path.join(os.path.dirname(
     os.path.realpath(__file__)), "../../../gqcnn/scripts/downloads/models/download_models.sh"))
-GQCNN_MODEL_RENAME_DICT = {"GQCNN-2.0": "GQ-Image-Wise",
-                           "GQCNN-2.1": "GQ-Bin-Picking-Eps90", "GQCNN-3.0": "GQ-Suction"}
+MODEL_RENAME_DICT = {"GQCNN-2.0": "GQ-Image-Wise",
+                     "GQCNN-2.1": "GQ-Bin-Picking-Eps90",
+                     "GQCNN-3.0": "GQ-Suction"}
 
 #################################################
 ## Functions ####################################
 #################################################
-def download_model(model):
+def download_model(model, model_output=MODELS_PATH, download_script_path=DEFAULT_DOWNLOAD_SCRIPT_PATH):
     """This function downloads the Pretrained CNN models that are used in the :py:mod:`panda_autograsp` package, when they
     are not yet present on the system.
 
@@ -46,12 +47,17 @@ def download_model(model):
     ----------
     model : str
         Name of the model you want to download.
-
+    model_output : str, optional
+        Path to the folder in which you want to place the downloaded models, by default MODELS_PATH
+    download_script_path : str, optional
+        Path to the download description script, by default GQCNN_DOWNLOAD_SCRIPT_PATH
     Returns
     -------
     int
         +------------+----------------------------+
         | Error code | Description                |
+        +------------+----------------------------+
+        | 0          | Model download successfull.|
         +------------+----------------------------+
         | 1          | Model name invalid.        |
         +------------+----------------------------+
@@ -64,13 +70,13 @@ def download_model(model):
     """
 
     ## Create model folder if it does not exists ##
-    if not os.path.exists(MODELS_PATH):
-        os.makedirs(MODELS_PATH)
+    if not os.path.exists(model_output):
+        os.makedirs(model_output)
         msg = "Creating model folder in panda_autograsp root directory."
         func_log.info(msg)
 
     ## Generate model directory string ##
-    model_dir = os.path.abspath(os.path.join(MODELS_PATH, model))
+    model_dir = os.path.abspath(os.path.join(model_output, model))
 
     ## Check if model is already present ##
     if not os.path.exists(model_dir):
@@ -88,16 +94,22 @@ def download_model(model):
         if solution[0] == "gqcnn":
 
             ## Get right model download url out of the included download script ##
-            with open(GQCNN_DOWNLOAD_SCRIPT_PATH) as file:
+            with open(download_script_path) as file:
                 for line in file:
                     if "/"+model in line:
                         model_download_url = [item for item in line.split(
                             " ") if ("https://" in item)][0]
 
+        ## Check if model is available ##
+        if not 'model_download_url' in locals():
+            msg = "Model download url could not be found. Please check the model name and try again."
+            func_log.warning(msg)
+            return 1
+
         ## Download model ##
         try:
             subprocess.check_call(["wget", "-O", os.path.abspath(
-                os.path.join(MODELS_PATH, model+'.zip')), model_download_url.rstrip()])
+                os.path.join(model_output, model+'.zip')), model_download_url.rstrip()])
         except subprocess.CalledProcessError:
             msg = "Model download failed. Please check your internet connection and try again."
             func_log.warning(msg)
@@ -105,26 +117,62 @@ def download_model(model):
 
         ## Unzip model ##
         try:
-            subprocess.check_call(["unzip", "-o", "-a", "-d", MODELS_PATH,
-                                   os.path.abspath(os.path.join(MODELS_PATH, model+'.zip'))])
+            subprocess.check_call(["unzip", "-o", "-a", "-d", model_output,
+                                   os.path.abspath(os.path.join(model_output, model+'.zip'))])
             # remove zip file
             os.remove(os.path.abspath(os.path.join(
-                MODELS_PATH, model+'.zip')))
+                model_output, model+'.zip')))
         except subprocess.CalledProcessError:
             msg = "Model unzip failed."
             func_log.warning(msg)
             return 3
 
         ## Rename some model folders ##
-        if model in GQCNN_MODEL_RENAME_DICT.keys():
+        if model in MODEL_RENAME_DICT.keys():
             subprocess.check_call(["mv", os.path.abspath(os.path.join(
-                MODELS_PATH, GQCNN_MODEL_RENAME_DICT[model])), os.path.abspath(os.path.join(MODELS_PATH, model))])
+                model_output, MODEL_RENAME_DICT[model])), os.path.abspath(os.path.join(model_output, model))])
 
         ## Return success boolean ##
         msg = model + " was downloaded successfully."
         func_log.info(msg)
-        return
+        return 0
     else:
         msg = model + " was already present and thus not downloaded."
         func_log.info(msg)
-        return
+        return 0
+
+def list_files(path='.', exclude=[], recursive=True):
+    """Returns a list of files that are present in a folder.
+    Parameters
+    ----------
+    path : str, optional
+        Parent folder of which you want to list the files, by default '.' meaning
+        the current working directory.
+    exclude : list, optional
+        A list of files you want to exclude, by default []
+    recursive : bool, optional
+        Option specifying whether you also want to list files of subfolders, by default True
+    level : int, optional
+        If recursive is enabled this specifies up till how many levels deep you want to list
+        the files, by default 0 (Defined as all levels).
+    Returns
+    -------
+    List
+        A list containing the relative paths of all the files in the parent folder.
+    """
+
+    ## Get a list of files that are contained in the given path
+    file_list = list()
+    for dir_, _, files in os.walk(path):
+        for file_name in files:
+            rel_dir = os.path.relpath(dir_, path)
+            rel_file = os.path.join(rel_dir, file_name)
+
+            ## Add files to file list if they are not in exclude list ##
+            if file_name not in exclude:
+                file_list.append(rel_file)
+
+        ## Break out of loop if recursive is disabled
+        if not recursive:
+            break
+    return file_list

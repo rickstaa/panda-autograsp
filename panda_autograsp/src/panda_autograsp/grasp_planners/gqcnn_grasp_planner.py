@@ -47,16 +47,16 @@ for (attr, value) in Kinect2PacketPipelineMode.__dict__.items():
 
 ## Read panda_autograsp configuration file ##
 main_cfg = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
-    os.path.realpath(__file__)), "../cfg/main_config.yaml")))
+    os.path.realpath(__file__)), "../../../cfg/main_config.yaml")))
 
 ## Get settings out of main_cfg ##
-DEFAULT_SOLUTION = main_cfg["defaults"]["solution"]
-DEFAULT_MODEL = main_cfg["grasp_detection_solutions"][DEFAULT_SOLUTION]["defaults"]["model"]
-DEFAULT_POLICY = main_cfg["grasp_detection_solutions"][DEFAULT_SOLUTION]["defaults"]["policy"]
+GRASP_SOLUTION = "gqcnn"
+DEFAULT_MODEL = main_cfg["grasp_detection_solutions"][GRASP_SOLUTION]["defaults"]["model"]
+DEFAULT_POLICY = main_cfg["grasp_detection_solutions"][GRASP_SOLUTION]["defaults"]["policy"]
 MODELS_PATH = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "..", main_cfg["defaults"]["models_dir"]))\
-
-# TODO DOCSTRINGS
+    os.path.dirname(os.path.realpath(__file__)), "../../..", main_cfg["defaults"]["models_dir"]))
+DOWNLOAD_SCRIPT_PATH = os.path.abspath(os.path.join(os.path.dirname(
+    os.path.realpath(__file__)), "../../../..", "gqcnn/scripts/downloads/models/download_models.sh"))
 
 #################################################
 ## GQCNN grasp class ############################
@@ -110,39 +110,23 @@ class GraspPlanner(object):
         ## Add main_config as object member ##
         self.main_cfg = main_cfg
 
-        ## Check if grasping solution, model and policy are available ##
-        self.grasp_solution = [s for s in list(
-            self.main_cfg["grasp_detection_solutions"].keys()) if s in model.lower()]
-        if len(self.grasp_solution) == 1:  # Check if model name is vallid
-            # Check if model is available
-            if model not in list(self.main_cfg["grasp_detection_solutions"][self.grasp_solution[0]]["parameters"]["available"].keys()):
-                msg = "Model name is invalid. Please check the name and try again."
-                mod_logger.warning(msg)
-                raise NameError
-            else:
-                # Convert to string
-                self.grasp_solution = self.grasp_solution[0]
-        else:
-            msg = "Model name is invalid. Please check the name and try again."
-            mod_logger.warning(msg)
-            raise NameError
-
         ## Load model and policy configuration files ##
         self._get_cfg(model)
 
         ## Create grasping policy ##
         mod_logger.info("Creating Grasping Policy")
-        if self.grasp_solution == "gqcnn":
-            if "cross_entropy" == self.main_cfg["grasp_detection_solutions"][self.grasp_solution]["parameters"]["available"][model]:
-                self.grasping_policy = CrossEntropyRobustGraspingPolicy(
+        if "cross_entropy" == self.main_cfg["grasp_detection_solutions"][GRASP_SOLUTION]["parameters"]["available"][model]:
+            self.grasping_policy = CrossEntropyRobustGraspingPolicy(
+                self.policy_cfg)
+        elif "fully_conv" == self.main_cfg["grasp_detection_solutions"][GRASP_SOLUTION]["parameters"]["available"][model]:
+            if "pj" in model.lower():
+                self.grasping_policy = FullyConvolutionalGraspingPolicyParallelJaw(
                     self.policy_cfg)
-            elif "fully_conv" == self.main_cfg["grasp_detection_solutions"][self.grasp_solution]["parameters"]["available"][model]:
-                if "pj" in model.lower():
-                    self.grasping_policy = FullyConvolutionalGraspingPolicyParallelJaw(
-                        self.policy_cfg)
-                elif "suction" in model.lower():
-                    self.grasping_policy = FullyConvolutionalGraspingPolicySuction(
-                        self.policy_cfg)
+            elif "suction" in model.lower():
+                self.grasping_policy = FullyConvolutionalGraspingPolicySuction(
+                    self.policy_cfg)
+        else:
+            mod_logger.info("The %s model of the %s policy is not yet implemented." % (model, GRASP_SOLUTION))
 
         ## Create usefull class properties ##
         self.sensor_type = sensor_type
@@ -181,66 +165,79 @@ class GraspPlanner(object):
         """
 
         ## Download CNN model if not present ##
-        model_dir = os.path.abspath(os.path.join(MODELS_PATH, model))
+        model_dir = os.path.join(MODELS_PATH, model)
         if not os.path.exists(model_dir):
             mod_logger.warning(
                 "The " + model + " model was not found in the models folder. This model is required to continue.")
             while True:
-                prompt_result = input(
+                prompt_result = raw_input(
                     "Do you want to download this model now? [Y/n] ")
 
                 # Check user input #
                 # If yes download sample
                 if prompt_result.lower() in ['y', 'yes']:
-                    download_model(model)
-                    break
+                    val = download_model(model, MODELS_PATH, DOWNLOAD_SCRIPT_PATH)
+                    if not val == 0: # Check if download was successful
+                        shutdown_msg = "Shutting down %s node because grasp model could not downloaded." % (
+                        model)
+                        mod_logger.warning(shutdown_msg)
+                        sys.exit(0)
+                    else:
+                        break
                 elif prompt_result.lower() in ['n', 'no']:
-                    mod_logger.info("Shutting down grasp planner.")
-                    sys.exit(0)  # Terminate script
+                    shutdown_msg = "Shutting down %s node because grasp model is not downloaded." % (
+                    model)
+                    mod_logger.warning(shutdown_msg)
+                    sys.exit(0)
                 elif prompt_result == "":
-                    download_model(model)
-                    break
+                    download_model(model, MODELS_PATH, DOWNLOAD_SCRIPT_PATH)
+                    if not val == 0: # Check if download was successful
+                        shutdown_msg = "Shutting down %s node because grasp model could not downloaded." % (
+                        model)
+                        mod_logger.warning(shutdown_msg)
+                        sys.exit(0)
+                    else:
+                        break
                 else:
                     print(
                         prompt_result + " is not a valid response please answer with Y or N to continue.")
 
         ## Retrieve model related configuration values ##
-        if self.grasp_solution == "gqcnn":
-            self.model_config = json.load(
-                open(os.path.join(model_dir, "config.json"), "r"))
-            try:
-                gqcnn_config = self.model_config["gqcnn"]
-                gripper_mode = gqcnn_config["gripper_mode"]
-            except KeyError:
-                gqcnn_config = self.model_config["gqcnn_config"]
-                input_data_mode = gqcnn_config["input_data_mode"]
-                if input_data_mode == "tf_image":
-                    gripper_mode = GripperMode.LEGACY_PARALLEL_JAW
-                elif input_data_mode == "tf_image_suction":
-                    gripper_mode = GripperMode.LEGACY_SUCTION
-                elif input_data_mode == "suction":
-                    gripper_mode = GripperMode.SUCTION
-                elif input_data_mode == "multi_suction":
-                    gripper_mode = GripperMode.MULTI_SUCTION
-                elif input_data_mode == "parallel_jaw":
-                    gripper_mode = GripperMode.PARALLEL_JAW
-                else:
-                    raise ValueError(
-                        "Input data mode {} not supported!".format(input_data_mode))
+        self.model_config = json.load(
+            open(os.path.join(model_dir, "config.json"), "r"))
+        try:
+            gqcnn_config = self.model_config["gqcnn"]
+            gripper_mode = gqcnn_config["gripper_mode"]
+        except KeyError:
+            gqcnn_config = self.model_config["gqcnn_config"]
+            input_data_mode = gqcnn_config["input_data_mode"]
+            if input_data_mode == "tf_image":
+                gripper_mode = GripperMode.LEGACY_PARALLEL_JAW
+            elif input_data_mode == "tf_image_suction":
+                gripper_mode = GripperMode.LEGACY_SUCTION
+            elif input_data_mode == "suction":
+                gripper_mode = GripperMode.SUCTION
+            elif input_data_mode == "multi_suction":
+                gripper_mode = GripperMode.MULTI_SUCTION
+            elif input_data_mode == "parallel_jaw":
+                gripper_mode = GripperMode.PARALLEL_JAW
+            else:
+                raise ValueError(
+                    "Input data mode {} not supported!".format(input_data_mode))
 
-            ## Get the policy based config parameters ##
-            config_filename = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                                           "..", "gqcnn/cfg/examples/gqcnn_suction.yaml"))
-            if (gripper_mode == GripperMode.LEGACY_PARALLEL_JAW
-                    or gripper_mode == GripperMode.PARALLEL_JAW):
-                config_filename = os.path.abspath(os.path.join(
-                    os.path.dirname(os.path.realpath(__file__)), "..",
-                    "gqcnn/cfg/examples/gqcnn_pj.yaml"))
+        ## Get the policy based config parameters ##
+        config_filename = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                                       "../../../..", "gqcnn/cfg/examples/gqcnn_suction.yaml"))
+        if (gripper_mode == GripperMode.LEGACY_PARALLEL_JAW
+                or gripper_mode == GripperMode.PARALLEL_JAW):
+            config_filename = os.path.abspath(os.path.join(
+                os.path.dirname(os.path.realpath(__file__)), "../../../..",
+                "gqcnn/cfg/examples/gqcnn_pj.yaml"))
 
-            ## Get CNN and Policy files ##
-            self.cfg = YamlConfig(config_filename)
-            self.policy_cfg = self.cfg["policy"]
-            self.policy_cfg["metric"]["gqcnn_model"] = model_dir
+        ## Get CNN and Policy files ##
+        self.cfg = YamlConfig(config_filename)
+        self.policy_cfg = self.cfg["policy"]
+        self.policy_cfg["metric"]["gqcnn_model"] = model_dir
 
     def start(self):
         """Starts the sensor and the grasp planner request handler.

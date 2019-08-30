@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <!-- ============================================================================== -->
+    <!-- | Launch file to start the robot with moveit, for automatic path planning    | -->
+    <!-- | based on the moveit_planning_execution launchfiles from iiwa_moveit        | -->
+    <!-- ============================================================================== -->
+
+    <arg name="robotrunmode" default="sim"/>  <!-- 'sim' or 'real' -->
+
+    <arg name="hardware_interface" default="PositionJointInterface" />
+    <arg name="robot_name" default="iiwa" />
+    <arg name="model" default="iiwa7"/>
+
+    <rosparam command="load" file="$(find command_iiwa_gazebo)/config/start_pos.yaml"/>
+
+    <!-- Loads the Gazebo world. -->
+    <group if="$(eval robotrunmode == 'sim')">
+        <param name="initial_path_time" value="10"/> <!-- in simulation we can be quick -->
+        <include file="$(find iiwa_gazebo)/launch/iiwa_world.launch">
+             <arg name="hardware_interface" value="hardware_interface/$(arg hardware_interface)" />
+            <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="model" value="$(arg model)" />
+        </include>
+    </group>
+
+    <!-- Load the URDF with the given hardware interface into the ROS Parameter Server -->
+    <group if="$(eval robotrunmode == 'real')">
+        <group ns="$(arg robot_name)">
+            <include file="$(find iiwa_description)/launch/$(arg model)_upload.launch">
+                <arg name="hardware_interface" value="hardware_interface/$(arg hardware_interface)"/>
+                <arg name="robot_name" value="$(arg robot_name)" />
+            </include>
+
+            <!-- Run FRI interface -->
+            <node name="iiwa_fri" pkg="iiwa_fri" type="iiwa_fri" output="screen"/>
+
+
+            <!-- addresses  & joint names -->
+            <rosparam command="load" file="$(find iiwa_hw)/config/joint_names.yaml" />
+            <param name="interface" value="$(arg hardware_interface)"/>
+        </group>
+    </group>
+
+    <!-- Spawn controllers -->
+    <group  ns="$(arg robot_name)">       
+        <rosparam file="$(find command_iiwa_gazebo)/config/iiwa_control.yaml" command="load" />
+        <!-- Load controllers: jointstate just publishes joint states, joint trajectory to get to initial position, and iiwa_cart for teleoperated control -->
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+            output="screen" args="robot_state_publisher joint_state_controller iiwa_jnt_traj_control"/>
+    </group>
+
+    <!-- Load move_group -->
+    <group ns="$(arg robot_name)">
+        <include file="$(find iiwa_moveit)/launch/move_group.launch">
+            <arg name="publish_monitored_planning_scene" value="true" />
+            <arg name="hardware_interface" value="$(arg hardware_interface)"/>
+            <arg name="robot_name" value="$(arg robot_name)"/>
+            <arg name="model" value="$(arg model)" />
+        </include>
+
+        <include file="$(find iiwa_moveit)/launch/moveit_rviz.launch">
+            <arg name="config" value="true"/>
+        </include>
+    </group>
+
+    <!--
+        Load the joint limits at last to overwrite the default values.
+        Defaults are max robot capabilities, but with real robot we want maximum safe settings
+    -->
+    <group if="$(eval robotrunmode == 'real')">
+        <rosparam command="load" file="$(find command_iiwa_gazebo)/config/joint_limits.yaml"/>
+    </group>
+</launch>
