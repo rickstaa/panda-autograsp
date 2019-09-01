@@ -39,12 +39,12 @@ class GraspPlannerClient():
         rospy.loginfo("Conneting to %s service." % grasp_detection_srv)
         rospy.wait_for_service(grasp_detection_srv)
         try:
-            self.grasp_planner_service_handle = rospy.ServiceProxy(
+            self.planning_scene_srv = rospy.ServiceProxy(
                 grasp_detection_srv, GQCNNGraspPlanner)
         except rospy.ServiceException as e:
             rospy.loginfo("Service initialization failed: %s" % e)
             shutdown_msg = "Shutting down %s node because %s connection failed." % (
-                rospy.get_name(), self.grasp_planner_service_handle)
+                rospy.get_name(), self.planning_scene_srv)
             rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
             return
 
@@ -63,7 +63,7 @@ class GraspPlannerClient():
 
     def msg_filter_callback(self, color_image, depth_image, camera_info):
         raw_input("Click enter to compute a grasp.")
-        self.grasp_planner_service_handle(color_image, depth_image, camera_info)
+        self.planning_scene_srv(color_image, depth_image, camera_info)
 
 #################################################
 ## Main script ##################################

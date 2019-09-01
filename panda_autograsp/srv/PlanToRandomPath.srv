@@ -1,0 +1,5 @@
+# Request a plan to the random path
+float64 n_waypoints
+float64 n_scale
+---
+bool success

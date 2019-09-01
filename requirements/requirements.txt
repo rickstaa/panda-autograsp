@@ -1,0 +1,10 @@
+## Python 3 package requirements
+# This file can be used to install the main package requirements when using the panda_autograsp
+# package in python 3.
+
+rospkg
+defusedxml
+empy
+catkin-pkg
+pyQt5
+PySide2

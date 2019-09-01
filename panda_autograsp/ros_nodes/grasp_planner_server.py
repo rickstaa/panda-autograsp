@@ -63,6 +63,9 @@ MODELS_PATH = os.path.abspath(os.path.join(
 DOWNLOAD_SCRIPT_PATH = os.path.abspath(os.path.join(os.path.dirname(
     os.path.realpath(__file__)), "../..", "gqcnn/scripts/downloads/models/download_models.sh"))
 
+#################################################
+## Main script ##################################
+#################################################
 if __name__ == "__main__":
 
     ## Initialize the ROS node. ##
@@ -160,20 +163,20 @@ if __name__ == "__main__":
     # This allows us to add and overwrite to the original GQCNN config file
     cfg.update(main_cfg)
 
-    ## Create publisher to publish pose of final grasp. ##
+    ## Create publisher to publish pose of final grasp ##
     grasp_pose_publisher = rospy.Publisher("/gqcnn_grasp/pose",
                                            PoseStamped,
                                            queue_size=10)
 
-    ## Create a grasping policy. ##
+    ## Create a grasping policy ##
     rospy.loginfo("Creating Grasping Policy")
     grasping_policy = CrossEntropyRobustGraspingPolicy(policy_cfg)
 
-    ## Create a grasp planner. ##
+    ## Create a grasp planner ##
     grasp_planner = GraspPlanner(cfg, cv_bridge, grasping_policy,
                                  grasp_pose_publisher)
 
-    ## Initialize the ROS service. ##
+    ## Initialize the ROS services ##
     grasp_planning_service = rospy.Service("grasp_planner", GQCNNGraspPlanner,
                                            grasp_planner.plan_grasp)
     grasp_planning_service_bb = rospy.Service("grasp_planner_bounding_box",

@@ -28,12 +28,11 @@ from distutils.sysconfig import get_python_lib
 relative_site_packages = get_python_lib().split(sys.prefix+os.sep)[1]
 date_files_relative_path = os.path.join(relative_site_packages, "panda_autograsp")
 
-## Package requirements ##
-setup_requirements = []
-requirements = ["pylibfreenect2", "tensorflow-estimator >= 1.13.0, <1.14.0rc0"]
-
 ## General setup.py parameters ##
 TF_MAX_VERSION = "1.13.1"
+
+## Package requirements ##
+requirements = ["pylibfreenect2", "tensorflow-estimator >= 1.13.0, <1.14.0rc0"]
 
 ## Set up logger. ##
 logger = logging.getLogger(__name__)

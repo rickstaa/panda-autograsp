@@ -12,7 +12,10 @@ project(panda_autograsp)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  message_generation
+  std_msgs
   sensor_msgs
+  geometry_msgs
 )
 
 ################################################
@@ -62,11 +65,15 @@ catkin_python_setup()
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  ExecutePlan.srv
+  PlanToJoint.srv
+  PlanToPoint.srv
+  PlanToPath.srv
+  PlanToRandomPath.srv
+  PlanToRandomPoint.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -76,10 +83,11 @@ catkin_python_setup()
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  geometry_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -113,7 +121,7 @@ catkin_python_setup()
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES ${PROJECT_NAME}
-   CATKIN_DEPENDS roscpp rospy sensor_msgs
+   CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs geometry_msgs
 #  DEPENDS system_lib
 )
 

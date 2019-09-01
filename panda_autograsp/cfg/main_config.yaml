@@ -36,5 +36,15 @@ grasp_detection_result:
   include_thumbnail: 0 # Include grasp photo thumbnail in output grasp object/
   thumbnail_resize: 0.5 # Resize fraction of thumbnail compared to original sensor image (needs to be between 0 and 1).
 
+## Robot planning settings
+planning:
+
+  point: # Plan to point
+    point_n_step: 5 # The number of times moveit tries to p
+
+  cartesian: # Plan cartesian path
+    eef_step: 1.0
+    jump_threshold: 0.0
+
 ## Robot control settings
 control:

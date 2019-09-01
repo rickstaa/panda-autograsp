@@ -15,7 +15,7 @@ from __future__ import print_function
 ## Standard library imports ##
 import logging
 import os
-from setuptools import setup, find_packages, find_namespace_packages
+from setuptools import setup, find_packages
 from setuptools.command.develop import develop
 from setuptools.command.install import install
 import subprocess
@@ -27,8 +27,10 @@ import shutil
 TF_MAX_VERSION = "1.13.1"
 
 ## Package requirements ##
-setup_requirements = []
-requirements = ['rospkg']
+if (sys.version_info > (3, 0)): # Py 2 requirements
+    requirements = ['rospkg', 'defusedxml', 'empy', 'catkin-pkg', 'pyQt5', 'PySide2']
+else: # Py 3 requirements
+    requirements = ['rospkg', 'defusedxml', 'empy', 'catkin-pkg', 'PySide2']
 
 ## Set up logger. ##
 logger = logging.getLogger(__name__)
@@ -249,7 +251,7 @@ setup(
         "Natural Language :: English",
         "Topic :: Scientific/Engineering"
     ],
-    packages=find_namespace_packages(),
+    packages=find_packages(),
     include_package_data=True,
     install_requires=requirements,
     extras_require={
