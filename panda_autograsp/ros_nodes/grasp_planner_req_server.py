@@ -61,9 +61,15 @@ class GraspPlannerClient():
         ats.registerCallback(self.msg_filter_callback)
         rospy.loginfo("Camera sensor message_filter created.")
 
-    def msg_filter_callback(self, color_image, depth_image, camera_info):
-        raw_input("Click enter to compute a grasp.")
-        self.planning_scene_srv(color_image, depth_image, camera_info)
+        ## Create grasp_planner_req_server ##
+
+    ## TODO: Docstring
+    def msg_filter_callback(self, color_image_rect, depth_image_rect, camera_info):
+
+        ## Call the grasp_planner_service ##
+        self.color_rect_color_image_rectimage = color_image_rect
+        self.depth_image_rect = depth_image_rect
+        self.planning_scene_srv(color_image_rect, depth_image_rect, camera_info)
 
 #################################################
 ## Main script ##################################
@@ -85,13 +91,13 @@ if __name__ == "__main__":
         grasp_detection_srv = 'grasp_planner'
 
     ## Create topics ##
-    kinect_color_topic="/kinect2/%s/image_color_rect" % img_quality
-    kinect_depth_topic = "/kinect2/%s/image_depth_rect_32FC1" % img_quality
+    kinect_color_image_rect_topic="/kinect2/%s/image_color_rect" % img_quality
+    kinect_depth_image_rect_topic = "/kinect2/%s/image_depth_rect_32FC1" % img_quality
     kinect_camera_info_topic = "/kinect2/%s/camera_info" % img_quality
 
     ## Create GraspPlannerClient object ##
-    grasp_planner_client = GraspPlannerClient(grasp_detection_srv, kinect_color_topic,
-                                              kinect_depth_topic, kinect_camera_info_topic, MSG_FILTER_QUEUE_SIZE, MSG_FILTER_SLOP)
+    grasp_planner_client = GraspPlannerClient(grasp_detection_srv, kinect_color_image_rect_topic,
+                                              kinect_depth_image_rect_topic, kinect_camera_info_topic, MSG_FILTER_QUEUE_SIZE, MSG_FILTER_SLOP)
 
     ## Loop till the service is shutdown. ##
     rospy.spin()

@@ -86,13 +86,13 @@ if __name__ == "__main__":
             rospy.get_name(), visualize_plan_srv)
         rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
-    # ## Plan random pose ##
-    # plan_to_random_pose_srv()
-    # execute_plan_srv()
+    ## Plan random pose ##
+    plan_to_random_pose_srv()
+    execute_plan_srv()
 
-    # ## Plan random joint ##
-    # plan_to_random_joint_srv()
-    # execute_plan_srv()
+    ## Plan random joint ##
+    plan_to_random_joint_srv()
+    execute_plan_srv()
 
     ## Plan random cartesian trajectory ##
     prompt_result = raw_input(

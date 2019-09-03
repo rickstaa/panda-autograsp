@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"python.autoComplete.extraPaths": [
+			"/home/ricks/panda_autograsp_ws/devel/lib/python2.7/dist-packages",
+			"/opt/ros/melodic/lib/python2.7/dist-packages"
+		]
+	}
+}

@@ -34,3 +34,6 @@ if __name__ == "__main__":
     ## Start grasp planner ##
     grasp_planner.start()
     grasp = grasp_planner.plan_grasp()
+
+    ## Stop for a moment ##
+    print("I want to stop here.")

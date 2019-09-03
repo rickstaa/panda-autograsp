@@ -12,6 +12,7 @@ import sys
 import six
 import copy
 import os
+import threading
 
 ## Import third party packages ##
 import cv2
@@ -21,8 +22,8 @@ import matplotlib.pyplot as plt
 ## Import ROS python packages ##
 import rospy
 import sensor_msgs
-from message_filters import (ApproximateTimeSynchronizer, Subscriber)
-
+from message_filters import (ApproximateTimeSynchronizer) #, Subscriber)
+from rospy import Subscriber
 ## Import ROS services and messages ##
 from panda_autograsp.srv import (PlanToPoint, VisualizePlan, ExecutePlan)
 from cv_bridge import CvBridge, CvBridgeError
@@ -104,14 +105,12 @@ def draw_axis(img, corners, imgpts):
 #################################################
 ## GraspPlannerClient Class #####################
 #################################################
-
-
 class GraspPlannerClient():
 
 	def __init__(self, grasp_detection_srv, color_topic, color_rect_topic, depth_rect_topic, camera_info_topic, queue_size=5, slop=0.1):
 
 		## Setup member variables ##
-		self.firstcallback = True
+		# self.firstcallback = True
 
 		## Setup cv_bridge ##
 		self.bridge = CvBridge()
@@ -168,56 +167,26 @@ class GraspPlannerClient():
 
 		## Create msg filter subscribers ##
 		rospy.loginfo("Creating camera sensor message_filter.")
-		color_image_sub = Subscriber(color_topic, sensor_msgs.msg.Image)
-		color_rect_image_sub = Subscriber(color_rect_topic, sensor_msgs.msg.Image)
-		depth_rect_image_sub = Subscriber(depth_rect_topic, sensor_msgs.msg.Image)
+		# color_image_sub = Subscriber(color_topic, sensor_msgs.msg.Image)
+		color_rect_image_sub = Subscriber(color_rect_topic, sensor_msgs.msg.Image, callback=self.color_rect_sub)
+		depth_rect_image_sub = Subscriber(depth_rect_topic, sensor_msgs.msg.Image, callback=self.depth_rect_sub)
 		camera_info_sub = Subscriber(
-			camera_info_topic, sensor_msgs.msg.CameraInfo)
+			camera_info_topic, sensor_msgs.msg.CameraInfo, callback=self.camera_info_sub)
 
 		## Create msg filter ##
-		ats = ApproximateTimeSynchronizer(
-			[color_image_sub, color_rect_image_sub, depth_rect_image_sub, camera_info_sub], queue_size, slop)
-		ats.registerCallback(self.msg_filter_callback)
-		rospy.loginfo("Camera sensor message_filter created.")
+		# ats = ApproximateTimeSynchronizer(
+		# 	[color_image_sub, color_rect_image_sub, depth_rect_image_sub, camera_info_sub], queue_size, slop)
+		#ats = ApproximateTimeSynchronizer(
+		#	[color_rect_image_sub, depth_rect_image_sub, camera_info_sub], queue_size, slop)
+		#ats.registerCallback(self.msg_filter_callback)
+		#rospy.loginfo("Camera sensor message_filter created.")
 
-	def msg_filter_callback(self, color_image, color_rect_image, depth_rect_image, camera_info):
-
-		# Perform the calibration while first entered
-		if self.firstcallback:
-			## Perform external world_camera calibration
-			rospy.loginfo(
-			"For the robot to know where it is relative to the camera we need a quick external calibration.")
-			loop_break = False
-			while True:
-
-				prompt_result = raw_input(
-					"Is the checkerboard positioned on the upper left corner of the table [Y/N]? ")
-				if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
-					ret, rvecs, tvecs, inliers = self.camera_world_calibration(color_image, camera_info)
-					if ret: # When fails rvecs = None
-						## Ask if the frame was correct ##
-						prompt_result = raw_input("Is the frame correct? [Y/N]? ")
-						if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
-							break
-						elif prompt_result.lower() in ['n', 'no']:
-							return
-						else:
-							print(prompt_result + " is not a valid response please answer with Y or N to continue.")
-				elif prompt_result.lower() in ['n', 'no']:
-					rospy.loginfo(
-						"Please place the chessboard in the upper left corner of the robot table.")
-					return
-				else:
-					print(prompt_result +
-						  " is not a valid response please answer with Y or N to continue.")
-			self.firstcallback = False
-
-		## Ask users if they want to compute a grasp ##
+	def request_grasp_planning(self):
 		raw_input("Click enter to compute a grasp: ")
 
 		## Call GQCNN grasp planning service ##
 		rospy.loginfo("Computting grasp using the GQCNN grasp planning service...")
-		grasp = self.grasp_computation_srv(color_rect_image, depth_rect_image, camera_info)
+		grasp = self.grasp_computation_srv(self.latest_color_rect, self.latest_depth_rect, self.latest_camera_info)
 		if grasp:
 			rospy.loginfo("Grasp pose computation successful.")
 			raw_input(
@@ -253,6 +222,90 @@ class GraspPlannerClient():
 		else:
 			print(prompt_result +
 				  " is not a valid response please answer with Y or N to continue.")
+
+	def color_rect_sub(self, color_rect):
+		self.latest_color_rect = color_rect
+
+	def depth_rect_sub(self, depth_rect):
+		self.latest_depth_rect = depth_rect
+
+	def camera_info_sub(self, camera_info):
+		self.latest_camera_info = camera_info
+
+	# def msg_filter_callback(self, color_image, color_rect_image, depth_rect_image, camera_info):
+	def msg_filter_callback(self, color_rect_image, depth_rect_image, camera_info):
+
+		# Perform the calibration while first entered
+		# if self.firstcallback:
+		# 	## Perform external world_camera calibration
+		# 	rospy.loginfo(
+		# 	"For the robot to know where it is relative to the camera we need a quick external calibration.")
+		# 	loop_break = False
+		# 	while True:
+
+		# 		prompt_result = raw_input(
+		# 			"Is the checkerboard positioned on the upper left corner of the table [Y/N]? ")
+		# 		if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
+		# 			ret, rvecs, tvecs, inliers = self.camera_world_calibration(color_image, camera_info)
+		# 			if ret: # When fails rvecs = None
+		# 				## Ask if the frame was correct ##
+		# 				prompt_result = raw_input("Is the frame correct? [Y/N]? ")
+		# 				if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
+		# 					break
+		# 				elif prompt_result.lower() in ['n', 'no']:
+		# 					return
+		# 				else:
+		# 					print(prompt_result + " is not a valid response please answer with Y or N to continue.")
+		# 		elif prompt_result.lower() in ['n', 'no']:
+		# 			rospy.loginfo(
+		# 				"Please place the chessboard in the upper left corner of the robot table.")
+		# 			return
+		# 		else:
+		# 			print(prompt_result +
+		# 				  " is not a valid response please answer with Y or N to continue.")
+		# 	self.firstcallback = False
+
+		# ## Ask users if they want to compute a grasp ##
+		raw_input("Click enter to compute a grasp: ")
+
+		## Call GQCNN grasp planning service ##
+		rospy.loginfo("Computting grasp using the GQCNN grasp planning service...")
+		grasp = self.grasp_computation_srv(color_rect_image, depth_rect_image, camera_info)
+		# if grasp:
+		# 	rospy.loginfo("Grasp pose computation successful.")
+		# 	raw_input(
+		# 		"Click enter to perform the path planning: ")
+		# else:
+		# 	rospy.loginfo("Grasp planning failed please try again.")
+
+		# ## Send grasp to moveit planning service ##
+		# rospy.loginfo("Computing grasp planning using moveit...")
+		# result = self.plan_to_pose_srv(grasp.grasp.pose)
+		# if result:
+		# 	rospy.loginfo("Grasp planning successful.")
+		# 	raw_input(
+		# 		"Click enter to perform a grasp visualization: ")
+		# else:
+		# 	rospy.loginfo("Grasp planning failed please try again.")
+
+		# ## Call visualize grasp service ##
+		# result = self.visualize_plan_srv()
+		# if result:
+		# 	rospy.loginfo("Grasp visualization succesfull.")
+		# else:
+		# 	rospy.loginfo("Grasp planning failed please try again.")
+
+		# ## Call grasp execution service ##
+		# prompt_result = raw_input(
+		# 	"Do you want to execute the planned trajectory [Y/n]? ")
+		# if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
+		# 	self.execute_plan_srv()
+		# elif prompt_result.lower() in ['n', 'no']:
+		# 	print("shutdown")
+		# 	sys.exit(0)
+		# else:
+		# 	print(prompt_result +
+		# 		  " is not a valid response please answer with Y or N to continue.")
 
 		## Publish the camera and calibration board frames
 
@@ -349,5 +402,8 @@ if __name__ == "__main__":
 	grasp_planner_client = GraspPlannerClient(grasp_detection_srv, kinect_color_topic, kinect_color_rect_topic,
 										   kinect_depth_rect_topic, kinect_camera_info_topic, MSG_FILTER_QUEUE_SIZE, MSG_FILTER_SLOP)
 
-	## Loop till the service is shutdown. ##
+	rospy.sleep(2.0)
+	grasp_planner_client.request_grasp_planning()
+
+	# ## Loop till the service is shutdown. ##
 	rospy.spin()

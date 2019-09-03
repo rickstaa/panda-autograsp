@@ -52,7 +52,6 @@ main_cfg = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
 ## Get settings out of main_cfg ##
 GRASP_SOLUTION = "gqcnn"
 DEFAULT_MODEL = main_cfg["grasp_detection_solutions"][GRASP_SOLUTION]["defaults"]["model"]
-DEFAULT_POLICY = main_cfg["grasp_detection_solutions"][GRASP_SOLUTION]["defaults"]["policy"]
 MODELS_PATH = os.path.abspath(os.path.join(
     os.path.dirname(os.path.realpath(__file__)), "../../..", main_cfg["defaults"]["models_dir"]))
 DOWNLOAD_SCRIPT_PATH = os.path.abspath(os.path.join(os.path.dirname(
@@ -115,18 +114,17 @@ class GraspPlanner(object):
 
         ## Create grasping policy ##
         mod_logger.info("Creating Grasping Policy")
-        if "cross_entropy" == self.main_cfg["grasp_detection_solutions"][GRASP_SOLUTION]["parameters"]["available"][model]:
-            self.grasping_policy = CrossEntropyRobustGraspingPolicy(
-                self.policy_cfg)
-        elif "fully_conv" == self.main_cfg["grasp_detection_solutions"][GRASP_SOLUTION]["parameters"]["available"][model]:
-            if "pj" in model.lower():
-                self.grasping_policy = FullyConvolutionalGraspingPolicyParallelJaw(
-                    self.policy_cfg)
-            elif "suction" in model.lower():
-                self.grasping_policy = FullyConvolutionalGraspingPolicySuction(
-                    self.policy_cfg)
-        else:
-            mod_logger.info("The %s model of the %s policy is not yet implemented." % (model, GRASP_SOLUTION))
+        try:
+	    	if "cross_entropy" == main_cfg["grasp_detection_solutions"]["gqcnn"]["parameters"]["available"][model_name]:
+	    		grasping_policy = CrossEntropyRobustGraspingPolicy(policy_cfg)
+	    	elif "fully_conv" == main_cfg["grasp_detection_solutions"]["gqcnn"]["parameters"]["available"][model_name]:
+	    		if "pj" in model_name.lower():
+	    			grasping_policy = FullyConvolutionalGraspingPolicyParallelJaw(policy_cfg)
+	    		elif "suction" in model_name.lower():
+	    			grasping_policy = FullyConvolutionalGraspingPolicySuction(policy_cfg)
+        except KeyError:
+	    	mod_logger.info("The %s model of the %s policy is not yet implemented." % (model_name, "gqcnn"))
+	    	sys.exit(0)
 
         ## Create usefull class properties ##
         self.sensor_type = sensor_type

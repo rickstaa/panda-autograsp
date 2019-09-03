@@ -3,11 +3,11 @@
 
 ## Panda_autograsp visualization settings ##
 vis:
-  rgbd_state: 1
-  cropped_rgbd_image: 1
-  color_image: 1
-  depth_image: 1
-  segmask: 1
+  rgbd_state: 0
+  cropped_rgbd_image: 0
+  color_image: 0
+  depth_image: 0
+  segmask: 0
   final_grasp: 1
 
 ## Panda_autograsp default values ##
@@ -23,8 +23,12 @@ grasp_detection_solutions:
 
     ## GQCNN default values ##
     defaults:
-      model: GQCNN-2.0 # Default CNN model
-      policy: cross_entropy # Default policy
+
+      ## Uncomment the model you want to use ##
+      # model: GQCNN-2.0 # Trained on images of objects in singulation
+      # model: GQCNN-2.1 # Model fine-tuned on images of objects in clutter
+      model: GQCNN-4.0-PJ # Trained on images of objects in clutter with parameters
+      # model: FC-GQCNN-4.0-PJ # Improved network trained on images of objects in clutter
 
     ## Important GQCNN paths ##
     parameters:

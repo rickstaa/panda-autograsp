@@ -6,4 +6,4 @@
 cfg_path: ./gqcnn/cfg
 
 ## Available models and policies
-available: {GQCNN-4.0-PJ: "cross_entropy", FC-GQCNN-4.0-PJ: "fully_conv"}
+available: {GQCNN-2.0: "cross_entropy", GQCNN-2.1: "cross_entropy", GQCNN-4.0-PJ: "cross_entropy", FC-GQCNN-4.0-PJ: "fully_conv"}
