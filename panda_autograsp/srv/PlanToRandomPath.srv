@@ -1,5 +1,4 @@
-# Request a plan to the random path
-float64 n_waypoints
-float64 n_scale
+# Request a plan to a random path
+int64 n_waypoints
 ---
 bool success

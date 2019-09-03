@@ -16,12 +16,13 @@ import random
 import moveit_commander
 
 ## Import services and messages ##
-from moveit_msgs.msg import CollisionObject
+from moveit_msgs.msg import (CollisionObject, DisplayTrajectory)
 from shape_msgs.msg import SolidPrimitive, Mesh
 from geometry_msgs.msg import Pose
 from moveit_msgs.srv import ApplyPlanningScene
 from panda_autograsp.srv import ExecutePlan
-from panda_autograsp.srv import (PlanToJoint, PlanToPoint, PlanToPath, PlanToRandomPath, PlanToRandomPoint)
+from panda_autograsp.srv import (PlanToJoint, PlanToPoint, PlanToPath,
+                                 PlanToRandomPoint, PlanToRandomJoint, PlanToRandomPath, VisualizePlan)
 
 ## Import BerkeleyAutomation packages packages ##
 from autolab_core import YamlConfig
@@ -40,6 +41,20 @@ JUMPT_THRESHOLD = MAIN_CFG["planning"]["cartesian"]["jump_threshold"]
 #################################################
 ## PandaPathPlanningService class ###############
 #################################################
+
+# #################################################
+# ## ptvsd Debugger initiation snippet ############
+# #################################################
+
+# ## Import the ptvsd module ##
+# import ptvsd
+
+# ## Allow other computers to attach to ptvsd at this IP address and port. ##
+# ptvsd.enable_attach(address=('0.0.0.0', 5678), redirect_output=True)
+
+# ## Pause the program until a remote debugger is attached ##
+# ptvsd.wait_for_attach()
+# #################################################
 class PandaPathPlanningService:
     def __init__(self, robot_description, group_name, args, planner='RRTConnectkConfigDefault', ):
         """PandaPathPlannerService class initialization.
@@ -63,50 +78,70 @@ class PandaPathPlanningService:
         rospy.init_node('moveit_planner_server')
 
         ## Connect to moveit services ##
-        rospy.loginfo("Conneting moveit default moveit \'apply_planning_scene\' service.")
-        rospy.wait_for_service('apply_planning_scene')
+        rospy.loginfo(
+            "Conneting moveit default moveit \'apply_planning_scene\' service.")
+        rospy.wait_for_service('/apply_planning_scene')
+        rospy.wait_for_service('/apply_planning_scene') ##
         try:
-            self.planning_scene_srv = rospy.ServiceProxy('apply_planning_scene', ApplyPlanningScene)
+            self.planning_scene_srv = rospy.ServiceProxy(
+                '/apply_planning_scene', ApplyPlanningScene)
             rospy.loginfo("Moveit \'apply_planning_scene\' service found!")
         except rospy.ServiceException as e:
-            rospy.loginfo("Moveit \'apply_planning_scene\' service initialization failed: %s" % e)
+            rospy.loginfo(
+                "Moveit \'apply_planning_scene\' service initialization failed: %s" % e)
             shutdown_msg = "Shutting down %s node because %s connection failed." % (
                 rospy.get_name(), self.planning_scene_srv)
             rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
             return
 
         ## Create robot commander ##
-        # Used to get information from the robot
-        self.robot = moveit_commander.RobotCommander(robot_description=robot_description, ns=rospy.get_namespace())
+        self.robot = moveit_commander.RobotCommander(
+            robot_description=robot_description, ns="/")
         rospy.logdebug("Robot Groups: %s", self.robot.get_group_names())
 
         ## Create scene commanders ##
         # Used to get information about the world and update the robot
         # its understanding of the world.
+        print(self.robot.get_group_names())
         self.move_group = self.robot.get_group(group_name)
-        self.scene = moveit_commander.PlanningSceneInterface(ns=rospy.get_namespace())
-
+        self.scene = moveit_commander.PlanningSceneInterface(
+            ns="/")
         ## Specify the planner we want to use ##
         self.move_group.set_planner_id(planner)
 
         ## Get end effector ##
         self.eef_link = self.move_group.get_end_effector_link()
 
+        ## Create a `DisplayTrajectory`_ ROS publisher to display the plan in RVIZ ##
+        self.display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
+                                                            DisplayTrajectory,
+                                                            queue_size=20)
+
         ## Print some information about the planner configuration ##
         rospy.loginfo("Using planner: %s", planner)
-        rospy.logdebug("Reference frame: %s", self.move_group.get_planning_frame())
+        rospy.logdebug("Reference frame: %s",
+                       self.move_group.get_planning_frame())
         rospy.logdebug("End effector: %s", self.eef_link)
-        rospy.logdebug("Current robot state: %s", self.robot.get_current_state())
+        rospy.logdebug("Current robot state: %s",
+                       self.robot.get_current_state())
 
         ## Add our custom services ##
         rospy.loginfo("Initializing %s services.", rospy.get_name())
         rospy.Service('execute_plan', ExecutePlan, self.execute_plan_service)
         rospy.Service('plan_to_point', PlanToPoint, self.plan_to_point_service)
         rospy.Service('plan_to_joint', PlanToJoint, self.plan_to_joint_service)
-        rospy.Service('plan_to_path', PlanToPath, self.plan_cartesian_path_service)
-        rospy.Service('plan_random_pose', PlanToRandomPoint, self.plan_random_pose_service)
-        rospy.Service('plan_random_path', PlanToRandomPath, self.plan_random_cartesian_path_service)
-        rospy.loginfo("%s services initialized successfully. Waiting for requests.", rospy.get_name())
+        rospy.Service('plan_to_path', PlanToPath,
+                      self.plan_cartesian_path_service)
+        rospy.Service('plan_random_pose', PlanToRandomPoint,
+                      self.plan_random_pose_service)
+        rospy.Service('plan_random_joint', PlanToRandomJoint,
+                      self.plan_random_joint_service)
+        rospy.Service('plan_random_path', PlanToRandomPath,
+                      self.plan_random_cartesian_path_service)
+        rospy.Service('visualize_plan', VisualizePlan,
+                      self.visualize_plan_service)
+        rospy.loginfo(
+            "\'%s\' services initialized successfully. Waiting for requests.", rospy.get_name())
 
         ## Create additional class members ##
         self.current_plan = None
@@ -126,7 +161,7 @@ class PandaPathPlanningService:
         """
 
         ## Set joint targets and plan trajectory ##
-        rospy.loginfo("Planning to %s", joints.target)
+        rospy.loginfo("Planning to: \n %s", joints.target)
         self.move_group.set_joint_value_target(list(joints.target))
         plan = self.move_group.plan()
 
@@ -160,7 +195,7 @@ class PandaPathPlanningService:
         points = []
 
         ## Set the target possition ##
-        rospy.loginfo("Planning to %s", req.target)
+        rospy.loginfo("Planning to: \n %s", req.target)
         self.move_group.set_pose_target(req.target)
 
         ## Perform planning ##
@@ -172,18 +207,19 @@ class PandaPathPlanningService:
 
         ## Find shortest path ##
         plan = plans[points.index(min(points))]
-        rospy.logdebug("Points of chosen plan: %d" % len(plan.joint_trajectory.points))
+        rospy.logdebug("Points of chosen plan: %d" %
+                       len(plan.joint_trajectory.points))
 
         ## Validate whether planning was successful ##
         if len(plan.joint_trajectory.points) > 1:
             rospy.loginfo("Plan found")
             self.current_plan = plan
-            self.move_group.clear_pose_targets() # Clear pose targets
+            self.move_group.clear_pose_targets()  # Clear pose targets
             return True
         else:
             rospy.logwarn("No plan found")
             self.current_plan = None
-            self.move_group.clear_pose_targets() # Clear pose targets
+            self.move_group.clear_pose_targets()  # Clear pose targets
             return False
 
     def plan_cartesian_path_service(self, req):
@@ -202,20 +238,48 @@ class PandaPathPlanningService:
 
         ## Plan cartesain path ##
         (plan, fraction) = self.move_group.compute_cartesian_path(
-                                           req.waypoints,       # waypoints to follow
-                                           EEF_STEP,        # eef_step
-                                           JUMPT_THRESHOLD) # jump_threshold
+            req.waypoints,       # waypoints to follow
+            EEF_STEP,            # eef_step
+            JUMPT_THRESHOLD)     # jump_threshold
 
         ## Validate whether planning was successful ##
         if len(plan.joint_trajectory.points) > 1:
             rospy.loginfo("Plan found")
-            rospy.loginfo("%s of the path can be executed.", fraction)
+            rospy.loginfo("%s %% of the path can be executed.",
+                          str(fraction*100))
             self.current_plan = plan
             return True
         else:
             rospy.logwarn("No plan found")
             self.current_plan = None
             return False
+
+    def visualize_plan_service(self, req):
+        """Execute the plan that has been computed by the other plan services.
+
+        Parameters
+        ----------
+        req : empty service request
+            Request dummy arguments. Needed since ros can be started with multiple srv's.
+
+        Returns
+        -------
+        bool
+            Returns a bool to specify whether the plan was executed successfully.
+        """
+        ## Generate movit_msgs ##
+        if self.current_plan is not None:
+            display_trajectory = DisplayTrajectory()
+            display_trajectory.trajectory_start = self.robot.get_current_state()
+            display_trajectory.trajectory.append(self.current_plan)
+        else:
+            rospy.loginfo(
+                "No plan was found please first execute the planning service.")
+            return False
+
+        ## Publish plan ##
+        self.display_trajectory_publisher.publish(display_trajectory)
+        return True
 
     def execute_plan_service(self, req):
         """Execute the plan that has been computed by the other plan services.
@@ -228,21 +292,26 @@ class PandaPathPlanningService:
         Returns
         -------
         bool
-            Returns a bool to specify whether the plan was executed successfully
+            Returns a bool to specify whether the plan was executed successfully.
         """
 
         ## Execute plan if available ##
         if self.current_plan is not None:
-            result = self.move_group.execute(plan_msg=self.current_plan, wait=True)
-            rospy.loginfo("Execute result = %s" % result)
-            # self.current_plan
+            result = self.move_group.execute(
+                plan_msg=self.current_plan, wait=True)
+
+            ## Check if execution was successful ##
+            if result:
+                rospy.loginfo("Plan execution was successful.")
+            else:
+                rospy.loginfo("Plan execution was unsuccessful.")
             return result
         else:
             rospy.logwarn("No plan available for execution.")
             return False
 
     def plan_random_pose_service(self, req):
-        """Plan to a random pose.
+        """Plan to a random pose goal.
 
         Parameters
         ----------
@@ -252,23 +321,51 @@ class PandaPathPlanningService:
         Returns
         -------
         bool
-            Returns a bool to specify whether the plan was executed successfully
+            Returns a bool to specify whether the plan was executed successfully.
         """
 
         ## Create random pose ##
-        rand_pose = self.create_rand_pose(req.x_range, req.y_range, req.z_range)
+        rospy.loginfo("Creating random pose.")
+        rand_pose = self.move_group.get_random_pose()
 
         ## Plan to random pose ##
-        req = lambda: None # Create dumpy request function object
-        req.target = rand_pose # set random pose as a property
+        req = (lambda: None)  # Create dumpy request function object
+        req.target = rand_pose  # set random pose as a property
         result = self.plan_to_point_service(req)
 
         ## Check whether path planning was successful ##
         if result:
-            rospy.loginfo("Plan found")
             return True
         else:
-            rospy.loginfo("No plan found")
+            return False
+
+    def plan_random_joint_service(self, req):
+        """Plan to a random joint goal.
+
+        Parameters
+        ----------
+        req : empty service request
+            Request dummy arguments. Needed since ros can be started with multiple srv's.
+
+        Returns
+        -------
+        bool
+            Returns a bool to specify whether the plan was executed successfully.
+        """
+
+        ## Create random pose ##
+        rospy.loginfo("Creating random joint goal.")
+        rand_joint = self.move_group.get_random_joint_values()
+
+        ## Plan to random pose ##
+        req = (lambda: None)  # Create dumpy request function object
+        req.target = rand_joint  # set random joint goal as a property
+        result = self.plan_to_joint_service(req)
+
+        ## Check whether path planning was successful ##
+        if result:
+            return True
+        else:
             return False
 
     def plan_random_cartesian_path_service(self, req):
@@ -282,62 +379,34 @@ class PandaPathPlanningService:
 
         Returns
         -------
-        [type]
-            [description]
+        bool
+            Returns a bool to specify whether the plan was executed successfully.
         """
         ## Create local variables ##
         waypoints = []
         w_pose = self.move_group.get_current_pose().pose
 
         ## Create a cartesian path ##
-        for i in range(req.n_waypoints):
+        for _ in range(req.n_waypoints):
 
-            w_pose.position.x += req.n_scale * random.uniform(-1,1)
-            w_pose.position.y += req.n_scale * random.uniform(-1,1)
-            w_pose.position.z += req.n_scale * random.uniform(-1,1)
+            ## Generate random pose ##
+            rand_pose = self.move_group.get_random_pose()
+            w_pose.position.x = rand_pose.pose.position.x
+            w_pose.position.y = rand_pose.pose.position.y
+            w_pose.position.z = rand_pose.pose.position.z
             waypoints.append(copy.deepcopy(w_pose))
 
         ## Plan cartesian path ##
-        result = self.plan_cartesian_path_service(waypoints)
+        req = (lambda: None)  # Create dumpy request function object
+        req.waypoints = waypoints  # set random pose as a property
+        result = self.plan_cartesian_path_service(req)
 
         ## Check whether path planning was successful ##
         if result:
-            rospy.loginfo("Plan found")
             return True
         else:
-            rospy.loginfo("No plan found")
             return False
 
-    def create_rand_pose(self, x_range=(-2, 2), y_range=(-2, 2), z_range=(-2, 2)):
-        """Function used to create random robot poses.
-
-        Parameters
-        ----------
-        x_range : tuple, optional
-            The range of the x_position=(x_min, x_max), by default (-2, 2)
-        y_range : tuple, optional
-            The range of the y_position(y_min, y_max), by default (-2, 2)
-        z_range : tuple, optional
-            The range of the z_position=(z_min, z_max), by default (-2, 2)
-
-        Returns
-        -------
-        geometry_msgs/Pose.msg
-            Random robot pose
-        """
-
-        ## Construct random robot pose ##
-        random_pose = Pose()
-        random_pose.position.x = (random.random()-x_range[0])*x_range[1]
-        random_pose.position.y = (random.random()-y_range[0])*y_range[1]
-        random_pose.position.z = (random.random()-z_range[0])*z_range[1]
-        random_pose.orientation.x = random.random()
-        random_pose.orientation.y = random.random()
-        random_pose.orientation.z = random.random()
-        random_pose.orientation.w = random.random()
-
-        ## Return robot pose ##
-        return random_pose
 
 #################################################
 ## Main script ##################################
@@ -345,23 +414,8 @@ class PandaPathPlanningService:
 if __name__ == '__main__':
 
     ## Create service object ##
-    path_planning_service = PandaPathPlanningService(robot_description='robot_description', group_name='panda_arm', args=sys.argv,
-                             planner="TRRTkConfigDefault")
-
-    # ## Initialize the ROS services ##
-    # execute_plan_srv = rospy.Service("execute_plan", ExecutePlan,
-    #                                        path_planning_service.execute_plan_service)
-    # plan_to_joint_srv = rospy.Service("plan_to_joint", PlanToJoint,
-    #                                        path_planning_service.plan_to_joint_service)
-    # plan_to_point_srv = rospy.Service("plan_to_point", PlanToPoint,
-    #                                        path_planning_service.plan_to_point_service)
-    # plan_to_path_srv = rospy.Service("plan_to_joint", PlanToPath,
-    #                                    path_planning_service.plan_cartesian_path_service)
-    # plan_to_random_path_srv = rospy.Service("plan_to_joint", PlanToRandomPath,
-    #                                    path_planning_service.plan_random_cartesian_path_service)
-    # plan_to_random_point_srv = rospy.Service("plan_to_joint", PlanToRandomPoint,
-    #                                    path_planning_service.plan_random_pose_service)
-    # rospy.loginfo("Moveit planner initialized")
+    path_planning_service = PandaPathPlanningService(robot_description='/robot_description', group_name='panda_arm', args=sys.argv,
+                                                     planner="TRRTkConfigDefault")
 
     ## Spin forever. ##
     rospy.spin()

@@ -28,9 +28,9 @@ TF_MAX_VERSION = "1.13.1"
 
 ## Package requirements ##
 if (sys.version_info > (3, 0)): # Py 2 requirements
-    requirements = ['rospkg', 'defusedxml', 'empy', 'catkin-pkg', 'pyQt5', 'PySide2']
+    requirements = ['rospkg', 'defusedxml', 'empy', 'catkin-pkg', 'pyQt5', 'PySide2', 'pyassimp']
 else: # Py 3 requirements
-    requirements = ['rospkg', 'defusedxml', 'empy', 'catkin-pkg', 'PySide2']
+    requirements = ['rospkg', 'defusedxml', 'empy', 'catkin-pkg', 'PySide2', 'pyassimp']
 
 ## Set up logger. ##
 logger = logging.getLogger(__name__)

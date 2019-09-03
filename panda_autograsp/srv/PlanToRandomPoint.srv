@@ -1,6 +1,4 @@
-# Request a plan to the random point
-float64[2] x_range
-float64[2] y_range
-float64[2] z_range
+# Request a plan to a random point
+
 ---
 bool success

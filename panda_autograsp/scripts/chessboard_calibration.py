@@ -29,6 +29,8 @@ factory = False # Use libfreenect2 camera parameters
 ## Calibration settings ##
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER,
             30, 0.001)  # termination criteria
+
+### BIG BOARD ##
 N_FRAMES = 10
 # Row size -1 (see https://stackoverflow.com/questions/17993522/opencv-findchessboardcorners-function-is-failing-in-a-apparently-simple-scenar)
 N_ROWS = 7
@@ -36,12 +38,24 @@ N_ROWS = 7
 N_COLMNS = 10
 SQUARE_SIZE = 34  # The square size in mm
 
+### Small Board ##
+N_FRAMES = 10
+# Row size -1 (see https://stackoverflow.com/questions/17993522/opencv-findchessboardcorners-function-is-failing-in-a-apparently-simple-scenar)
+N_ROWS = 5
+# Column size -1 (see https://stackoverflow.com/questions/17993522/opencv-findchessboardcorners-function-is-failing-in-a-apparently-simple-scenar)
+N_COLMNS = 7
+SQUARE_SIZE = 30  # The square size in mm
+
 ## Text default settings ##
 font                   = cv2.FONT_HERSHEY_SIMPLEX
 fontScale              = 0.90
 fontColor              = (0, 0, 0)
 lineType               = 1
 rectangle_bgr          = (255, 255, 255)
+
+## Result save location ##
+SAVE_CALIB = os.path.abspath(os.path.join(os.path.dirname(
+    os.path.realpath(__file__)), "..", "data", "calib","calib_results.npz"))
 
 #################################################
 ## Functions ####################################
@@ -92,18 +106,18 @@ if __name__ == "__main__":
     #################################################
     ## Get Intrinsic  color matrix ##################
     #################################################
+    ## Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0) ##
+    # Multiply with size of square to et the result in mm
+    objp = np.zeros((N_COLMNS*N_ROWS, 3), np.float32)
+
+    # Multiply by chessboard scale factor
+    objp[:, :2] = np.mgrid[0:N_ROWS, 0:N_COLMNS].T.reshape(-1, 2) * SQUARE_SIZE
+
+    ## Arrays to store object points and image points from all the images. ##
+    objpoints = []  # 3d point in real world space
+    imgpoints = []  # 2d points in image plane.
+    axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3) * SQUARE_SIZE # Coordinate axis
     if not factory:
-
-        ## Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0) ##
-        # Multiply with size of square to et the result in mm
-        objp = np.zeros((N_COLMNS*N_ROWS, 3), np.float32)
-        # Multiply by chessboard scale factor
-        objp[:, :2] = np.mgrid[0:N_ROWS, 0:N_COLMNS].T.reshape(-1, 2) * SQUARE_SIZE
-
-        ## Arrays to store object points and image points from all the images. ##
-        objpoints = []  # 3d point in real world space
-        imgpoints = []  # 2d points in image plane.
-        axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3) * SQUARE_SIZE # Coordinate axis
 
         ## Start message ##
         script_logger.info("--- Kinect2 camera calibration ---")
@@ -253,15 +267,15 @@ if __name__ == "__main__":
         cv2.destroyAllWindows()
 
         ## Perform calibration ##
-        ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(
+        ret, color_mtx, dist, rvecs, tvecs = cv2.calibrateCamera(
             objpoints, imgpoints, gray.shape[::-1], None, None)
 
         ## Retrieve intr parameters out of camera matrix ##
-        f_x = mtx[0, 0]  # x focal length
-        f_y = mtx[1, 1]  # Y focal length
-        c_x = mtx[0, 2]  # x optical center
-        c_y = mtx[1, 2]  # y optical center
-        s = mtx[1, 0]  # skew
+        f_x = color_mtx[0, 0]  # x focal length
+        f_y = color_mtx[1, 1]  # Y focal length
+        c_x = color_mtx[0, 2]  # x optical center
+        c_y = color_mtx[1, 2]  # y optical center
+        s = color_mtx[1, 0]  # skew
 
         ## Unwarp distortion parameters ##
         k_1 = dist[0][0]  # First radial distortion coefficient
@@ -277,13 +291,13 @@ if __name__ == "__main__":
         print("Distortion parameters:")
         print(dist[0])
         print("Camera matrix:")
-        print(mtx)
+        print(color_mtx)
 
         ## Calculate re-projection error ##
         tot_error = 0
         for index, value in enumerate(objpoints):
             imgpoints2, _ = cv2.projectPoints(
-                objpoints[index], rvecs[index], tvecs[index], mtx, dist)
+                objpoints[index], rvecs[index], tvecs[index], color_mtx, dist)
             error = cv2.norm(imgpoints[index], imgpoints2, cv2.NORM_L2)/len(imgpoints2)
             tot_error += error
         print("Mean error: ", tot_error/len(objpoints))
@@ -292,8 +306,8 @@ if __name__ == "__main__":
         ## Save camera matrix and distortion coefficients #
         ###################################################
 
-        ## Save as numpy array ##
-        np.savez("calib_results.npz", mtx=mtx, dst=dist, rvecs=rvecs, tvec=tvecs)
+        # ## Save as numpy array ##
+        # np.savez(SAVE_CALIB, color_mtx=color_mtx, dst=dist, rvecs=rvecs, tvec=tvecs)
 
         # ## Save as berkeley format file ##
         # camera_intr_obj = CameraIntrinsics("none", f_x, f_y, c_x, c_y, s) # Create Berkeley perception intrinsic camera parmeter format
@@ -301,7 +315,7 @@ if __name__ == "__main__":
 
         # ## Reload numpy array ##
         # with np.load('B.npz') as X:
-        #     mtx, dist, _, _ = [X[i] for i in ('mtx','dist','rvecs','tvecs')]
+        #     color_mtx, dist, _, _ = [X[i] for i in ('color_mtx','dist','rvecs','tvecs')]
 
     ##################################################
     ## Get IR intrinsic parameters ###################
@@ -313,12 +327,16 @@ if __name__ == "__main__":
 
     ## Get intrinsic parameters if factory is set ##
     if factory:
+        # color_intr = sensor._device.getColorCameraParams()
         color_intr = sensor.color_intrinsics
-        ir_intr = sensor.ir_intrinsics
+        ir_intr = sensor._device.getIrCameraParams()
+        # ir_intr = sensor.ir_intrinsics
         color_mtx = color_intr.K
-        ir_mtx = ir_intr.K
+        ir_mtx = [ir_intr.k1, ir_intr.k2, ir_intr.p1, ir_intr.p2, ir_intr.k3]
+        dist = np.array(ir_mtx)
 
     ## Show results ##
+    print("Calculating the extrinsic properties. Put the chessboard in the upper left corner of the robot table and click [s] to save the calibration. You can click [q] to exit.")
     while True:
 
         ## Get color image ##
@@ -335,10 +353,10 @@ if __name__ == "__main__":
             corners2 = cv2.cornerSubPix(gray,corners,(11,11),(-1,-1),criteria)
 
             # Find the rotation and translation vectors.
-            _, rvecs, tvecs, inliers = cv2.solvePnPRansac(objp, corners2, mtx, dist)
+            _, rvecs, tvecs, inliers = cv2.solvePnPRansac(objp, corners2, color_mtx, dist)
 
             # project 3D points to image plane
-            imgpts, jac = cv2.projectPoints(axis, rvecs, tvecs, mtx, dist)
+            imgpts, jac = cv2.projectPoints(axis, rvecs, tvecs, color_mtx, dist)
 
             screen_img = draw_axis(screen_img, corners2, imgpts)
             cv2.imshow('img',screen_img)
@@ -346,11 +364,12 @@ if __name__ == "__main__":
             if k == ord('s'):
 
                 ## Save rotation and transformation matrix
-                np.savez("calib_result_extr.npz", rvecs=rvecs, tvecs=tvecs, inliers=inliers)
+                print("saving calibration")
+                np.savez(SAVE_CALIB, mtx=color_mtx, dst=dist, rvecs=rvecs, tvecs=tvecs, inliers=inliers)
                 # cv2.imwrite(fname[:6]+'.png', img)
 
             ## Break if someone presses q ##
-            if key == ord('q'):
+            if k == ord('q'):
                 sys.exit(0)
 
     cv2.destroyAllWindows()

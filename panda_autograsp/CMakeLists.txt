@@ -16,6 +16,9 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   sensor_msgs
   geometry_msgs
+  tf2_geometry_msgs
+  trajectory_msgs
+  moveit_msgs
 )
 
 ################################################
@@ -71,8 +74,10 @@ add_service_files(
   PlanToJoint.srv
   PlanToPoint.srv
   PlanToPath.srv
-  PlanToRandomPath.srv
   PlanToRandomPoint.srv
+  PlanToRandomJoint.srv
+  PlanToRandomPath.srv
+  VisualizePlan.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -87,6 +92,7 @@ generate_messages(
   DEPENDENCIES
   std_msgs
   geometry_msgs
+  trajectory_msgs
 )
 
 ################################################
@@ -121,7 +127,14 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES ${PROJECT_NAME}
-   CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs geometry_msgs
+   CATKIN_DEPENDS
+   roscpp rospy
+   sensor_msgs
+   std_msgs
+   geometry_msgs
+   tf2_geometry_msgs
+   trajectory_msgs
+   moveit_msgs
 #  DEPENDS system_lib
 )
 

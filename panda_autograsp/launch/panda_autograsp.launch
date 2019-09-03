@@ -9,22 +9,31 @@
 
     <!-- Include sensor package and grasp detection package launch files-->
     <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" >
-        <param name="output" value="log" />
+        <arg name="output" value="log" />
     </include>
 
     <!-- Load panda_autograsp package nodes -->
-    <group ns="panda_autograsp">
 
-        <!-- Grasp planner service server -->
-        <node name="grasp_planner_server" pkg="panda_autograsp" type="grasp_planner_server.py" output="screen">
-            <param name="grasp_detection_srv" value="$(arg grasp_detection_srv)" />
-        </node>
+    <!-- Include rviz movit launchfile -->
+    <!-- TODO: I still have to replace the parameters in this file to make it work on the real robot -->
+    <include file="$(find panda_autograsp)/launch/rviz_moveit_demo.launch">
+        <arg name="output" value="log" />
+    </include>
 
-        <!-- Grasp planner service client -->
-        <!-- <node name="grasp_planner_client" pkg="panda_autograsp" type="grasp_planner_client.py" output="screen" >
-            <param name="grasp_img_quality" value="$(arg grasp_img_quality)" />
-            <param name="grasp_detection_srv" value="$(arg grasp_detection_srv)" />
-        </node> -->
-    </group>
+    <!-- Create static transform for the calibration board-->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="chessboard_frame" args="1 0 0 0 0 0 1 link1_parent link1" />
+
+    <!-- Grasp planner service server -->
+    <node name="grasp_planner_server" pkg="panda_autograsp" type="grasp_planner_server.py" output="log">
+        <param name="grasp_detection_srv" value="$(arg grasp_detection_srv)" />
+    </node>
+
+    <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="log"/>
+
+    <!-- Grasp planner service client -->
+    <!-- <node name="grasp_planner_client" pkg="panda_autograsp" type="grasp_planner_client.py" output="screen" >
+        <param name="grasp_img_quality" value="$(arg grasp_img_quality)" />
+        <param name="grasp_detection_srv" value="$(arg grasp_detection_srv)" />
+    </node> -->
 
 </launch>
