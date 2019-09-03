@@ -3,14 +3,14 @@
 <launch>
 
     <!-- Set global args -->
-    <arg name="base_name"           default="kinect2"/>
-    <arg name="grasp_img_quality"   default="sd" /> <!-- The input image quality into the GQCNN [qhd or sd] -->
-    <arg name="grasp_detection_srv" default="/panda_autograsp/grasp_planner" /> <!-- Grasp planner service name -->
+    <!-- <arg name="base_name"           default="kinect2"/>
+    <arg name="grasp_img_quality"   default="sd" />
+    <arg name="grasp_detection_srv" default="/panda_autograsp/grasp_planner" /> -->
 
     <!-- Include sensor package and grasp detection package launch files-->
-    <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" >
+    <!-- <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" >
         <arg name="output" value="log" />
-    </include>
+    </include> -->
 
     <!-- Load panda_autograsp package nodes -->
 
@@ -21,14 +21,14 @@
     </include>
 
     <!-- Create static transform for the calibration board-->
-    <node pkg="tf2_ros" type="static_transform_publisher" name="chessboard_frame" args="1 0 0 0 0 0 1 link1_parent link1" />
+    <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="chessboard_frame" args="1 0 0 0 0 0 1 link1_parent link1" /> -->
 
     <!-- Grasp planner service server -->
-    <node name="grasp_planner_server" pkg="panda_autograsp" type="grasp_planner_server.py" output="log">
+    <!-- <node name="grasp_planner_server" pkg="panda_autograsp" type="grasp_planner_server.py" output="log">
         <param name="grasp_detection_srv" value="$(arg grasp_detection_srv)" />
-    </node>
+    </node> -->
 
-    <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="log"/>
+    <!-- <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="log"/> -->
 
     <!-- Grasp planner service client -->
     <!-- <node name="grasp_planner_client" pkg="panda_autograsp" type="grasp_planner_client.py" output="screen" >

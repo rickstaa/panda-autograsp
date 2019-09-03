@@ -120,12 +120,12 @@ class GraspPlannerClient():
 		rospy.loginfo("Conneting to %s service." % grasp_detection_srv)
 		rospy.wait_for_service(grasp_detection_srv)
 		try:
-			self.grasp_compuation_srv = rospy.ServiceProxy(
+			self.grasp_computation_srv = rospy.ServiceProxy(
 				grasp_detection_srv, GQCNNGraspPlanner)
 		except rospy.ServiceException as e:
 			rospy.loginfo("Service initialization failed: %s" % e)
 			shutdown_msg = "Shutting down %s node because %s connection failed." % (
-				rospy.get_name(), self.grasp_compuation_srv)
+				rospy.get_name(), self.grasp_computation_srv)
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 			return
 
@@ -187,65 +187,75 @@ class GraspPlannerClient():
 			## Perform external world_camera calibration
 			rospy.loginfo(
 			"For the robot to know where it is relative to the camera we need a quick external calibration.")
-
+			loop_break = False
 			while True:
+
 				prompt_result = raw_input(
 					"Is the checkerboard positioned on the upper left corner of the table [Y/N]? ")
 				if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
-					rvecs, tvecs, inliers = self.camera_world_calibration(color_image, camera_info)
-					if not rvecs: # When fails rvecs = None
-						break # Break if successful
+					ret, rvecs, tvecs, inliers = self.camera_world_calibration(color_image, camera_info)
+					if ret: # When fails rvecs = None
+						## Ask if the frame was correct ##
+						prompt_result = raw_input("Is the frame correct? [Y/N]? ")
+						if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
+							break
+						elif prompt_result.lower() in ['n', 'no']:
+							return
+						else:
+							print(prompt_result + " is not a valid response please answer with Y or N to continue.")
 				elif prompt_result.lower() in ['n', 'no']:
 					rospy.loginfo(
 						"Please place the chessboard in the upper left corner of the robot table.")
+					return
 				else:
 					print(prompt_result +
 						  " is not a valid response please answer with Y or N to continue.")
+			self.firstcallback = False
 
-			## Ask users if they want to compute a grasp ##
-			raw_input("Click enter to compute a grasp: ")
+		## Ask users if they want to compute a grasp ##
+		raw_input("Click enter to compute a grasp: ")
 
-			## Call GQCNN grasp planning service ##
-			rospy.loginfo("Computting grasp using the GQCNN grasp planning service...")
-			grasp = self.grasp_compuation_srv(color_rect_image, depth_rect_image, camera_info)
-			if grasp:
-				rospy.loginfo("Grasp pose computation successful.")
-				raw_input(
-					"Click enter to perform the path planning: ")
-			else:
-				rospy.loginfo("Grasp planning failed please try again.")
+		## Call GQCNN grasp planning service ##
+		rospy.loginfo("Computting grasp using the GQCNN grasp planning service...")
+		grasp = self.grasp_computation_srv(color_rect_image, depth_rect_image, camera_info)
+		if grasp:
+			rospy.loginfo("Grasp pose computation successful.")
+			raw_input(
+				"Click enter to perform the path planning: ")
+		else:
+			rospy.loginfo("Grasp planning failed please try again.")
 
-			## Send grasp to moveit planning service ##
-			rospy.loginfo("Computing grasp planning using moveit...")
-			result = self.plan_to_pose_srv(grasp.grasp.pose)
-			if result:
-				rospy.loginfo("Grasp planning successful.")
-				raw_input(
-					"Click enter to perform a grasp visualization: ")
-			else:
-				rospy.loginfo("Grasp planning failed please try again.")
+		## Send grasp to moveit planning service ##
+		rospy.loginfo("Computing grasp planning using moveit...")
+		result = self.plan_to_pose_srv(grasp.grasp.pose)
+		if result:
+			rospy.loginfo("Grasp planning successful.")
+			raw_input(
+				"Click enter to perform a grasp visualization: ")
+		else:
+			rospy.loginfo("Grasp planning failed please try again.")
 
-			## Call visualize grasp service ##
-			result = self.visualize_plan_srv()
-			if result:
-				rospy.loginfo("Grasp visualization succesfull.")
-			else:
-				rospy.loginfo("Grasp planning failed please try again.")
+		## Call visualize grasp service ##
+		result = self.visualize_plan_srv()
+		if result:
+			rospy.loginfo("Grasp visualization succesfull.")
+		else:
+			rospy.loginfo("Grasp planning failed please try again.")
 
-			## Call grasp execution service ##
-			prompt_result = raw_input(
-				"Do you want to execute the planned trajectory [Y/n]? ")
-			if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
-				self.execute_plan_srv()
-			elif prompt_result.lower() in ['n', 'no']:
-				print("shutdown")
-				sys.exit(0)
-			else:
-				print(prompt_result +
-					  " is not a valid response please answer with Y or N to continue.")
+		## Call grasp execution service ##
+		prompt_result = raw_input(
+			"Do you want to execute the planned trajectory [Y/n]? ")
+		if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
+			self.execute_plan_srv()
+		elif prompt_result.lower() in ['n', 'no']:
+			print("shutdown")
+			sys.exit(0)
+		else:
+			print(prompt_result +
+				  " is not a valid response please answer with Y or N to continue.")
 
 		## Publish the camera and calibration board frames
-		
+
 
 	def camera_world_calibration(self, color_image, camera_info):
 
@@ -297,9 +307,9 @@ class GraspPlannerClient():
 			plt.imshow(screen_img)
 			plt.show()
 			if ret:
-				return rvecs, tvecs, inliers
+				return ret, rvecs, tvecs, inliers
 			else:
-				return None, None, None
+				return False, None, None, None
 		else:
 			return None # Chessboard calibration failed
 

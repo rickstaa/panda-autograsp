@@ -4,10 +4,10 @@
 ## Panda_autograsp visualization settings ##
 vis:
   rgbd_state: 1
-  cropped_rgbd_image: 0
-  color_image: 0
-  depth_image: 0
-  segmask: 0
+  cropped_rgbd_image: 1
+  color_image: 1
+  depth_image: 1
+  segmask: 1
   final_grasp: 1
 
 ## Panda_autograsp default values ##
