@@ -18,7 +18,7 @@ from message_filters import (ApproximateTimeSynchronizer, Subscriber)
 
 ## Import messages and services ##
 from gqcnn.srv import GQCNNGraspPlanner
-from panda_autograsp.srv import RequestGraspPlanning
+from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, PlanToPoint, VisualizePlan, VisualizeGrasp, ExecutePlan, ExecuteGrasp)
 
 ## Import custom packages ##
 from panda_autograsp.functions import yes_or_no
@@ -42,7 +42,7 @@ class ComputeGraspServer():
 		rospy.loginfo("Initializing panda_autograsp_server")
 		rospy.init_node('panda_autograsp_server')
 
-		## Initialize grasp_planning service ##
+		## Initialize grasp_computation service ##
 		rospy.loginfo("Conneting to %s service." % grasp_detection_srv)
 		rospy.wait_for_service(grasp_detection_srv)
 		try:
@@ -54,6 +54,44 @@ class ComputeGraspServer():
 				rospy.get_name(), self.planning_scene_srv)
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 			return
+
+		## Initialize moveit_planner server services ##
+
+		## Initialize Plan to point service ##
+		rospy.logdebug("Conneting to \'plan_to_point\' service.")
+		rospy.wait_for_service("/plan_to_point")
+		try:
+			self.plan_to_pose_srv = rospy.ServiceProxy(
+				"/plan_to_point", PlanToPoint)
+		except rospy.ServiceException as e:
+			rospy.logdebug("Service initialization failed: %s" % e)
+			shutdown_msg = "Shutting down %s node because %s connection failed." % (
+				rospy.get_name(), self.plan_to_pose_srv)
+			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+
+		## Initialize plan visualization service ##
+		rospy.logdebug("Conneting to \'visualize_plan\' service.")
+		rospy.wait_for_service("/visualize_plan")
+		try:
+			self.visualize_plan_srv = rospy.ServiceProxy(
+				"/visualize_plan", VisualizePlan)
+		except rospy.ServiceException as e:
+			rospy.logdebug("Service initialization failed: %s" % e)
+			shutdown_msg = "Shutting down %s node because %s connection failed." % (
+				rospy.get_name(), self.visualize_plan_srv)
+			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+
+		## Initialize execute plan service ##
+		rospy.logdebug("Conneting to \'execute_plan\' service.")
+		rospy.wait_for_service("/execute_plan")
+		try:
+			self.execute_plan_srv = rospy.ServiceProxy(
+				"/execute_plan", ExecutePlan)
+		except rospy.ServiceException as e:
+			rospy.logdebug("Service initialization failed: %s" % e)
+			shutdown_msg = "Shutting down %s node because %s connection failed." % (
+				rospy.get_name(), self.execute_plan_srv)
+			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 		## Create msg filter subscribers ##
 		rospy.loginfo("Creating camera sensor message_filter.")
@@ -70,8 +108,24 @@ class ComputeGraspServer():
 		rospy.loginfo("Camera sensor message_filter created.")
 
 		## Create panda_autograsp_server services ##
+
+		## Compute grasp service ##
 		rospy.loginfo("Initializing %s services.", rospy.get_name())
-		self.request_grasp_planning_srv = rospy.Service('request_grasp_planning',RequestGraspPlanning, self.request_grasp_planning_service)
+		self.compute_grasp_srv = rospy.Service('compute_grasp',ComputeGrasp , self.compute_grasp_service)
+
+		## Plan grasp service ##
+		rospy.loginfo("Initializing %s services.", rospy.get_name())
+		self.plan_grasp_srv = rospy.Service('plan_grasp', PlanGrasp, self.plan_grasp_service)
+
+		## Visualize grasp service ##
+		rospy.loginfo("Initializing %s services.", rospy.get_name())
+		self.visualize_grasp_srv = rospy.Service('visualize_grasp', VisualizeGrasp, self.visualize_grasp_service)
+
+		## execute grasp service ##
+		rospy.loginfo("Initializing %s services.", rospy.get_name())
+		self.execute_grasp_srv = rospy.Service('execute_grasp', ExecutePlan, self.execute_grasp_service)
+
+		## Service initiation succes messag ##
 		rospy.loginfo(
 			"\'%s\' services initialized successfully. Waiting for requests.", rospy.get_name())
 
@@ -87,7 +141,7 @@ class ComputeGraspServer():
 		self.depth_image_rect = depth_image_rect
 		self.camera_info = camera_info
 
-	def request_grasp_planning_service(self, req):
+	def compute_grasp_service(self, req):
 
 		## Call grasp computation service ##
 		self.grasp = self.planning_scene_srv(
@@ -95,6 +149,39 @@ class ComputeGraspServer():
 
 		## Test if successful ##
 		if self.grasp:
+			return True
+		else:
+			return False
+
+	def plan_grasp_service(self, req):
+
+		## Call grasp computation service ##
+		result = self.plan_to_pose_srv(self.grasp.grasp.pose)
+
+		## Test if successful ##
+		if result:
+			return True
+		else:
+			return False
+
+	def visualize_grasp_service(self, req):
+
+		## Call grasp computation service ##
+		result = self.visualize_plan_srv()
+
+		## Test if successful ##
+		if result:
+			return True
+		else:
+			return False
+
+	def execute_grasp_service(self, req):
+
+		## Call grasp computation service ##
+		result = self.execute_plan_srv()
+
+		## Test if successful ##
+		if result:
 			return True
 		else:
 			return False
