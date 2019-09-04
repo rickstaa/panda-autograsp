@@ -10,15 +10,21 @@ from __future__ import print_function
 ## Import standard library packages ##
 import sys
 import six
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+import os
 
 ## Import ROS python packages ##
 import rospy
 import sensor_msgs
 from message_filters import (ApproximateTimeSynchronizer, Subscriber)
+from cv_bridge import CvBridge, CvBridgeError
+import copy
 
 ## Import messages and services ##
 from gqcnn.srv import GQCNNGraspPlanner
-from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, PlanToPoint, VisualizePlan, VisualizeGrasp, ExecutePlan, ExecuteGrasp)
+from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, PlanToPoint, VisualizePlan, VisualizeGrasp, ExecutePlan, ExecuteGrasp, CalibrateSensor)
 
 ## Import custom packages ##
 from panda_autograsp.functions import yes_or_no
@@ -31,6 +37,60 @@ from panda_autograsp.functions import yes_or_no
 MSG_FILTER_QUEUE_SIZE = 5  # Max queue size
 MSG_FILTER_SLOP = 0.1  # Max sync delay (in seconds)
 
+## Big board ##
+criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER,
+			30, 0.001)  # termination criteria
+N_FRAMES = 10
+# Row size -1 (see https://stackoverflow.com/questions/17993522/opencv-findchessboardcorners-function-is-failing-in-a-apparently-simple-scenar)
+N_ROWS = 7
+# Column size -1 (see https://stackoverflow.com/questions/17993522/opencv-findchessboardcorners-function-is-failing-in-a-apparently-simple-scenar)
+N_COLMNS = 10
+SQUARE_SIZE = 34  # The square size in mm
+
+## Small Board ##
+N_FRAMES = 10
+# Row size -1 (see https://stackoverflow.com/questions/17993522/opencv-findchessboardcorners-function-is-failing-in-a-apparently-simple-scenar)
+N_ROWS = 5
+# Column size -1 (see https://stackoverflow.com/questions/17993522/opencv-findchessboardcorners-function-is-failing-in-a-apparently-simple-scenar)
+N_COLMNS = 7
+SQUARE_SIZE = 30  # The square size in mm
+
+## Text default settings ##
+font = cv2.FONT_HERSHEY_SIMPLEX
+fontScale = 0.90
+fontColor = (0, 0, 0)
+lineType = 1
+rectangle_bgr = (255, 255, 255)
+
+## Load calib file path ##
+LOAD_CALIB = os.path.abspath(os.path.join(os.path.dirname(
+    os.path.realpath(__file__)), "..", "data", "calib","calib_results.npz"))
+
+#################################################
+## Functions ####################################
+#################################################
+def draw_axis(img, corners, imgpts):
+	"""Takes the corners in the chessboard (obtained using cv2.findChessboardCorners())
+	and axis points to draw a 3D axis.
+	Parameters
+	----------
+	img : numpy.ndarray
+		Image
+	corners : corners2
+		Corners
+	imgpts : corners2
+		Axis points
+	Returns
+	-------
+	[type]
+		[description]
+	"""
+	corner = tuple(corners[0].ravel())
+	img = cv2.line(img, corner, tuple(imgpts[0].ravel()), (255, 0, 0), 5)
+	img = cv2.line(img, corner, tuple(imgpts[1].ravel()), (0, 255, 0), 5)
+	img = cv2.line(img, corner, tuple(imgpts[2].ravel()), (0, 0, 255), 5)
+	return img
+
 #################################################
 ## GraspPlannerClient Class #####################
 #################################################
@@ -41,6 +101,9 @@ class ComputeGraspServer():
 		## Initialize ros node ##
 		rospy.loginfo("Initializing panda_autograsp_server")
 		rospy.init_node('panda_autograsp_server')
+
+		## Setup cv_bridge ##
+		self.bridge = CvBridge()
 
 		## Initialize grasp_computation service ##
 		rospy.loginfo("Conneting to %s service." % grasp_detection_srv)
@@ -108,6 +171,10 @@ class ComputeGraspServer():
 		rospy.loginfo("Camera sensor message_filter created.")
 
 		## Create panda_autograsp_server services ##
+
+		## Calibrate sensor ##
+		rospy.loginfo("Initializing %s services.", rospy.get_name())
+		self.calibrate_sensor_srv = rospy.Service('calibrate_sensor', CalibrateSensor , self.calibrate_sensor_service)
 
 		## Compute grasp service ##
 		rospy.loginfo("Initializing %s services.", rospy.get_name())
@@ -185,6 +252,73 @@ class ComputeGraspServer():
 			return True
 		else:
 			return False
+
+	def calibrate_sensor_service(self, req):
+
+		## Call grasp computation service ##
+		ret, self.rvecs, self.tvecs, self.inliers = self.camera_world_calibration(self.color_image, self.camera_info)
+
+		## Test if successful ##
+		if ret:
+			return True
+		else:
+			return False
+
+	def camera_world_calibration(self, color_image, camera_info):
+
+		## Convert color image to opencv format ##
+		color_image_cv = self.bridge.imgmsg_to_cv2(color_image, desired_encoding="passthrough")
+
+		## Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0) ##
+		objp = np.zeros((N_COLMNS*N_ROWS, 3), np.float32)
+		objp[:, :2] = np.mgrid[0:N_ROWS, 0:N_COLMNS].T.reshape(-1, 2) * SQUARE_SIZE # Multiply by chessboard scale factor to get results in mm
+		axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3) * SQUARE_SIZE # Coordinate axis
+
+		## unpack camera information ##
+		# Get calibration parameters if file exists
+		if os.path.exists(LOAD_CALIB):
+			a = np.load(LOAD_CALIB)
+			mtx = a['mtx']
+			dist = a['dst']
+		else:
+			mtx = np.array(camera_info.K).reshape(3,3)
+			dist = camera_info.D # Default distortion parameters are 0
+
+		## Get color image ##
+		gray = cv2.cvtColor(color_image_cv, cv2.COLOR_BGR2GRAY)
+
+		## Create screen display image ##
+		screen_img = cv2.cvtColor(copy.copy(color_image_cv), cv2.COLOR_RGB2BGR)
+
+		## Find the chess board corners ##
+		ret, corners = cv2.findChessboardCorners(
+			gray, (N_ROWS, N_COLMNS), None)
+
+		## Find external matrix ##
+		if ret == True:
+
+			## Find corners ##
+			corners2 = cv2.cornerSubPix(
+			gray, corners, (11, 11), (-1, -1), criteria)
+
+			## Find the rotation and translation vectors. ##
+			ret, rvecs, tvecs, inliers = cv2.solvePnPRansac(
+				objp, corners2, mtx, dist)
+
+			## project 3D points to image plane ##
+			imgpts, jac = cv2.projectPoints(axis, rvecs, tvecs, mtx, dist)
+
+			## Show projection to user ##
+			screen_img = draw_axis(screen_img, corners2, imgpts)
+			plt.figure("Reference frame")
+			plt.imshow(screen_img)
+			plt.show()
+			if ret:
+				return ret, rvecs, tvecs, inliers
+			else:
+				return False, None, None, None
+		else:
+			return None # Chessboard calibration failed
 
 #################################################
 ## Main script ##################################

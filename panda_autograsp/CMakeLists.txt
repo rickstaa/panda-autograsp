@@ -82,6 +82,7 @@ add_service_files(
   PlanGrasp.srv
   VisualizeGrasp.srv
   ExecuteGrasp.srv
+  CalibrateSensor.srv
 )
 
 ## Generate actions in the 'action' folder

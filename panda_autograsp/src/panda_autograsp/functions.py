@@ -177,6 +177,8 @@ def list_files(path='.', exclude=[], recursive=True):
             break
     return file_list
 
+# TODO: make rawinput python 2 3 compatible
+# TODO: Accept enter as yes
 def yes_or_no(question):
     """Simple yes or no prompt.
 
@@ -191,12 +193,13 @@ def yes_or_no(question):
         Boolean specifying if the user gave the right response.
     """
 
-    answer = input(question + "(y/n): ").lower().strip()
+    answer = raw_input(question + " (Y/n): ").lower().strip()
+    # if answer == ""
     print("")
     while not(answer == "y" or answer == "yes" or \
-    answer == "n" or answer == "no"):
+    answer == "n" or answer == "no" or answer == ""):
         print("Input yes or no")
-        answer = input(question + "(y/n):").lower().strip()
+        answer = raw_input(question + "(y/n):").lower().strip()
         print("")
     if answer[0] == "y":
         return True

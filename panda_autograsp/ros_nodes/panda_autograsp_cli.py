@@ -5,7 +5,7 @@
 import rospy
 import sys
 
-from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, VisualizePlan, ExecutePlan)
+from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, VisualizePlan, ExecutePlan, CalibrateSensor)
 from panda_autograsp.functions import yes_or_no
 
 ## TODO: Put in class
@@ -24,6 +24,19 @@ if __name__ == "__main__":
 
 	## Initialize panda_autograsp services ##
 	## TODO: Catch unsuccefull grasps
+
+	## Initilazie camera calibration sercice ##
+	rospy.logdebug("Conneting to \'calibrate_sensor\' service.")
+	rospy.wait_for_service("calibrate_sensor")
+	try:
+		calibrate_sensor_srv = rospy.ServiceProxy(
+			"calibrate_sensor", CalibrateSensor)
+	except rospy.ServiceException as e:
+		rospy.logdebug("Service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s connection failed." % (
+			rospy.get_name(), calibrate_sensor_srv)
+		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+
 	## Initialize Request grasp service ##
 	rospy.logdebug("Conneting to \'compute_grasp\' service.")
 	rospy.wait_for_service("compute_grasp")
@@ -73,11 +86,33 @@ if __name__ == "__main__":
 		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 	## Keep alive as node is alive ##
-	raw_input("Click enter to compute a grasp> ")
 	while  not rospy.is_shutdown():
+
+		## Calibrate Camera frame ##
+		while True:
+			raw_input("For the robot to know where it is relative to the camera we need a quick external calibration. Press enter to start the calibration procedure.> ")
+			response = yes_or_no(
+					"Is the checkerboard positioned on the upper left corner of the table?")
+			if not response:
+					rospy.logdebug("Shutting down %s node>" % rospy.get_name())
+					sys.exit(0)
+			else:
+				result = calibrate_sensor_srv()
+				if not result:
+					response = yes_or_no("Calibration not successfully do you want to try again?")
+					if not response:
+						rospy.logdebug("Shutting down %s node>" % rospy.get_name())
+						sys.exit(0)
+				else:
+					response = yes_or_no("Is the frame correct?")
+					if not response:
+						continue
+					else:
+						break #  Continue to grasp lanning
 
 		## Compute grasp ##
 		## TODO: Add ablity for users to accept the grasp
+		raw_input("Click enter to compute a grasp> ")
 		while True:
 			print("Computing grasp...")
 			result = compute_grasp_srv()
