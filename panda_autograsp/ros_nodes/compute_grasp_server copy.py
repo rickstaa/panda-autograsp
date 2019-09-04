@@ -16,9 +16,9 @@ import rospy
 import sensor_msgs
 from message_filters import (ApproximateTimeSynchronizer, Subscriber)
 
-## Import BerkeleyAutomation package ##
-from gqcnn.srv import (
-    GQCNNGraspPlanner, GQCNNGraspPlannerBoundingBox, GQCNNGraspPlannerSegmask)
+## Import messages and services ##
+from gqcnn.srv import GQCNNGraspPlanner
+from panda_autograsp.srv import ComputeGrasp
 
 #################################################
 ## Script settings ##############################
@@ -31,7 +31,9 @@ MSG_FILTER_SLOP = 0.1  # Max sync delay (in seconds)
 #################################################
 ## GraspPlannerClient Class #####################
 #################################################
-class GraspPlannerClient():
+
+
+class ComputeGraspServer():
 
     def __init__(self, grasp_detection_srv, color_topic, depth_topic, camera_info_topic, queue_size=5, slop=0.1):
 
@@ -61,15 +63,31 @@ class GraspPlannerClient():
         ats.registerCallback(self.msg_filter_callback)
         rospy.loginfo("Camera sensor message_filter created.")
 
-        ## Create grasp_planner_req_server ##
+        ## TODO: CHANGE names now confusing
+        ## Initialize the ROS services ##
+        rospy.Service("compute_grasp", ComputeGrasp,
+                      ComputeGraspServer.compute_grasp_service)
 
     ## TODO: Docstring
     def msg_filter_callback(self, color_image_rect, depth_image_rect, camera_info):
 
         ## Call the grasp_planner_service ##
-        self.color_rect_color_image_rectimage = color_image_rect
+        self.color_image_rect = color_image_rect
         self.depth_image_rect = depth_image_rect
-        self.planning_scene_srv(color_image_rect, depth_image_rect, camera_info)
+        self.camera_info = camera_info
+
+    def compute_grasp_service(self, req):
+
+        ## Call grasp computation service ##
+        self.grasp = self.planning_scene_srv(
+            self.color_image_rect, self.depth_image_rect, self.camera_info)
+
+        ## Test if successful ##
+        if self.grasp:
+            return True
+        else:
+            return False
+
 
 #################################################
 ## Main script ##################################
@@ -91,13 +109,13 @@ if __name__ == "__main__":
         grasp_detection_srv = 'grasp_planner'
 
     ## Create topics ##
-    kinect_color_image_rect_topic="/kinect2/%s/image_color_rect" % img_quality
+    kinect_color_image_rect_topic = "/kinect2/%s/image_color_rect" % img_quality
     kinect_depth_image_rect_topic = "/kinect2/%s/image_depth_rect_32FC1" % img_quality
     kinect_camera_info_topic = "/kinect2/%s/camera_info" % img_quality
 
     ## Create GraspPlannerClient object ##
-    grasp_planner_client = GraspPlannerClient(grasp_detection_srv, kinect_color_image_rect_topic,
-                                              kinect_depth_image_rect_topic, kinect_camera_info_topic, MSG_FILTER_QUEUE_SIZE, MSG_FILTER_SLOP)
+    grasp_planner_client = ComputeGraspServer(grasp_detection_srv, kinect_color_image_rect_topic,
+                                           kinect_depth_image_rect_topic, kinect_camera_info_topic, MSG_FILTER_QUEUE_SIZE, MSG_FILTER_SLOP)
 
     ## Loop till the service is shutdown. ##
     rospy.spin()

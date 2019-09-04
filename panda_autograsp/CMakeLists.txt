@@ -78,6 +78,7 @@ add_service_files(
   PlanToRandomJoint.srv
   PlanToRandomPath.srv
   VisualizePlan.srv
+  ComputeGrasp.srv
 )
 
 ## Generate actions in the 'action' folder
