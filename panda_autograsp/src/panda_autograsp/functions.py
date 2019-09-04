@@ -194,14 +194,14 @@ def yes_or_no(question):
     """
 
     answer = raw_input(question + " (Y/n): ").lower().strip()
-    # if answer == ""
+    answer = [answer] if answer == "" else answer # Make sure enter i
     print("")
     while not(answer == "y" or answer == "yes" or \
-    answer == "n" or answer == "no" or answer == ""):
+    answer == "n" or answer == "no" or answer[0] == ""):
         print("Input yes or no")
         answer = raw_input(question + "(y/n):").lower().strip()
         print("")
-    if answer[0] == "y":
+    if answer[0] == "y" or answer[0] == "":
         return True
     else:
         return False

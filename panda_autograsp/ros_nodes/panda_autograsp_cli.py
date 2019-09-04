@@ -6,7 +6,7 @@ import rospy
 import sys
 
 from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, VisualizePlan, ExecutePlan, CalibrateSensor)
-from panda_autograsp.functions import yes_or_no
+from panda_autograsp.functions import (yes_or_no)
 
 ## TODO: Put in class
 #################################################
@@ -90,62 +90,63 @@ if __name__ == "__main__":
 
 		## Calibrate Camera frame ##
 		while True:
-			raw_input("For the robot to know where it is relative to the camera we need a quick external calibration. Press enter to start the calibration procedure.> ")
+			print(" ")
+			raw_input("For the robot to know where it is relative to the camera we need a quick external calibration. Press enter to start the calibration procedure: ")
 			response = yes_or_no(
 					"Is the checkerboard positioned on the upper left corner of the table?")
 			if not response:
-					rospy.logdebug("Shutting down %s node>" % rospy.get_name())
+					rospy.logdebug("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				result = calibrate_sensor_srv()
 				if not result:
 					response = yes_or_no("Calibration not successfully do you want to try again?")
 					if not response:
-						rospy.logdebug("Shutting down %s node>" % rospy.get_name())
+						rospy.logdebug("Shutting down %s node: " % rospy.get_name())
 						sys.exit(0)
 				else:
-					response = yes_or_no("Is the frame correct?")
+					response = yes_or_no("Was the frame correct?")
 					if not response:
 						continue
 					else:
-						break #  Continue to grasp lanning
+						break #  Continue to grasp planning
 
 		## Compute grasp ##
 		## TODO: Add ablity for users to accept the grasp
-		raw_input("Click enter to compute a grasp> ")
+		raw_input("Click enter to compute a grasp: ")
 		while True:
 			print("Computing grasp...")
 			result = compute_grasp_srv()
 			if not result:
-				response = yes_or_no("Grasp computation not successfully do you want to try again?> ")
+				response = yes_or_no("Grasp computation not successfully do you want to try again?: ")
 				if not response:
-					rospy.logdebug("Shutting down %s node>" % rospy.get_name())
+					rospy.logdebug("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				break
-		raw_input("Grasp computed successfully. Press enter to compute the grasp path planning> ")
+		raw_input("Grasp computed successfully. Press enter to compute the grasp path planning: ")
 
 		## Grasp planning ##
 		while True:
 			print("Planning grasp...")
 			result = plan_grasp_srv()
 			if not result:
-				response = yes_or_no("Grasp path computation not successfully do you want to try again?> ")
+				response = yes_or_no("Grasp path computation not successfully do you want to try again?: ")
 				if not response:
-					rospy.logdebug("Shutting down %s node>" % rospy.get_name())
+					rospy.logdebug("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				break
-		raw_input("Grasp path planning computed successfully. press enter to visualize the computed path> ")
+		raw_input("Grasp path planning computed successfully. press enter to visualize the computed path: ")
 
 		## Grasp visualization ##
 		while True:
 			print("Visualizing grasp path...")
 			result = visualize_grasp_srv()
 			if not result:
-				response = yes_or_no("Grasp path visualization not successfully do you want to try again?> ")
+				response = yes_or_no("Grasp path visualization not successfully do you want to try again?: ")
 				if not response:
-					rospy.logdebug("Shutting down %s node>" % rospy.get_name())
+					rospy.logdebug("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				break
@@ -156,12 +157,12 @@ if __name__ == "__main__":
 			print("Executing grasp...")
 			result = execute_grasp_srv()
 			if not result:
-				response = yes_or_no("Grasp did not execute successfully do you want to try again?> ")
+				response = yes_or_no("Grasp did not execute successfully do you want to try again?: ")
 				if not response:
-					rospy.logdebug("Shutting down %s node>" % rospy.get_name())
+					rospy.logdebug("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				break
-		raw_input("Grasp path executed successfully. press enter to compute another grasp>")
+		raw_input("Grasp path executed successfully. press enter to compute another grasp: ")
 
 		## TODO: Create CLI break key
