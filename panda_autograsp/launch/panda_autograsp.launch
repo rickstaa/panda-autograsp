@@ -11,7 +11,8 @@
 
     <!-- Include rviz movit launchfile -->
     <!-- TODO: I still have to replace the parameters in this file to make it work on the real robot -->
-    <include file="$(find panda_autograsp)/launch/panda_rviz.launch">
+    <!-- TODO: Change rviz_tutorials variable -->
+    <include file="$(find panda_autograsp)/launch/panda_autograsp_rviz.launch">
         <arg name="output" value="log" />
     </include>
 
@@ -21,7 +22,7 @@
     <!-- Create static transform for the calibration board-->
     <!-- TODO: Replace with math-->
     <node pkg="tf2_ros" type="static_transform_publisher" name="chessboard_frame_broadcaster" args="1 0 0 0 0 0 1 panda_link0 chessboard_frame" />
-    <node pkg="tf2_ros" type="static_transform_publisher" name="kinect2_rgb_optical_frame" args="0 1 1 1 1 1 panda_link0 kinect2_rgb_optical_frame" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="kinect2_rgb_optical_frame" args="0 1 1 0 3.14 0.78 panda_link0 kinect2_rgb_optical_frame" />
 
     <!-- Grasp planner service server -->
     <!-- <node name="grasp_planner_server" pkg="panda_autograsp" type="grasp_planner_server.py" output="log">

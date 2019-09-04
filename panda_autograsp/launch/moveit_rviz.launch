@@ -5,8 +5,8 @@
   <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
 
   <arg name="rviz_tutorial" default="false" />
-  <arg unless="$(arg rviz_tutorial)" name="command_args" value="-d $(find panda_moveit_config)/launch/panda_autograsp_empty.rviz" />
-  <arg     if="$(arg rviz_tutorial)" name="command_args" value="-d $(find panda_moveit_config)/launch/panda_autograsp.rviz" />
+  <arg unless="$(arg rviz_tutorial)" name="command_args" value="-d $(find panda_autograsp)/launch/panda_autograsp_empty.rviz" />
+  <arg     if="$(arg rviz_tutorial)" name="command_args" value="-d $(find panda_autograsp)/launch/panda_autograsp.rviz" />
 
   <node name="$(anon rviz)" launch-prefix="$(arg launch_prefix)" pkg="rviz" type="rviz" respawn="false"
 	args="$(arg command_args)" output="screen">
