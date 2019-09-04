@@ -176,3 +176,29 @@ def list_files(path='.', exclude=[], recursive=True):
         if not recursive:
             break
     return file_list
+
+def yes_or_no(question):
+    """Simple yes or no prompt.
+
+    Parameters
+    ----------
+    question : str
+        Question of the yes or no prompt.
+
+    Returns
+    -------
+    bool
+        Boolean specifying if the user gave the right response.
+    """
+
+    answer = input(question + "(y/n): ").lower().strip()
+    print("")
+    while not(answer == "y" or answer == "yes" or \
+    answer == "n" or answer == "no"):
+        print("Input yes or no")
+        answer = input(question + "(y/n):").lower().strip()
+        print("")
+    if answer[0] == "y":
+        return True
+    else:
+        return False

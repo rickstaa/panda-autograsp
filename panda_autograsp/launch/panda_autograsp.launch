@@ -15,14 +15,22 @@
         <arg name="output" value="log" />
     </include>
 
+    <!-- Start Tf visual tool node-->
+    <!-- <node pkg="tf_visual_tools" type="tf_visual_tools_publisher" name="rviz_tfs" output="screen" /> -->
+
     <!-- Create static transform for the calibration board-->
+    <!-- TODO: Replace with math-->
     <node pkg="tf2_ros" type="static_transform_publisher" name="chessboard_frame_broadcaster" args="1 0 0 0 0 0 1 panda_link0 chessboard_frame" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="kinect2_rgb_optical_frame" args="0 1 1 1 1 1 panda_link0 kinect2_rgb_optical_frame" />
 
     <!-- Grasp planner service server -->
     <!-- <node name="grasp_planner_server" pkg="panda_autograsp" type="grasp_planner_server.py" output="log">
         <param name="grasp_detection_srv" value="$(arg grasp_detection_srv)" />
     </node> -->
 
+    <!--Start panda_autograsp servers-->
+    <node name="panda_autogras_server" pkg="panda_autograsp" type="panda_autograsp_server.py" output="log"/>
+    <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="log"/>
     <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="log"/>
 
     <!-- Grasp planner service client -->
