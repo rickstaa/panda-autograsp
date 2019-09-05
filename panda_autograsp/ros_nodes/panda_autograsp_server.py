@@ -14,17 +14,22 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import os
+import copy
+import transforms3d
 
 ## Import ROS python packages ##
 import rospy
 import sensor_msgs
 from message_filters import (ApproximateTimeSynchronizer, Subscriber)
 from cv_bridge import CvBridge, CvBridgeError
-import copy
+import tf_conversions
+import tf2_ros
+import tf
 
 ## Import messages and services ##
 from gqcnn.srv import GQCNNGraspPlanner
 from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, PlanToPoint, VisualizePlan, VisualizeGrasp, ExecutePlan, ExecuteGrasp, CalibrateSensor)
+import geometry_msgs.msg
 
 ## Import custom packages ##
 from panda_autograsp.functions import yes_or_no
@@ -64,7 +69,7 @@ rectangle_bgr = (255, 255, 255)
 
 ## Load calib file path ##
 LOAD_CALIB = os.path.abspath(os.path.join(os.path.dirname(
-    os.path.realpath(__file__)), "..", "data", "calib","calib_results.npz"))
+	os.path.realpath(__file__)), "..", "data", "calib","calib_results.npz"))
 
 #################################################
 ## Functions ####################################
@@ -133,7 +138,7 @@ class ComputeGraspServer():
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 		## Initialize plan visualization service ##
-		rospy.logdebug("Conneting to \'visualize_plan\' service.")
+		rospy.logdebug("Conneting to \'visualize 	_plan\' service.")
 		rospy.wait_for_service("/visualize_plan")
 		try:
 			self.visualize_plan_srv = rospy.ServiceProxy(
@@ -196,6 +201,9 @@ class ComputeGraspServer():
 		rospy.loginfo(
 			"\'%s\' services initialized successfully. Waiting for requests.", rospy.get_name())
 
+		## Create static publisher ##
+		self.camera_frame_br = tf2_ros.StaticTransformBroadcaster()
+
 		## Loop till the service is shutdown. ##
 		rospy.spin()
 
@@ -256,10 +264,14 @@ class ComputeGraspServer():
 	def calibrate_sensor_service(self, req):
 
 		## Call grasp computation service ##
-		ret, self.rvecs, self.tvecs, self.inliers = self.camera_world_calibration(self.color_image, self.camera_info)
+		ret, self.rvec, self.tvec, self.inliers = self.camera_world_calibration(self.color_image, self.camera_info)
 
 		## Test if successful ##
 		if ret:
+			## Publish the camera frame ##
+			self.broadcast_camera_frame()
+
+			## return result ##
 			return True
 		else:
 			return False
@@ -319,6 +331,86 @@ class ComputeGraspServer():
 				return False, None, None, None
 		else:
 			return None # Chessboard calibration failed
+
+	def broadcast_camera_frame(self):
+
+		## Generate transform message ##
+		tf_msg = geometry_msgs.msg.TransformStamped()
+		tf_msg.header.stamp = rospy.Time.now()
+		tf_msg.header.frame_id = "chessboard_frame"
+		tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
+
+		## HARDCODE ##
+		# euler = [np.radians(0),np.radians(0), np.radians(180)]
+		# tf_msg.transform.translation.x = -1
+		# tf_msg.transform.translation.y = 1
+		# tf_msg.transform.translation.z = 0.90
+		# quat = tf.transformations.quaternion_from_euler(
+		# 		   float(euler[0]),float(euler[1]),float(euler[2]))
+		# tf_msg.transform.rotation.x = quat[0]
+		# tf_msg.transform.rotation.y = quat[1]
+		# tf_msg.transform.rotation.z = quat[2]
+		# tf_msg.transform.rotation.w = quat[3]
+
+		# quat = tf.transformations.quaternion_from_euler(
+		# 		   float(euler[0]),float(euler[1]),float(euler[2]))
+		# ## DEBUG ##
+		tf_msg.transform.translation.x = -self.tvec[0]/1000
+		tf_msg.transform.translation.y = -self.tvec[1]/1000
+		tf_msg.transform.translation.z = -self.tvec[2]/1000
+		rotation_matrix = np.zeros(shape=(3,3))
+		jacobian_matrix = np.zeros(shape=(3,3))
+		cv2.Rodrigues(self.rvec, rotation_matrix, jacobian_matrix)
+		#TODO PYQUATERNION
+		# M = np.empty((4, 4))
+		# M[:3, :3] = rotation_matrix
+		# M[:3, 3] = self.tvec.reshape(1,3)
+		# M[3, :] = [0, 0, 0, 1]
+		euler = transforms3d.euler.mat2euler(cv2.Rodrigues(self.rvec)[0], axes='ryxz') # Ros needs ryxz
+		quat = tf.transformations.quaternion_from_euler(
+				   float(euler[0]),float(euler[1]),float(euler[2]), 'ryxz')
+		quat = tf.transformations.quaternion_inverse(quat)
+		tf_msg.transform.rotation.x = quat[0]
+		tf_msg.transform.rotation.y = quat[1]
+		tf_msg.transform.rotation.z = quat[2]
+		tf_msg.transform.rotation.w = quat[3]
+		# # q = tf.transformations.quaternion_from_matrix(M)
+		# # q = tf_conversions.posemath.fromMatrix(cv2, self.rvec, self.tvec) # Convert to rotation matrix DOESNT WORK cant find rodriges2 FIX
+		# # tf_msg.transform.rotation.x = q2[0]
+		# # tf_msg.transform.rotation.y = q2[1]
+		# # tf_msg.transform.rotation.z = q2[2]
+		# # tf_msg.transform.rotation.w = q2[3]
+		self.camera_frame_br.sendTransform(tf_msg)
+
+# Checks if a matrix is a valid rotation matrix.
+def isRotationMatrix(R) :
+	Rt = np.transpose(R)
+	shouldBeIdentity = np.dot(Rt, R)
+	I = np.identity(3, dtype = R.dtype)
+	n = np.linalg.norm(I - shouldBeIdentity)
+	return n < 1e-6
+
+# Calculates rotation matrix to euler angles
+# The result is the same as MATLAB except the order
+# of the euler angles ( x and z are swapped ).
+def rotationMatrixToEulerAngles(R) :
+
+	assert(isRotationMatrix(R))
+
+	sy = math.sqrt(R[0,0] * R[0,0] +  R[1,0] * R[1,0])
+
+	singular = sy < 1e-6
+
+	if  not singular :
+		x = math.atan2(R[2,1] , R[2,2])
+		y = math.atan2(-R[2,0], sy)
+		z = math.atan2(R[1,0], R[0,0])
+	else :
+		x = math.atan2(-R[1,2], R[1,1])
+		y = math.atan2(-R[2,0], sy)
+		z = 0
+
+	return np.array([x, y, z])
 
 #################################################
 ## Main script ##################################

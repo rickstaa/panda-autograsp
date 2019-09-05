@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /PlanningScene1/Scene Robot1
         - /MotionPlanning1/Planning Request1
+        - /PointCloud21
       Splitter Ratio: 0.7425600290298462
     Tree Height: 682
   - Class: rviz/Help
@@ -440,8 +441,6 @@ Visualization Manager:
         All Enabled: true
         chessboard_frame:
           Value: true
-        kinect2_rgb_optical_frame:
-          Value: true
         panda_hand:
           Value: true
         panda_leftfinger:
@@ -477,8 +476,6 @@ Visualization Manager:
         world:
           panda_link0:
             chessboard_frame:
-              {}
-            kinect2_rgb_optical_frame:
               {}
             panda_link1:
               panda_link2:
@@ -520,7 +517,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.009999999776482582
       Style: Flat Squares
-      Topic: /kinect2/hd/points
+      Topic: /kinect2/qhd/points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -557,10 +554,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.10520371794700623
+      Pitch: 0.2502037584781647
       Target Frame: panda_link0
       Value: XYOrbit (rviz)
-      Yaw: 1.3117752075195312
+      Yaw: 6.264960289001465
     Saved: ~
 Window Geometry:
   Displays:
