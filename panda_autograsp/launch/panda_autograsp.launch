@@ -1,44 +1,43 @@
-<!-- Panda Autograsp default launchfile-->
-
+<!-- Main panda Autograsp launchfile
+    This launch file launches all the required ROS nodes except the panda_autograsp_cli.py command line interface (CLI).
+    This CLI can be opened using the 'rosrun panda_autograsp panda_autograsp_cli.py' command.
+-->
 <launch>
 
-    <!-- Include sensor package and grasp detection package launch files-->
+    <!-- Start the Kinect processing ROS nodes
+        The IAI_kinect2 package was used for the kinect processing.
+    -->
     <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" >
         <arg name="output" value="log" />
     </include>
 
-    <!-- Load panda_autograsp package nodes -->
-
-    <!-- Include rviz movit launchfile -->
-    <!-- TODO: I still have to replace the parameters in this file to make it work on the real robot -->
-    <!-- TODO: Change rviz_tutorials variable -->
+    <!-- Load Rviz-->
     <include file="$(find panda_autograsp)/launch/panda_autograsp_rviz.launch">
         <arg name="output" value="log" />
     </include>
 
-    <!-- Start Tf visual tool node-->
-    <!-- <node pkg="tf_visual_tools" type="tf_visual_tools_publisher" name="rviz_tfs" output="screen" /> -->
+    <!-- Load dynamic reconfigure GUI -->
+    <node pkg="rqt_gui" type="rqt_gui" name="dyn_reconf_gui" args="-s reconfigure" />
 
-    <!-- Create static transform for the calibration board-->
-    <!-- TODO: Replace with math-->
-    <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="chessboard_frame_broadcaster" args="1 0 0 0 0 0 1 panda_link0 chessboard_frame" /> -->
-    <node pkg="tf2_ros" type="static_transform_publisher" name="chessboard_frame_broadcaster" args="1 0 0 0 0 0 1 panda_link0 chessboard_frame" />
-    <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="kinect2_rgb_optical_frame" args="0 1 1 0 3.14 0.78 panda_link0 kinect2_rgb_optical_frame" /> -->
+    <!-- Create static TF for the calibration board (CB)
+        The pose for this static TF can be set in the calib_frame_pose.yaml file.
 
-    <!-- Grasp planner service server -->
-    <!-- <node name="grasp_planner_server" pkg="panda_autograsp" type="grasp_planner_server.py" output="screen">
-        <param name="grasp_detection_srv" value="$(arg grasp_detection_srv)" />
-    </node> -->
+        TF broadcaster conventions:
+            yaw: is rotation about Z (blue axis)
+            pitch: is rotation about Y (red axis)
+            roll: is rotation about X (green axis)
+    -->
+    <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml"/> <!-- Load calibration parametesr -->
+    <node pkg="panda_autograsp" type="calib_frame_tf2_broadcaster.py" name="calib_frame_broadcaster" args="panda_link0 calib_frame" />
 
-    <!--Start panda_autograsp servers-->
+    <!-- Load panda_autograsp services
+        Panda_autograsp services:
+           - panda_autograsp: Main panda_autograsp server. Used for calling all the other services.
+           - moveit_planner_server: Used for controlling the robot.
+           - grasp_planner_server: Used for computing the grasps.
+    -->
     <node name="panda_autogras_server" pkg="panda_autograsp" type="panda_autograsp_server.py" output="screen"/>
     <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="log"/>
     <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen"/>
-
-    <!-- Grasp planner service client -->
-    <!-- <node name="grasp_planner_client" pkg="panda_autograsp" type="grasp_planner_client.py" output="screen" >
-        <param name="grasp_img_quality" value="$(arg grasp_img_quality)" />
-        <param name="grasp_detection_srv" value="$(arg grasp_detection_srv)" />
-    </node> -->
 
 </launch>

@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 import os
 import copy
 import transforms3d
+from pyquaternion import Quaternion
 
 ## Import ROS python packages ##
 import rospy
@@ -337,80 +338,36 @@ class ComputeGraspServer():
 		## Generate transform message ##
 		tf_msg = geometry_msgs.msg.TransformStamped()
 		tf_msg.header.stamp = rospy.Time.now()
-		tf_msg.header.frame_id = "chessboard_frame"
+		tf_msg.header.frame_id = "calib_frame"
 		tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
 
-		## HARDCODE ##
-		# euler = [np.radians(0),np.radians(0), np.radians(180)]
-		# tf_msg.transform.translation.x = -1
-		# tf_msg.transform.translation.y = 1
-		# tf_msg.transform.translation.z = 0.90
-		# quat = tf.transformations.quaternion_from_euler(
-		# 		   float(euler[0]),float(euler[1]),float(euler[2]))
-		# tf_msg.transform.rotation.x = quat[0]
-		# tf_msg.transform.rotation.y = quat[1]
-		# tf_msg.transform.rotation.z = quat[2]
-		# tf_msg.transform.rotation.w = quat[3]
+		## Get rotation matrix ##
+		R = np.zeros(shape=(3,3))
+		J = np.zeros(shape=(3,3))
+		cv2.Rodrigues(self.rvec, R, J)
 
-		# quat = tf.transformations.quaternion_from_euler(
-		# 		   float(euler[0]),float(euler[1]),float(euler[2]))
-		# ## DEBUG ##
-		tf_msg.transform.translation.x = -self.tvec[0]/1000
-		tf_msg.transform.translation.y = -self.tvec[1]/1000
-		tf_msg.transform.translation.z = -self.tvec[2]/1000
-		rotation_matrix = np.zeros(shape=(3,3))
-		jacobian_matrix = np.zeros(shape=(3,3))
-		cv2.Rodrigues(self.rvec, rotation_matrix, jacobian_matrix)
-		#TODO PYQUATERNION
-		# M = np.empty((4, 4))
-		# M[:3, :3] = rotation_matrix
-		# M[:3, 3] = self.tvec.reshape(1,3)
-		# M[3, :] = [0, 0, 0, 1]
-		euler = transforms3d.euler.mat2euler(cv2.Rodrigues(self.rvec)[0], axes='ryxz') # Ros needs ryxz
-		quat = tf.transformations.quaternion_from_euler(
-				   float(euler[0]),float(euler[1]),float(euler[2]), 'ryxz')
-		quat = tf.transformations.quaternion_inverse(quat)
-		tf_msg.transform.rotation.x = quat[0]
-		tf_msg.transform.rotation.y = quat[1]
-		tf_msg.transform.rotation.z = quat[2]
-		tf_msg.transform.rotation.w = quat[3]
-		# # q = tf.transformations.quaternion_from_matrix(M)
-		# # q = tf_conversions.posemath.fromMatrix(cv2, self.rvec, self.tvec) # Convert to rotation matrix DOESNT WORK cant find rodriges2 FIX
-		# # tf_msg.transform.rotation.x = q2[0]
-		# # tf_msg.transform.rotation.y = q2[1]
-		# # tf_msg.transform.rotation.z = q2[2]
-		# # tf_msg.transform.rotation.w = q2[3]
+		## Compute inverse rotation and translation matrix ##
+		R = R.T
+		tvec = np.dot(-R, self.tvec)
+
+		## Create homogenious matrix and the flip x and y axis ##
+		H = np.empty((4, 4))
+		H[:3, :3] = R
+		H[:3, 3] = tvec.reshape(1,3)
+		H[3, :] = [0, 0, 0, 1]
+		H = np.dot(np.array([[1,0,0,0],[0,-1,0,0], [0,0,-1,0], [0,0,0,1]]), H)
+		R = H[0:3,0:3]
+		quat = Quaternion(matrix=R)
+
+		## Create message ##
+		tf_msg.transform.translation.x = H[0,3]/1000.0
+		tf_msg.transform.translation.y = H[1,3]/1000.0
+		tf_msg.transform.translation.z = H[2,3]/1000.0
+		tf_msg.transform.rotation.x = quat[1]
+		tf_msg.transform.rotation.y = quat[2]
+		tf_msg.transform.rotation.z = quat[3]
+		tf_msg.transform.rotation.w = quat[0]
 		self.camera_frame_br.sendTransform(tf_msg)
-
-# Checks if a matrix is a valid rotation matrix.
-def isRotationMatrix(R) :
-	Rt = np.transpose(R)
-	shouldBeIdentity = np.dot(Rt, R)
-	I = np.identity(3, dtype = R.dtype)
-	n = np.linalg.norm(I - shouldBeIdentity)
-	return n < 1e-6
-
-# Calculates rotation matrix to euler angles
-# The result is the same as MATLAB except the order
-# of the euler angles ( x and z are swapped ).
-def rotationMatrixToEulerAngles(R) :
-
-	assert(isRotationMatrix(R))
-
-	sy = math.sqrt(R[0,0] * R[0,0] +  R[1,0] * R[1,0])
-
-	singular = sy < 1e-6
-
-	if  not singular :
-		x = math.atan2(R[2,1] , R[2,2])
-		y = math.atan2(-R[2,0], sy)
-		z = math.atan2(R[1,0], R[0,0])
-	else :
-		x = math.atan2(-R[1,2], R[1,1])
-		y = math.atan2(-R[2,0], sy)
-		z = 0
-
-	return np.array([x, y, z])
 
 #################################################
 ## Main script ##################################

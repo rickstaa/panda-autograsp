@@ -417,5 +417,5 @@ if __name__ == '__main__':
     path_planning_service = PandaPathPlanningService(robot_description='/robot_description', group_name='panda_arm', args=sys.argv,
                                                      planner="TRRTkConfigDefault")
 
-    ## Spin forever. ##
+    ## Spin forever ##
     rospy.spin()
