@@ -72,6 +72,12 @@ rectangle_bgr = (255, 255, 255)
 LOAD_CALIB = os.path.abspath(os.path.join(os.path.dirname(
 	os.path.realpath(__file__)), "..", "data", "calib","calib_results.npz"))
 
+## TOPICS ##
+COLOR_TOPIC = "/kinect2/%s/image_color"
+COLOR_RECT_TOPIC = "kinect2/%s/image_color_rect"
+DEPTH_TOPIC = "/kinect2/%s/image_depth_rect_32FC1"
+CAMERA_INFO_TOPIC = "/kinect2/%s/camera_info"
+
 #################################################
 ## Functions ####################################
 #################################################
@@ -102,7 +108,7 @@ def draw_axis(img, corners, imgpts):
 #################################################
 class ComputeGraspServer():
 
-	def __init__(self, grasp_detection_srv, color_topic, color_rect_topic, depth_topic, camera_info_topic, queue_size=5, slop=0.1):
+	def __init__(self, grasp_detection_srv, queue_size=5, slop=0.1):
 
 		## Initialize ros node ##
 		rospy.loginfo("Initializing panda_autograsp_server")
@@ -164,15 +170,16 @@ class ComputeGraspServer():
 
 		## Create msg filter subscribers ##
 		rospy.loginfo("Creating camera sensor message_filter.")
-		color_image_sub = Subscriber(color_topic, sensor_msgs.msg.Image)
-		color_image_rect_sub = Subscriber(color_rect_topic, sensor_msgs.msg.Image)
-		depth_image_sub = Subscriber(depth_topic, sensor_msgs.msg.Image)
-		camera_info_sub = Subscriber(
-			camera_info_topic, sensor_msgs.msg.CameraInfo)
+		color_image_sub = Subscriber(COLOR_TOPIC % "hd", sensor_msgs.msg.Image)
+		color_image_rect_sub = Subscriber(COLOR_RECT_TOPIC % "sd", sensor_msgs.msg.Image)
+		depth_image_sub = Subscriber(DEPTH_TOPIC % "sd", sensor_msgs.msg.Image)
+		camera_info_hd_sub = Subscriber(CAMERA_INFO_TOPIC % "hd", sensor_msgs.msg.CameraInfo)
+		camera_info_qhd_sub = Subscriber(CAMERA_INFO_TOPIC % "qhd", sensor_msgs.msg.CameraInfo)
+		camera_info_sd_sub = Subscriber(CAMERA_INFO_TOPIC % "sd", sensor_msgs.msg.CameraInfo)
 
 		## Create msg filter ##
 		ats = ApproximateTimeSynchronizer(
-			[color_image_sub, color_image_rect_sub, depth_image_sub, camera_info_sub], queue_size, slop)
+			[color_image_sub, color_image_rect_sub, depth_image_sub, camera_info_hd_sub, camera_info_qhd_sub, camera_info_sd_sub], queue_size, slop)
 		ats.registerCallback(self.msg_filter_callback)
 		rospy.loginfo("Camera sensor message_filter created.")
 
@@ -205,23 +212,22 @@ class ComputeGraspServer():
 		## Create static publisher ##
 		self.camera_frame_br = tf2_ros.StaticTransformBroadcaster()
 
-		## Loop till the service is shutdown. ##
-		rospy.spin()
-
 	## TODO: Docstring
-	def msg_filter_callback(self, color_image, color_image_rect, depth_image_rect, camera_info):
+	def msg_filter_callback(self, color_image, color_image_rect, depth_image_rect, camera_info_hd,camera_info_qhd, camera_info_sd):
 
 		## Call the grasp_planner_service ##
 		self.color_image = color_image
 		self.color_image_rect = color_image_rect
 		self.depth_image_rect = depth_image_rect
-		self.camera_info = camera_info
+		self.camera_info_hd = camera_info_hd
+		self.camera_info_qhd = camera_info_qhd
+		self.camera_info_sd = camera_info_sd
 
 	def compute_grasp_service(self, req):
 
 		## Call grasp computation service ##
 		self.grasp = self.planning_scene_srv(
-			self.color_image_rect, self.depth_image_rect, self.camera_info)
+			self.color_image_rect, self.depth_image_rect, self.camera_info_sd)
 
 		## Test if successful ##
 		if self.grasp:
@@ -265,7 +271,7 @@ class ComputeGraspServer():
 	def calibrate_sensor_service(self, req):
 
 		## Call grasp computation service ##
-		ret, self.rvec, self.tvec, self.inliers = self.camera_world_calibration(self.color_image, self.camera_info)
+		ret, self.rvec, self.tvec, self.inliers = self.camera_world_calibration(self.color_image, self.camera_info_hd)
 
 		## Test if successful ##
 		if ret:
@@ -376,20 +382,12 @@ if __name__ == "__main__":
 
 	## Argument parser ##
 	try:
-		img_quality = rospy.get_param("~grasp_img_quality")
-	except KeyError:
-		img_quality = 'sd'
-	try:
 		grasp_detection_srv = rospy.get_param("~grasp_detection_srv")
 	except KeyError:
 		grasp_detection_srv = 'grasp_planner'
 
-	## Create topics ##
-	kinect_color_image_topic ="/kinect2/%s/image_color" % "hd"
-	kinect_color_image_rect_topic = "/kinect2/%s/image_color_rect" % img_quality
-	kinect_depth_image_rect_topic = "/kinect2/%s/image_depth_rect_32FC1" % img_quality
-	kinect_camera_info_topic = "/kinect2/%s/camera_info" % img_quality
-
 	## Create GraspPlannerClient object ##
-	grasp_planner_client = ComputeGraspServer(grasp_detection_srv, kinect_color_image_topic, kinect_color_image_rect_topic,
-										   kinect_depth_image_rect_topic, kinect_camera_info_topic, MSG_FILTER_QUEUE_SIZE, MSG_FILTER_SLOP)
+	grasp_planner_client = ComputeGraspServer(grasp_detection_srv, MSG_FILTER_QUEUE_SIZE, MSG_FILTER_SLOP)
+
+	## Loop till the service is shutdown ##
+	rospy.spin()

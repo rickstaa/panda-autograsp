@@ -10,7 +10,7 @@ import sys
 ## Import ros packages ##
 import rospy
 from dynamic_reconfigure.server import Server
-from panda_autograsp.cfg import PandaAutoGraspConfig
+from panda_autograsp.cfg import CalibFramesConfig
 import tf_conversions
 import tf
 import tf2_ros
@@ -36,12 +36,12 @@ class tf2_broadcaster():
         self.child_id = child_id
 
         ## Set member variables ##
-        self.x_pos = rospy.get_param("x_pos")
-        self.y_pos = rospy.get_param("y_pos")
-        self.z_pos = rospy.get_param("z_pos")
-        self.yaw = rospy.get_param("yaw")
-        self.pitch = rospy.get_param("pitch")
-        self.roll = rospy.get_param("roll")
+        self.x_pos = rospy.get_param("/calib_frames/x_pos")
+        self.y_pos = rospy.get_param("/calib_frames/y_pos")
+        self.z_pos = rospy.get_param("/calib_frames/z_pos")
+        self.yaw = rospy.get_param("/calib_frames/yaw")
+        self.pitch = rospy.get_param("/calib_frames/pitch")
+        self.roll = rospy.get_param("/calib_frames/roll")
 
         ## Create static broadcster ##
         self.static_br = tf2_ros.StaticTransformBroadcaster()
@@ -53,7 +53,7 @@ class tf2_broadcaster():
         self.tf_msg = geometry_msgs.msg.TransformStamped()
 
         ## Initialize dynamic reconfigure server ##
-        self.srv = Server(PandaAutoGraspConfig, self.dync_reconf_callback)
+        self.srv = Server(CalibFramesConfig, self.dync_reconf_callback)
 
     def dync_reconf_callback(self, config, level):
         """Dynamic reconfigure callback function.
@@ -81,12 +81,12 @@ class tf2_broadcaster():
         self.roll = config["roll"]
 
         ## Update parameters in the parameter server ##
-        rospy.set_param('x_pos', config["x_pos"])
-        rospy.set_param('y_pos', config["y_pos"])
-        rospy.set_param('z_pos', config["z_pos"])
-        rospy.set_param('yaw', config["yaw"])
-        rospy.set_param('pitch', config["pitch"])
-        rospy.set_param('roll', config["roll"])
+        rospy.set_param('/calib_frames/x_pos', config["x_pos"])
+        rospy.set_param('/calib_frames/y_pos', config["y_pos"])
+        rospy.set_param('/calib_frames/z_pos', config["z_pos"])
+        rospy.set_param('/calib_frames/yaw', config["yaw"])
+        rospy.set_param('/calib_frames/pitch', config["pitch"])
+        rospy.set_param('/calib_frames/roll', config["roll"])
 
         ## Return possibly updated configuration ##
         return config
@@ -122,12 +122,12 @@ class tf2_broadcaster():
 if __name__ == "__main__":
 
     ## Initialize TF2 broadcaster node ##
-    rospy.init_node('calib_frame', anonymous=False)
+    rospy.init_node('calib_frames', anonymous=False)
 
     ## Check if enough arguments are supplied ##
     if len(sys.argv) < 3:
         rospy.logerr('Invalid number of parameters\nusage: '
-                     './static_calib_frame_tf2_broadcaster.py '
+                     './tf2_broadcaster.py '
                      'frame_id child_frame_name')
         sys.exit(0)
     else:
