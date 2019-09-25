@@ -439,7 +439,7 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        chessboard_frame:
+        calib_frame:
           Value: true
         panda_hand:
           Value: true
@@ -475,7 +475,7 @@ Visualization Manager:
       Tree:
         world:
           panda_link0:
-            chessboard_frame:
+            calib_frame:
               {}
             panda_link1:
               panda_link2:
@@ -554,10 +554,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.33020371198654175
+      Pitch: 0.26520371437072754
       Target Frame: panda_link0
       Value: XYOrbit (rviz)
-      Yaw: 4.46496057510376
+      Yaw: 4.4599609375
     Saved: ~
 Window Geometry:
   Displays:
@@ -580,4 +580,4 @@ Window Geometry:
     collapsed: false
   Width: 1920
   X: 0
-  Y: 0
+  Y: 2

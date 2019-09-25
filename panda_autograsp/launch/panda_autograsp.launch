@@ -28,7 +28,7 @@
             roll: is rotation about X (green axis)
     -->
     <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml"/> <!-- Load calibration parametesr -->
-    <node pkg="panda_autograsp" type="calib_frame_tf2_broadcaster.py" name="calib_frame_broadcaster" args="panda_link0 calib_frame" />
+    <node pkg="panda_autograsp" type="tf2_broadcaster.py" name="frame_broadcaster" args="panda_link0 calib_frame" />
 
     <!-- Load panda_autograsp services
         Panda_autograsp services:

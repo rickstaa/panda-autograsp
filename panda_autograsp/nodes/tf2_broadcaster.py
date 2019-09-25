@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-#!/usr/bin/env python
-""" Calib frame tf2 broadcaster node
-This node publishes the calibframe position relative to the robot base (panda_link0).
-It also includes a dynamic reconfiguration server such that this frame can be changed by the user.
+""" tf2 broadcaster node
+This node broadcasts a number of tf2 frames and ensures these frames
+can be updated using a dynamic reconfigure server.
 """
 
 ## Import standard library packages ##
@@ -18,9 +17,9 @@ import tf2_ros
 import geometry_msgs.msg
 
 #################################################
-## calib_frame_tf2_broadcaster script ###########
+## tf2_broadcaster class ########################
 #################################################
-class calib_frame_tf2_broadcaster():
+class tf2_broadcaster():
     def __init__(self, parent_frame="panda_link0", child_id="calib_frame"):
         """Calib_frame_tf2_broadcaster class initialization.
 
@@ -36,10 +35,20 @@ class calib_frame_tf2_broadcaster():
         self.parent_frame = parent_frame
         self.child_id = child_id
 
+        ## Set member variables ##
+        self.x_pos = rospy.get_param("x_pos")
+        self.y_pos = rospy.get_param("y_pos")
+        self.z_pos = rospy.get_param("z_pos")
+        self.yaw = rospy.get_param("yaw")
+        self.pitch = rospy.get_param("pitch")
+        self.roll = rospy.get_param("roll")
+
         ## Create static broadcster ##
         self.static_br = tf2_ros.StaticTransformBroadcaster()
 
         ## Initialize transform broardcaster ##
+        self.timer = rospy.Timer(rospy.Duration(1.0/10.0),
+                                 self.tf2_broadcaster_callback)
         self.br = tf2_ros.TransformBroadcaster()
         self.tf_msg = geometry_msgs.msg.TransformStamped()
 
@@ -63,15 +72,42 @@ class calib_frame_tf2_broadcaster():
         rospy.loginfo("""Reconfigure Request: {x_pos}, {y_pos},\ 
             , {z_pos}, {yaw}, {pitch} & {roll}""".format(**config))
 
+        ## Read dynamic parameter values ##
+        self.x_pos = config["x_pos"]
+        self.y_pos = config["y_pos"]
+        self.z_pos = config["z_pos"]
+        self.yaw = config["yaw"]
+        self.pitch = config["pitch"]
+        self.roll = config["roll"]
+
+        ## Update parameters in the parameter server ##
+        rospy.set_param('x_pos', config["x_pos"])
+        rospy.set_param('y_pos', config["y_pos"])
+        rospy.set_param('z_pos', config["z_pos"])
+        rospy.set_param('yaw', config["yaw"])
+        rospy.set_param('pitch', config["pitch"])
+        rospy.set_param('roll', config["roll"])
+
+        ## Return possibly updated configuration ##
+        return config
+
+    def tf2_broadcaster_callback(self, event=None):
+        """TF2 broadcaster callback function. This function broadcast the tf2 frames.
+
+        Parameters
+        ----------
+        event : rospy.timer.TimerEvent, optional
+            Structure passed in provides you timing information that can be useful when debugging or profiling. , by default None
+        """
         ## Generate TF message ##
         self.tf_msg.header.stamp = rospy.Time.now()
         self.tf_msg.header.frame_id = self.parent_frame
         self.tf_msg.child_frame_id = self.child_id
-        self.tf_msg.transform.translation.x = config["x_pos"]
-        self.tf_msg.transform.translation.y = config["y_pos"]
-        self.tf_msg.transform.translation.z = config["z_pos"]
+        self.tf_msg.transform.translation.x = self.x_pos
+        self.tf_msg.transform.translation.y = self.y_pos
+        self.tf_msg.transform.translation.z = self.z_pos
         quat = tf.transformations.quaternion_from_euler(
-            float(config["yaw"]), float(config["pitch"]), float(config["roll"]), axes='rzyx')
+            float(self.yaw), float(self.pitch), float(self.roll), axes='rzyx')
         self.tf_msg.transform.rotation.x = quat[0]
         self.tf_msg.transform.rotation.y = quat[1]
         self.tf_msg.transform.rotation.z = quat[2]
@@ -79,9 +115,6 @@ class calib_frame_tf2_broadcaster():
 
         ## Send tf message ##
         self.br.sendTransform(self.tf_msg)
-
-        ## Return dynamic configuration dictionary ##
-        return config
 
 #################################################
 ## Main script ##################################
@@ -105,7 +138,7 @@ if __name__ == "__main__":
             sys.exit(0)
 
     ## Initialize calib frame broadcaster ##
-    calib_frame_tf2_broadcaster(sys.argv[1], sys.argv[2])
+    tf2_broadcaster(sys.argv[1], sys.argv[2])
 
     ## Spin forever ##
     rospy.spin()
