@@ -27,9 +27,8 @@
             pitch: is rotation about Y (red axis)
             roll: is rotation about X (green axis)
     -->
-    <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml"/> <!-- Load calibration parametesr -->
-    <!-- <node pkg="panda_autograsp" type="calib_frame_tf2_broadcaster.py" name="calib_frame_broadcaster" args="panda_link0 calib_frame" /> -->
-    <node pkg="tf2_ros" type="static_transform_publisher" name="chessboard_frame_broadcaster" args="1 0 0 0 0 0 1 panda_link0 calib_frame" />
+    <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml" ns="calib_frames"/> <!-- Load calibration parametesr -->
+    <node name="calib_frames" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" />
 
     <!-- Load panda_autograsp services
         Panda_autograsp services:
@@ -37,7 +36,7 @@
            - moveit_planner_server: Used for controlling the robot.
            - grasp_planner_server: Used for computing the grasps.
     -->
-    <node name="panda_autogras_server" pkg="panda_autograsp" type="panda_autograsp_server.py" output="screen"/>
+    <node name="panda_autograsp_server" pkg="panda_autograsp" type="panda_autograsp_server.py" output="screen"/>
     <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="log"/>
     <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen"/>
 

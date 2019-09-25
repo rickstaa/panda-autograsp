@@ -6,7 +6,10 @@ Panels:
       Expanded:
         - /PlanningScene1/Scene Robot1
         - /MotionPlanning1/Planning Request1
-        - /PointCloud21
+        - /TF1
+        - /TF1/Frames1
+        - /TF1/Tree1
+        - /TF1/Tree1/world1
       Splitter Ratio: 0.7425600290298462
     Tree Height: 682
   - Class: rviz/Help
@@ -439,7 +442,7 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        chessboard_frame:
+        calib_framer:
           Value: true
         panda_hand:
           Value: true
@@ -475,7 +478,7 @@ Visualization Manager:
       Tree:
         world:
           panda_link0:
-            chessboard_frame:
+            calib_framer:
               {}
             panda_link1:
               panda_link2:
@@ -554,10 +557,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.33020371198654175
+      Pitch: 0.17020435631275177
       Target Frame: panda_link0
       Value: XYOrbit (rviz)
-      Yaw: 4.46496057510376
+      Yaw: 1.6217763423919678
     Saved: ~
 Window Geometry:
   Displays:
@@ -580,4 +583,4 @@ Window Geometry:
     collapsed: false
   Width: 1920
   X: 0
-  Y: 0
+  Y: 2
