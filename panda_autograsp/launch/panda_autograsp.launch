@@ -17,7 +17,7 @@
     </include>
 
     <!-- Load dynamic reconfigure GUI -->
-    <node pkg="rqt_gui" type="rqt_gui" name="dyn_reconf_gui" args="-s reconfigure" />
+    <node pkg="rqt_gui" type="rqt_gui" name="dyn_reconf_gui" args="-s reconfigure"/>
 
     <!-- Create static TF for the calibration board (CB)
         The pose for this static TF can be set in the calib_frame_pose.yaml file.
@@ -28,7 +28,7 @@
             roll: is rotation about X (green axis)
     -->
     <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml" ns="tf_broadcaster"/> <!-- Load calibration parametesr -->
-    <!-- <node name="tf_broadcaster" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" /> -->
+    <node name="tf_broadcaster" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" />
 
     <!-- Load panda_autograsp services
         Panda_autograsp services:

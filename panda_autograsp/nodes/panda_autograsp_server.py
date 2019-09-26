@@ -289,7 +289,21 @@ class ComputeGraspServer():
 			return False
 
 	def camera_world_calibration(self, color_image, camera_info):
+		"""Perform camera world calibration (External camera matrix) using
+		a chessboard or several aruco markers.
 
+		Parameters
+		----------
+		color_image : [type]
+			[description]
+		camera_info : [type]
+			[description]
+
+		Returns
+		-------
+		[type]
+			[description]
+		"""
 		## Convert color image to opencv format ##
 		color_image_cv = self.bridge.imgmsg_to_cv2(color_image, desired_encoding="passthrough")
 
@@ -345,6 +359,9 @@ class ComputeGraspServer():
 			return None # Chessboard calibration failed
 
 	def broadcast_camera_frame(self):
+		"""Send the sensor pose we acquired from the calibration to the tf2_broadcaster so that
+		it can broadcast the sensor camera frame.
+		"""
 
 		## Get rotation matrix ##
 		R = np.zeros(shape=(3,3))
