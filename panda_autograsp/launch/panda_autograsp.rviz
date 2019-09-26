@@ -9,7 +9,6 @@ Panels:
         - /TF1
         - /TF1/Frames1
         - /TF1/Tree1
-        - /TF1/Tree1/world1
       Splitter Ratio: 0.7425600290298462
     Tree Height: 682
   - Class: rviz/Help
@@ -442,7 +441,9 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        calib_framer:
+        calib_frame:
+          Value: true
+        kinect2_rgb_optical_frame:
           Value: true
         panda_hand:
           Value: true
@@ -478,8 +479,9 @@ Visualization Manager:
       Tree:
         world:
           panda_link0:
-            calib_framer:
-              {}
+            calib_frame:
+              kinect2_rgb_optical_frame:
+                {}
             panda_link1:
               panda_link2:
                 panda_link3:
@@ -542,7 +544,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 4.983186721801758
+      Distance: 3.347001075744629
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -557,10 +559,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.17020435631275177
+      Pitch: 0.5452042818069458
       Target Frame: panda_link0
       Value: XYOrbit (rviz)
-      Yaw: 1.6217763423919678
+      Yaw: 1.1167763471603394
     Saved: ~
 Window Geometry:
   Displays:
