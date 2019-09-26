@@ -22,6 +22,3 @@
 [submodule "moveit_tutorials"]
 	path = moveit_tutorials
 	url = git@github.com:ros-planning/moveit_tutorials.git
-[submodule "tf_visual_tools"]
-	path = tf_visual_tools
-	url = https://github.com/PickNikRobotics/tf_visual_tools
