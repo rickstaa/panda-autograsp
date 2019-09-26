@@ -26,6 +26,7 @@ from cv_bridge import CvBridge, CvBridgeError
 import tf_conversions
 import tf2_ros
 import tf
+import dynamic_reconfigure.client
 
 ## Import messages and services ##
 from gqcnn.srv import GQCNNGraspPlanner
@@ -209,6 +210,9 @@ class ComputeGraspServer():
 		rospy.loginfo(
 			"\'%s\' services initialized successfully. Waiting for requests.", rospy.get_name())
 
+		## Create dynamic reconfigure client ##
+		self.dyn_client = dynamic_reconfigure.client.Client("tf_broadcaster", timeout=30)
+
 		## Create static publisher ##
 		self.camera_frame_br = tf2_ros.StaticTransformBroadcaster()
 
@@ -275,6 +279,7 @@ class ComputeGraspServer():
 
 		## Test if successful ##
 		if ret:
+
 			## Publish the camera frame ##
 			self.broadcast_camera_frame()
 
@@ -341,12 +346,6 @@ class ComputeGraspServer():
 
 	def broadcast_camera_frame(self):
 
-		## Generate transform message ##
-		tf_msg = geometry_msgs.msg.TransformStamped()
-		tf_msg.header.stamp = rospy.Time.now()
-		tf_msg.header.frame_id = "calib_frame"
-		tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
-
 		## Get rotation matrix ##
 		R = np.zeros(shape=(3,3))
 		J = np.zeros(shape=(3,3))
@@ -365,15 +364,51 @@ class ComputeGraspServer():
 		R = H[0:3,0:3]
 		quat = Quaternion(matrix=R)
 
-		## Create message ##
-		tf_msg.transform.translation.x = H[0,3]/1000.0
-		tf_msg.transform.translation.y = H[1,3]/1000.0
-		tf_msg.transform.translation.z = H[2,3]/1000.0
-		tf_msg.transform.rotation.x = quat[1]
-		tf_msg.transform.rotation.y = quat[2]
-		tf_msg.transform.rotation.z = quat[3]
-		tf_msg.transform.rotation.w = quat[0]
-		self.camera_frame_br.sendTransform(tf_msg)
+		## Print Calibration information ##
+		cal_pose = {
+			"x": float(H[0,3]/1000.0),
+			"y": float(H[0,3]/1000.0),
+			"z": float(H[0,3]/1000.0),
+			"q1": float(quat[1]),
+			"q2": float(quat[2]),
+			"q3": float(quat[3]),
+			"q4": float(quat[0])
+		}
+		rospy.loginfo("Calibration result: x={x}, y={y}, z={z}, q1={q1}, q2={q2}, q3={q3} and q4={q4}".format(**cal_pose))
+
+		## Update sensor frame parameters on the parameter server ##
+		rospy.set_param("/tf_broadcaster/sensor_frame_x_pos",
+						float(H[0,3]/1000.0))
+		rospy.set_param("/tf_broadcaster/sensor_frame_y_pos",
+						float(H[1,3]/1000.0))
+		rospy.set_param("/tf_broadcaster/sensor_frame_z_pos",
+						float(H[2,3]/1000.0))
+		rospy.set_param("/tf_broadcaster/sensor_frame_q1",
+						float(quat[1]))
+		rospy.set_param("/tf_broadcaster/sensor_frame_q2",
+						float(quat[2]))
+		rospy.set_param("/tf_broadcaster/sensor_frame_q3",
+						float(quat[3]))
+		rospy.set_param("/tf_broadcaster/sensor_frame_q4",
+						float(quat[0]))
+
+		# Update yaw, pitch & roll ##
+		euler = tf.transformations.euler_from_quaternion([quat[1], quat[2], quat[3], quat[0]])
+		rospy.set_param("/tf_broadcaster/sensor_frame_yaw",
+						float(euler[0]))
+		rospy.set_param("/tf_broadcaster/sensor_frame_pitch",
+						float(euler[1]))
+		rospy.set_param("/tf_broadcaster/sensor_frame_roll",
+						float(euler[2]))
+		config = {
+			"sensor_frame_x_pos": float(H[0,3]/1000.0),
+			"sensor_frame_y_pos": float(H[1,3]/1000.0),
+			"sensor_frame_z_pos": float(H[2,3]/1000.0),
+			"sensor_frame_yaw": euler[0],
+			"sensor_frame_pitch": euler[1],
+			"sensor_frame_roll": euler[2]
+		}
+		self.dyn_client.update_configuration(config)
 
 #################################################
 ## Main script ##################################

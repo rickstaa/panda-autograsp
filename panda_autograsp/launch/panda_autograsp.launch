@@ -27,8 +27,8 @@
             pitch: is rotation about Y (red axis)
             roll: is rotation about X (green axis)
     -->
-    <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml" ns="calib_frames"/> <!-- Load calibration parametesr -->
-    <node name="calib_frames" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" />
+    <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml" ns="tf_broadcaster"/> <!-- Load calibration parametesr -->
+    <!-- <node name="tf_broadcaster" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" /> -->
 
     <!-- Load panda_autograsp services
         Panda_autograsp services:
