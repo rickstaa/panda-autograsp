@@ -80,14 +80,14 @@ class PandaPathPlanningService:
         ## Connect to moveit services ##
         rospy.loginfo(
             "Conneting moveit default moveit \'apply_planning_scene\' service.")
-        rospy.wait_for_service('/apply_planning_scene')
-        rospy.wait_for_service('/apply_planning_scene') ##
+        rospy.wait_for_service('apply_planning_scene')
+        rospy.wait_for_service('apply_planning_scene') ##
         try:
             self.planning_scene_srv = rospy.ServiceProxy(
-                '/apply_planning_scene', ApplyPlanningScene)
+                'apply_planning_scene', ApplyPlanningScene)
             rospy.loginfo("Moveit \'apply_planning_scene\' service found!")
         except rospy.ServiceException as e:
-            rospy.loginfo(
+            rospy.logerr(
                 "Moveit \'apply_planning_scene\' service initialization failed: %s" % e)
             shutdown_msg = "Shutting down %s node because %s connection failed." % (
                 rospy.get_name(), self.planning_scene_srv)
@@ -414,7 +414,7 @@ class PandaPathPlanningService:
 if __name__ == '__main__':
 
     ## Create service object ##
-    path_planning_service = PandaPathPlanningService(robot_description='/robot_description', group_name='panda_arm', args=sys.argv,
+    path_planning_service = PandaPathPlanningService(robot_description='robot_description', group_name='panda_arm', args=sys.argv,
                                                      planner="TRRTkConfigDefault")
 
     ## Spin forever ##

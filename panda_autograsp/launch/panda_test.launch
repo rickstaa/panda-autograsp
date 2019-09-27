@@ -1,0 +1,56 @@
+<!-- Main panda Autograsp launchfile
+    This launch file launches all the required ROS nodes except the panda_autograsp_cli.py command line interface (CLI).
+    This CLI can be opened using the 'rosrun panda_autograsp panda_autograsp_cli.py' command.
+-->
+<launch>
+
+    <!--Launch file arguments-->
+    <arg name="base_name"           default="panda_autograsp"/>
+
+    <!-- Start the Kinect processing ROS nodes
+        The IAI_kinect2 package was used for the kinect processing.
+    -->
+    <!-- <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" >
+        <arg name="output" value="log" />
+    </include> -->
+
+    <!--Create panda_autograsp group-->
+    <group ns="$(arg base_name)">
+
+        <!-- Load Rviz-->
+        <!-- <include file="$(find panda_autograsp)/launch/panda_autograsp_rviz.launch">
+            <arg name="output" value="log" />
+        </include> -->
+
+        <!-- Load dynamic reconfigure GUI -->
+        <!-- <node pkg="rqt_gui" type="rqt_gui" name="dyn_reconf_gui" args="-s reconfigure" output="log"/> -->
+
+        <!-- Create static TF for the calibration board (CB)
+            The pose for this static TF can be set in the calib_frame_pose.yaml file.
+
+            TF broadcaster conventions:
+                yaw: is rotation about Z (blue axis)
+                pitch: is rotation about Y (red axis)
+                roll: is rotation about X (green axis)
+        -->
+        <!-- <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml" ns="tf2_broadcaster"/> Load calibration parametesr -->
+        <!-- <node name="tf2_broadcaster" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" output="log"/> -->
+
+        <!-- Load panda_autograsp services
+            Panda_autograsp services:
+               - panda_autograsp: Main panda_autograsp server. Used for calling all the other services.
+               - moveit_planner_server: Used for controlling the robot.
+               - grasp_planner_server: Used for computing the grasps.
+        -->
+        <node name="panda_autograsp_server" pkg="panda_autograsp" type="panda_autograsp_server.py" output="screen">
+            <!-- <remap from="image_color" to="/kinect/hd/image_color"/> -->
+            <!-- <remap from="image_color_rect" to="/kinect/sd/image_color_rect"/> -->
+            <!-- <remap from="image_depth_rect_32FC1" to="/kinect/sd/image_depth_rect_32FC1"/> -->
+            <!-- <remap from="hd/camera_info" to="/kinect/hd/camera_info"/> -->
+            <!-- <remap from="qhd/camera_info" to="/kinect/qhd/camera_info"/> -->
+            <!-- <remap from="sd/camera_info" to="/kinect/hd/camera_info"/> -->
+        </node>
+        <!-- <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="log"/> -->
+        <!-- <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="log" ns="moveit"/> -->
+    </group>
+</launch>

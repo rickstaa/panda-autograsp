@@ -472,7 +472,7 @@ if __name__ == "__main__":
 	cfg.update(main_cfg)
 
 	## Create publisher to publish pose of final grasp ##
-	grasp_pose_publisher = rospy.Publisher("/gqcnn_grasp/pose",
+	grasp_pose_publisher = rospy.Publisher("gqcnn_grasp/pose",
 										   PoseStamped,
 										   queue_size=10)
 
@@ -495,13 +495,13 @@ if __name__ == "__main__":
 								 grasp_pose_publisher)
 
 	## Initialize the ROS services ##
-	grasp_planning_service = rospy.Service("grasp_planner", GQCNNGraspPlanner,
+	grasp_planning_service = rospy.Service("gqcnn_grasp_planner", GQCNNGraspPlanner,
 										   grasp_planner.plan_grasp)
-	grasp_planning_service_bb = rospy.Service("grasp_planner_bounding_box",
+	grasp_planning_service_bb = rospy.Service("gqcnn_grasp_planner_bounding_box",
 											  GQCNNGraspPlannerBoundingBox,
 											  grasp_planner.plan_grasp_bb)
 	grasp_planning_service_segmask = rospy.Service(
-		"grasp_planner_segmask", GQCNNGraspPlannerSegmask,
+		"gqcnn_grasp_planner_segmask", GQCNNGraspPlannerSegmask,
 		grasp_planner.plan_grasp_segmask)
 	rospy.loginfo("Grasping Policy Initialized")
 

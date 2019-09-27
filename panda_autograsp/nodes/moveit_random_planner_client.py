@@ -32,10 +32,10 @@ if __name__ == "__main__":
     rospy.loginfo("Conneting to moveit_planning_server service.")
 
     ## Initialize random pose service ##
-    rospy.wait_for_service("/plan_random_pose")
+    rospy.wait_for_service("moveit/plan_random_pose")
     try:
         plan_to_random_pose_srv = rospy.ServiceProxy(
-            "/plan_random_pose", PlanToRandomPoint)
+            "moveit/plan_random_pose", PlanToRandomPoint)
     except rospy.ServiceException as e:
         rospy.loginfo("Service initialization failed: %s" % e)
         shutdown_msg = "Shutting down %s node because %s connection failed." % (
@@ -43,10 +43,10 @@ if __name__ == "__main__":
         rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
     ## Initialize random joint service ##
-    rospy.wait_for_service("/plan_random_joint")
+    rospy.wait_for_service("moveit/plan_random_joint")
     try:
         plan_to_random_joint_srv = rospy.ServiceProxy(
-            "/plan_random_joint", PlanToRandomPoint)
+            "moveit/plan_random_joint", PlanToRandomPoint)
     except rospy.ServiceException as e:
         rospy.loginfo("Service initialization failed: %s" % e)
         shutdown_msg = "Shutting down %s node because %s connection failed." % (
@@ -54,10 +54,10 @@ if __name__ == "__main__":
         rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
     ## Initialize random cartesian path service ##
-    rospy.wait_for_service("/plan_random_path")
+    rospy.wait_for_service("moveit/plan_random_path")
     try:
         plan_to_random_path_srv = rospy.ServiceProxy(
-            "/plan_random_path", PlanToRandomPath)
+            "moveit/plan_random_path", PlanToRandomPath)
     except rospy.ServiceException as e:
         rospy.loginfo("Service initialization failed: %s" % e)
         shutdown_msg = "Shutting down %s node because %s connection failed." % (
@@ -65,10 +65,10 @@ if __name__ == "__main__":
         rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
     ## Initialize execute plan service ##
-    rospy.wait_for_service("/execute_plan")
+    rospy.wait_for_service("moveit/execute_plan")
     try:
         execute_plan_srv = rospy.ServiceProxy(
-            "/execute_plan", ExecutePlan)
+            "moveit/execute_plan", ExecutePlan)
     except rospy.ServiceException as e:
         rospy.loginfo("Service initialization failed: %s" % e)
         shutdown_msg = "Shutting down %s node because %s connection failed." % (
@@ -76,10 +76,10 @@ if __name__ == "__main__":
         rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
     ## Initialize plan visualization service ##
-    rospy.wait_for_service("/visualize_plan")
+    rospy.wait_for_service("moveit/visualize_plan")
     try:
         visualize_plan_srv = rospy.ServiceProxy(
-            "/visualize_plan", VisualizePlan)
+            "moveit/visualize_plan", VisualizePlan)
     except rospy.ServiceException as e:
         rospy.loginfo("Service initialization failed: %s" % e)
         shutdown_msg = "Shutting down %s node because %s connection failed." % (

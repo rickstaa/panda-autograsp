@@ -95,8 +95,8 @@ class ComputeGraspServer():
 if __name__ == "__main__":
 
     ## Initialize ros node ##
-    rospy.loginfo("Initializing grasp_planner_client node")
-    rospy.init_node('grasp_planner_client', anonymous=True)
+    rospy.loginfo("Initializing grasp_planner_service node")
+    rospy.init_node('grasp_planner_service', anonymous=True)
 
     ## Argument parser ##
     try:
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     try:
         grasp_detection_srv = rospy.get_param("~grasp_detection_srv")
     except KeyError:
-        grasp_detection_srv = 'grasp_planner'
+        grasp_detection_srv = 'gqcnn_grasp_planner'
 
     ## Create topics ##
     kinect_color_image_rect_topic = "/kinect2/%s/image_color_rect" % img_quality

@@ -15,7 +15,7 @@ from panda_autograsp.functions import (yes_or_no)
 if __name__ == "__main__":
 
 	## Initialize ros node ##
-	rospy.init_node('panda_autograsp_server', anonymous=True)
+	rospy.init_node('panda_autograsp_cli', anonymous=True)
 
 	## Welcome message ##
 	print("----- PANDA_AUTOGRASP_PACKAGE_CLI -----")
@@ -27,60 +27,60 @@ if __name__ == "__main__":
 
 	## Initilazie camera calibration sercice ##
 	rospy.logdebug("Conneting to \'calibrate_sensor\' service.")
-	rospy.wait_for_service("calibrate_sensor")
+	rospy.wait_for_service("/panda_autograsp/calibrate_sensor")
 	try:
 		calibrate_sensor_srv = rospy.ServiceProxy(
-			"calibrate_sensor", CalibrateSensor)
+			"/panda_autograsp/calibrate_sensor", CalibrateSensor)
 	except rospy.ServiceException as e:
-		rospy.logdebug("Service initialization failed: %s" % e)
+		rospy.logerr("Service initialization failed: %s" % e)
 		shutdown_msg = "Shutting down %s node because %s connection failed." % (
 			rospy.get_name(), calibrate_sensor_srv)
 		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 	## Initialize Request grasp service ##
 	rospy.logdebug("Conneting to \'compute_grasp\' service.")
-	rospy.wait_for_service("compute_grasp")
+	rospy.wait_for_service("/panda_autograsp/compute_grasp")
 	try:
 		compute_grasp_srv = rospy.ServiceProxy(
-			"compute_grasp", ComputeGrasp)
+			"/panda_autograsp/compute_grasp", ComputeGrasp)
 	except rospy.ServiceException as e:
-		rospy.logdebug("Service initialization failed: %s" % e)
+		rospy.logerr("Service initialization failed: %s" % e)
 		shutdown_msg = "Shutting down %s node because %s connection failed." % (
 			rospy.get_name(), compute_grasp_srv)
 		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 	## Initialize moveit_planner server services ##
 	rospy.logdebug("Conneting to \'plan_grasp\' service.")
-	rospy.wait_for_service("/plan_grasp")
+	rospy.wait_for_service("/panda_autograsp/plan_grasp")
 	try:
 		plan_grasp_srv = rospy.ServiceProxy(
-			"/plan_grasp", PlanGrasp)
+			"/panda_autograsp/plan_grasp", PlanGrasp)
 	except rospy.ServiceException as e:
-		rospy.logdebug("Service initialization failed: %s" % e)
+		rospy.logerr("Service initialization failed: %s" % e)
 		shutdown_msg = "Shutting down %s node because %s connection failed." % (
 			rospy.get_name(), plan_grasp_srv)
 		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 	## Initialize plan visualization service ##
 	rospy.logdebug("Conneting to \'visualize_grasp\' service.")
-	rospy.wait_for_service("/visualize_grasp")
+	rospy.wait_for_service("/panda_autograsp/visualize_grasp")
 	try:
 		visualize_grasp_srv = rospy.ServiceProxy(
-			"/visualize_grasp", VisualizePlan)
+			"/panda_autograsp/visualize_grasp", VisualizePlan)
 	except rospy.ServiceException as e:
-		rospy.logdebug("Service initialization failed: %s" % e)
+		rospy.logerr("Service initialization failed: %s" % e)
 		shutdown_msg = "Shutting down %s node because %s connection failed." % (
 			rospy.get_name(), visualize_grasp_srv)
 		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 	## Initialize execute plan service ##
 	rospy.logdebug("Conneting to \'execute_grasp\' service.")
-	rospy.wait_for_service("/execute_grasp")
+	rospy.wait_for_service("/panda_autograsp/execute_grasp")
 	try:
 		execute_grasp_srv = rospy.ServiceProxy(
-			"/execute_grasp", ExecutePlan)
+			"/panda_autograsp/execute_grasp", ExecutePlan)
 	except rospy.ServiceException as e:
-		rospy.logdebug("Service initialization failed: %s" % e)
+		rospy.logerr("Service initialization failed: %s" % e)
 		shutdown_msg = "Shutting down %s node because %s connection failed." % (
 			rospy.get_name(), execute_grasp_srv)
 		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
@@ -95,14 +95,14 @@ if __name__ == "__main__":
 			response = yes_or_no(
 					"Is the checkerboard positioned on the upper left corner of the table?")
 			if not response:
-					rospy.logdebug("Shutting down %s node: " % rospy.get_name())
+					rospy.loginfo("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				result = calibrate_sensor_srv()
 				if not result:
 					response = yes_or_no("Calibration not successfully do you want to try again?")
 					if not response:
-						rospy.logdebug("Shutting down %s node: " % rospy.get_name())
+						rospy.loginfo("Shutting down %s node: " % rospy.get_name())
 						sys.exit(0)
 				else:
 					response = yes_or_no("Was the frame correct?")
@@ -120,7 +120,7 @@ if __name__ == "__main__":
 			if not result:
 				response = yes_or_no("Grasp computation not successfully do you want to try again?: ")
 				if not response:
-					rospy.logdebug("Shutting down %s node: " % rospy.get_name())
+					rospy.loginfo("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				break
@@ -133,7 +133,7 @@ if __name__ == "__main__":
 			if not result:
 				response = yes_or_no("Grasp path computation not successfully do you want to try again?: ")
 				if not response:
-					rospy.logdebug("Shutting down %s node: " % rospy.get_name())
+					rospy.loginfo("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				break
@@ -146,7 +146,7 @@ if __name__ == "__main__":
 			if not result:
 				response = yes_or_no("Grasp path visualization not successfully do you want to try again?: ")
 				if not response:
-					rospy.logdebug("Shutting down %s node: " % rospy.get_name())
+					rospy.loginfo("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				break
@@ -159,7 +159,7 @@ if __name__ == "__main__":
 			if not result:
 				response = yes_or_no("Grasp did not execute successfully do you want to try again?: ")
 				if not response:
-					rospy.logdebug("Shutting down %s node: " % rospy.get_name())
+					rospy.loginfo("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				break

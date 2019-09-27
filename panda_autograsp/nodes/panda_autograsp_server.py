@@ -40,10 +40,6 @@ from panda_autograsp.functions import yes_or_no
 ## Script settings ##############################
 #################################################
 
-## Message filter settings ##
-MSG_FILTER_QUEUE_SIZE = 5  # Max queue size
-MSG_FILTER_SLOP = 0.1  # Max sync delay (in seconds)
-
 ## Big board ##
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER,
 			30, 0.001)  # termination criteria
@@ -72,12 +68,6 @@ rectangle_bgr = (255, 255, 255)
 ## Load calib file path ##
 LOAD_CALIB = os.path.abspath(os.path.join(os.path.dirname(
 	os.path.realpath(__file__)), "..", "data", "calib","calib_results.npz"))
-
-## TOPICS ##
-COLOR_TOPIC = "/kinect2/%s/image_color"
-COLOR_RECT_TOPIC = "kinect2/%s/image_color_rect"
-DEPTH_TOPIC = "/kinect2/%s/image_depth_rect_32FC1"
-CAMERA_INFO_TOPIC = "/kinect2/%s/camera_info"
 
 #################################################
 ## Functions ####################################
@@ -109,7 +99,7 @@ def draw_axis(img, corners, imgpts):
 #################################################
 class ComputeGraspServer():
 
-	def __init__(self, grasp_detection_srv, queue_size=5, slop=0.1):
+	def __init__(self):
 
 		## Initialize ros node ##
 		rospy.loginfo("Initializing panda_autograsp_server")
@@ -119,69 +109,70 @@ class ComputeGraspServer():
 		self.bridge = CvBridge()
 
 		## Initialize grasp_computation service ##
-		rospy.loginfo("Conneting to %s service." % grasp_detection_srv)
-		rospy.wait_for_service(grasp_detection_srv)
+		rospy.loginfo("Conneting to %s service." % "gqcnn_grasp_planner")
+		rospy.wait_for_service("gqcnn_grasp_planner")
 		try:
-			self.planning_scene_srv = rospy.ServiceProxy(
-				grasp_detection_srv, GQCNNGraspPlanner)
+			self.gqcnn_grasp_planning_srv = rospy.ServiceProxy(
+				"gqcnn_grasp_planner", GQCNNGraspPlanner)
+			rospy.loginfo("Grasp_planner service found!")
 		except rospy.ServiceException as e:
-			rospy.loginfo("Service initialization failed: %s" % e)
+			rospy.logerr("Service initialization failed: %s" % e)
 			shutdown_msg = "Shutting down %s node because %s connection failed." % (
-				rospy.get_name(), self.planning_scene_srv)
+				rospy.get_name(), self.gqcnn_grasp_planning_srv)
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 			return
 
 		## Initialize moveit_planner server services ##
 
 		## Initialize Plan to point service ##
-		rospy.logdebug("Conneting to \'plan_to_point\' service.")
-		rospy.wait_for_service("/plan_to_point")
+		rospy.loginfo("Initializing moveit_planner services.")
+		rospy.loginfo("Conneting to \'plan_to_point\' service.")
+		rospy.wait_for_service("moveit/plan_to_point")
 		try:
 			self.plan_to_pose_srv = rospy.ServiceProxy(
-				"/plan_to_point", PlanToPoint)
+				"moveit/plan_to_point", PlanToPoint)
 		except rospy.ServiceException as e:
-			rospy.logdebug("Service initialization failed: %s" % e)
+			rospy.logerr("Service initialization failed: %s" % e)
 			shutdown_msg = "Shutting down %s node because %s connection failed." % (
 				rospy.get_name(), self.plan_to_pose_srv)
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 		## Initialize plan visualization service ##
-		rospy.logdebug("Conneting to \'visualize 	_plan\' service.")
-		rospy.wait_for_service("/visualize_plan")
+		rospy.loginfo("Conneting to \'visualize_plan\' service.")
+		rospy.wait_for_service("moveit/visualize_plan")
 		try:
 			self.visualize_plan_srv = rospy.ServiceProxy(
-				"/visualize_plan", VisualizePlan)
+				"moveit/visualize_plan", VisualizePlan)
 		except rospy.ServiceException as e:
-			rospy.logdebug("Service initialization failed: %s" % e)
+			rospy.logerr("Service initialization failed: %s" % e)
 			shutdown_msg = "Shutting down %s node because %s connection failed." % (
 				rospy.get_name(), self.visualize_plan_srv)
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 		## Initialize execute plan service ##
-		rospy.logdebug("Conneting to \'execute_plan\' service.")
-		rospy.wait_for_service("/execute_plan")
+		rospy.loginfo("Conneting to \'execute_plan\' service.")
+		rospy.wait_for_service("moveit/execute_plan")
 		try:
 			self.execute_plan_srv = rospy.ServiceProxy(
-				"/execute_plan", ExecutePlan)
+				"moveit/execute_plan", ExecutePlan)
 		except rospy.ServiceException as e:
-			rospy.logdebug("Service initialization failed: %s" % e)
+			rospy.logerr("Service initialization failed: %s" % e)
 			shutdown_msg = "Shutting down %s node because %s connection failed." % (
 				rospy.get_name(), self.execute_plan_srv)
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 		## Create msg filter subscribers ##
 		rospy.loginfo("Creating camera sensor message_filter.")
-		color_image_sub = Subscriber(COLOR_TOPIC % "hd", sensor_msgs.msg.Image)
-		color_image_rect_sub = Subscriber(COLOR_RECT_TOPIC % "sd", sensor_msgs.msg.Image)
-		depth_image_sub = Subscriber(DEPTH_TOPIC % "sd", sensor_msgs.msg.Image)
-		camera_info_hd_sub = Subscriber(CAMERA_INFO_TOPIC % "hd", sensor_msgs.msg.CameraInfo)
-		camera_info_qhd_sub = Subscriber(CAMERA_INFO_TOPIC % "qhd", sensor_msgs.msg.CameraInfo)
-		camera_info_sd_sub = Subscriber(CAMERA_INFO_TOPIC % "sd", sensor_msgs.msg.CameraInfo)
+		self.color_image_sub = Subscriber("/kinect/hd/image_color", sensor_msgs.msg.Image)
+		self.color_image_rect_sub = Subscriber("/kinect/sd/image_color_rect", sensor_msgs.msg.Image)
+		self.depth_image_sub = Subscriber("/kinect/sd/image_depth_rect_32FC1", sensor_msgs.msg.Image)
+		self.camera_info_hd_sub = Subscriber("/kinect/hd/camera_info", sensor_msgs.msg.CameraInfo)
+		self.camera_info_qhd_sub = Subscriber("/kinect/qhd/camera_info", sensor_msgs.msg.CameraInfo)
+		self.camera_info_sd_sub = Subscriber("/kinect/sd/camera_info", sensor_msgs.msg.CameraInfo)
 
 		## Create msg filter ##
-		ats = ApproximateTimeSynchronizer(
-			[color_image_sub, color_image_rect_sub, depth_image_sub, camera_info_hd_sub, camera_info_qhd_sub, camera_info_sd_sub], queue_size, slop)
-		ats.registerCallback(self.msg_filter_callback)
+		self.ats = ApproximateTimeSynchronizer([self.color_image_sub, self.color_image_rect_sub, self.depth_image_sub, self.camera_info_hd_sub, self.camera_info_qhd_sub, self.camera_info_sd_sub], queue_size=5, slop=0.1)
+		self.ats.registerCallback(self.msg_filter_callback)
 		rospy.loginfo("Camera sensor message_filter created.")
 
 		## Create panda_autograsp_server services ##
@@ -211,13 +202,13 @@ class ComputeGraspServer():
 			"\'%s\' services initialized successfully. Waiting for requests.", rospy.get_name())
 
 		## Create dynamic reconfigure client ##
-		self.dyn_client = dynamic_reconfigure.client.Client("tf_broadcaster", timeout=30)
+		self.dyn_client = dynamic_reconfigure.client.Client("tf2_broadcaster", timeout=30)
 
 		## Create static publisher ##
 		self.camera_frame_br = tf2_ros.StaticTransformBroadcaster()
 
 	## TODO: Docstring
-	def msg_filter_callback(self, color_image, color_image_rect, depth_image_rect, camera_info_hd,camera_info_qhd, camera_info_sd):
+	def msg_filter_callback(self, color_image, color_image_rect, depth_image_rect, camera_info_hd, camera_info_qhd, camera_info_sd):
 
 		## Call the grasp_planner_service ##
 		self.color_image = color_image
@@ -230,7 +221,7 @@ class ComputeGraspServer():
 	def compute_grasp_service(self, req):
 
 		## Call grasp computation service ##
-		self.grasp = self.planning_scene_srv(
+		self.grasp = self.gqcnn_grasp_planning_srv(
 			self.color_image_rect, self.depth_image_rect, self.camera_info_sd)
 
 		## Test if successful ##
@@ -394,28 +385,28 @@ class ComputeGraspServer():
 		rospy.loginfo("Calibration result: x={x}, y={y}, z={z}, q1={q1}, q2={q2}, q3={q3} and q4={q4}".format(**cal_pose))
 
 		## Update sensor frame parameters on the parameter server ##
-		rospy.set_param("/tf_broadcaster/sensor_frame_x_pos",
+		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_x_pos",
 						float(H[0,3]/1000.0))
-		rospy.set_param("/tf_broadcaster/sensor_frame_y_pos",
+		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_y_pos",
 						float(H[1,3]/1000.0))
-		rospy.set_param("/tf_broadcaster/sensor_frame_z_pos",
+		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_z_pos",
 						float(H[2,3]/1000.0))
-		rospy.set_param("/tf_broadcaster/sensor_frame_q1",
+		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_q1",
 						float(quat[1]))
-		rospy.set_param("/tf_broadcaster/sensor_frame_q2",
+		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_q2",
 						float(quat[2]))
-		rospy.set_param("/tf_broadcaster/sensor_frame_q3",
+		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_q3",
 						float(quat[3]))
-		rospy.set_param("/tf_broadcaster/sensor_frame_q4",
+		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_q4",
 						float(quat[0]))
 
 		# Update yaw, pitch & roll ##
 		euler = tf.transformations.euler_from_quaternion([quat[1], quat[2], quat[3], quat[0]])
-		rospy.set_param("/tf_broadcaster/sensor_frame_yaw",
+		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_yaw",
 						float(euler[0]))
-		rospy.set_param("/tf_broadcaster/sensor_frame_pitch",
+		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_pitch",
 						float(euler[1]))
-		rospy.set_param("/tf_broadcaster/sensor_frame_roll",
+		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_roll",
 						float(euler[2]))
 		config = {
 			"sensor_frame_x_pos": float(H[0,3]/1000.0),
@@ -432,14 +423,8 @@ class ComputeGraspServer():
 #################################################
 if __name__ == "__main__":
 
-	## Argument parser ##
-	try:
-		grasp_detection_srv = rospy.get_param("~grasp_detection_srv")
-	except KeyError:
-		grasp_detection_srv = 'grasp_planner'
-
 	## Create GraspPlannerClient object ##
-	grasp_planner_client = ComputeGraspServer(grasp_detection_srv, MSG_FILTER_QUEUE_SIZE, MSG_FILTER_SLOP)
+	grasp_planner_client = ComputeGraspServer()
 
 	## Loop till the service is shutdown ##
 	rospy.spin()

@@ -37,27 +37,21 @@ class tf2_broadcaster():
 		self.child_id = child_id
 
 		## Set calib frame member variables ##
-		self.calib_frame_x_pos = rospy.get_param(
-			"/tf_broadcaster/calib_frame_x_pos")
-		self.calib_frame_y_pos = rospy.get_param(
-			"/tf_broadcaster/calib_frame_y_pos")
-		self.calib_frame_z_pos = rospy.get_param(
-			"/tf_broadcaster/calib_frame_z_pos")
-		self.calib_frame_yaw = rospy.get_param(
-			"/tf_broadcaster/calib_frame_yaw")
-		self.calib_frame_pitch = rospy.get_param(
-			"/tf_broadcaster/calib_frame_pitch")
-		self.calib_frame_roll = rospy.get_param(
-			"/tf_broadcaster/calib_frame_roll")
+		self.calib_frame_x_pos = rospy.get_param(rospy.get_name()+"/calib_frame_x_pos")
+		self.calib_frame_y_pos = rospy.get_param(rospy.get_name()+"/calib_frame_y_pos")
+		self.calib_frame_z_pos = rospy.get_param(rospy.get_name()+"/calib_frame_z_pos")
+		self.calib_frame_yaw = rospy.get_param(rospy.get_name()+"/calib_frame_yaw")
+		self.calib_frame_pitch = rospy.get_param(rospy.get_name()+"/calib_frame_pitch")
+		self.calib_frame_roll = rospy.get_param(rospy.get_name()+"/calib_frame_roll")
 
 		## Set sensor starting parameters ##
-		quat = Quaternion(rospy.get_param("/tf_broadcaster/sensor_frame_q1"), rospy.get_param("/tf_broadcaster/sensor_frame_q2"),
-				rospy.get_param("/tf_broadcaster/sensor_frame_q3"), rospy.get_param("/tf_broadcaster/sensor_frame_q4")).normalised
-		quat = Quaternion(0,0,0,1) if not quat.__nonzero__() else quat
-		rospy.set_param('/tf_broadcaster/sensor_frame_q1', float(quat[0]))
-		rospy.set_param('/tf_broadcaster/sensor_frame_q2', float(quat[1]))
-		rospy.set_param('/tf_broadcaster/sensor_frame_q3', float(quat[2]))
-		rospy.set_param('/tf_broadcaster/sensor_frame_q4', float(quat[3]))
+		quat = Quaternion(rospy.get_param(rospy.get_name()+"/sensor_frame_q1"), rospy.get_param(rospy.get_name()+"/sensor_frame_q2"),
+                    rospy.get_param(rospy.get_name()+"/sensor_frame_q3"), rospy.get_param(rospy.get_name()+"/sensor_frame_q4")).normalised
+		quat = Quaternion(0, 0, 0, 1) if not quat.__nonzero__() else quat
+		rospy.set_param(rospy.get_name()+"/sensor_frame_q1", float(quat[0]))
+		rospy.set_param(rospy.get_name()+"/sensor_frame_q2", float(quat[1]))
+		rospy.set_param(rospy.get_name()+"/sensor_frame_q3", float(quat[2]))
+		rospy.set_param(rospy.get_name()+"/sensor_frame_q4", float(quat[3]))
 
 		euler = tf.transformations.euler_from_quaternion(list(quat), axes='szyx')
 		self.sensor_frame_yaw = euler[0]
@@ -66,7 +60,7 @@ class tf2_broadcaster():
 
 		## Initialize transform broadcaster ##
 		self.timer = rospy.Timer(rospy.Duration(1.0/10.0),
-								 self.tf2_broadcaster_callback)
+                           self.tf2_broadcaster_callback)
 		self.br = tf2_ros.TransformBroadcaster()
 
 		## Initialize dynamic reconfigure server ##
@@ -75,9 +69,9 @@ class tf2_broadcaster():
 
 		## Update dynamic reconfigure server ##
 		self.srv.update_configuration({
-			"/tf_broadcaster/sensor_frame_yaw": self.sensor_frame_yaw,
-			"/tf_broadcaster/sensor_frame_pitch": self.sensor_frame_pitch,
-			"/tf_broadcaster/sensor_frame_roll": self.sensor_frame_roll
+			"sensor_frame_yaw": self.sensor_frame_yaw,
+			"sensor_frame_pitch": self.sensor_frame_pitch,
+			"sensor_frame_roll": self.sensor_frame_roll
 		})
 
 	def dync_reconf_callback(self, config, level):
@@ -94,8 +88,9 @@ class tf2_broadcaster():
 		"""
 
 		## Print information about which values were changed##
-		diff_items = {k: config[k] for k in config if k in self.config and config[k] != self.config[k]}
-		if not diff_items== {}:
+		diff_items = {k: config[k]
+                    for k in config if k in self.config and config[k] != self.config[k]}
+		if not diff_items == {}:
 			log_msg = ""
 			for key, value in diff_items.items():
 				log_msg = log_msg + ", {}: {}".format(key, diff_items[key])
@@ -114,18 +109,18 @@ class tf2_broadcaster():
 		self.calib_frame_roll = config["calib_frame_roll"]
 
 		## Update calib frame ros parameters ##
-		rospy.set_param('/tf_broadcaster/calib_frame_x_pos',
-						config["calib_frame_x_pos"])
-		rospy.set_param('/tf_broadcaster/calib_frame_y_pos',
-						config["calib_frame_y_pos"])
-		rospy.set_param('/tf_broadcaster/calib_frame_z_pos',
-						config["calib_frame_z_pos"])
-		rospy.set_param('/tf_broadcaster/calib_frame_yaw',
-						config["calib_frame_yaw"])
-		rospy.set_param('/tf_broadcaster/calib_frame_pitch',
-						config["calib_frame_pitch"])
-		rospy.set_param('/tf_broadcaster/calib_frame_roll',
-						config["calib_frame_roll"])
+		rospy.set_param(rospy.get_name()+"/calib_frame_x_pos",
+                  config["calib_frame_x_pos"])
+		rospy.set_param(rospy.get_name()+"/calib_frame_y_pos",
+                  config["calib_frame_y_pos"])
+		rospy.set_param(rospy.get_name()+"/calib_frame_z_pos",
+                  config["calib_frame_z_pos"])
+		rospy.set_param(rospy.get_name()+"/calib_frame_yaw",
+                  config["calib_frame_yaw"])
+		rospy.set_param(rospy.get_name()+"/calib_frame_pitch",
+                  config["calib_frame_pitch"])
+		rospy.set_param(rospy.get_name()+"/calib_frame_roll",
+                  config["calib_frame_roll"])
 
 		#########################################
 		## Update sensor frame parms ############
@@ -133,44 +128,44 @@ class tf2_broadcaster():
 
 		## Get old sensor frame pose values ##
 		sensor_pose_old = {
-			"sensor_frame_x_pos": rospy.get_param("/tf_broadcaster/sensor_frame_x_pos"),
-			"sensor_frame_y_pos": rospy.get_param("/tf_broadcaster/sensor_frame_y_pos"),
-			"sensor_frame_z_pos": rospy.get_param("/tf_broadcaster/sensor_frame_z_pos"),
-			"sensor_frame_yaw": rospy.get_param("/tf_broadcaster/sensor_frame_yaw"),
-			"sensor_frame_pitch": rospy.get_param("/tf_broadcaster/sensor_frame_pitch"),
-			"sensor_frame_roll": rospy.get_param("/tf_broadcaster/sensor_frame_roll")
+			"sensor_frame_x_pos": rospy.get_param(rospy.get_name()+"/sensor_frame_x_pos"),
+			"sensor_frame_y_pos": rospy.get_param(rospy.get_name()+"/sensor_frame_y_pos"),
+			"sensor_frame_z_pos": rospy.get_param(rospy.get_name()+"/sensor_frame_z_pos"),
+			"sensor_frame_yaw": rospy.get_param(rospy.get_name()+"/sensor_frame_yaw"),
+			"sensor_frame_pitch": rospy.get_param(rospy.get_name()+"/sensor_frame_pitch"),
+			"sensor_frame_roll": rospy.get_param(rospy.get_name()+"/sensor_frame_roll")
 		}
-		quat_old = [rospy.get_param("/tf_broadcaster/sensor_frame_q1"),
-					rospy.get_param("/tf_broadcaster/sensor_frame_q2"),
-					rospy.get_param("/tf_broadcaster/sensor_frame_q3"),
-					rospy.get_param("/tf_broadcaster/sensor_frame_q4")]
+		quat_old = [rospy.get_param(rospy.get_name()+"/sensor_frame_q1"),
+                    rospy.get_param(rospy.get_name()+"/sensor_frame_q2"),
+                    rospy.get_param(rospy.get_name()+"/sensor_frame_q3"),
+                    rospy.get_param(rospy.get_name()+"/sensor_frame_q4")]
 
 		## Get relative rotaion ##
 		if any([config[key] != sensor_pose_old[key] for key in config if key in sensor_pose_old]):
 
 			## Get relative rotaion ##
 			yaw_diff = config["sensor_frame_yaw"] - sensor_pose_old["sensor_frame_yaw"]
-			pitch_diff = config["sensor_frame_pitch"] - sensor_pose_old["sensor_frame_yaw"]
-			roll_diff = config["sensor_frame_roll"] - sensor_pose_old["sensor_frame_yaw"]
+			pitch_diff = config["sensor_frame_pitch"] - \
+				sensor_pose_old["sensor_frame_yaw"]
+			roll_diff = config["sensor_frame_roll"] - \
+				sensor_pose_old["sensor_frame_yaw"]
 
 			## Apply relative rotation to old quaternion ##
-			quat_diff = tf.transformations.quaternion_from_euler(yaw_diff, pitch_diff, roll_diff)
+			quat_diff = tf.transformations.quaternion_from_euler(
+				yaw_diff, pitch_diff, roll_diff)
 			quat = tf.transformations.quaternion_multiply(quat_diff, quat_old)
 
 			## Set new quaternion values ##
-			rospy.set_param('/tf_broadcaster/sensor_frame_q1', float(quat[0]))
-			rospy.set_param('/tf_broadcaster/sensor_frame_q2', float(quat[1]))
-			rospy.set_param('/tf_broadcaster/sensor_frame_q3', float(quat[2]))
-			rospy.set_param('/tf_broadcaster/sensor_frame_q4', float(quat[3]))
-			rospy.set_param("/tf_broadcaster/sensor_frame_x_pos",
-							config["sensor_frame_x_pos"])
-			rospy.set_param("/tf_broadcaster/sensor_frame_y_pos",
-							config["sensor_frame_y_pos"])
-			rospy.set_param("/tf_broadcaster/sensor_frame_z_pos",
-							config["sensor_frame_z_pos"])
-			rospy.set_param("/tf_broadcaster/sensor_frame_yaw", config["sensor_frame_yaw"])
-			rospy.set_param("/tf_broadcaster/se5nsor_frame_pitch", config["sensor_frame_pitch"])
-			rospy.set_param("/tf_broadcaster/sensor_frame_roll", config["sensor_frame_roll"])
+			rospy.set_param(rospy.get_name()+"/sensor_frame_q1", float(quat[0]))
+			rospy.set_param(rospy.get_name()+"/sensor_frame_q2", float(quat[1]))
+			rospy.set_param(rospy.get_name()+"/sensor_frame_q3", float(quat[2]))
+			rospy.set_param(rospy.get_name()+"/sensor_frame_q4", float(quat[3]))
+			rospy.set_param(rospy.get_name()+"/sensor_frame_x_pos", config["sensor_frame_x_pos"])
+			rospy.set_param(rospy.get_name()+"/sensor_frame_y_pos", config["sensor_frame_y_pos"])
+			rospy.set_param(rospy.get_name()+"/sensor_frame_z_pos", config["sensor_frame_z_pos"])
+			rospy.set_param(rospy.get_name()+"/sensor_frame_yaw", config["sensor_frame_yaw"])
+			rospy.set_param(rospy.get_name()+"/sensor_frame_pitch", config["sensor_frame_pitch"])
+			rospy.set_param(rospy.get_name()+"/sensor_frame_roll", config["sensor_frame_roll"])
 
 		## Save current config ##
 		self.config = config
@@ -211,23 +206,17 @@ class tf2_broadcaster():
 		sensor_frame_tf_msg.header.stamp = rospy.Time.now()
 		sensor_frame_tf_msg.header.frame_id = "calib_frame"
 		sensor_frame_tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
-		sensor_frame_tf_msg.transform.translation.x = rospy.get_param(
-			"/tf_broadcaster/sensor_frame_x_pos")
-		sensor_frame_tf_msg.transform.translation.y = rospy.get_param(
-			"/tf_broadcaster/sensor_frame_y_pos")
-		sensor_frame_tf_msg.transform.translation.z = rospy.get_param(
-			"/tf_broadcaster/sensor_frame_z_pos")
-		sensor_frame_tf_msg.transform.rotation.x = rospy.get_param(
-			"/tf_broadcaster/sensor_frame_q1")
-		sensor_frame_tf_msg.transform.rotation.y = rospy.get_param(
-			"/tf_broadcaster/sensor_frame_q2")
-		sensor_frame_tf_msg.transform.rotation.z = rospy.get_param(
-			"/tf_broadcaster/sensor_frame_q3")
-		sensor_frame_tf_msg.transform.rotation.w = rospy.get_param(
-			"/tf_broadcaster/sensor_frame_q4")
+		sensor_frame_tf_msg.transform.translation.x = rospy.get_param(rospy.get_name()+"/sensor_frame_x_pos")
+		sensor_frame_tf_msg.transform.translation.y = rospy.get_param(rospy.get_name()+"/sensor_frame_y_pos")
+		sensor_frame_tf_msg.transform.translation.z = rospy.get_param(rospy.get_name()+"/sensor_frame_z_pos")
+		sensor_frame_tf_msg.transform.rotation.x = rospy.get_param(rospy.get_name()+"/sensor_frame_q1")
+		sensor_frame_tf_msg.transform.rotation.y = rospy.get_param(rospy.get_name()+"/sensor_frame_q2")
+		sensor_frame_tf_msg.transform.rotation.z = rospy.get_param(rospy.get_name()+"/sensor_frame_q3")
+		sensor_frame_tf_msg.transform.rotation.w = rospy.get_param(rospy.get_name()+"/sensor_frame_q4")
 
 		## Send tf message ##
 		self.br.sendTransform([calib_frame_tf_msg, sensor_frame_tf_msg])
+
 
 #################################################
 ## Main script ##################################
@@ -235,13 +224,13 @@ class tf2_broadcaster():
 if __name__ == "__main__":
 
 	## Initialize TF2 broadcaster node ##
-	rospy.init_node('tf_broadcaster', anonymous=False)
+	rospy.init_node('tf2_broadcaster', anonymous=False)
 
 	## Check if enough arguments are supplied ##
 	if len(sys.argv) < 3:
 		rospy.logerr('Invalid number of parameters\nusage: '
-					 './tf2_broadcaster.py '
-					 'frame_id child_frame_name')
+                    './tf2_broadcaster.py '
+                    'frame_id child_frame_name')
 		sys.exit(0)
 	else:
 
