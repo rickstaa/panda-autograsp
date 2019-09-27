@@ -28,6 +28,11 @@ if __name__ == "__main__":
     rospy.loginfo("Initializing moveit_planner_client node")
     rospy.init_node('moveit_planner_client', anonymous=True)
 
+    ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+    import ptvsd
+    ptvsd.wait_for_attach()
+    ## ------------------------------ ##
+
     ## Initialize grasp_planning service ##
     rospy.loginfo("Conneting to moveit_planning_server service.")
 

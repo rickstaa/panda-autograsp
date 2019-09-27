@@ -26,6 +26,7 @@ if __name__ == "__main__":
 	## TODO: Catch unsuccefull grasps
 
 	## Initilazie camera calibration sercice ##
+	rospy.loginfo("Connecting to the panda_autograsp services...")
 	rospy.logdebug("Conneting to \'calibrate_sensor\' service.")
 	rospy.wait_for_service("/panda_autograsp/calibrate_sensor")
 	try:
@@ -84,6 +85,7 @@ if __name__ == "__main__":
 		shutdown_msg = "Shutting down %s node because %s connection failed." % (
 			rospy.get_name(), execute_grasp_srv)
 		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+	rospy.loginfo("Connected to the panda_autograsp services.")
 
 	## Keep alive as node is alive ##
 	while  not rospy.is_shutdown():

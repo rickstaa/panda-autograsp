@@ -65,10 +65,6 @@ fontColor = (0, 0, 0)
 lineType = 1
 rectangle_bgr = (255, 255, 255)
 
-## Load calib file path ##
-LOAD_CALIB = os.path.abspath(os.path.join(os.path.dirname(
-	os.path.realpath(__file__)), "..", "data", "calib","calib_results.npz"))
-
 #################################################
 ## Functions ####################################
 #################################################
@@ -98,8 +94,12 @@ def draw_axis(img, corners, imgpts):
 ## GraspPlannerClient Class #####################
 #################################################
 class ComputeGraspServer():
-
 	def __init__(self):
+
+		## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+		import ptvsd
+		ptvsd.wait_for_attach()
+		## ------------------------------ ##
 
 		## Initialize ros node ##
 		rospy.loginfo("Initializing panda_autograsp_server")
@@ -163,12 +163,12 @@ class ComputeGraspServer():
 
 		## Create msg filter subscribers ##
 		rospy.loginfo("Creating camera sensor message_filter.")
-		self.color_image_sub = Subscriber("/kinect/hd/image_color", sensor_msgs.msg.Image)
-		self.color_image_rect_sub = Subscriber("/kinect/sd/image_color_rect", sensor_msgs.msg.Image)
-		self.depth_image_sub = Subscriber("/kinect/sd/image_depth_rect_32FC1", sensor_msgs.msg.Image)
-		self.camera_info_hd_sub = Subscriber("/kinect/hd/camera_info", sensor_msgs.msg.CameraInfo)
-		self.camera_info_qhd_sub = Subscriber("/kinect/qhd/camera_info", sensor_msgs.msg.CameraInfo)
-		self.camera_info_sd_sub = Subscriber("/kinect/sd/camera_info", sensor_msgs.msg.CameraInfo)
+		self.color_image_sub = Subscriber("image_color", sensor_msgs.msg.Image)
+		self.color_image_rect_sub = Subscriber("image_color_rect", sensor_msgs.msg.Image)
+		self.depth_image_sub = Subscriber("image_depth_rect_32FC1", sensor_msgs.msg.Image)
+		self.camera_info_hd_sub = Subscriber("hd/camera_info", sensor_msgs.msg.CameraInfo)
+		self.camera_info_qhd_sub = Subscriber("qhd/camera_info", sensor_msgs.msg.CameraInfo)
+		self.camera_info_sd_sub = Subscriber("sd/camera_info", sensor_msgs.msg.CameraInfo)
 
 		## Create msg filter ##
 		self.ats = ApproximateTimeSynchronizer([self.color_image_sub, self.color_image_rect_sub, self.depth_image_sub, self.camera_info_hd_sub, self.camera_info_qhd_sub, self.camera_info_sd_sub], queue_size=5, slop=0.1)
@@ -303,15 +303,9 @@ class ComputeGraspServer():
 		objp[:, :2] = np.mgrid[0:N_ROWS, 0:N_COLMNS].T.reshape(-1, 2) * SQUARE_SIZE # Multiply by chessboard scale factor to get results in mm
 		axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3) * SQUARE_SIZE # Coordinate axis
 
-		## unpack camera information ##
-		# Get calibration parameters if file exists
-		if os.path.exists(LOAD_CALIB):
-			a = np.load(LOAD_CALIB)
-			mtx = a['mtx']
-			dist = a['dst']
-		else:
-			mtx = np.array(camera_info.K).reshape(3,3)
-			dist = camera_info.D # Default distortion parameters are 0
+		## Get camera information ##
+		mtx = np.array(camera_info.K).reshape(3,3)
+		dist = camera_info.D # Default distortion parameters are 0
 
 		## Get color image ##
 		gray = cv2.cvtColor(color_image_cv, cv2.COLOR_BGR2GRAY)
@@ -385,28 +379,28 @@ class ComputeGraspServer():
 		rospy.loginfo("Calibration result: x={x}, y={y}, z={z}, q1={q1}, q2={q2}, q3={q3} and q4={q4}".format(**cal_pose))
 
 		## Update sensor frame parameters on the parameter server ##
-		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_x_pos",
+		rospy.set_param("tf2_broadcaster/sensor_frame_x_pos",
 						float(H[0,3]/1000.0))
-		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_y_pos",
+		rospy.set_param("tf2_broadcaster/sensor_frame_y_pos",
 						float(H[1,3]/1000.0))
-		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_z_pos",
+		rospy.set_param("tf2_broadcaster/sensor_frame_z_pos",
 						float(H[2,3]/1000.0))
-		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_q1",
+		rospy.set_param("tf2_broadcaster/sensor_frame_q1",
 						float(quat[1]))
-		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_q2",
+		rospy.set_param("tf2_broadcaster/sensor_frame_q2",
 						float(quat[2]))
-		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_q3",
+		rospy.set_param("tf2_broadcaster/sensor_frame_q3",
 						float(quat[3]))
-		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_q4",
+		rospy.set_param("tf2_broadcaster/sensor_frame_q4",
 						float(quat[0]))
-
+		# BUG:
 		# Update yaw, pitch & roll ##
 		euler = tf.transformations.euler_from_quaternion([quat[1], quat[2], quat[3], quat[0]])
-		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_yaw",
+		rospy.set_param("tf2_broadcaster/sensor_frame_yaw",
 						float(euler[0]))
-		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_pitch",
+		rospy.set_param("tf2_broadcaster/sensor_frame_pitch",
 						float(euler[1]))
-		rospy.set_param("/panda_autograsp/tf2_broadcaster/sensor_frame_roll",
+		rospy.set_param("tf2_broadcaster/sensor_frame_roll",
 						float(euler[2]))
 		config = {
 			"sensor_frame_x_pos": float(H[0,3]/1000.0),

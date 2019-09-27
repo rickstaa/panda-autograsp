@@ -1,0 +1,21 @@
+<!-- Moveit random planner launchfile
+    This launch file launches the moveit_random_planner_client node. This node can be used to
+    send random movements to moveit.
+-->
+<launch>
+
+    <!-- Setup launchfile arguments -->
+    <arg name="ns"  default="panda_autograsp"/>
+    <arg name="panda_launch"  default="FALSE"/>
+
+    <!-- Start panda_autograsp ROS nodes -->
+    <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" if="$(arg panda_launch)">
+        <arg name="output" value="log" />
+    </include>
+
+    <!-- Start random movement planner client -->
+    <group ns="$(arg ns)">
+        <node pkg="panda_autograsp" type="moveit_random_planner_client.py" name="moveit_random_planner_client" output="screen"/>
+    </group>
+
+</launch>
