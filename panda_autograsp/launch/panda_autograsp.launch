@@ -51,15 +51,7 @@
             <remap from="qhd/camera_info" to="kinect2/qhd/camera_info"/>
             <remap from="sd/camera_info" to="kinect2/sd/camera_info"/>
         </node>
-        <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="log">
-            <remap from="sensor_frame_x_pos" to="panda_autograsp/tf2_broadcaster/sensor_frame_x_pos"/>
-            <remap from="sensor_frame_y_pos" to="panda_autograsp/tf2_broadcaster/sensor_frame_y_pos"/>
-            <remap from="sensor_frame_z_pos" to="panda_autograsp/tf2_broadcaster/sensor_frame_z_pos"/>
-            <remap from="sensor_frame_q1" to="panda_autograsp/tf2_broadcaster/sensor_frame_q1"/>
-            <remap from="sensor_frame_q2" to="panda_autograsp/tf2_broadcaster/sensor_frame_q2"/>
-            <remap from="sensor_frame_q3" to="panda_autograsp/tf2_broadcaster/sensor_frame_q3"/>
-            <remap from="sensor_frame_q4" to="panda_autograsp/tf2_broadcaster/sensor_frame_q4"/>
-        </node>
+        <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="log"/>
         <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen">
             <remap from="execute_plan" to="moveit/execute_plan"/> <!--Remaped to make better distinction between grasp planner service-->
             <remap from="plan_to_point" to="moveit/plan_to_point"/> <!--Ditto-->
