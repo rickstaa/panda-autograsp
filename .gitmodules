@@ -22,3 +22,6 @@
 [submodule "moveit_tutorials"]
 	path = moveit_tutorials
 	url = git@github.com:ros-planning/moveit_tutorials.git
+[submodule "ar_track_alvar"]
+	path = ar_track_alvar
+	url = git@github.com:ros-perception/ar_track_alvar.git
