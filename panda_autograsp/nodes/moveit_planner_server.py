@@ -194,7 +194,7 @@ class PandaPathPlanningService:
         plans = []
         points = []
 
-        ## Set the target possition ##
+        ## Set the target position ##
         rospy.loginfo("Planning to: \n %s", req.target)
         self.move_group.set_pose_target(req.target)
 

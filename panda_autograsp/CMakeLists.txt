@@ -84,6 +84,7 @@ add_service_files(
   VisualizeGrasp.srv
   ExecuteGrasp.srv
   CalibrateSensor.srv
+  SetSensorPose.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -101,7 +102,7 @@ generate_messages(
   trajectory_msgs
 )
 
-################################################
+######################geometry_msgs##########################
 ## Declare ROS dynamic reconfigure parameters ##
 ################################################
 

@@ -30,8 +30,9 @@ import dynamic_reconfigure.client
 
 ## Import messages and services ##
 from gqcnn.srv import GQCNNGraspPlanner
-from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, PlanToPoint, VisualizePlan, VisualizeGrasp, ExecutePlan, ExecuteGrasp, CalibrateSensor)
+from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, PlanToPoint, VisualizePlan, VisualizeGrasp, ExecutePlan, ExecuteGrasp, CalibrateSensor, SetSensorPose)
 import geometry_msgs.msg
+from std_msgs.msg import Header
 
 ## Import custom packages ##
 from panda_autograsp.functions import yes_or_no
@@ -96,19 +97,23 @@ def draw_axis(img, corners, imgpts):
 class ComputeGraspServer():
 	def __init__(self):
 
-		## DEBUG: WAIT FOR PTVSD DEBUGGER ##
-		import ptvsd
-		ptvsd.wait_for_attach()
-		## ------------------------------ ##
 
 		## Initialize ros node ##
 		rospy.loginfo("Initializing panda_autograsp_server")
 		rospy.init_node('panda_autograsp_server')
 
+		## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+		import ptvsd
+		ptvsd.wait_for_attach()
+		## ------------------------------ ##
+
 		## Setup cv_bridge ##
 		self.bridge = CvBridge()
 
-		## Initialize grasp_computation service ##
+		###############################################
+		## Initialize grasp computation services #######
+		###############################################
+
 		rospy.loginfo("Conneting to %s service." % "gqcnn_grasp_planner")
 		rospy.wait_for_service("gqcnn_grasp_planner")
 		try:
@@ -122,11 +127,13 @@ class ComputeGraspServer():
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 			return
 
+		###############################################
 		## Initialize moveit_planner server services ##
+		###############################################
 
 		## Initialize Plan to point service ##
 		rospy.loginfo("Initializing moveit_planner services.")
-		rospy.loginfo("Conneting to \'plan_to_point\' service.")
+		rospy.loginfo("Conneting to \'moveit/plan_to_point\' service.")
 		rospy.wait_for_service("moveit/plan_to_point")
 		try:
 			self.plan_to_pose_srv = rospy.ServiceProxy(
@@ -138,7 +145,7 @@ class ComputeGraspServer():
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 		## Initialize plan visualization service ##
-		rospy.loginfo("Conneting to \'visualize_plan\' service.")
+		rospy.loginfo("Conneting to \'moveit/visualize_plan\' service.")
 		rospy.wait_for_service("moveit/visualize_plan")
 		try:
 			self.visualize_plan_srv = rospy.ServiceProxy(
@@ -150,7 +157,7 @@ class ComputeGraspServer():
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
 		## Initialize execute plan service ##
-		rospy.loginfo("Conneting to \'execute_plan\' service.")
+		rospy.loginfo("Conneting to \'moveit/execute_plan\' service.")
 		rospy.wait_for_service("moveit/execute_plan")
 		try:
 			self.execute_plan_srv = rospy.ServiceProxy(
@@ -161,45 +168,64 @@ class ComputeGraspServer():
 				rospy.get_name(), self.execute_plan_srv)
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
+		## Initialize send sensor pose service ##
+		rospy.loginfo("Conneting to \'send_sensor_pose\' service.")
+		rospy.wait_for_service("set_sensor_pose")
+		try:
+			self.set_sensor_pose_srv = rospy.ServiceProxy(
+				"set_sensor_pose", SetSensorPose)
+		except rospy.ServiceException as e:
+			rospy.logerr("Service initialization failed: %s" % e)
+			shutdown_msg = "Shutting down %s node because %s connection failed." % (
+				rospy.get_name(), self.set_sensor_pose_srv)
+			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+
+		###############################################
+		## Create panda_autograsp_server services #####
+		###############################################
+
+		## Calibrate sensor ##
+		rospy.loginfo("Initializing %s services.", rospy.get_name())
+		rospy.loginfo("Initializing panda_autograsp/calibrate_sensor service.")
+		self.calibrate_sensor_srv = rospy.Service('calibrate_sensor', CalibrateSensor , self.calibrate_sensor_service)
+
+		## Compute grasp service ##
+		rospy.loginfo("Initializing panda_autograsp/compute_grasp services.")
+		self.compute_grasp_srv = rospy.Service('compute_grasp',ComputeGrasp , self.compute_grasp_service)
+
+		## Plan grasp service ##
+		rospy.loginfo("Initializing panda_autograsp/plan_grasp services.")
+		self.plan_grasp_srv = rospy.Service('plan_grasp', PlanGrasp, self.plan_grasp_service)
+
+		## Visualize grasp service ##
+		rospy.loginfo("Initializing panda_autograsp/visualize_grasp services.")
+		self.visualize_grasp_srv = rospy.Service('visualize_grasp', VisualizeGrasp, self.visualize_grasp_service)
+
+		## execute grasp service ##
+		rospy.loginfo("Initializing panda_autograsp/execute_grasp services.")
+		self.execute_grasp_srv = rospy.Service('execute_grasp', ExecutePlan, self.execute_grasp_service)
+
+		## Service initiation success messag ##
+		rospy.loginfo(
+			"\'%s\' services initialized successfully. Waiting for requests.", rospy.get_name())
+
+		###############################################
+		## Create subscribers and publishers ##########
+		###############################################
+
 		## Create msg filter subscribers ##
 		rospy.loginfo("Creating camera sensor message_filter.")
 		self.color_image_sub = Subscriber("image_color", sensor_msgs.msg.Image)
 		self.color_image_rect_sub = Subscriber("image_color_rect", sensor_msgs.msg.Image)
-		self.depth_image_sub = Subscriber("image_depth_rect_32FC1", sensor_msgs.msg.Image)
+		self.depth_image_rect_sub = Subscriber("image_depth_rect_32FC1", sensor_msgs.msg.Image)
 		self.camera_info_hd_sub = Subscriber("hd/camera_info", sensor_msgs.msg.CameraInfo)
 		self.camera_info_qhd_sub = Subscriber("qhd/camera_info", sensor_msgs.msg.CameraInfo)
 		self.camera_info_sd_sub = Subscriber("sd/camera_info", sensor_msgs.msg.CameraInfo)
 
 		## Create msg filter ##
-		self.ats = ApproximateTimeSynchronizer([self.color_image_sub, self.color_image_rect_sub, self.depth_image_sub, self.camera_info_hd_sub, self.camera_info_qhd_sub, self.camera_info_sd_sub], queue_size=5, slop=0.1)
+		self.ats = ApproximateTimeSynchronizer([self.color_image_sub, self.color_image_rect_sub, self.depth_image_rect_sub, self.camera_info_hd_sub, self.camera_info_qhd_sub, self.camera_info_sd_sub], queue_size=5, slop=0.1)
 		self.ats.registerCallback(self.msg_filter_callback)
 		rospy.loginfo("Camera sensor message_filter created.")
-
-		## Create panda_autograsp_server services ##
-
-		## Calibrate sensor ##
-		rospy.loginfo("Initializing %s services.", rospy.get_name())
-		self.calibrate_sensor_srv = rospy.Service('calibrate_sensor', CalibrateSensor , self.calibrate_sensor_service)
-
-		## Compute grasp service ##
-		rospy.loginfo("Initializing %s services.", rospy.get_name())
-		self.compute_grasp_srv = rospy.Service('compute_grasp',ComputeGrasp , self.compute_grasp_service)
-
-		## Plan grasp service ##
-		rospy.loginfo("Initializing %s services.", rospy.get_name())
-		self.plan_grasp_srv = rospy.Service('plan_grasp', PlanGrasp, self.plan_grasp_service)
-
-		## Visualize grasp service ##
-		rospy.loginfo("Initializing %s services.", rospy.get_name())
-		self.visualize_grasp_srv = rospy.Service('visualize_grasp', VisualizeGrasp, self.visualize_grasp_service)
-
-		## execute grasp service ##
-		rospy.loginfo("Initializing %s services.", rospy.get_name())
-		self.execute_grasp_srv = rospy.Service('execute_grasp', ExecutePlan, self.execute_grasp_service)
-
-		## Service initiation succes messag ##
-		rospy.loginfo(
-			"\'%s\' services initialized successfully. Waiting for requests.", rospy.get_name())
 
 		## Create dynamic reconfigure client ##
 		self.dyn_client = dynamic_reconfigure.client.Client("tf2_broadcaster", timeout=30)
@@ -207,7 +233,26 @@ class ComputeGraspServer():
 		## Create static publisher ##
 		self.camera_frame_br = tf2_ros.StaticTransformBroadcaster()
 
-	## TODO: Docstring
+		## Create state listener ##
+		self.tf2_listener = tf.TransformListener()
+
+		## Create pose subscriber ##
+		rospy.Subscriber("gqcnn_grasp/pose", geometry_msgs.msg.PoseStamped, self.get_pose_callback)
+
+	def get_pose_callback(self, pose_msg):
+		"""Callback function of the 'gqcnn_graps/pose` subsriber. This function updates the
+		self.pose_msg member variable.
+
+		Parameters
+		----------
+		pose_msg : geometry_msgs.PosedStamed
+			Grasp pose msgs.
+		"""
+
+		## Update pose_msg ##
+		rospy.loginfo("Received grasp pose.")
+		self.pose_msg = pose_msg
+
 	def msg_filter_callback(self, color_image, color_image_rect, depth_image_rect, camera_info_hd, camera_info_qhd, camera_info_sd):
 
 		## Call the grasp_planner_service ##
@@ -232,8 +277,18 @@ class ComputeGraspServer():
 
 	def plan_grasp_service(self, req):
 
+		## Translate pose in camera frame to robot frame ##
+		# try:
+		# 	(trans, rot) = self.tf2_listener.lookupTransform('panda_hand', 'kinect2_rgb_optical_frame', rospy.Time(0))
+		# except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+		# 	rospy.logerr("Pose could not be transformed from the camera frame to the robot frame.")
+		# 	return False
+
 		## Call grasp computation service ##
-		result = self.plan_to_pose_srv(self.grasp.grasp.pose)
+		# FIXME: Unsure if I need to add a kinect2_ir_optical_frame or that I can use the kinect2_rgb_optical_frame like I did below
+		self.pose_msg.header.frame_id = "kinect2_rgb_optical_frame"
+		panda_hand_grasp_pose = self.tf2_listener.transformPose('panda_hand', self.pose_msg)
+		result = self.plan_to_pose_srv(panda_hand_grasp_pose.pose)
 
 		## Test if successful ##
 		if result:
@@ -369,8 +424,8 @@ class ComputeGraspServer():
 		## Print Calibration information ##
 		cal_pose = {
 			"x": float(H[0,3]/1000.0),
-			"y": float(H[0,3]/1000.0),
-			"z": float(H[0,3]/1000.0),
+			"y": float(H[1,3]/1000.0),
+			"z": float(H[2,3]/1000.0),
 			"q1": float(quat[1]),
 			"q2": float(quat[2]),
 			"q3": float(quat[3]),
@@ -378,39 +433,21 @@ class ComputeGraspServer():
 		}
 		rospy.loginfo("Calibration result: x={x}, y={y}, z={z}, q1={q1}, q2={q2}, q3={q3} and q4={q4}".format(**cal_pose))
 
-		## Update sensor frame parameters on the parameter server ##
-		rospy.set_param("tf2_broadcaster/sensor_frame_x_pos",
-						float(H[0,3]/1000.0))
-		rospy.set_param("tf2_broadcaster/sensor_frame_y_pos",
-						float(H[1,3]/1000.0))
-		rospy.set_param("tf2_broadcaster/sensor_frame_z_pos",
-						float(H[2,3]/1000.0))
-		rospy.set_param("tf2_broadcaster/sensor_frame_q1",
-						float(quat[1]))
-		rospy.set_param("tf2_broadcaster/sensor_frame_q2",
-						float(quat[2]))
-		rospy.set_param("tf2_broadcaster/sensor_frame_q3",
-						float(quat[3]))
-		rospy.set_param("tf2_broadcaster/sensor_frame_q4",
-						float(quat[0]))
-		# BUG:
-		# Update yaw, pitch & roll ##
-		euler = tf.transformations.euler_from_quaternion([quat[1], quat[2], quat[3], quat[0]])
-		rospy.set_param("tf2_broadcaster/sensor_frame_yaw",
-						float(euler[0]))
-		rospy.set_param("tf2_broadcaster/sensor_frame_pitch",
-						float(euler[1]))
-		rospy.set_param("tf2_broadcaster/sensor_frame_roll",
-						float(euler[2]))
-		config = {
-			"sensor_frame_x_pos": float(H[0,3]/1000.0),
-			"sensor_frame_y_pos": float(H[1,3]/1000.0),
-			"sensor_frame_z_pos": float(H[2,3]/1000.0),
-			"sensor_frame_yaw": euler[0],
-			"sensor_frame_pitch": euler[1],
-			"sensor_frame_roll": euler[2]
-		}
-		self.dyn_client.update_configuration(config)
+		## Create geometry_msg ##
+		sensor_frame_tf_msg = geometry_msgs.msg.TransformStamped()
+		sensor_frame_tf_msg.header.stamp = rospy.Time.now()
+		sensor_frame_tf_msg.header.frame_id = "calib_frame"
+		sensor_frame_tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
+		sensor_frame_tf_msg.transform.translation.x = float(H[0,3]/1000.0)
+		sensor_frame_tf_msg.transform.translation.y = float(H[1,3]/1000.0)
+		sensor_frame_tf_msg.transform.translation.z = float(H[2,3]/1000.0)
+		sensor_frame_tf_msg.transform.rotation.x = float(quat[1])
+		sensor_frame_tf_msg.transform.rotation.y = float(quat[2])
+		sensor_frame_tf_msg.transform.rotation.z = float(quat[3])
+		sensor_frame_tf_msg.transform.rotation.w = float(quat[0])
+
+		## Communicate sensor_frame_pose to the tf2_broadcaster node ##
+		self.set_sensor_pose_srv(sensor_frame_tf_msg)
 
 #################################################
 ## Main script ##################################
