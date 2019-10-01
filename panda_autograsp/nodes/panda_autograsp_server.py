@@ -32,6 +32,7 @@ import dynamic_reconfigure.client
 from gqcnn.srv import GQCNNGraspPlanner
 from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, PlanToPoint, VisualizePlan, VisualizeGrasp, ExecutePlan, ExecuteGrasp, CalibrateSensor, SetSensorPose)
 import geometry_msgs.msg
+from std_msgs.msg import Header
 
 ## Import custom packages ##
 from panda_autograsp.functions import yes_or_no
@@ -101,15 +102,18 @@ class ComputeGraspServer():
 		rospy.loginfo("Initializing panda_autograsp_server")
 		rospy.init_node('panda_autograsp_server')
 
-		# ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
-		# import ptvsd
-		# ptvsd.wait_for_attach()
-		# ## ------------------------------ ##
+		## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+		import ptvsd
+		ptvsd.wait_for_attach()
+		## ------------------------------ ##
 
 		## Setup cv_bridge ##
 		self.bridge = CvBridge()
 
-		## Initialize grasp_computation service ##
+		###############################################
+		## Initialize grasp computation services #######
+		###############################################
+
 		rospy.loginfo("Conneting to %s service." % "gqcnn_grasp_planner")
 		rospy.wait_for_service("gqcnn_grasp_planner")
 		try:
@@ -123,7 +127,9 @@ class ComputeGraspServer():
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 			return
 
+		###############################################
 		## Initialize moveit_planner server services ##
+		###############################################
 
 		## Initialize Plan to point service ##
 		rospy.loginfo("Initializing moveit_planner services.")
@@ -174,46 +180,52 @@ class ComputeGraspServer():
 				rospy.get_name(), self.set_sensor_pose_srv)
 			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
 
+		###############################################
+		## Create panda_autograsp_server services #####
+		###############################################
+
+		## Calibrate sensor ##
+		rospy.loginfo("Initializing %s services.", rospy.get_name())
+		rospy.loginfo("Initializing panda_autograsp/calibrate_sensor service.")
+		self.calibrate_sensor_srv = rospy.Service('calibrate_sensor', CalibrateSensor , self.calibrate_sensor_service)
+
+		## Compute grasp service ##
+		rospy.loginfo("Initializing panda_autograsp/compute_grasp services.")
+		self.compute_grasp_srv = rospy.Service('compute_grasp',ComputeGrasp , self.compute_grasp_service)
+
+		## Plan grasp service ##
+		rospy.loginfo("Initializing panda_autograsp/plan_grasp services.")
+		self.plan_grasp_srv = rospy.Service('plan_grasp', PlanGrasp, self.plan_grasp_service)
+
+		## Visualize grasp service ##
+		rospy.loginfo("Initializing panda_autograsp/visualize_grasp services.")
+		self.visualize_grasp_srv = rospy.Service('visualize_grasp', VisualizeGrasp, self.visualize_grasp_service)
+
+		## execute grasp service ##
+		rospy.loginfo("Initializing panda_autograsp/execute_grasp services.")
+		self.execute_grasp_srv = rospy.Service('execute_grasp', ExecutePlan, self.execute_grasp_service)
+
+		## Service initiation success messag ##
+		rospy.loginfo(
+			"\'%s\' services initialized successfully. Waiting for requests.", rospy.get_name())
+
+		###############################################
+		## Create subscribers and publishers ##########
+		###############################################
+
 		## Create msg filter subscribers ##
 		rospy.loginfo("Creating camera sensor message_filter.")
 		self.color_image_sub = Subscriber("image_color", sensor_msgs.msg.Image)
 		self.color_image_rect_sub = Subscriber("image_color_rect", sensor_msgs.msg.Image)
-		self.depth_image_sub = Subscriber("image_depth_rect_32FC1", sensor_msgs.msg.Image)
+		self.depth_image_rect_sub = Subscriber("image_depth_rect_32FC1", sensor_msgs.msg.Image)
 		self.camera_info_hd_sub = Subscriber("hd/camera_info", sensor_msgs.msg.CameraInfo)
 		self.camera_info_qhd_sub = Subscriber("qhd/camera_info", sensor_msgs.msg.CameraInfo)
 		self.camera_info_sd_sub = Subscriber("sd/camera_info", sensor_msgs.msg.CameraInfo)
 
 		## Create msg filter ##
-		self.ats = ApproximateTimeSynchronizer([self.color_image_sub, self.color_image_rect_sub, self.depth_image_sub, self.camera_info_hd_sub, self.camera_info_qhd_sub, self.camera_info_sd_sub], queue_size=5, slop=0.1)
+		self.ats = ApproximateTimeSynchronizer([self.color_image_sub, self.color_image_rect_sub, self.depth_image_rect_sub, self.camera_info_hd_sub, self.camera_info_qhd_sub, self.camera_info_sd_sub], queue_size=5, slop=0.1)
 		self.ats.registerCallback(self.msg_filter_callback)
 		rospy.loginfo("Camera sensor message_filter created.")
-
-		## Create panda_autograsp_server services ##
-
-		## Calibrate sensor ##
-		rospy.loginfo("Initializing %s services.", rospy.get_name())
-		rospy.loginfo("Initializing panda_autograsp_server/calibrate_sensor service.")
-		self.calibrate_sensor_srv = rospy.Service('calibrate_sensor', CalibrateSensor , self.calibrate_sensor_service)
-
-		## Compute grasp service ##
-		rospy.loginfo("Initializing panda_autograsp_server/compute_grasp services.")
-		self.compute_grasp_srv = rospy.Service('compute_grasp',ComputeGrasp , self.compute_grasp_service)
-
-		## Plan grasp service ##
-		rospy.loginfo("Initializing panda_autograsp_server/plan_grasp services.")
-		self.plan_grasp_srv = rospy.Service('plan_grasp', PlanGrasp, self.plan_grasp_service)
-
-		## Visualize grasp service ##
-		rospy.loginfo("Initializing panda_autograsp_server/visualize_grasp services.")
-		self.visualize_grasp_srv = rospy.Service('visualize_grasp', VisualizeGrasp, self.visualize_grasp_service)
-
-		## execute grasp service ##
-		rospy.loginfo("Initializing panda_autograsp_server/execute_grasp services.")
-		self.execute_grasp_srv = rospy.Service('execute_grasp', ExecutePlan, self.execute_grasp_service)
-
-		## Service initiation succes messag ##
-		rospy.loginfo(
-			"\'%s\' services initialized successfully. Waiting for requests.", rospy.get_name())
 
 		## Create dynamic reconfigure client ##
 		self.dyn_client = dynamic_reconfigure.client.Client("tf2_broadcaster", timeout=30)
@@ -224,7 +236,23 @@ class ComputeGraspServer():
 		## Create state listener ##
 		self.tf2_listener = tf.TransformListener()
 
-	## TODO: Docstring
+		## Create pose subscriber ##
+		rospy.Subscriber("gqcnn_grasp/pose", geometry_msgs.msg.PoseStamped, self.get_pose_callback)
+
+	def get_pose_callback(self, pose_msg):
+		"""Callback function of the 'gqcnn_graps/pose` subsriber. This function updates the
+		self.pose_msg member variable.
+
+		Parameters
+		----------
+		pose_msg : geometry_msgs.PosedStamed
+			Grasp pose msgs.
+		"""
+
+		## Update pose_msg ##
+		rospy.loginfo("Received grasp pose.")
+		self.pose_msg = pose_msg
+
 	def msg_filter_callback(self, color_image, color_image_rect, depth_image_rect, camera_info_hd, camera_info_qhd, camera_info_sd):
 
 		## Call the grasp_planner_service ##
@@ -250,14 +278,17 @@ class ComputeGraspServer():
 	def plan_grasp_service(self, req):
 
 		## Translate pose in camera frame to robot frame ##
-		try:
-			(trans,rot) = self.tf2_listener.lookupTransform('/turtle2', '/turtle1', rospy.Time(0))
-		except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
-			rospy.logerr("Pose could not be transformed from the camera frame to the robot frame.")
-			return False
+		# try:
+		# 	(trans, rot) = self.tf2_listener.lookupTransform('panda_hand', 'kinect2_rgb_optical_frame', rospy.Time(0))
+		# except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+		# 	rospy.logerr("Pose could not be transformed from the camera frame to the robot frame.")
+		# 	return False
 
 		## Call grasp computation service ##
-		result = self.plan_to_pose_srv(self.grasp.grasp.pose)
+		# FIXME: Unsure if I need to add a kinect2_ir_optical_frame or that I can use the kinect2_rgb_optical_frame like I did below
+		self.pose_msg.header.frame_id = "kinect2_rgb_optical_frame"
+		panda_hand_grasp_pose = self.tf2_listener.transformPose('panda_hand', self.pose_msg)
+		result = self.plan_to_pose_srv(panda_hand_grasp_pose.pose)
 
 		## Test if successful ##
 		if result:

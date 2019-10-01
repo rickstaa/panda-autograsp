@@ -127,6 +127,9 @@ class tf2_broadcaster():
 		rospy.set_param("~calib_frame_pitch", euler[1])
 		rospy.set_param("~calib_frame_roll", euler[2])
 
+		## Return succes bool ##
+		return True
+
 	def dync_reconf_callback(self, config, level):
 		"""Dynamic reconfigure callback function.
 
@@ -281,10 +284,10 @@ if __name__ == "__main__":
 	## Initialize TF2 broadcaster node ##
 	rospy.init_node('tf2_broadcaster', anonymous=False)
 
-	## DEBUG: WAIT FOR PTVSD DEBUGGER ##
-	import ptvsd
-	ptvsd.wait_for_attach()
-	## ------------------------------ ##
+	# ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+	# import ptvsd
+	# ptvsd.wait_for_attach()
+	# ## ------------------------------ ##
 
 	## Check if enough arguments are supplied ##
 	if len(sys.argv) < 3:
