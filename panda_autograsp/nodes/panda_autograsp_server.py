@@ -102,10 +102,10 @@ class ComputeGraspServer():
 		rospy.loginfo("Initializing panda_autograsp_server")
 		rospy.init_node('panda_autograsp_server')
 
-		## DEBUG: WAIT FOR PTVSD DEBUGGER ##
-		import ptvsd
-		ptvsd.wait_for_attach()
-		## ------------------------------ ##
+		# ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+		# import ptvsd
+		# ptvsd.wait_for_attach()
+		# ## ------------------------------ ##
 
 		## Setup cv_bridge ##
 		self.bridge = CvBridge()

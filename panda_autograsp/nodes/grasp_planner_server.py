@@ -467,9 +467,10 @@ if __name__ == "__main__":
 	policy_cfg = cfg["policy"]
 	policy_cfg["metric"]["gqcnn_model"] = model_dir
 
-	## Add main Polyicy values to the GQCNN based cfg ##
+	## Add main policy values to the GQCNN based cfg ##
 	# This allows us to add and overwrite to the original GQCNN config file
 	cfg.update(main_cfg)
+	cfg["policy"]["gripper_width"] = main_cfg["robot"]["gripper_width"] # Update gripper width
 
 	## Create publisher to publish pose of final grasp ##
 	grasp_pose_publisher = rospy.Publisher("gqcnn_grasp/pose",

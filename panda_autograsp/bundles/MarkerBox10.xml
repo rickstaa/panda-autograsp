@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<multimarker markers="6">
+    <marker index="10" status="1">
+        <corner x="-2" y="-2" z="-2" />
+        <corner x="2"  y="-2" z="-2" />
+        <corner x="2"  y="-2" z="2"  />
+        <corner x="-2" y="-2" z="2"  />
+    </marker>
+    <marker index="11" status="1">
+        <corner x="2" y="-2" z="-2" />
+        <corner x="2" y="2"  z="-2" />
+        <corner x="2" y="2"  z="2"  />
+        <corner x="2" y="-2" z="2"  />
+    </marker>
+    <marker index="12" status="1">
+        <corner x="2"  y="2" z="-2" />
+        <corner x="-2" y="2" z="-2" />
+        <corner x="-2" y="2" z="2"  />
+        <corner x="2"  y="2" z="2"  />
+    </marker>
+    <marker index="15" status="1">
+        <corner x="-2" y="-2" z="2" />
+        <corner x="-2" y="2"  z="2" />
+        <corner x="-2" y="2"  z="-2"  />
+        <corner x="-2" y="-2" z="-2"  />
+    </marker>
+    <marker index="13" status="1">
+        <corner x="2"  y="-2" z="2" />
+        <corner x="2"  y="2"  z="2" />
+        <corner x="-2" y="2"  z="2"  />
+        <corner x="-2" y="-2" z="2"  />
+    </marker>
+    <marker index="14" status="1">
+        <corner x="-2" y="-2" z="-2" />
+        <corner x="-2" y="2"  z="-2" />
+        <corner x="2"  y="2"  z="-2"  />
+        <corner x="2"  y="-2" z="-2"  />
+    </marker>
+</multimarker>
