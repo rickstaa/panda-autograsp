@@ -344,7 +344,7 @@ if __name__ == "__main__":
         gray = cv2.cvtColor(color_im.data, cv2.COLOR_BGR2GRAY)
 
         ## Create screen display image ##
-        # Needed since opencv uses BGR instead of RGB
+        # Needed since opencv uses BGR instead of BGR
         screen_img = cv2.cvtColor(copy.copy(color_im.data), cv2.COLOR_RGB2BGR)
 
         ## Find the chess board corners ##

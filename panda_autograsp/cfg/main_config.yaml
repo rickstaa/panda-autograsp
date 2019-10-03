@@ -15,6 +15,10 @@ defaults:
   solution: gqcnn
   models_dir: ./models # Folder in which models are downloaded
 
+## Calibration settigns ##
+calibration:
+  pose_estimation_calib_board: aruco_board # [aruco_board or chess_board]
+
 ## Robot parameters ##
 robot:
   gripper_width: 0.08 # [m]
