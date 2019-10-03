@@ -46,6 +46,7 @@ from panda_autograsp.functions import yes_or_no
 #################################################
 ## Script settings ##############################
 #################################################
+CALIB_TRY_DURATION = 30 # [s]
 
 ###############################
 ## Chessboard settings ########
@@ -359,7 +360,7 @@ class ComputeGraspServer():
 	def calibrate_sensor_service(self, req):
 
 		## Retrieve camera pose ##
-		retval, self.rvec, self.tvec = self.camera_world_calibration(self.color_image, self.camera_info_hd, calib_type=POSE_CALIB_METHOD)
+		retval, self.rvec, self.tvec = self.camera_world_calibration(calib_type=POSE_CALIB_METHOD)
 
 		## Test if successful ##
 		if retval:
@@ -372,7 +373,7 @@ class ComputeGraspServer():
 		else:
 			return False
 
-	def camera_world_calibration(self, color_image, camera_info, calib_type="aruco_board"):
+	def camera_world_calibration(self, calib_type="aruco_board"):
 		"""Perform camera world calibration (External camera matrix) using
 		a chessboard or several aruco markers.
 
@@ -391,114 +392,136 @@ class ComputeGraspServer():
 
 		## Switch between different calibrations ##
 		if calib_type == "chess_board":
-			return self.chessboard_pose_estimation(color_image, camera_info) # Perform calibration using an chessboard
+			return self.chessboard_pose_estimation() # Perform calibration using an chessboard
 		else:
-			return self.aruco_board_pose_estimation(color_image, camera_info)  # Perform calibration using an arucoboard
+			return self.aruco_board_pose_estimation()  # Perform calibration using an arucoboard
 
-	def aruco_board_pose_estimation(self, color_image, camera_info):
+	def aruco_board_pose_estimation(self):
 
-		## Convert color image to opencv format ##
-		color_image_cv = self.bridge.imgmsg_to_cv2(color_image, desired_encoding="passthrough")
+		## Get current time ##
+		start_time = rospy.get_time()
 
-		## Get camera information ##
-		camera_matrix = np.array(camera_info.K).reshape(3,3)
-		dist_coeffs = camera_info.D # Default distortion parameters are 0
+		## Try till chessboard is found or till try time is over ##
+		while rospy.get_time() < start_time + CALIB_TRY_DURATION:
 
-		## Get gray image ##
-		gray = cv2.cvtColor(color_image_cv, cv2.COLOR_BGR2GRAY)
+			## Retrieve color image and convert to opencv format ##
+			color_image = self.color_image
+			camera_info = self.camera_info_hd
+			color_image_cv = self.bridge.imgmsg_to_cv2(color_image, desired_encoding="passthrough")
 
-		## Create screen display image ##
-		# Needed since opencv uses BGR instead of RGB
-		screen_img = cv2.cvtColor(copy.copy(color_image_cv), cv2.COLOR_RGB2BGR)
+			## Get camera information ##
+			camera_matrix = np.array(camera_info.K).reshape(3,3)
+			dist_coeffs = camera_info.D # Default distortion parameters are 0
 
-		## Detect aruco markers ##
-		# TODO: Check if I need to add camera matrix
-		corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, ARUCO_DICT, parameters=ARUCO_PARAMETERS)
+			## Get gray image ##
+			gray = cv2.cvtColor(color_image_cv, cv2.COLOR_BGR2GRAY)
 
-		# Refine detected markers
-		# TODO: Check if I need to add camera matrix
-		# Eliminates markers not part of our board, adds missing markers to the board
-		corners, ids, rejectedImgPoints, recoveredIds = aruco.refineDetectedMarkers(
-				image = gray,
-				board = aruco_board,
-				detectedCorners = corners,
-				detectedIds = ids,
-				rejectedCorners = rejectedImgPoints)
+			## Create screen display image ##
+			# Needed since opencv uses BGR instead of RGB
+			screen_img = cv2.cvtColor(copy.copy(color_image_cv), cv2.COLOR_RGB2BGR)
 
-		## If at least one marker was found try to estimate the pose
-		if ids is not None and ids.size > 0:
+			## Detect aruco markers ##
+			# TODO: Check if I need to add camera matrix
+			corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, ARUCO_DICT, parameters=ARUCO_PARAMETERS)
 
-			## Outline all of the markers detected in our image ##
-			screen_img = aruco.drawDetectedMarkers(screen_img, corners, ids, borderColor=(0,255, 0))
+			# Refine detected markers
+			# TODO: Check if I need to add camera matrix
+			# Eliminates markers not part of our board, adds missing markers to the board
+			corners, ids, rejectedImgPoints, recoveredIds = aruco.refineDetectedMarkers(
+					image = gray,
+					board = aruco_board,
+					detectedCorners = corners,
+					detectedIds = ids,
+					rejectedCorners = rejectedImgPoints)
 
-			## Estimate pose ##
-			retval, rvec, tvec = aruco.estimatePoseBoard(corners, ids, aruco_board, camera_matrix, dist_coeffs, RVEC, TVEC);
+			## If at least one marker was found try to estimate the pose
+			if ids is not None and ids.size > 0:
 
-			## If pose estimation was successful draw pose ##
-			if(retval > 0):
-				aruco.drawAxis(screen_img, camera_matrix, dist_coeffs, rvec, tvec, POSE_ARROW_SIZE)
+				## Outline all of the markers detected in our image ##
+				screen_img = aruco.drawDetectedMarkers(screen_img, corners, ids, borderColor=(0,255, 0))
 
+				## Estimate pose ##
+				retval, rvec, tvec = aruco.estimatePoseBoard(corners, ids, aruco_board, camera_matrix, dist_coeffs, RVEC, TVEC);
+
+				## If pose estimation was successful draw pose ##
+				if(retval > 0):
+					aruco.drawAxis(screen_img, camera_matrix, dist_coeffs, rvec, tvec, POSE_ARROW_SIZE)
+
+					## Show projection to user ##
+					plt.figure("Reference frame")
+					plt.imshow(screen_img)
+					plt.show()
+					return retval, rvec, tvec
+				else:
+					rospy.logwarn("Pose of arcuboard could not be found please try again.")
+					return False, None, None
+			else:
+				rospy.logwarn("Arcuboard could not be detected make sure the arcuboard is present.")
+
+		## Display timeout message and return ##
+		rospy.logwarn("Arcuboard detector times out after %s. seconds. Please reposition the arcuboard and try again.", CALIB_TRY_DURATION)
+		return False, None, None
+
+	## TODO: take the mean over 5 frames ##
+	def chessboard_pose_estimation(self):
+
+		## Get current time ##
+		start_time = rospy.get_time()
+
+		## Try till chessboard is found or till try time is over ##
+		while rospy.get_time() < start_time + CALIB_TRY_DURATION:
+
+			## Retrieve color image and convert to opencv format ##
+			color_image = self.color_image
+			camera_info = self.camera_info_hd
+			color_image_cv = self.bridge.imgmsg_to_cv2(color_image, desired_encoding="passthrough")
+
+			## Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0) ##
+			objp = np.zeros((N_COLMNS*N_ROWS, 3), np.float32)
+			objp[:, :2] = np.mgrid[0:N_ROWS, 0:N_COLMNS].T.reshape(-1, 2) * SQUARE_SIZE # Multiply by chessboard scale factor to get results in mm
+			axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3) * SQUARE_SIZE # Coordinate axis
+
+			## Get camera information ##
+			camera_matrix = np.array(camera_info.K).reshape(3,3)
+			dist_coeffs = camera_info.D # Default distortion parameters are 0
+
+			## Get gray image ##
+			gray = cv2.cvtColor(color_image_cv, cv2.COLOR_BGR2GRAY)
+
+			## Create screen display image ##
+			screen_img = cv2.cvtColor(copy.copy(color_image_cv), cv2.COLOR_RGB2BGR)
+
+			## Find the chess board corners ##
+			retval, corners = cv2.findChessboardCorners(
+				gray, (N_ROWS, N_COLMNS), None)
+
+			## Find external matrix ##
+			if retval:
+
+				## Find corners ##
+				corners2 = cv2.cornerSubPix(
+				gray, corners, (11, 11), (-1, -1), criteria)
+				## Find the rotation and translation vectors. ##
+				retval, rvecs, tvecs, inliers = cv2.solvePnPRansac(
+					objp, corners2, camera_matrix, dist_coeffs)
+				## project 3D points to image plane ##
+				imgpts, jac = cv2.projectPoints(axis, rvecs, tvecs, camera_matrix, dist_coeffs)
 				## Show projection to user ##
+				screen_img = draw_axis(screen_img, corners2, imgpts)
 				plt.figure("Reference frame")
 				plt.imshow(screen_img)
 				plt.show()
-				return retval, rvec, tvec
+				if retval:
+					return retval, rvecs, tvecs
+				else:
+					rospy.logwarn("Pose of chessboard could not be found please try again.")
+					return False, None, None
 			else:
-				return False, None, None
-		else:
-			return None, None, None # Aruco calibration failed
+				rospy.logwarn("Chessboard could not be detected make sure the chessboard is present.")
 
-
-	## TODO: take the mean over 5 frames ##
-	def chessboard_pose_estimation(self, color_image, camera_info):
-
-		## Convert color image to opencv format ##
-		color_image_cv = self.bridge.imgmsg_to_cv2(color_image, desired_encoding="passthrough")
-
-		## Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0) ##
-		objp = np.zeros((N_COLMNS*N_ROWS, 3), np.float32)
-		objp[:, :2] = np.mgrid[0:N_ROWS, 0:N_COLMNS].T.reshape(-1, 2) * SQUARE_SIZE # Multiply by chessboard scale factor to get results in mm
-		axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3) * SQUARE_SIZE # Coordinate axis
-
-		## Get camera information ##
-		camera_matrix = np.array(camera_info.K).reshape(3,3)
-		dist_coeffs = camera_info.D # Default distortion parameters are 0
-
-		## Get gray image ##
-		gray = cv2.cvtColor(color_image_cv, cv2.COLOR_BGR2GRAY)
-
-		## Create screen display image ##
-		screen_img = cv2.cvtColor(copy.copy(color_image_cv), cv2.COLOR_RGB2BGR)
-
-		## Find the chess board corners ##
-		retval, corners = cv2.findChessboardCorners(
-			gray, (N_ROWS, N_COLMNS), None)
-
-		## Find external matrix ##
-		if retval == True:
-
-			## Find corners ##
-			corners2 = cv2.cornerSubPix(
-			gray, corners, (11, 11), (-1, -1), criteria)
-
-			## Find the rotation and translation vectors. ##
-			retval, rvecs, tvecs, inliers = cv2.solvePnPRansac(
-				objp, corners2, camera_matrix, dist_coeffs)
-
-			## project 3D points to image plane ##
-			imgpts, jac = cv2.projectPoints(axis, rvecs, tvecs, camera_matrix, dist_coeffs)
-
-			## Show projection to user ##
-			screen_img = draw_axis(screen_img, corners2, imgpts)
-			plt.figure("Reference frame")
-			plt.imshow(screen_img)
-			plt.show()
-			if retval:
-				return retval, rvecs, tvecs
-			else:
-				return False, None, None
-		else:
-			return None, None, None # Chessboard calibration failed
+		## Display timeout message and return ##
+		rospy.logwarn("Chessboard detector times out after %s. seconds. Please reposition the chessboard and try again.", CALIB_TRY_DURATION)
+		return False, None, None
 
 	def broadcast_camera_frame(self, calib_type="aruco_board"):
 		"""Send the sensor pose we acquired from the calibration to the tf2_broadcaster so that
@@ -609,10 +632,10 @@ if __name__ == "__main__":
 	rospy.loginfo("Initializing panda_autograsp_server")
 	rospy.init_node('panda_autograsp_server')
 
-	## DEBUG: WAIT FOR PTVSD DEBUGGER ##
-	import ptvsd
-	ptvsd.wait_for_attach()
-	## ------------------------------ ##
+	# ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+	# import ptvsd
+	# ptvsd.wait_for_attach()
+	# ## ------------------------------ ##
 
 	## Argument parser ##
 	try:

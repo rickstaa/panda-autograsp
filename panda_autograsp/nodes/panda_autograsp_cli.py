@@ -88,20 +88,20 @@ if __name__ == "__main__":
 	rospy.loginfo("Connected to the panda_autograsp services.")
 
 	## Keep alive as node is alive ##
+	raw_input("For the robot to know where it is relative to the camera we need a quick external calibration. Press enter to start the calibration procedure: ")
 	while  not rospy.is_shutdown():
 
 		## Calibrate Camera frame ##
 		while True:
 			print(" ")
-			raw_input("For the robot to know where it is relative to the camera we need a quick external calibration. Press enter to start the calibration procedure: ")
 			response = yes_or_no(
-					"Is the checkerboard positioned on the upper left corner of the table?")
+					"Is the checkerboard/arucoboard positioned on the upper left corner of the table?")
 			if not response:
 					rospy.loginfo("Shutting down %s node: " % rospy.get_name())
 					sys.exit(0)
 			else:
 				result = calibrate_sensor_srv()
-				if not result:
+				if not result.success:
 					response = yes_or_no("Calibration not successfully do you want to try again?")
 					if not response:
 						rospy.loginfo("Shutting down %s node: " % rospy.get_name())
