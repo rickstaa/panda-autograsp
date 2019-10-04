@@ -391,7 +391,7 @@ class ComputeGraspServer():
 		"""
 
 		## Switch between different calibrations ##
-		if calib_type == "chess_board":
+		if calib_type == "chessboard":
 			return self.chessboard_pose_estimation() # Perform calibration using an chessboard
 		else:
 			return self.aruco_board_pose_estimation()  # Perform calibration using an arucoboard
@@ -501,11 +501,14 @@ class ComputeGraspServer():
 				## Find corners ##
 				corners2 = cv2.cornerSubPix(
 				gray, corners, (11, 11), (-1, -1), criteria)
+
 				## Find the rotation and translation vectors. ##
 				retval, rvecs, tvecs, inliers = cv2.solvePnPRansac(
 					objp, corners2, camera_matrix, dist_coeffs)
+
 				## project 3D points to image plane ##
 				imgpts, jac = cv2.projectPoints(axis, rvecs, tvecs, camera_matrix, dist_coeffs)
+
 				## Show projection to user ##
 				screen_img = draw_axis(screen_img, corners2, imgpts)
 				plt.figure("Reference frame")
@@ -529,7 +532,7 @@ class ComputeGraspServer():
 		"""
 
 		## Check calibration method ##
-		if calib_type == "chess_board":
+		if calib_type == "chessboard":
 
 			## Get rotation matrix ##
 			R = np.zeros(shape=(3,3))
@@ -639,7 +642,7 @@ if __name__ == "__main__":
 
 	## Argument parser ##
 	try:
-		POSE_CALIB_METHOD = rospy.get_param("~calib_board_type")
+		POSE_CALIB_METHOD = rospy.get_param("~calib_type")
 	except KeyError:
 		try:
 			POSE_CALIB_METHOD = main_cfg["calibration"]["pose_estimation_calib_board"]

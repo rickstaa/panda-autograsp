@@ -17,7 +17,7 @@ defaults:
 
 ## Calibration settigns ##
 calibration:
-  pose_estimation_calib_board: aruco_board # [aruco_board or chess_board]
+  pose_estimation_calib_board: aruco_board # [aruco_board or chessboard]
 
 ## Robot parameters ##
 robot:
