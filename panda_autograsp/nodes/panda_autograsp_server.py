@@ -7,16 +7,19 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-## Import standard library packages ##
+## Import main library packages ##
 import sys
 import six
 import numpy as np
 import cv2
+import cv2.aruco as aruco
 import matplotlib.pyplot as plt
 import os
 import copy
 import transforms3d
 from pyquaternion import Quaternion
+import pickle
+import copy
 
 ## Import ROS python packages ##
 import rospy
@@ -27,6 +30,9 @@ import tf_conversions
 import tf2_ros
 import tf
 import dynamic_reconfigure.client
+
+## Import third party automation packages ##
+from autolab_core import YamlConfig
 
 ## Import messages and services ##
 from gqcnn.srv import GQCNNGraspPlanner
@@ -40,6 +46,11 @@ from panda_autograsp.functions import yes_or_no
 #################################################
 ## Script settings ##############################
 #################################################
+CALIB_TRY_DURATION = 30 # [s]
+
+###############################
+## Chessboard settings ########
+###############################
 
 ## Big board ##
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER,
@@ -65,6 +76,40 @@ fontScale = 0.90
 fontColor = (0, 0, 0)
 lineType = 1
 rectangle_bgr = (255, 255, 255)
+
+###############################
+## Aruco settings #############
+###############################
+POSE_ARROW_SIZE = 0.2 # [M]
+
+## Initialize board parameters ##
+load_dir_path = os.path.abspath(os.path.join(os.path.dirname(
+	os.path.realpath(__file__)), "../cfg/_cfg/aruco_config.dict"))
+with open(load_dir_path, 'rb') as config_dict_file:
+	config_dict = pickle.load(config_dict_file) # Load the aruco board settings
+
+## Overwrite settings based on measurements ##
+config_dict["MARKER_LENGTH"] =0.032       # [M]
+config_dict["MARKER_SEPERATION"] = 0.009  #[M]
+ARUCO_DICT = aruco.Dictionary_get(config_dict["ARUCO_DICT_TYPE"])
+aruco_board = aruco.GridBoard_create(
+	markersX=config_dict["MARKERS_X"],
+	markersY=config_dict["MARKERS_Y"],
+	markerLength=config_dict["MARKER_LENGTH"],
+	markerSeparation=config_dict["MARKER_SEPARATION"],
+	dictionary=ARUCO_DICT)
+ARUCO_PARAMETERS = aruco.DetectorParameters_create()
+
+## Initialize rvec and tvec vectors ##
+# These will be used as an initial guess in the pose estimation.
+RVEC, TVEC = None, None
+
+###############################
+## Read main config ###########
+###############################
+## Read panda_autograsp configuration file ##
+main_cfg = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
+	os.path.realpath(__file__)), "../cfg/main_config.yaml")))
 
 #################################################
 ## Functions ####################################
@@ -97,21 +142,15 @@ def draw_axis(img, corners, imgpts):
 class ComputeGraspServer():
 	def __init__(self):
 
-
-		## Initialize ros node ##
-		rospy.loginfo("Initializing panda_autograsp_server")
-		rospy.init_node('panda_autograsp_server')
-
-		## DEBUG: WAIT FOR PTVSD DEBUGGER ##
-		import ptvsd
-		ptvsd.wait_for_attach()
-		## ------------------------------ ##
-
 		## Setup cv_bridge ##
 		self.bridge = CvBridge()
 
+		## Setup member variables ##
+		self.rvec = RVEC
+		self.tvec = TVEC
+
 		###############################################
-		## Initialize grasp computation services #######
+		## Initialize grasp computation services ######
 		###############################################
 
 		rospy.loginfo("Conneting to %s service." % "gqcnn_grasp_planner")
@@ -320,21 +359,21 @@ class ComputeGraspServer():
 
 	def calibrate_sensor_service(self, req):
 
-		## Call grasp computation service ##
-		ret, self.rvec, self.tvec, self.inliers = self.camera_world_calibration(self.color_image, self.camera_info_hd)
+		## Retrieve camera pose ##
+		retval, self.rvec, self.tvec = self.camera_world_calibration(calib_type=POSE_CALIB_METHOD)
 
 		## Test if successful ##
-		if ret:
+		if retval:
 
 			## Publish the camera frame ##
-			self.broadcast_camera_frame()
+			self.broadcast_camera_frame(calib_type=POSE_CALIB_METHOD)
 
 			## return result ##
 			return True
 		else:
 			return False
 
-	def camera_world_calibration(self, color_image, camera_info):
+	def camera_world_calibration(self, calib_type="aruco_board"):
 		"""Perform camera world calibration (External camera matrix) using
 		a chessboard or several aruco markers.
 
@@ -350,109 +389,266 @@ class ComputeGraspServer():
 		[type]
 			[description]
 		"""
-		## Convert color image to opencv format ##
-		color_image_cv = self.bridge.imgmsg_to_cv2(color_image, desired_encoding="passthrough")
 
-		## Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0) ##
-		objp = np.zeros((N_COLMNS*N_ROWS, 3), np.float32)
-		objp[:, :2] = np.mgrid[0:N_ROWS, 0:N_COLMNS].T.reshape(-1, 2) * SQUARE_SIZE # Multiply by chessboard scale factor to get results in mm
-		axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3) * SQUARE_SIZE # Coordinate axis
-
-		## Get camera information ##
-		mtx = np.array(camera_info.K).reshape(3,3)
-		dist = camera_info.D # Default distortion parameters are 0
-
-		## Get color image ##
-		gray = cv2.cvtColor(color_image_cv, cv2.COLOR_BGR2GRAY)
-
-		## Create screen display image ##
-		screen_img = cv2.cvtColor(copy.copy(color_image_cv), cv2.COLOR_RGB2BGR)
-
-		## Find the chess board corners ##
-		ret, corners = cv2.findChessboardCorners(
-			gray, (N_ROWS, N_COLMNS), None)
-
-		## Find external matrix ##
-		if ret == True:
-
-			## Find corners ##
-			corners2 = cv2.cornerSubPix(
-			gray, corners, (11, 11), (-1, -1), criteria)
-
-			## Find the rotation and translation vectors. ##
-			ret, rvecs, tvecs, inliers = cv2.solvePnPRansac(
-				objp, corners2, mtx, dist)
-
-			## project 3D points to image plane ##
-			imgpts, jac = cv2.projectPoints(axis, rvecs, tvecs, mtx, dist)
-
-			## Show projection to user ##
-			screen_img = draw_axis(screen_img, corners2, imgpts)
-			plt.figure("Reference frame")
-			plt.imshow(screen_img)
-			plt.show()
-			if ret:
-				return ret, rvecs, tvecs, inliers
-			else:
-				return False, None, None, None
+		## Switch between different calibrations ##
+		if calib_type == "chessboard":
+			return self.chessboard_pose_estimation() # Perform calibration using an chessboard
 		else:
-			return None # Chessboard calibration failed
+			return self.aruco_board_pose_estimation()  # Perform calibration using an arucoboard
 
-	def broadcast_camera_frame(self):
+	def aruco_board_pose_estimation(self):
+
+		## Get current time ##
+		start_time = rospy.get_time()
+
+		## Try till chessboard is found or till try time is over ##
+		while rospy.get_time() < start_time + CALIB_TRY_DURATION:
+
+			## Retrieve color image and convert to opencv format ##
+			color_image = self.color_image
+			camera_info = self.camera_info_hd
+			color_image_cv = self.bridge.imgmsg_to_cv2(color_image, desired_encoding="passthrough")
+
+			## Get camera information ##
+			camera_matrix = np.array(camera_info.K).reshape(3,3)
+			dist_coeffs = camera_info.D # Default distortion parameters are 0
+
+			## Get gray image ##
+			gray = cv2.cvtColor(color_image_cv, cv2.COLOR_BGR2GRAY)
+
+			## Create screen display image ##
+			# Needed since opencv uses BGR instead of RGB
+			screen_img = cv2.cvtColor(copy.copy(color_image_cv), cv2.COLOR_RGB2BGR)
+
+			## Detect aruco markers ##
+			# TODO: Check if I need to add camera matrix
+			corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, ARUCO_DICT, parameters=ARUCO_PARAMETERS)
+
+			# Refine detected markers
+			# TODO: Check if I need to add camera matrix
+			# Eliminates markers not part of our board, adds missing markers to the board
+			corners, ids, rejectedImgPoints, recoveredIds = aruco.refineDetectedMarkers(
+					image = gray,
+					board = aruco_board,
+					detectedCorners = corners,
+					detectedIds = ids,
+					rejectedCorners = rejectedImgPoints)
+
+			## If at least one marker was found try to estimate the pose
+			if ids is not None and ids.size > 0:
+
+				## Outline all of the markers detected in our image ##
+				screen_img = aruco.drawDetectedMarkers(screen_img, corners, ids, borderColor=(0,255, 0))
+
+				## Estimate pose ##
+				retval, rvec, tvec = aruco.estimatePoseBoard(corners, ids, aruco_board, camera_matrix, dist_coeffs, RVEC, TVEC);
+
+				## If pose estimation was successful draw pose ##
+				if(retval > 0):
+					aruco.drawAxis(screen_img, camera_matrix, dist_coeffs, rvec, tvec, POSE_ARROW_SIZE)
+
+					## Show projection to user ##
+					plt.figure("Reference frame")
+					plt.imshow(screen_img)
+					plt.show()
+					return retval, rvec, tvec
+				else:
+					rospy.logwarn("Pose of arcuboard could not be found please try again.")
+					return False, None, None
+			else:
+				rospy.logwarn("Arcuboard could not be detected make sure the arcuboard is present.")
+
+		## Display timeout message and return ##
+		rospy.logwarn("Arcuboard detector times out after %s. seconds. Please reposition the arcuboard and try again.", CALIB_TRY_DURATION)
+		return False, None, None
+
+	## TODO: take the mean over 5 frames ##
+	def chessboard_pose_estimation(self):
+
+		## Get current time ##
+		start_time = rospy.get_time()
+
+		## Try till chessboard is found or till try time is over ##
+		while rospy.get_time() < start_time + CALIB_TRY_DURATION:
+
+			## Retrieve color image and convert to opencv format ##
+			color_image = self.color_image
+			camera_info = self.camera_info_hd
+			color_image_cv = self.bridge.imgmsg_to_cv2(color_image, desired_encoding="passthrough")
+
+			## Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0) ##
+			objp = np.zeros((N_COLMNS*N_ROWS, 3), np.float32)
+			objp[:, :2] = np.mgrid[0:N_ROWS, 0:N_COLMNS].T.reshape(-1, 2) * SQUARE_SIZE # Multiply by chessboard scale factor to get results in mm
+			axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3) * SQUARE_SIZE # Coordinate axis
+
+			## Get camera information ##
+			camera_matrix = np.array(camera_info.K).reshape(3,3)
+			dist_coeffs = camera_info.D # Default distortion parameters are 0
+
+			## Get gray image ##
+			gray = cv2.cvtColor(color_image_cv, cv2.COLOR_BGR2GRAY)
+
+			## Create screen display image ##
+			screen_img = cv2.cvtColor(copy.copy(color_image_cv), cv2.COLOR_RGB2BGR)
+
+			## Find the chess board corners ##
+			retval, corners = cv2.findChessboardCorners(
+				gray, (N_ROWS, N_COLMNS), None)
+
+			## Find external matrix ##
+			if retval:
+
+				## Find corners ##
+				corners2 = cv2.cornerSubPix(
+				gray, corners, (11, 11), (-1, -1), criteria)
+
+				## Find the rotation and translation vectors. ##
+				retval, rvecs, tvecs, inliers = cv2.solvePnPRansac(
+					objp, corners2, camera_matrix, dist_coeffs)
+
+				## project 3D points to image plane ##
+				imgpts, jac = cv2.projectPoints(axis, rvecs, tvecs, camera_matrix, dist_coeffs)
+
+				## Show projection to user ##
+				screen_img = draw_axis(screen_img, corners2, imgpts)
+				plt.figure("Reference frame")
+				plt.imshow(screen_img)
+				plt.show()
+				if retval:
+					return retval, rvecs, tvecs
+				else:
+					rospy.logwarn("Pose of chessboard could not be found please try again.")
+					return False, None, None
+			else:
+				rospy.logwarn("Chessboard could not be detected make sure the chessboard is present.")
+
+		## Display timeout message and return ##
+		rospy.logwarn("Chessboard detector times out after %s. seconds. Please reposition the chessboard and try again.", CALIB_TRY_DURATION)
+		return False, None, None
+
+	def broadcast_camera_frame(self, calib_type="aruco_board"):
 		"""Send the sensor pose we acquired from the calibration to the tf2_broadcaster so that
 		it can broadcast the sensor camera frame.
 		"""
 
-		## Get rotation matrix ##
-		R = np.zeros(shape=(3,3))
-		J = np.zeros(shape=(3,3))
-		cv2.Rodrigues(self.rvec, R, J)
+		## Check calibration method ##
+		if calib_type == "chessboard":
 
-		## Compute inverse rotation and translation matrix ##
-		R = R.T
-		tvec = np.dot(-R, self.tvec)
+			## Get rotation matrix ##
+			R = np.zeros(shape=(3,3))
+			J = np.zeros(shape=(3,3))
+			cv2.Rodrigues(self.rvec, R, J)
 
-		## Create homogenious matrix and the flip x and y axis ##
-		H = np.empty((4, 4))
-		H[:3, :3] = R
-		H[:3, 3] = tvec.reshape(1,3)
-		H[3, :] = [0, 0, 0, 1]
-		H = np.dot(np.array([[1,0,0,0],[0,-1,0,0], [0,0,-1,0], [0,0,0,1]]), H)
-		R = H[0:3,0:3]
-		quat = Quaternion(matrix=R)
+			## Compute inverse rotation and translation matrix ##
+			R = R.T
+			tvec = np.dot(-R, self.tvec)
 
-		## Print Calibration information ##
-		cal_pose = {
-			"x": float(H[0,3]/1000.0),
-			"y": float(H[1,3]/1000.0),
-			"z": float(H[2,3]/1000.0),
-			"q1": float(quat[1]),
-			"q2": float(quat[2]),
-			"q3": float(quat[3]),
-			"q4": float(quat[0])
-		}
-		rospy.loginfo("Calibration result: x={x}, y={y}, z={z}, q1={q1}, q2={q2}, q3={q3} and q4={q4}".format(**cal_pose))
+			## Create homogenious matrix and the flip x and y axis ##
+			H = np.empty((4, 4))
+			H[:3, :3] = R
+			H[:3, 3] = tvec.reshape(1,3)
+			H[3, :] = [0, 0, 0, 1]
+			H = np.dot(np.array([[1,0,0,0],[0,-1,0,0], [0,0,-1,0], [0,0,0,1]]), H)
+			R = H[0:3,0:3]
+			quat = Quaternion(matrix=R)
 
-		## Create geometry_msg ##
-		sensor_frame_tf_msg = geometry_msgs.msg.TransformStamped()
-		sensor_frame_tf_msg.header.stamp = rospy.Time.now()
-		sensor_frame_tf_msg.header.frame_id = "calib_frame"
-		sensor_frame_tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
-		sensor_frame_tf_msg.transform.translation.x = float(H[0,3]/1000.0)
-		sensor_frame_tf_msg.transform.translation.y = float(H[1,3]/1000.0)
-		sensor_frame_tf_msg.transform.translation.z = float(H[2,3]/1000.0)
-		sensor_frame_tf_msg.transform.rotation.x = float(quat[1])
-		sensor_frame_tf_msg.transform.rotation.y = float(quat[2])
-		sensor_frame_tf_msg.transform.rotation.z = float(quat[3])
-		sensor_frame_tf_msg.transform.rotation.w = float(quat[0])
+			## Print Calibration information ##
+			cal_pose = {
+				"x": float(H[0,3]/1000.0),
+				"y": float(H[1,3]/1000.0),
+				"z": float(H[2,3]/1000.0),
+				"q1": float(quat[1]),
+				"q2": float(quat[2]),
+				"q3": float(quat[3]),
+				"q4": float(quat[0])
+			}
+			rospy.loginfo("Calibration result: x={x}, y={y}, z={z}, q1={q1}, q2={q2}, q3={q3} and q4={q4}".format(**cal_pose))
 
-		## Communicate sensor_frame_pose to the tf2_broadcaster node ##
-		self.set_sensor_pose_srv(sensor_frame_tf_msg)
+			## Create geometry_msg ##
+			sensor_frame_tf_msg = geometry_msgs.msg.TransformStamped()
+			sensor_frame_tf_msg.header.stamp = rospy.Time.now()
+			sensor_frame_tf_msg.header.frame_id = "calib_frame"
+			sensor_frame_tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
+			sensor_frame_tf_msg.transform.translation.x = float(H[0,3]/1000.0)
+			sensor_frame_tf_msg.transform.translation.y = float(H[1,3]/1000.0)
+			sensor_frame_tf_msg.transform.translation.z = float(H[2,3]/1000.0)
+			sensor_frame_tf_msg.transform.rotation.x = float(quat[1])
+			sensor_frame_tf_msg.transform.rotation.y = float(quat[2])
+			sensor_frame_tf_msg.transform.rotation.z = float(quat[3])
+			sensor_frame_tf_msg.transform.rotation.w = float(quat[0])
+
+			## Communicate sensor_frame_pose to the tf2_broadcaster node ##
+			self.set_sensor_pose_srv(sensor_frame_tf_msg)
+		else:
+
+			## Get rotation matrix ##
+			R = np.zeros(shape=(3,3))
+			J = np.zeros(shape=(3,3))
+			cv2.Rodrigues(self.rvec, R, J)
+
+			## Compute inverse rotation and translation matrix ##
+			R = R.T
+			tvec = np.dot(-R, self.tvec)
+
+			## Create homogenious matrix and the flip x and y axis ##
+			H = np.empty((4, 4))
+			H[:3, :3] = R
+			H[:3, 3] = tvec.reshape(1,3)
+			H[3, :] = [0, 0, 0, 1]
+			R = H[0:3,0:3]
+			quat = Quaternion(matrix=R)
+
+			## Print Calibration information ##
+			cal_pose = {
+				"x": float(H[0,3]),
+				"y": float(H[1,3]),
+				"z": float(H[2,3]),
+				"q1": float(quat[1]),
+				"q2": float(quat[2]),
+				"q3": float(quat[3]),
+				"q4": float(quat[0])
+			}
+			rospy.loginfo("Calibration result: x={x}, y={y}, z={z}, q1={q1}, q2={q2}, q3={q3} and q4={q4}".format(**cal_pose))
+
+			## Create geometry_msg ##
+			sensor_frame_tf_msg = geometry_msgs.msg.TransformStamped()
+			sensor_frame_tf_msg.header.stamp = rospy.Time.now()
+			sensor_frame_tf_msg.header.frame_id = "calib_frame"
+			sensor_frame_tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
+			sensor_frame_tf_msg.transform.translation.x = float(H[0,3])
+			sensor_frame_tf_msg.transform.translation.y = float(H[1,3])
+			sensor_frame_tf_msg.transform.translation.z = float(H[2,3])
+			sensor_frame_tf_msg.transform.rotation.x = float(quat[1])
+			sensor_frame_tf_msg.transform.rotation.y = float(quat[2])
+			sensor_frame_tf_msg.transform.rotation.z = float(quat[3])
+			sensor_frame_tf_msg.transform.rotation.w = float(quat[0])
+
+			## Communicate sensor_frame_pose to the tf2_broadcaster node ##
+			self.set_sensor_pose_srv(sensor_frame_tf_msg)
 
 #################################################
 ## Main script ##################################
 #################################################
 if __name__ == "__main__":
+
+	## Initialize ros node ##
+	rospy.loginfo("Initializing panda_autograsp_server")
+	rospy.init_node('panda_autograsp_server')
+
+	# ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+	# import ptvsd
+	# ptvsd.wait_for_attach()
+	# ## ------------------------------ ##
+
+	## Argument parser ##
+	try:
+		POSE_CALIB_METHOD = rospy.get_param("~calib_type")
+	except KeyError:
+		try:
+			POSE_CALIB_METHOD = main_cfg["calibration"]["pose_estimation_calib_board"]
+			CALIB_CONFIG_ERROR = False
+		except KeyError:
+			POSE_CALIB_METHOD = "aruco_board"
 
 	## Create GraspPlannerClient object ##
 	grasp_planner_client = ComputeGraspServer()

@@ -7,6 +7,7 @@
     <!--Launch file arguments-->
     <arg name="base_name"           default="panda_autograsp"/>
     <arg name="output"              default="log"/>
+    <arg name="calib_type"          default="aruco_board"/> <!--Supports "aruco_board" or "chessboard"-->
 
     <!--Create panda_autograsp group-->
     <group ns="$(arg base_name)">
@@ -45,6 +46,7 @@
                - grasp_planner_server: Used for computing the grasps.
         -->
         <node name="panda_autograsp_server" pkg="panda_autograsp" type="panda_autograsp_server.py" output="screen">
+            <param name="calib_type" type="str" value="$(arg calib_type)"/>
             <remap from="image_color" to="kinect2/hd/image_color"/>
             <remap from="image_color_rect" to="kinect2/sd/image_color_rect"/>
             <remap from="image_depth_rect_32FC1" to="kinect2/sd/image_depth_rect_32FC1"/>

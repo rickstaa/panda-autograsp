@@ -21,3 +21,15 @@ Calibration configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The calibration configuration settings can be found in the
 ``./cfg/calib/register_camera.yaml`` file.
+
+Generate ar markers
+----------------------------------------
+To generate the ar markers run the ``rosrun ar_track_alvar createMarker -s 4.5`` command. The 4.5 stands for the size.
+Then following use 0,1,2 as the tag ids. 
+
+- This toolbox asks for the [x,y] position of the bottom left corner of the marker.
+
+-Print the pattern
+-Measure the marker size and adjust the relative positions in the xml so that the cluster is well defined.
+
+positive-z comes out of the front of the tag toward the viewer, positive-x is to the right, and positive-y is up.

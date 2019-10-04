@@ -77,6 +77,9 @@ class tf2_broadcaster():
 
 		## Update dynamic reconfigure server ##
 		self.dyn_reconfig_srv.update_configuration({
+			"sensor_frame_x_pos": self.sensor_frame_x_pos,
+			"sensor_frame_y_pos": self.sensor_frame_y_pos,
+			"sensor_frame_z_pos": self.sensor_frame_z_pos,
 			"sensor_frame_yaw": self.sensor_frame_yaw,
 			"sensor_frame_pitch": self.sensor_frame_pitch,
 			"sensor_frame_roll": self.sensor_frame_roll
@@ -110,9 +113,12 @@ class tf2_broadcaster():
 		euler = tf.transformations.euler_from_quaternion(quat)
 		self.just_calibrated = True
 		self.dyn_reconfig_srv.update_configuration({
+			"sensor_frame_x_pos": self.sensor_frame_x_pos,
+			"sensor_frame_y_pos": self.sensor_frame_y_pos,
+			"sensor_frame_z_pos": self.sensor_frame_z_pos,
 			"sensor_frame_yaw": euler[0],
 			"sensor_frame_pitch": euler[1],
-			"sensor_frame_roll": euler[2]
+			"sensor_frame_roll":  euler[2]
 		})
 
 		## Update calib frame ros parameters ##
@@ -283,11 +289,6 @@ if __name__ == "__main__":
 
 	## Initialize TF2 broadcaster node ##
 	rospy.init_node('tf2_broadcaster', anonymous=False)
-
-	# ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
-	# import ptvsd
-	# ptvsd.wait_for_attach()
-	# ## ------------------------------ ##
 
 	## Check if enough arguments are supplied ##
 	if len(sys.argv) < 3:

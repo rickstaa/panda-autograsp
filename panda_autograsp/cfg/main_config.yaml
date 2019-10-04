@@ -15,6 +15,14 @@ defaults:
   solution: gqcnn
   models_dir: ./models # Folder in which models are downloaded
 
+## Calibration settigns ##
+calibration:
+  pose_estimation_calib_board: aruco_board # [aruco_board or chessboard]
+
+## Robot parameters ##
+robot:
+  gripper_width: 0.08 # [m]
+
 ## Grasping detection solution settings ##
 grasp_detection_solutions:
 
