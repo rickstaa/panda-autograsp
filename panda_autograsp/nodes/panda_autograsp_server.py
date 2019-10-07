@@ -160,11 +160,10 @@ class ComputeGraspServer():
 				"gqcnn_grasp_planner", GQCNNGraspPlanner)
 			rospy.loginfo("Grasp_planner service found!")
 		except rospy.ServiceException as e:
-			rospy.logerr("Service initialization failed: %s" % e)
-			shutdown_msg = "Shutting down %s node because %s connection failed." % (
-				rospy.get_name(), self.gqcnn_grasp_planning_srv)
-			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
-			return
+   		    rospy.logerr("Panda_autograsp \'gqcnn_grasp_planner\' service initialization failed: %s" % e)
+		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.gqcnn_grasp_planning_srv.resolved_name)
+		    rospy.logerr(shutdown_msg)
+		    sys.exit(0)
 
 		###############################################
 		## Initialize moveit_planner server services ##
@@ -178,10 +177,10 @@ class ComputeGraspServer():
 			self.plan_to_pose_srv = rospy.ServiceProxy(
 				"moveit/plan_to_point", PlanToPoint)
 		except rospy.ServiceException as e:
-			rospy.logerr("Service initialization failed: %s" % e)
-			shutdown_msg = "Shutting down %s node because %s connection failed." % (
-				rospy.get_name(), self.plan_to_pose_srv)
-			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+   		    rospy.logerr("Panda_autograsp \'moveit/plan_to_point\' service initialization failed: %s" % e)
+		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.plan_to_pose_srv.resolved_name)
+		    rospy.logerr(shutdown_msg)
+		    sys.exit(0)
 
 		## Initialize plan visualization service ##
 		rospy.loginfo("Conneting to \'moveit/visualize_plan\' service.")
@@ -190,10 +189,10 @@ class ComputeGraspServer():
 			self.visualize_plan_srv = rospy.ServiceProxy(
 				"moveit/visualize_plan", VisualizePlan)
 		except rospy.ServiceException as e:
-			rospy.logerr("Service initialization failed: %s" % e)
-			shutdown_msg = "Shutting down %s node because %s connection failed." % (
-				rospy.get_name(), self.visualize_plan_srv)
-			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+   		    rospy.logerr("Panda_autograsp \'moveit/visualize_plan\' service initialization failed: %s" % e)
+		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.visualize_plan_srv.resolved_name)
+		    rospy.logerr(shutdown_msg)
+		    sys.exit(0)
 
 		## Initialize execute plan service ##
 		rospy.loginfo("Conneting to \'moveit/execute_plan\' service.")
@@ -202,10 +201,10 @@ class ComputeGraspServer():
 			self.execute_plan_srv = rospy.ServiceProxy(
 				"moveit/execute_plan", ExecutePlan)
 		except rospy.ServiceException as e:
-			rospy.logerr("Service initialization failed: %s" % e)
-			shutdown_msg = "Shutting down %s node because %s connection failed." % (
-				rospy.get_name(), self.execute_plan_srv)
-			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+  		    rospy.logerr("Panda_autograsp \'moveit/execute_plan\' service initialization failed: %s" % e)
+		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.execute_plan_srv.resolved_name)
+		    rospy.logerr(shutdown_msg)
+		    sys.exit(0)
 
 		## Initialize send sensor pose service ##
 		rospy.loginfo("Conneting to \'send_sensor_pose\' service.")
@@ -214,10 +213,10 @@ class ComputeGraspServer():
 			self.set_sensor_pose_srv = rospy.ServiceProxy(
 				"set_sensor_pose", SetSensorPose)
 		except rospy.ServiceException as e:
-			rospy.logerr("Service initialization failed: %s" % e)
-			shutdown_msg = "Shutting down %s node because %s connection failed." % (
-				rospy.get_name(), self.set_sensor_pose_srv)
-			rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+  		    rospy.logerr("Panda_autograsp \'set_sensor_pose\' service initialization failed: %s" % e)
+		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.set_sensor_pose_srv.resolved_name)
+		    rospy.logerr(shutdown_msg)
+		    sys.exit(0)
 
 		###############################################
 		## Create panda_autograsp_server services #####
@@ -308,6 +307,12 @@ class ComputeGraspServer():
 		self.grasp = self.gqcnn_grasp_planning_srv(
 			self.color_image_rect, self.depth_image_rect, self.camera_info_sd)
 
+		## Print grasp ##
+		position = self.grasp.grasp.pose.position
+		orientation = self.grasp.grasp.pose.orientation
+		pose_array = [position.x, position.y, position.z, orientation.x, orientation.y, orientation.z, orientation.w]
+		rospy.loginfo("Grasp pose result in kinect2_rgb_camera_frame: x={0}, y={1}, z={2}, q1={3}, q2={4}, q3={5} and q4={6}".format(*pose_array))
+
 		## Test if successful ##
 		if self.grasp:
 			return True
@@ -326,7 +331,8 @@ class ComputeGraspServer():
 		## Call grasp computation service ##
 		# FIXME: Unsure if I need to add a kinect2_ir_optical_frame or that I can use the kinect2_rgb_optical_frame like I did below
 		self.pose_msg.header.frame_id = "kinect2_rgb_optical_frame"
-		panda_hand_grasp_pose = self.tf2_listener.transformPose('panda_hand', self.pose_msg)
+		self.pose_msg.header.stamp = rospy.Time(0) # Set time to last available transform
+		panda_hand_grasp_pose = self.tf2_listener.transformPose('panda_link0', self.pose_msg)
 		result = self.plan_to_pose_srv(panda_hand_grasp_pose.pose)
 
 		## Test if successful ##
@@ -634,11 +640,6 @@ if __name__ == "__main__":
 	## Initialize ros node ##
 	rospy.loginfo("Initializing panda_autograsp_server")
 	rospy.init_node('panda_autograsp_server')
-
-	# ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
-	# import ptvsd
-	# ptvsd.wait_for_attach()
-	# ## ------------------------------ ##
 
 	## Argument parser ##
 	try:

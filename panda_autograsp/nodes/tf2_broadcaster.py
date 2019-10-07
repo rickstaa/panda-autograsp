@@ -265,22 +265,37 @@ class tf2_broadcaster():
 		calib_frame_tf_msg.transform.rotation.w = calib_quat[3]
 
 		#########################################
-		## Generate sensor Frame msg ############
+		## Generate sensor rgb frame msg ############
 		#########################################
-		sensor_frame_tf_msg = geometry_msgs.msg.TransformStamped()
-		sensor_frame_tf_msg.header.stamp = rospy.Time.now()
-		sensor_frame_tf_msg.header.frame_id = "calib_frame"
-		sensor_frame_tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
-		sensor_frame_tf_msg.transform.translation.x = self.sensor_frame_x_pos
-		sensor_frame_tf_msg.transform.translation.y = self.sensor_frame_y_pos
-		sensor_frame_tf_msg.transform.translation.z = self.sensor_frame_z_pos
-		sensor_frame_tf_msg.transform.rotation.x = self.sensor_frame_q1
-		sensor_frame_tf_msg.transform.rotation.y = self.sensor_frame_q2
-		sensor_frame_tf_msg.transform.rotation.z = self.sensor_frame_q3
-		sensor_frame_tf_msg.transform.rotation.w = self.sensor_frame_q4
+		sensor_frame_rgb_tf_msg = geometry_msgs.msg.TransformStamped()
+		sensor_frame_rgb_tf_msg.header.stamp = rospy.Time.now()
+		sensor_frame_rgb_tf_msg.header.frame_id = "calib_frame"
+		sensor_frame_rgb_tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
+		sensor_frame_rgb_tf_msg.transform.translation.x = self.sensor_frame_x_pos
+		sensor_frame_rgb_tf_msg.transform.translation.y = self.sensor_frame_y_pos
+		sensor_frame_rgb_tf_msg.transform.translation.z = self.sensor_frame_z_pos
+		sensor_frame_rgb_tf_msg.transform.rotation.x = self.sensor_frame_q1
+		sensor_frame_rgb_tf_msg.transform.rotation.y = self.sensor_frame_q2
+		sensor_frame_rgb_tf_msg.transform.rotation.z = self.sensor_frame_q3
+		sensor_frame_rgb_tf_msg.transform.rotation.w = self.sensor_frame_q4
+
+		#########################################
+		## Generate sensor ir frame msg ############
+		#########################################
+		sensor_frame_ir_tf_msg = geometry_msgs.msg.TransformStamped()
+		sensor_frame_ir_tf_msg.header.stamp = rospy.Time.now()
+		sensor_frame_ir_tf_msg.header.frame_id = "calib_frame"
+		sensor_frame_ir_tf_msg.child_frame_id = "kinect2_ir_optical_frame"
+		sensor_frame_ir_tf_msg.transform.translation.x = self.sensor_frame_x_pos
+		sensor_frame_ir_tf_msg.transform.translation.y = self.sensor_frame_y_pos
+		sensor_frame_ir_tf_msg.transform.translation.z = self.sensor_frame_z_pos
+		sensor_frame_ir_tf_msg.transform.rotation.x = self.sensor_frame_q1
+		sensor_frame_ir_tf_msg.transform.rotation.y = self.sensor_frame_q2
+		sensor_frame_ir_tf_msg.transform.rotation.z = self.sensor_frame_q3
+		sensor_frame_ir_tf_msg.transform.rotation.w = self.sensor_frame_q4
 
 		## Send tf message ##
-		self.br.sendTransform([calib_frame_tf_msg, sensor_frame_tf_msg])
+		self.br.sendTransform([calib_frame_tf_msg, sensor_frame_rgb_tf_msg, sensor_frame_ir_tf_msg])
 
 #################################################
 ## Main script ##################################

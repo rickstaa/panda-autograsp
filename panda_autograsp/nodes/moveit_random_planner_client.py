@@ -42,10 +42,10 @@ if __name__ == "__main__":
         plan_to_random_pose_srv = rospy.ServiceProxy(
             "moveit/plan_random_pose", PlanToRandomPoint)
     except rospy.ServiceException as e:
-        rospy.loginfo("Service initialization failed: %s" % e)
-        shutdown_msg = "Shutting down %s node because %s connection failed." % (
-            rospy.get_name(), plan_to_random_pose_srv)
-        rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+   		rospy.logerr("Moveit \'plan_random_pose\' service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), plan_to_random_pose_srv.resolved_name)
+		rospy.logerr(shutdown_msg)
+		sys.exit(0)
 
     ## Initialize random joint service ##
     rospy.wait_for_service("moveit/plan_random_joint")
@@ -53,10 +53,10 @@ if __name__ == "__main__":
         plan_to_random_joint_srv = rospy.ServiceProxy(
             "moveit/plan_random_joint", PlanToRandomPoint)
     except rospy.ServiceException as e:
-        rospy.loginfo("Service initialization failed: %s" % e)
-        shutdown_msg = "Shutting down %s node because %s connection failed." % (
-            rospy.get_name(), plan_to_random_joint_srv)
-        rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+   		rospy.logerr("Moveit \'plan_random_joint\' service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), plan_to_random_joint_srv.resolved_name)
+		rospy.logerr(shutdown_msg)
+		sys.exit(0)
 
     ## Initialize random cartesian path service ##
     rospy.wait_for_service("moveit/plan_random_path")
@@ -64,10 +64,10 @@ if __name__ == "__main__":
         plan_to_random_path_srv = rospy.ServiceProxy(
             "moveit/plan_random_path", PlanToRandomPath)
     except rospy.ServiceException as e:
-        rospy.loginfo("Service initialization failed: %s" % e)
-        shutdown_msg = "Shutting down %s node because %s connection failed." % (
-            rospy.get_name(), plan_to_random_path_srv)
-        rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+   		rospy.logerr("Moveit \'plan_random_path\' service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), plan_to_random_path_srv.resolved_name)
+		rospy.logerr(shutdown_msg)
+		sys.exit(0)
 
     ## Initialize execute plan service ##
     rospy.wait_for_service("moveit/execute_plan")
@@ -75,10 +75,10 @@ if __name__ == "__main__":
         execute_plan_srv = rospy.ServiceProxy(
             "moveit/execute_plan", ExecutePlan)
     except rospy.ServiceException as e:
-        rospy.loginfo("Service initialization failed: %s" % e)
-        shutdown_msg = "Shutting down %s node because %s connection failed." % (
-            rospy.get_name(), execute_plan_srv)
-        rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+   		rospy.logerr("Moveit \'execute_plan\' service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), execute_plan_srv.resolved_name)
+		rospy.logerr(shutdown_msg)
+		sys.exit(0)
 
     ## Initialize plan visualization service ##
     rospy.wait_for_service("moveit/visualize_plan")
@@ -86,10 +86,10 @@ if __name__ == "__main__":
         visualize_plan_srv = rospy.ServiceProxy(
             "moveit/visualize_plan", VisualizePlan)
     except rospy.ServiceException as e:
-        rospy.loginfo("Service initialization failed: %s" % e)
-        shutdown_msg = "Shutting down %s node because %s connection failed." % (
-            rospy.get_name(), visualize_plan_srv)
-        rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+		rospy.logerr("Panda_autograsp \'visualize_plan\' service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), visualize_plan_srv.resolved_name)
+		rospy.logerr(shutdown_msg)
+		sys.exit(0)
 
     ## Plan random pose ##
     plan_to_random_pose_srv()
