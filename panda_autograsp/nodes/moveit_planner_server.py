@@ -41,32 +41,22 @@ JUMPT_THRESHOLD = MAIN_CFG["planning"]["cartesian"]["jump_threshold"]
 #################################################
 ## PandaPathPlanningService class ###############
 #################################################
-
-# #################################################
-# ## ptvsd Debugger initiation snippet ############
-# #################################################
-
-# ## Import the ptvsd module ##
-# import ptvsd
-
-# ## Allow other computers to attach to ptvsd at this IP address and port. ##
-# ptvsd.enable_attach(address=('0.0.0.0', 5678), redirect_output=True)
-
-# ## Pause the program until a remote debugger is attached ##
-# ptvsd.wait_for_attach()
-# #################################################
 class PandaPathPlanningService:
-    def __init__(self, robot_description, group_name, args, planner='RRTConnectkConfigDefault', ):
+    def __init__(self, robot_description, args, pose_reference_frame="panda_link0", move_group="panda_arm", end_effector="panda_link8", planner='RRTConnectkConfigDefault', ):
         """PandaPathPlannerService class initialization.
 
         Parameters
         ----------
         robot_description : str
             Where to find the URDF.
-        group_name : str
-            name of the move group.
         args : objects
-            roscpp args, passed on.
+            Roscpp args, passed on.
+        move_group : str
+            Name of the pose planning reference frame, by default "panda_link0".
+        move_group : str
+            Name of the move group, by default "panda_arm_hand".
+        end_effector : str
+            Name of end effector, by default "panda_hand
         planner : str, optional
             The Path planning algorithm, by default 'RRTConnectkConfigDefault'.
         """
@@ -74,25 +64,19 @@ class PandaPathPlanningService:
         ## initialize moveit_commander and robot commander ##
         moveit_commander.roscpp_initialize(args)
 
-        ## Init service node ##
-        rospy.init_node('moveit_planner_server')
-
         ## Connect to moveit services ##
         rospy.loginfo(
             "Conneting moveit default moveit \'apply_planning_scene\' service.")
         rospy.wait_for_service('apply_planning_scene')
-        rospy.wait_for_service('apply_planning_scene') ##
         try:
             self.planning_scene_srv = rospy.ServiceProxy(
                 'apply_planning_scene', ApplyPlanningScene)
             rospy.loginfo("Moveit \'apply_planning_scene\' service found!")
         except rospy.ServiceException as e:
-            rospy.logerr(
-                "Moveit \'apply_planning_scene\' service initialization failed: %s" % e)
-            shutdown_msg = "Shutting down %s node because %s connection failed." % (
-                rospy.get_name(), self.planning_scene_srv)
-            rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
-            return
+   		    rospy.logerr("Moveit \'apply_planning_scene\' service initialization failed: %s" % e)
+		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.planning_scene_srv.resolved_name)
+		    rospy.logerr(shutdown_msg)
+		    sys.exit(0)
 
         ## Create robot commander ##
         self.robot = moveit_commander.RobotCommander(
@@ -102,15 +86,18 @@ class PandaPathPlanningService:
         ## Create scene commanders ##
         # Used to get information about the world and update the robot
         # its understanding of the world.
-        print(self.robot.get_group_names())
-        self.move_group = self.robot.get_group(group_name)
+        self.move_group = self.robot.get_group(move_group)
+        self.move_group.set_pose_reference_frame(pose_reference_frame) # Set reference frame
+        self.move_group.set_end_effector_link(end_effector)            # Set end-effector link
         self.scene = moveit_commander.PlanningSceneInterface(
             ns="/")
+
         ## Specify the planner we want to use ##
         self.move_group.set_planner_id(planner)
 
         ## Get end effector ##
         self.eef_link = self.move_group.get_end_effector_link()
+        rospy.logdebug("End effector link: %s", self.eef_link)
 
         ## Create a `DisplayTrajectory`_ ROS publisher to display the plan in RVIZ ##
         self.display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
@@ -413,8 +400,16 @@ class PandaPathPlanningService:
 #################################################
 if __name__ == '__main__':
 
+    ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+    import ptvsd
+    ptvsd.wait_for_attach()
+    ## ------------------------------ ##
+
+    ## Init service node ##
+    rospy.init_node('moveit_planner_server')
+
     ## Create service object ##
-    path_planning_service = PandaPathPlanningService(robot_description='robot_description', group_name='panda_arm', args=sys.argv,
+    path_planning_service = PandaPathPlanningService(robot_description='robot_description', pose_reference_frame="panda_link0", move_group="panda_arm", end_effector="panda_link8", args=sys.argv,
                                                      planner="TRRTkConfigDefault")
 
     ## Spin forever ##

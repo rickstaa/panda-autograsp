@@ -2,13 +2,13 @@
 # This file contains the configuration values used in the panda_autograsp solution
 
 ## Panda_autograsp visualization settings ##
-vis:
+vis: # Show grasp images using opencv (Useful for debugging)
   rgbd_state: 0
   cropped_rgbd_image: 0
   color_image: 0
   depth_image: 0
   segmask: 0
-  final_grasp: 1
+  final_grasp: 0
 
 ## Panda_autograsp default values ##
 defaults:

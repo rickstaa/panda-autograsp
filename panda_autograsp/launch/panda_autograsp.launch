@@ -8,61 +8,61 @@
     <arg name="base_name"           default="panda_autograsp"/>
     <arg name="output"              default="log"/>
     <arg name="calib_type"          default="aruco_board"/> <!--Supports "aruco_board" or "chessboard"-->
+    <arg name="debug"               default="False"/>
 
-    <!--Create panda_autograsp group-->
-    <group ns="$(arg base_name)">
+    <!--Change loggin format-->
+    <env name="ROSCONSOLE_FORMAT" value="[${severity}] [WallTime: ${time}]: [${node}] ${message}" if="$(arg debug)"/>
 
-        <!-- Start the Kinect processing ROS nodes
-            The IAI_kinect2 package was used for the kinect processing.
-        -->
-        <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" >
-            <arg name="output" value="$(arg output)" />
-        </include>
+    <!-- Load Rviz-->
+    <include file="$(find panda_autograsp)/launch/panda_autograsp_rviz.launch">
+        <arg name="output" value="$(arg output)" />
+    </include>
 
-        <!-- Load Rviz-->
-        <include file="$(find panda_autograsp)/launch/panda_autograsp_rviz.launch">
-            <arg name="output" value="$(arg output)" />
-        </include>
 
-        <!-- Load dynamic reconfigure GUI -->
-        <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="dyn_reconf_gui" output="$(arg output)"/>
+    <!-- Start the Kinect processing ROS nodes
+        The IAI_kinect2 package was used for the kinect processing.
+    -->
+    <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" >
+        <arg name="output" value="$(arg output)" />
+    </include>
 
-        <!-- Create static TF for the calibration board (CB)
-            The pose for this static TF can be set in the calib_frame_pose.yaml file.
+    <!-- Load dynamic reconfigure GUI -->
+    <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="dyn_reconf_gui" output="$(arg output)"/>
 
-            TF broadcaster conventions:
-                yaw: is rotation about Z (blue axis)
-                pitch: is rotation about Y (red axis)
-                roll: is rotation about X (green axis)
-        -->
-        <node name="tf2_broadcaster" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" output="$(arg output)">
-            <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml"/> <!--Load calibration parameters-->
-        </node>
-
-        <!-- Load panda_autograsp services
-            Panda_autograsp services:
-               - panda_autograsp: Main panda_autograsp server. Used for calling all the other services.
-               - moveit_planner_server: Used for controlling the robot.
-               - grasp_planner_server: Used for computing the grasps.
-        -->
-        <node name="panda_autograsp_server" pkg="panda_autograsp" type="panda_autograsp_server.py" output="screen">
-            <param name="calib_type" type="str" value="$(arg calib_type)"/>
-            <remap from="image_color" to="kinect2/hd/image_color"/>
-            <remap from="image_color_rect" to="kinect2/sd/image_color_rect"/>
-            <remap from="image_depth_rect_32FC1" to="kinect2/sd/image_depth_rect_32FC1"/>
-            <remap from="hd/camera_info" to="kinect2/hd/camera_info"/>
-            <remap from="qhd/camera_info" to="kinect2/qhd/camera_info"/>
-            <remap from="sd/camera_info" to="kinect2/sd/camera_info"/>
-        </node>
-        <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="screen"/>
-        <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen">
-            <remap from="execute_plan" to="moveit/execute_plan"/> <!--Remaped to make better distinction between grasp planner service-->
-            <remap from="plan_to_point" to="moveit/plan_to_point"/> <!--Ditto-->
-            <remap from="plan_to_path" to="moveit/plan_to_path"/> <!--Ditto-->
-            <remap from="plan_random_pose" to="moveit/plan_random_pose"/> <!--Ditto-->
-            <remap from="plan_random_joint" to="moveit/plan_random_joint"/> <!--Ditto-->
-            <remap from="plan_random_path" to="moveit/plan_random_path"/> <!--Ditto-->
-            <remap from="visualize_plan" to="moveit/visualize_plan"/> <!--Ditto-->
-        </node>
-    </group>
+    <!-- Create static TF for the calibration board (CB)
+        The pose for this static TF can be set in the calib_frame_pose.yaml file.
+        TF broadcaster conventions:
+            yaw: is rotation about Z (blue axis)
+            pitch: is rotation about Y (red axis)
+            roll: is rotation about X (green axis)
+    -->
+    <node name="tf2_broadcaster" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" output="$(arg output)">
+        <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml"/> <!--Load calibration parameters-->
+    </node>
+    <!-- Load panda_autograsp services
+        Panda_autograsp services:
+           - panda_autograsp: Main panda_autograsp server. Used for calling all the other services.
+           - moveit_planner_server: Used for controlling the robot.
+           - grasp_planner_server: Used for computing the grasps.
+    -->
+    <node name="panda_autograsp_server" pkg="panda_autograsp" type="panda_autograsp_server.py" output="screen">
+        <param name="calib_type" type="str" value="$(arg calib_type)"/>
+        <remap from="image_color" to="kinect2/hd/image_color"/>
+        <remap from="image_color_rect" to="kinect2/sd/image_color_rect"/>
+        <remap from="image_depth_rect_32FC1" to="kinect2/sd/image_depth_rect_32FC1"/>
+        <remap from="hd/camera_info" to="kinect2/hd/camera_info"/>
+        <remap from="qhd/camera_info" to="kinect2/qhd/camera_info"/>
+        <remap from="sd/camera_info" to="kinect2/sd/camera_info"/>
+    </node>
+    <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="$(arg output)"/>
+    <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen">
+        <remap from="execute_plan" to="moveit/execute_plan"/> <!--Remaped to make better distinction between grasp planner service-->
+        <remap from="apply_planning_scene" to="/apply_planning_scene"/> <!--Remaped to make better distinction between grasp planner service-->
+        <remap from="plan_to_point" to="moveit/plan_to_point"/> <!--Ditto-->
+        <remap from="plan_to_path" to="moveit/plan_to_path"/> <!--Ditto-->
+        <remap from="plan_random_pose" to="moveit/plan_random_pose"/> <!--Ditto-->
+        <remap from="plan_random_joint" to="moveit/plan_random_joint"/> <!--Ditto-->
+        <remap from="plan_random_path" to="moveit/plan_random_path"/> <!--Ditto-->
+        <remap from="visualize_plan" to="moveit/visualize_plan"/> <!--Ditto-->
+    </node>
 </launch>

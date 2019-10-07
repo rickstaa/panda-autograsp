@@ -28,63 +28,65 @@ if __name__ == "__main__":
 	## Initilazie camera calibration sercice ##
 	rospy.loginfo("Connecting to the panda_autograsp services...")
 	rospy.logdebug("Conneting to \'calibrate_sensor\' service.")
-	rospy.wait_for_service("/panda_autograsp/calibrate_sensor")
+	rospy.wait_for_service("calibrate_sensor")
 	try:
 		calibrate_sensor_srv = rospy.ServiceProxy(
-			"/panda_autograsp/calibrate_sensor", CalibrateSensor)
+			"calibrate_sensor", CalibrateSensor)
 	except rospy.ServiceException as e:
-		rospy.logerr("Service initialization failed: %s" % e)
-		shutdown_msg = "Shutting down %s node because %s connection failed." % (
-			rospy.get_name(), calibrate_sensor_srv)
-		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+		rospy.logerr("Panda_autograsp \'calibrate_sensor\' service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), calibrate_sensor_srv.resolved_name)
+		rospy.logerr(shutdown_msg)
+		sys.exit(0)
 
 	## Initialize Request grasp service ##
 	rospy.logdebug("Conneting to \'compute_grasp\' service.")
-	rospy.wait_for_service("/panda_autograsp/compute_grasp")
+	rospy.wait_for_service("compute_grasp")
 	try:
 		compute_grasp_srv = rospy.ServiceProxy(
-			"/panda_autograsp/compute_grasp", ComputeGrasp)
+			"compute_grasp", ComputeGrasp)
 	except rospy.ServiceException as e:
-		rospy.logerr("Service initialization failed: %s" % e)
-		shutdown_msg = "Shutting down %s node because %s connection failed." % (
-			rospy.get_name(), compute_grasp_srv)
-		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+		rospy.logerr("Panda_autograsp \'compute_grasp\' service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), compute_grasp_srv.resolved_name)
+		rospy.logerr(shutdown_msg)
+		sys.exit(0)
 
 	## Initialize moveit_planner server services ##
 	rospy.logdebug("Conneting to \'plan_grasp\' service.")
-	rospy.wait_for_service("/panda_autograsp/plan_grasp")
+	rospy.wait_for_service("plan_grasp")
 	try:
 		plan_grasp_srv = rospy.ServiceProxy(
-			"/panda_autograsp/plan_grasp", PlanGrasp)
+			"plan_grasp", PlanGrasp)
 	except rospy.ServiceException as e:
-		rospy.logerr("Service initialization failed: %s" % e)
-		shutdown_msg = "Shutting down %s node because %s connection failed." % (
-			rospy.get_name(), plan_grasp_srv)
-		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+		rospy.logerr("Panda_autograsp \'plan_grasp\' service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), plan_grasp_srv.resolved_name)
+		rospy.logerr(shutdown_msg)
+		sys.exit(0)
 
 	## Initialize plan visualization service ##
 	rospy.logdebug("Conneting to \'visualize_grasp\' service.")
-	rospy.wait_for_service("/panda_autograsp/visualize_grasp")
+	rospy.wait_for_service("visualize_grasp")
 	try:
 		visualize_grasp_srv = rospy.ServiceProxy(
-			"/panda_autograsp/visualize_grasp", VisualizePlan)
+			"visualize_grasp", VisualizePlan)
 	except rospy.ServiceException as e:
-		rospy.logerr("Service initialization failed: %s" % e)
-		shutdown_msg = "Shutting down %s node because %s connection failed." % (
-			rospy.get_name(), visualize_grasp_srv)
-		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+		rospy.logerr("Panda_autograsp \'visualize_grasp\' service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), visualize_grasp_srv.resolved_name)
+		rospy.logerr(shutdown_msg)
+		sys.exit(0)
 
 	## Initialize execute plan service ##
 	rospy.logdebug("Conneting to \'execute_grasp\' service.")
-	rospy.wait_for_service("/panda_autograsp/execute_grasp")
+	rospy.wait_for_service("execute_grasp")
 	try:
 		execute_grasp_srv = rospy.ServiceProxy(
-			"/panda_autograsp/execute_grasp", ExecutePlan)
+			"execute_grasp", ExecutePlan)
 	except rospy.ServiceException as e:
-		rospy.logerr("Service initialization failed: %s" % e)
-		shutdown_msg = "Shutting down %s node because %s connection failed." % (
-			rospy.get_name(), execute_grasp_srv)
-		rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
+		rospy.logerr("Panda_autograsp \'execute_grasp\' service initialization failed: %s" % e)
+		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), execute_grasp_srv.resolved_name)
+		rospy.logerr(shutdown_msg)
+		sys.exit(0)
+
+	## Log success message ##
 	rospy.loginfo("Connected to the panda_autograsp services.")
 
 	## Keep alive as node is alive ##

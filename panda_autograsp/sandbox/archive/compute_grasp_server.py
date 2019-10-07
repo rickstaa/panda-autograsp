@@ -44,11 +44,10 @@ class ComputeGraspServer():
             self.planning_scene_srv = rospy.ServiceProxy(
                 grasp_detection_srv, GQCNNGraspPlanner)
         except rospy.ServiceException as e:
-            rospy.loginfo("Service initialization failed: %s" % e)
-            shutdown_msg = "Shutting down %s node because %s connection failed." % (
-                rospy.get_name(), self.planning_scene_srv)
-            rospy.signal_shutdown(shutdown_msg)  # Shutdown ROS node
-            return
+   		    rospy.logerr("Panda_autograsp \'%s\' service initialization failed: %s" % grasp_detection_srv, e)
+		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.planning_scene_srv.resolved_name)
+		    rospy.logerr(shutdown_msg)
+		    sys.exit(0)
 
         ## Create msg filter subscribers ##
         rospy.loginfo("Creating camera sensor message_filter.")

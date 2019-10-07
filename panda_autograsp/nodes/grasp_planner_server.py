@@ -18,12 +18,16 @@ import math
 import os
 import time
 import sys
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib.pyplot as plt
+plt.switch_backend('SVG')
 
 ## Imports third party packages ##
 import numpy as np
 
 ## Import pyros packages ##
 from cv_bridge import CvBridge, CvBridgeError
+from sensor_msgs.msg import Image
 import rospy
 
 ## Import BerkeleyAutomation packages ##
@@ -45,6 +49,9 @@ from gqcnn.msg import GQCNNGrasp
 from panda_autograsp.functions import download_model
 from panda_autograsp import Logger
 # from panda_autograsp.grasp_planners.gqcnn_ros_grasp_planner import GraspPlanner
+
+## Change matplotlib backend ##
+# vis.switch_backend('SVG')
 
 #################################################
 ## Script parameters ############################
@@ -84,7 +91,7 @@ class GraspPlanner(object):
 		self.grasping_policy = grasping_policy
 		self.grasp_pose_publisher = grasp_pose_publisher
 
-		# Set minimum input dimensions.
+		## Set minimum input dimensions. ##
 		self.pad = max(
 			math.ceil(
 				np.sqrt(2) *
@@ -96,6 +103,9 @@ class GraspPlanner(object):
 			"crop_width"]
 		self.min_height = 2 * self.pad + self.cfg["policy"]["metric"][
 			"crop_height"]
+
+		## Initialize image publisher ##
+		self.image_pub = rospy.Publisher("grasp_image", Image, queue_size=10)
 
 	def read_images(self, req):
 		"""Reads images from a ROS service request.
@@ -357,16 +367,29 @@ class GraspPlanner(object):
 					  str(time.time() - grasp_planning_start_time) + " secs.")
 
 		# Visualize result
+		fig = vis.figure(size=(8, 8), dpi=100)
+		vis.imshow(rgbd_image_state.rgbd_im.color,
+					vmin=self.cfg["policy"]["vis"]["vmin"],
+					vmax=self.cfg["policy"]["vis"]["vmax"])
+		vis.grasp(grasp.grasp, scale=2.5,
+					show_center=False, show_axis=True)
+		vis.title("Planned grasp at depth {0:.3f}m with Q={1:.3f}".format(
+		grasp.grasp.depth, grasp.q_value), fontsize=20)
+		fig.tight_layout()
 		if self.cfg["vis"]["final_grasp"]:
-			vis.figure(size=(10, 10))
-			vis.imshow(rgbd_image_state.rgbd_im.color,
-					   vmin=self.cfg["policy"]["vis"]["vmin"],
-					   vmax=self.cfg["policy"]["vis"]["vmax"])
-			vis.grasp(grasp.grasp, scale=2.5,
-					  show_center=False, show_axis=True)
-			vis.title("Planned grasp at depth {0:.3f}m with Q={1:.3f}".format(
-				grasp.grasp.depth, grasp.q_value))
 			vis.show()
+		else:
+			fig.canvas.draw()
+
+		## Convert grasp image to ROS IMAGE message ##
+		grap_image = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+		grap_image = grap_image.reshape(fig.canvas.get_width_height()[::-1] + (3,))[...,::-1].copy() # Reshape to image and convert RGB to BGR
+
+		## Publish final grasp image ##
+		try:
+	  		self.image_pub.publish(self.cv_bridge.cv2_to_imgmsg(grap_image, "bgr8"))
+		except CvBridgeError as e:
+	  		rospy.logerr(e)
 
 		## Return grasp ##
 		return gqcnn_grasp
