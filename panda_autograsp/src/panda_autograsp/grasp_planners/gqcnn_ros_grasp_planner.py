@@ -216,13 +216,13 @@ class GraspPlanner(object):
                                   frame=color_im.frame)
 
         # Visualize.
-        if self.cfg["vis"]["color_image"]:
+        if self.cfg["vis"]["figs"]["color_image"]:
             vis.imshow(color_im)
             vis.show()
-        if self.cfg["vis"]["depth_image"]:
+        if self.cfg["vis"]["figs"]["depth_image"]:
             vis.imshow(depth_im)
             vis.show()
-        if self.cfg["vis"]["segmask"] and segmask is not None:
+        if self.cfg["vis"]["figs"]["segmask"] and segmask is not None:
             vis.imshow(segmask)
             vis.show()
 
@@ -257,7 +257,7 @@ class GraspPlanner(object):
             segmask = segmask.mask_binary(bb_segmask)
 
         # Visualize.
-        if self.cfg["vis"]["rgbd_state"]:
+        if self.cfg["vis"]["figs"]["rgbd_state"]:
             masked_rgbd_im = rgbd_im.mask_binary(segmask)
             vis.figure()
             vis.subplot(1, 2, 1)
@@ -337,7 +337,7 @@ class GraspPlanner(object):
                       str(time.time() - grasp_planning_start_time) + " secs.")
 
         # Visualize result #
-        if self.cfg["vis"]["final_grasp"]:
+        if self.cfg["vis"]["figs"]["final_grasp"]:
             vis.figure(size=(10, 10))
             vis.imshow(rgbd_image_state.rgbd_im.color,
                        vmin=self.cfg["policy"]["vis"]["vmin"],
