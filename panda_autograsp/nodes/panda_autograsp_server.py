@@ -108,7 +108,7 @@ RVEC, TVEC = None, None
 ## Read main config ###########
 ###############################
 ## Read panda_autograsp configuration file ##
-main_cfg = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
+MAIN_CFG = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
 	os.path.realpath(__file__)), "../cfg/main_config.yaml")))
 
 #################################################
@@ -241,7 +241,7 @@ class ComputeGraspServer():
 
 		## execute grasp service ##
 		rospy.loginfo("Initializing panda_autograsp/execute_grasp services.")
-		self.execute_grasp_srv = rospy.Service('execute_grasp', ExecutePlan, self.execute_grasp_service)
+		self.execute_grasp_srv = rospy.Service('execute_grasp', ExecuteGrasp, self.execute_grasp_service)
 
 		## Service initiation success messag ##
 		rospy.loginfo(
@@ -321,22 +321,34 @@ class ComputeGraspServer():
 
 	def plan_grasp_service(self, req):
 
-		## Translate pose in camera frame to robot frame ##
-		# try:
-		# 	(trans, rot) = self.tf2_listener.lookupTransform('panda_hand', 'kinect2_rgb_optical_frame', rospy.Time(0))
-		# except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
-		# 	rospy.logerr("Pose could not be transformed from the camera frame to the robot frame.")
-		# 	return False
-
-		## Call grasp computation service ##
-		# FIXME: Unsure if I need to add a kinect2_ir_optical_frame or that I can use the kinect2_rgb_optical_frame like I did below
+		## Get pose expressed in the panda_link8 frame ##
 		self.pose_msg.header.frame_id = "kinect2_rgb_optical_frame"
-		self.pose_msg.header.stamp = rospy.Time(0) # Set time to last available transform
-		panda_hand_grasp_pose = self.tf2_listener.transformPose('panda_link0', self.pose_msg)
+		self.pose_msg.header.stamp = rospy.Time(0)
+		panda_hand_grasp_pose = self.tf2_listener.transformPose('panda_link8', self.pose_msg) # Translate from camera to pandalink_8 frame
+
+		## Translate pose to center of the gripper ##
+		# NOTE: Positions and orientations are relative to the panda_link8 frame
+		panda_hand_grasp_pose.pose.position.x += MAIN_CFG['robot']['gripper_center'][0] # Add x distance [m] from panda_link8 to the palm of the eef
+		panda_hand_grasp_pose.pose.position.y += MAIN_CFG['robot']['gripper_center'][1] # Add y distance [m] from panda_link8 to the palm of the eef
+		panda_hand_grasp_pose.pose.position.z += MAIN_CFG['robot']['gripper_center'][2] # Add x distance [m] from panda_link8 to the palm of the eef
+		yaw = MAIN_CFG['robot']['gripper_center'][3]
+		pitch = MAIN_CFG['robot']['gripper_center'][4]]
+		roll = MAIN_CFG['robot']['gripper_center'][5]
+		quat_diff = tf_conversions.transformations.quaternion_from_euler(yaw, pitch, roll)
+		panda_hand_grasp_pose.pose.orientation.x += quat_diff[0]
+		panda_hand_grasp_pose.pose.orientation.y += quat_diff[0]
+		panda_hand_grasp_pose.pose.orientation.z += quat_diff[0]
+		panda_hand_grasp_pose.pose.orientation.w += quat_diff[0]
+
+		## Transform pose to the planning reference frame ##
+		panda_hand_grasp_pose.header.stamp = rospy.Time(0)
+		panda_hand_grasp_pose = self.tf2_listener.transformPose('panda_link0', panda_hand_grasp_pose) # Translate to planning reference frame (panda_link0)
+
+		## Call grasp plan to pose service ##
 		result = self.plan_to_pose_srv(panda_hand_grasp_pose.pose)
 
 		## Test if successful ##
-		if result:
+		if result.success:
 			return True
 		else:
 			return False
@@ -347,7 +359,7 @@ class ComputeGraspServer():
 		result = self.visualize_plan_srv()
 
 		## Test if successful ##
-		if result:
+		if result.success:
 			return True
 		else:
 			return False
@@ -358,7 +370,7 @@ class ComputeGraspServer():
 		result = self.execute_plan_srv()
 
 		## Test if successful ##
-		if result:
+		if result.success:
 			return True
 		else:
 			return False
@@ -427,18 +439,23 @@ class ComputeGraspServer():
 			screen_img = cv2.cvtColor(copy.copy(color_image_cv), cv2.COLOR_RGB2BGR)
 
 			## Detect aruco markers ##
-			# TODO: Check if I need to add camera matrix
-			corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, ARUCO_DICT, parameters=ARUCO_PARAMETERS)
+			corners, ids, rejectedImgPoints = aruco.detectMarkers(
+					image = gray,
+					dictionary = ARUCO_DICT,
+					parameters=ARUCO_PARAMETERS,
+					cameraMatrix = camera_matrix,
+					distCoeff = dist_coeffs)
 
-			# Refine detected markers
-			# TODO: Check if I need to add camera matrix
+			## Refine detected markers ##
 			# Eliminates markers not part of our board, adds missing markers to the board
 			corners, ids, rejectedImgPoints, recoveredIds = aruco.refineDetectedMarkers(
 					image = gray,
 					board = aruco_board,
 					detectedCorners = corners,
 					detectedIds = ids,
-					rejectedCorners = rejectedImgPoints)
+					rejectedCorners = rejectedImgPoints,
+					cameraMatrix = camera_matrix,
+					distCoeffs = dist_coeffs)
 
 			## If at least one marker was found try to estimate the pose
 			if ids is not None and ids.size > 0:
@@ -468,7 +485,6 @@ class ComputeGraspServer():
 		rospy.logwarn("Arcuboard detector times out after %s. seconds. Please reposition the arcuboard and try again.", CALIB_TRY_DURATION)
 		return False, None, None
 
-	## TODO: take the mean over 5 frames ##
 	def chessboard_pose_estimation(self):
 
 		## Get current time ##
@@ -646,7 +662,7 @@ if __name__ == "__main__":
 		POSE_CALIB_METHOD = rospy.get_param("~calib_type")
 	except KeyError:
 		try:
-			POSE_CALIB_METHOD = main_cfg["calibration"]["pose_estimation_calib_board"]
+			POSE_CALIB_METHOD = MAIN_CFG["calibration"]["pose_estimation_calib_board"]
 			CALIB_CONFIG_ERROR = False
 		except KeyError:
 			POSE_CALIB_METHOD = "aruco_board"

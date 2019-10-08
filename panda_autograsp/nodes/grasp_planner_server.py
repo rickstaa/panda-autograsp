@@ -58,14 +58,14 @@ from panda_autograsp import Logger
 #################################################
 
 ## Read panda_autograsp configuration file ##
-main_cfg = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
+MAIN_CFG = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
 	os.path.realpath(__file__)), "../cfg/main_config.yaml")))
 
 ## Get settings out of main_cfg ##
-DEFAULT_SOLUTION = main_cfg["defaults"]["solution"]
-DEFAULT_MODEL = main_cfg["grasp_detection_solutions"][DEFAULT_SOLUTION]["defaults"]["model"]
+DEFAULT_SOLUTION = MAIN_CFG["defaults"]["solution"]
+DEFAULT_MODEL = MAIN_CFG["grasp_detection_solutions"][DEFAULT_SOLUTION]["defaults"]["model"]
 MODELS_PATH = os.path.abspath(os.path.join(
-	os.path.dirname(os.path.realpath(__file__)), "..", main_cfg["defaults"]["models_dir"]))
+	os.path.dirname(os.path.realpath(__file__)), "..", MAIN_CFG["defaults"]["models_dir"]))
 DOWNLOAD_SCRIPT_PATH = os.path.abspath(os.path.join(os.path.dirname(
 	os.path.realpath(__file__)), "../..", "gqcnn/scripts/downloads/models/download_models.sh"))
 
@@ -492,8 +492,8 @@ if __name__ == "__main__":
 
 	## Add main policy values to the GQCNN based cfg ##
 	# This allows us to add and overwrite to the original GQCNN config file
-	cfg.update(main_cfg)
-	cfg["policy"]["gripper_width"] = main_cfg["robot"]["gripper_width"] # Update gripper width
+	cfg.update(MAIN_CFG)
+	cfg["policy"]["gripper_width"] = MAIN_CFG["robot"]["gripper_width"] # Update gripper width
 
 	## Create publisher to publish pose of final grasp ##
 	grasp_pose_publisher = rospy.Publisher("gqcnn_grasp/pose",
@@ -503,9 +503,9 @@ if __name__ == "__main__":
 	## Create grasping policy ##
 	rospy.loginfo("Creating Grasping Policy")
 	try:
-		if "cross_entropy" == main_cfg["grasp_detection_solutions"]["gqcnn"]["parameters"]["available"][model_name]:
+		if "cross_entropy" == MAIN_CFG["grasp_detection_solutions"]["gqcnn"]["parameters"]["available"][model_name]:
 			grasping_policy = CrossEntropyRobustGraspingPolicy(policy_cfg)
-		elif "fully_conv" == main_cfg["grasp_detection_solutions"]["gqcnn"]["parameters"]["available"][model_name]:
+		elif "fully_conv" == MAIN_CFG["grasp_detection_solutions"]["gqcnn"]["parameters"]["available"][model_name]:
 			if "pj" in model_name.lower():
 				grasping_policy = FullyConvolutionalGraspingPolicyParallelJaw(policy_cfg)
 			elif "suction" in model_name.lower():

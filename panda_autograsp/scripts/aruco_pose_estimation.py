@@ -67,18 +67,23 @@ while(sensor.is_running):
 	screen_img = cv2.cvtColor(copy.copy(color_im.data), cv2.COLOR_RGB2BGR)
 
 	## Detect aruco markers ##
-	# TODO: Check if I need to add camera matrix
-	corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, ARUCO_DICT, parameters=ARUCO_PARAMETERS)
+	corners, ids, rejectedImgPoints = aruco.detectMarkers(
+			image = gray,
+			dictionary = ARUCO_DICT,
+			parameters=ARUCO_PARAMETERS,
+			cameraMatrix = camera_matrix,
+			distCoeff = dist_coeffs)
 
-	# Refine detected markers
-	# TODO: Check if I need to add camera matrix
+	## Refine detected markers ##
 	# Eliminates markers not part of our board, adds missing markers to the board
 	corners, ids, rejectedImgPoints, recoveredIds = aruco.refineDetectedMarkers(
 			image = gray,
 			board = aruco_board,
 			detectedCorners = corners,
 			detectedIds = ids,
-			rejectedCorners = rejectedImgPoints)
+			rejectedCorners = rejectedImgPoints,
+			cameraMatrix = camera_matrix,
+			distCoeffs = dist_coeffs)
 
 	## If at least one marker was found try to estimate the pose
 	if ids is not None and ids.size > 0:

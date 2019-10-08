@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /PlanningScene1/Scene Robot1
         - /MotionPlanning1/Planning Request1
-        - /Grasp Pose1
       Splitter Ratio: 0.7418803572654724
     Tree Height: 373
   - Class: rviz/Help
@@ -438,37 +437,37 @@ Visualization Manager:
       Enabled: true
       Frame Timeout: 15
       Frames:
-        All Enabled: true
+        All Enabled: false
         calib_frame:
           Value: true
         kinect2_ir_optical_frame:
-          Value: true
+          Value: false
         kinect2_rgb_optical_frame:
-          Value: true
+          Value: false
         panda_hand:
-          Value: true
+          Value: false
         panda_leftfinger:
-          Value: true
+          Value: false
         panda_link0:
-          Value: true
+          Value: false
         panda_link1:
-          Value: true
+          Value: false
         panda_link2:
-          Value: true
+          Value: false
         panda_link3:
-          Value: true
+          Value: false
         panda_link4:
-          Value: true
+          Value: false
         panda_link5:
-          Value: true
+          Value: false
         panda_link6:
-          Value: true
+          Value: false
         panda_link7:
-          Value: true
+          Value: false
         panda_link8:
-          Value: true
+          Value: false
         panda_rightfinger:
-          Value: true
+          Value: false
         world:
           Value: true
       Marker Scale: 1
@@ -610,10 +609,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6952028870582581
+      Pitch: 0.5202028155326843
       Target Frame: panda_link0
       Value: XYOrbit (rviz)
-      Yaw: 2.069929838180542
+      Yaw: 2.5449280738830566
     Saved: ~
 Window Geometry:
   Camera:
@@ -640,4 +639,4 @@ Window Geometry:
     collapsed: false
   Width: 1440
   X: 165
-  Y: 50
+  Y: 2

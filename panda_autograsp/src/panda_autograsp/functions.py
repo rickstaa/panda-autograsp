@@ -24,12 +24,12 @@ from .loggers import Logger
 func_log = Logger.get_logger(__name__)
 
 ## Read panda_autograsp configuration file ##
-main_cfg = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
+MAIN_CFG = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
     os.path.realpath(__file__)), "../../cfg/main_config.yaml")))
 
 ## Create script contants ##
 MODELS_PATH = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "../..", main_cfg["defaults"]["models_dir"]))
+    os.path.dirname(os.path.realpath(__file__)), "../..", MAIN_CFG["defaults"]["models_dir"]))
 DEFAULT_DOWNLOAD_SCRIPT_PATH = os.path.abspath(os.path.join(os.path.dirname(
     os.path.realpath(__file__)), "../../../gqcnn/scripts/downloads/models/download_models.sh"))
 MODEL_RENAME_DICT = {"GQCNN-2.0": "GQ-Image-Wise",
@@ -84,7 +84,7 @@ def download_model(model, model_output=MODELS_PATH, download_script_path=DEFAULT
         ## Download start message ##
         func_log.info("Downloading the " + model + " model.")
         ## Get solution group ##
-        solution = [s for s in list(main_cfg["grasp_detection_solutions"].keys()) if s in model.lower()]
+        solution = [s for s in list(MAIN_CFG["grasp_detection_solutions"].keys()) if s in model.lower()]
         if (len(solution) > 1 or len(solution) == 0):  # Check if model name is vallid
             msg = "Model name is invalid. Please check the name and try again."
             func_log.warning(msg)
@@ -177,15 +177,15 @@ def list_files(path='.', exclude=[], recursive=True):
             break
     return file_list
 
-# TODO: make rawinput python 2 3 compatible
-# TODO: Accept enter as yes
-def yes_or_no(question):
+def yes_or_no(question, add_options=True):
     """Simple yes or no prompt.
 
     Parameters
     ----------
     question : str
         Question of the yes or no prompt.
+    add_options : bool
+        Include option statement "(Y/n)" after the question.
 
     Returns
     -------
@@ -193,14 +193,20 @@ def yes_or_no(question):
         Boolean specifying if the user gave the right response.
     """
 
-    answer = raw_input(question + " (Y/n): ").lower().strip()
+    ## Check add_options argment ##
+    if add_options:
+        option_str=" (Y/n)>> "
+    else:
+        option_str=""
+
+    ## Create prompt ##
+    answer = raw_input(question + option_str).lower().strip()
     answer = [answer] if answer == "" else answer # Make sure enter i
-    print("")
     while not(answer == "y" or answer == "yes" or \
     answer == "n" or answer == "no" or answer[0] == ""):
-        print("Input yes or no")
-        answer = raw_input(question + "(y/n):").lower().strip()
         print("")
+        print("Input yes or no")
+        answer = raw_input(question + option_str).lower().strip()
     if answer[0] == "y" or answer[0] == "":
         return True
     else:
