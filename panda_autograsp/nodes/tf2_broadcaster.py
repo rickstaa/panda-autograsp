@@ -12,7 +12,6 @@ import rospy
 from dynamic_reconfigure.server import Server
 from panda_autograsp.cfg import CalibFramesConfig
 import tf_conversions
-import tf
 import tf2_ros
 import geometry_msgs.msg
 from pyquaternion import Quaternion
@@ -53,7 +52,7 @@ class tf2_broadcaster():
 		quat = Quaternion(rospy.get_param("~sensor_frame_q1"), rospy.get_param("~sensor_frame_q2"),
 					rospy.get_param("~sensor_frame_q3"), rospy.get_param("~sensor_frame_q4")).normalised
 		quat = Quaternion(0, 0, 0, 1) if not quat.__nonzero__() else quat
-		euler = tf.transformations.euler_from_quaternion(list(quat))
+		euler = tf_conversions.transformations.euler_from_quaternion(list(quat))
 		self.sensor_frame_x_pos = rospy.get_param('~sensor_frame_x_pos')
 		self.sensor_frame_y_pos = rospy.get_param('~sensor_frame_y_pos')
 		self.sensor_frame_z_pos = rospy.get_param('~sensor_frame_z_pos')
@@ -110,7 +109,7 @@ class tf2_broadcaster():
 		quat = [self.sensor_frame_q1, self.sensor_frame_q2, self.sensor_frame_q3, self.sensor_frame_q4]
 
 		## Set rotation angles to dynamic parameters server ##
-		euler = tf.transformations.euler_from_quaternion(quat)
+		euler = tf_conversions.transformations.euler_from_quaternion(quat)
 		self.just_calibrated = True
 		self.dyn_reconfig_srv.update_configuration({
 			"sensor_frame_x_pos": self.sensor_frame_x_pos,
@@ -207,9 +206,9 @@ class tf2_broadcaster():
 
 			## Apply relative rotation to old quaternion ##
 			quat_old = [self.sensor_frame_q1, self.sensor_frame_q2, self.sensor_frame_q3, self.sensor_frame_q4]
-			quat_diff = tf.transformations.quaternion_from_euler(
+			quat_diff = tf_conversions.transformations.quaternion_from_euler(
 				yaw_diff, pitch_diff, roll_diff)
-			quat = tf.transformations.quaternion_multiply(quat_diff, quat_old)
+			quat = tf_conversions.transformations.quaternion_multiply(quat_diff, quat_old)
 
 			## Set new quaternion values ##
 			self.sensor_frame_x_pos = config["sensor_frame_x_pos"]
@@ -257,7 +256,7 @@ class tf2_broadcaster():
 		calib_frame_tf_msg.transform.translation.x = self.calib_frame_x_pos
 		calib_frame_tf_msg.transform.translation.y = self.calib_frame_y_pos
 		calib_frame_tf_msg.transform.translation.z = self.calib_frame_z_pos
-		calib_quat = tf.transformations.quaternion_from_euler(
+		calib_quat = tf_conversions.transformations.quaternion_from_euler(
 			float(self.calib_frame_yaw), float(self.calib_frame_pitch), float(self.calib_frame_roll), axes='rzyx')
 		calib_frame_tf_msg.transform.rotation.x = calib_quat[0]
 		calib_frame_tf_msg.transform.rotation.y = calib_quat[1]

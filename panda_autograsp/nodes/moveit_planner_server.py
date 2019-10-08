@@ -89,6 +89,7 @@ class PandaPathPlanningService:
         self.move_group = self.robot.get_group(move_group)
         self.move_group.set_pose_reference_frame(pose_reference_frame) # Set reference frame
         self.move_group.set_end_effector_link(end_effector)            # Set end-effector link
+        self.move_group.set_planning_time(MAIN_CFG["planning"]["general"]["planning_time"])
         self.scene = moveit_commander.PlanningSceneInterface(
             ns="/")
 
@@ -259,14 +260,14 @@ class PandaPathPlanningService:
             display_trajectory = DisplayTrajectory()
             display_trajectory.trajectory_start = self.robot.get_current_state()
             display_trajectory.trajectory.append(self.current_plan)
+
+            ## Publish plan ##
+            self.display_trajectory_publisher.publish(display_trajectory)
+            return True
         else:
             rospy.loginfo(
                 "No plan was found please first execute the planning service.")
             return False
-
-        ## Publish plan ##
-        self.display_trajectory_publisher.publish(display_trajectory)
-        return True
 
     def execute_plan_service(self, req):
         """Execute the plan that has been computed by the other plan services.
@@ -394,16 +395,105 @@ class PandaPathPlanningService:
         else:
             return False
 
+    def openGripper(self, posture):
+        """Open the gripper.
+
+        Parameters
+        ----------
+        posture : trajectory_msgs.msg.JointTrajectory
+                Gripper posture.
+        """
+
+        ## Add both finger joints of panda robot ##
+        posture.joint_names = [str for i in range(2)]
+        posture.joint_names[0] = "panda_finger_joint1"
+        posture.joint_names[1] = "panda_finger_joint2"
+
+        ## Set them as open, wide enough for the object to fit. ##
+        posture.points = [JointTrajectoryPoint()]
+        posture.points[0].positions = [float for i in range(2)]
+        posture.points[0].positions[0] = 0.04
+        posture.points[0].positions[1] = 0.04
+        posture.points[0].time_from_start = rospy.Duration(0.5)
+
+    def closedGripper(self, posture):
+        """Close the gripper.
+
+        Parameters
+        ----------
+        posture : trajectory_msgs.msg.JointTrajectory
+                Gripper posture.
+        """
+
+        ## Add both finger joints of panda robot. ##
+        posture.joint_names = [str for i in range(2)]
+        posture.joint_names[0] = "panda_finger_joint1"
+        posture.joint_names[1] = "panda_finger_joint2"
+
+        ## Set them as closed. ##
+        posture.points = [JointTrajectoryPoint()]
+        posture.points[0].positions = [float for i in range(2)]
+        posture.points[0].positions[0] = 0.00
+        posture.points[0].positions[1] = 0.00
+        posture.points[0].time_from_start = rospy.Duration(0.5)
+
+    def pick(self):
+    	"""Pick an object."""
+
+    	## - BEGIN_SUB_TUTORIAL pick1 - ##
+    	## Create a vector of grasps to be attempted, currently only creating single grasp. ##
+    	# This is essentially useful when using a grasp generator to generate and test multiple grasps.
+    	grasps = [Grasp() for i in range(1)]
+
+    	## Setting grasp pose ##
+    	# This is the pose of panda_link8. |br|
+    	# From panda_link8 to the palm of the eef the distance is 0.058, the cube starts 0.01 before 5.0 (half of the length
+    	# of the cube). |br|
+    	# Therefore, the position for panda_link8 = 5 - (length of cube/2 - distance b/w panda_link8 and palm of eef - some
+    	# extra padding)
+    	grasps[0].grasp_pose.header.frame_id = "panda_link0"
+    	orientation = quaternion_from_euler(-math.pi /
+                                         2, -math.pi / 4, -math.pi / 2)
+    	grasps[0].grasp_pose.pose.orientation.x = orientation[0]
+    	grasps[0].grasp_pose.pose.orientation.y = orientation[1]
+    	grasps[0].grasp_pose.pose.orientation.z = orientation[2]
+    	grasps[0].grasp_pose.pose.orientation.w = orientation[3]
+    	grasps[0].grasp_pose.pose.position.x = 0.415
+    	grasps[0].grasp_pose.pose.position.y = 0
+    	grasps[0].grasp_pose.pose.position.z = 0.5
+
+    	## Setting pre-grasp approach ##
+    	# Defined with respect to frame_id
+    	grasps[0].pre_grasp_approach.direction.header.frame_id = "panda_link0"
+    	# Direction is set as positive x axis
+    	grasps[0].pre_grasp_approach.direction.vector.x = 1.0
+    	grasps[0].pre_grasp_approach.min_distance = 0.095
+    	grasps[0].pre_grasp_approach.desired_distance = 0.115
+
+    	## Setting post-grasp retreat ##
+    	# Defined with respect to frame_id
+    	grasps[0].post_grasp_retreat.direction.header.frame_id = "panda_link0"
+    	# Direction is set as positive z axis
+    	grasps[0].post_grasp_retreat.direction.vector.z = 1.0
+    	grasps[0].post_grasp_retreat.min_distance = 0.1
+    	grasps[0].post_grasp_retreat.desired_distance = 0.25
+
+    	## Setting posture of eef before grasp ##
+    	self.openGripper(grasps[0].pre_grasp_posture)
+
+    	## Setting posture of eef during grasp ##
+    	closedGripper(grasps[0].grasp_posture)
+
+    	# ## Set support surface as table1. ##
+    	# self.move_group.set_support_surface_name("table1")
+
+    	# Call pick to pick up the object using the grasps given
+    	self.move_group.pick("object", grasps)
 
 #################################################
 ## Main script ##################################
 #################################################
 if __name__ == '__main__':
-
-    ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
-    import ptvsd
-    ptvsd.wait_for_attach()
-    ## ------------------------------ ##
 
     ## Init service node ##
     rospy.init_node('moveit_planner_server')

@@ -2,7 +2,7 @@
 # This file specifies the poses of the frames used in the calibration.
 
 ## Calibration frame position (Relative to panda_link0 frame) ##
-calib_frame_x_pos: 1.0                        # Relative position on the x axis [m]
+calib_frame_x_pos: 0.6                        # Relative position on the x axis [m]
 calib_frame_y_pos: 0.0                        # Relative position on the y axis [m]
 calib_frame_z_pos: 0.0                        # Relative position on the z axis [m]
 calib_frame_yaw: deg(270)                     # Rotation around the z axis [deg]

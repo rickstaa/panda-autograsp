@@ -46,14 +46,14 @@ for (attr, value) in Kinect2PacketPipelineMode.__dict__.items():
         packet_modes.update({value: attr})
 
 ## Read panda_autograsp configuration file ##
-main_cfg = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
+MAIN_CFG = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
     os.path.realpath(__file__)), "../../../cfg/main_config.yaml")))
 
 ## Get settings out of main_cfg ##
 GRASP_SOLUTION = "gqcnn"
-DEFAULT_MODEL = main_cfg["grasp_detection_solutions"][GRASP_SOLUTION]["defaults"]["model"]
+DEFAULT_MODEL = MAIN_CFG["grasp_detection_solutions"][GRASP_SOLUTION]["defaults"]["model"]
 MODELS_PATH = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "../../..", main_cfg["defaults"]["models_dir"]))
+    os.path.dirname(os.path.realpath(__file__)), "../../..", MAIN_CFG["defaults"]["models_dir"]))
 DOWNLOAD_SCRIPT_PATH = os.path.abspath(os.path.join(os.path.dirname(
     os.path.realpath(__file__)), "../../../..", "gqcnn/scripts/downloads/models/download_models.sh"))
 
@@ -106,18 +106,15 @@ class GraspPlanner(object):
             The name of the RGBD sensor.
         """
 
-        ## Add main_config as object member ##
-        self.main_cfg = main_cfg
-
         ## Load model and policy configuration files ##
         self._get_cfg(model)
 
         ## Create grasping policy ##
         mod_logger.info("Creating Grasping Policy")
         try:
-	    	if "cross_entropy" == main_cfg["grasp_detection_solutions"]["gqcnn"]["parameters"]["available"][model_name]:
+	    	if "cross_entropy" == MAIN_CFG["grasp_detection_solutions"]["gqcnn"]["parameters"]["available"][model_name]:
 	    		grasping_policy = CrossEntropyRobustGraspingPolicy(policy_cfg)
-	    	elif "fully_conv" == main_cfg["grasp_detection_solutions"]["gqcnn"]["parameters"]["available"][model_name]:
+	    	elif "fully_conv" == MAIN_CFG["grasp_detection_solutions"]["gqcnn"]["parameters"]["available"][model_name]:
 	    		if "pj" in model_name.lower():
 	    			grasping_policy = FullyConvolutionalGraspingPolicyParallelJaw(policy_cfg)
 	    		elif "suction" in model_name.lower():
@@ -369,7 +366,6 @@ class GraspPlanner(object):
                                 self.sensor.ir_intrinsics,
                                 segmask=segmask)
 
-    # TODO: Check if threshold is good enough
     def _plan_grasp(self,
                     color_im,
                     depth_im,
@@ -391,16 +387,6 @@ class GraspPlanner(object):
         depth_im = depth_im.inpaint(
             rescale_factor=self.cfg["inpaint_rescale_factor"])
 
-        ## TODO: Make seperate function
-        ## TODO: Change camera parameters to calibrated parameters
-        ## Create detector object
-        # detector = RgbdDetector(color_im, depth_im, self.cfg, camera_intr)
-
-        ## DEBUG: Testing segmask creation function
-        # First with interinsic parameters then calibration
-
-        ##--DEBUG--
-
         ## Init segmask. ##
         if segmask is None:
             segmask = BinaryImage(255 *
@@ -408,15 +394,15 @@ class GraspPlanner(object):
                                   frame=color_im.frame)
 
         ## Visualize. ##
-        if self.main_cfg["vis"]["color_image"]:
+        if MAIN_CFG["vis"]["color_image"]:
             vis.imshow(color_im)
             vis.title("Color image")
             vis.show()
-        if self.main_cfg["vis"]["depth_image"]:
+        if MAIN_CFG["vis"]["depth_image"]:
             vis.imshow(depth_im)
             vis.title("Depth image")
             vis.show()
-        if self.main_cfg["vis"]["segmask"] and segmask is not None:
+        if MAIN_CFG["vis"]["segmask"] and segmask is not None:
             vis.imshow(segmask)
             vis.title("Segmask image")
             vis.show()
@@ -452,7 +438,7 @@ class GraspPlanner(object):
             segmask = segmask.mask_binary(bb_segmask)
 
         ## Visualize. ##
-        if self.main_cfg["vis"]["rgbd_state"]:
+        if MAIN_CFG["vis"]["rgbd_state"]:
             masked_rgbd_im = rgbd_im.mask_binary(segmask)
             vis.figure()
             vis.title("Masked RGBD state")
@@ -513,13 +499,13 @@ class GraspPlanner(object):
         gqcnn_grasp.depth = action.grasp.depth
 
         ## Create small thumbnail and add to the grasp ##
-        if self.main_cfg["grasp_detection_result"]["include_thumbnail"]:
-            if main_cfg["grasp_detection_result"]["thumbnail_resize"] < 0 or main_cfg["grasp_detection_result"]["thumbnail_resize"] > 1:
+        if MAIN_CFG["grasp_detection_result"]["include_thumbnail"]:
+            if MAIN_CFG["grasp_detection_result"]["thumbnail_resize"] < 0 or MAIN_CFG["grasp_detection_result"]["thumbnail_resize"] > 1:
                 mod_logger.error(
                     "Tumnail_resize vallue is invallid. Please check your configuration file and try again.")
                 sys.exit(0)
             else:
-                scale_factor = main_cfg["grasp_detection_result"]["tumbnail_resize"]
+                scale_factor = MAIN_CFG["grasp_detection_result"]["tumbnail_resize"]
                 resized_data = imresize(rgbd_image_state.rgbd_im.color.data.astype(
                     np.float32), scale_factor, 'bilinear')
                 thumbnail = ColorImage(resized_data.astype(
@@ -528,7 +514,7 @@ class GraspPlanner(object):
 
         # TODO: Look at bounding box
         # Visualize result
-        if self.main_cfg["vis"]["final_grasp"]:
+        if MAIN_CFG["vis"]["final_grasp"]:
             vis.figure(size=(10, 10))
             vis.imshow(rgbd_image_state.rgbd_im.color,
                        vmin=self.cfg["policy"]["vis"]["vmin"],

@@ -1,8 +1,4 @@
-"""
-Script to test autolab calibration capabilities.
-
-"""
-## TODO: Working here!
+"""Script to test autolab calibration capabilities."""
 
 import os
 import logging

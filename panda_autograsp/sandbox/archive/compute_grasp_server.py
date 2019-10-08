@@ -62,7 +62,6 @@ class ComputeGraspServer():
         ats.registerCallback(self.msg_filter_callback)
         rospy.loginfo("Camera sensor message_filter created.")
 
-        ## TODO: CHANGE names now confusing
         ## Initialize the ROS services ##
         rospy.Service("compute_grasp", ComputeGrasp,
                       ComputeGraspServer.compute_grasp_service)
