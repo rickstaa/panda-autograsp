@@ -65,6 +65,10 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        panda_gripper_center:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         panda_hand:
           Alpha: 1
           Show Axes: false
@@ -124,10 +128,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        world:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
       Loop Animation: false
       Name: Trajectory
       Robot Alpha: 0.5
@@ -161,6 +161,10 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          panda_gripper_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           panda_hand:
             Alpha: 1
             Show Axes: false
@@ -220,10 +224,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          world:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
         Robot Alpha: 1
         Show Robot Collision: false
         Show Robot Visual: true
@@ -262,6 +262,10 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          panda_gripper_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           panda_hand:
             Alpha: 1
             Show Axes: false
@@ -321,10 +325,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          world:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
         Loop Animation: false
         Robot Alpha: 0.5
         Robot Color: 150; 50; 150
@@ -370,6 +370,10 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          panda_gripper_center:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           panda_hand:
             Alpha: 1
             Show Axes: false
@@ -429,10 +433,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          world:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
         Robot Alpha: 1
         Show Robot Collision: false
         Show Robot Visual: false
@@ -443,14 +443,8 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        calib_frame:
+        panda_gripper_center:
           Value: true
-        gripper_center:
-          Value: true
-        kinect2_ir_optical_frame:
-          Value: false
-        kinect2_rgb_optical_frame:
-          Value: false
         panda_hand:
           Value: false
         panda_leftfinger:
@@ -485,11 +479,6 @@ Visualization Manager:
       Tree:
         world:
           panda_link0:
-            calib_frame:
-              kinect2_ir_optical_frame:
-                {}
-              kinect2_rgb_optical_frame:
-                {}
             panda_link1:
               panda_link2:
                 panda_link3:
@@ -499,7 +488,7 @@ Visualization Manager:
                         panda_link7:
                           panda_link8:
                             panda_hand:
-                              gripper_center:
+                              panda_gripper_center:
                                 {}
                               panda_leftfinger:
                                 {}
@@ -548,12 +537,12 @@ Visualization Manager:
       Unreliable: false
       Value: false
       Visibility:
-        "": true
         Grasp Pose: true
         Grasp image: true
         Grid: false
         MarkerArray: false
         MotionPlanning: true
+        Move_group end eff pose: true
         PlanningScene: false
         PointCloud2: true
         TF: true
@@ -619,7 +608,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 3.8807663917541504
+      Distance: 2.048004150390625
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -634,10 +623,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.18979661166667938
+      Pitch: 0.5197964310646057
       Target Frame: panda_link0
       Value: XYOrbit (rviz)
-      Yaw: 0.14674381911754608
+      Yaw: 1.0967437028884888
     Saved: ~
 Window Geometry:
   Camera:
@@ -664,4 +653,4 @@ Window Geometry:
     collapsed: false
   Width: 1440
   X: 244
-  Y: 2
+  Y: 0

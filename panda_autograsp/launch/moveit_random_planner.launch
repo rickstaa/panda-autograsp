@@ -5,8 +5,8 @@
 <launch>
 
     <!-- Setup launchfile arguments -->
-    <arg name="ns"  default="panda_autograsp"/>
-    <arg name="panda_launch"  default="FALSE"/>
+    <arg name="ns" default="panda_autograsp"/>
+    <arg name="panda_launch" default="FALSE"/>
 
     <!-- Start panda_autograsp ROS nodes -->
     <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" if="$(arg panda_launch)">

@@ -5,24 +5,27 @@
 <launch>
 
     <!--Launch file arguments-->
-    <arg name="base_name"           default="panda_autograsp"/>
-    <arg name="output"              default="log"/>
-    <arg name="calib_type"          default="aruco_board"/> <!--Supports "aruco_board" or "chessboard"-->
-    <arg name="debug"               default="False"/>
+    <arg name="base_name" default="panda_autograsp"/>
+    <arg name="output" default="log"/>
+    <arg name="debug" default="false"/>
+    <arg name="calib_type" default="aruco_board"/> <!--Supports "aruco_board" or "chessboard"-->
+    <arg name="gripper_center" default="true"/> <!-- Enable or disale gripper center frame -->
+    <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/> <!-- Gripper center position relative to the panda_hand frame -->
 
     <!--Change loggin format-->
     <env name="ROSCONSOLE_FORMAT" value="[${severity}] [WallTime: ${time}]: [${node}] ${message}" if="$(arg debug)"/>
 
-    <!-- Load Rviz-->
-    <include file="$(find panda_autograsp)/launch/panda_autograsp_rviz.launch">
+    <!-- Load panda simulation and visualization -->
+    <include file="$(find panda_autograsp)/launch/panda_moveit_config.launch">
         <arg name="output" value="$(arg output)" />
+        <arg name="gripper_center" value="$(arg gripper_center)" />
+        <arg name="gripper_center_xyz" value="$(arg gripper_center_xyz)" />
     </include>
-
 
     <!-- Start the Kinect processing ROS nodes
         The IAI_kinect2 package was used for the kinect processing.
     -->
-    <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" >
+    <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch">
         <arg name="output" value="$(arg output)" />
     </include>
 
@@ -37,7 +40,8 @@
             roll: is rotation about X (green axis)
     -->
     <node name="tf2_broadcaster" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" output="$(arg output)">
-        <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml"/> <!--Load calibration parameters-->
+        <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml"/>
+        <!--Load calibration parameters-->
     </node>
     <!-- Load panda_autograsp services
         Panda_autograsp services:
@@ -56,13 +60,13 @@
     </node>
     <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="$(arg output)"/>
     <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen">
-        <remap from="execute_plan" to="moveit/execute_plan"/> <!--Remaped to make better distinction between grasp planner service-->
-        <remap from="apply_planning_scene" to="/apply_planning_scene"/> <!--Remaped to make better distinction between grasp planner service-->
-        <remap from="plan_to_point" to="moveit/plan_to_point"/> <!--Ditto-->
-        <remap from="plan_to_path" to="moveit/plan_to_path"/> <!--Ditto-->
-        <remap from="plan_random_pose" to="moveit/plan_random_pose"/> <!--Ditto-->
-        <remap from="plan_random_joint" to="moveit/plan_random_joint"/> <!--Ditto-->
-        <remap from="plan_random_path" to="moveit/plan_random_path"/> <!--Ditto-->
-        <remap from="visualize_plan" to="moveit/visualize_plan"/> <!--Ditto-->
+        <remap from="execute_plan" to="moveit/execute_plan"/>
+        <remap from="apply_planning_scene" to="/apply_planning_scene"/>
+        <remap from="plan_to_point" to="moveit/plan_to_point"/>
+        <remap from="plan_to_path" to="moveit/plan_to_path"/>
+        <remap from="plan_random_pose" to="moveit/plan_random_pose"/>
+        <remap from="plan_random_joint" to="moveit/plan_random_joint"/>
+        <remap from="plan_random_path" to="moveit/plan_random_path"/>
+        <remap from="visualize_plan" to="moveit/visualize_plan"/>
     </node>
 </launch>
