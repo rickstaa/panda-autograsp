@@ -6,6 +6,7 @@ can be updated using a dynamic reconfigure server.
 
 ## Import standard library packages ##
 import sys
+import os
 
 ## Import ros packages ##
 import rospy
@@ -18,6 +19,16 @@ from pyquaternion import Quaternion
 
 ## Import messages and services ##
 from panda_autograsp.srv import SetSensorPose
+
+## Import third berkeley automation packages ##
+from autolab_core import YamlConfig
+
+###############################
+## Read main config ###########
+###############################
+## Read panda_autograsp configuration file ##
+MAIN_CFG = YamlConfig(os.path.abspath(os.path.join(os.path.dirname(
+	os.path.realpath(__file__)), "../cfg/main_config.yaml")))
 
 #################################################
 ## tf2_broadcaster class ########################
@@ -67,7 +78,7 @@ class tf2_broadcaster():
 		## Initialize transform broadcaster ##
 		self.timer = rospy.Timer(rospy.Duration(1.0/10.0),
 						   self.tf2_broadcaster_callback)
-		self.br = tf2_ros.TransformBroadcaster()
+		self.tf2_br = tf2_ros.TransformBroadcaster()
 
 		## Initialize dynamic reconfigure server ##
 		self.config = CalibFramesConfig.defaults
@@ -264,7 +275,7 @@ class tf2_broadcaster():
 		calib_frame_tf_msg.transform.rotation.w = calib_quat[3]
 
 		#########################################
-		## Generate sensor rgb frame msg ############
+		## Generate sensor rgb frame msg ########
 		#########################################
 		sensor_frame_rgb_tf_msg = geometry_msgs.msg.TransformStamped()
 		sensor_frame_rgb_tf_msg.header.stamp = rospy.Time.now()
@@ -279,7 +290,7 @@ class tf2_broadcaster():
 		sensor_frame_rgb_tf_msg.transform.rotation.w = self.sensor_frame_q4
 
 		#########################################
-		## Generate sensor ir frame msg ############
+		## Generate sensor ir frame msg #########
 		#########################################
 		sensor_frame_ir_tf_msg = geometry_msgs.msg.TransformStamped()
 		sensor_frame_ir_tf_msg.header.stamp = rospy.Time.now()
@@ -293,8 +304,28 @@ class tf2_broadcaster():
 		sensor_frame_ir_tf_msg.transform.rotation.z = self.sensor_frame_q3
 		sensor_frame_ir_tf_msg.transform.rotation.w = self.sensor_frame_q4
 
+		#########################################
+		## Generate gripper center frame msg ####
+		#########################################
+		if MAIN_CFG["vis"]["tf"]["publish_gripper_center"]:
+			gripper_center_tf_msg = geometry_msgs.msg.TransformStamped()
+			gripper_center_tf_msg.header.stamp = rospy.Time.now()
+			gripper_center_tf_msg.header.frame_id = "panda_hand"
+			gripper_center_tf_msg.child_frame_id = "gripper_center"
+			gripper_center_tf_msg.transform.translation.x += MAIN_CFG['robot']['gripper_center'][0] # Add x distance [m] from panda_link8 to the palm of the eef
+			gripper_center_tf_msg.transform.translation.y += MAIN_CFG['robot']['gripper_center'][1] # Add y distance [m] from panda_link8 to the palm of the eef
+			gripper_center_tf_msg.transform.translation.z += MAIN_CFG['robot']['gripper_center'][2] # Add x distance [m] from panda_link8 to the palm of the eef
+			yaw = MAIN_CFG['robot']['gripper_center'][3]
+			pitch = MAIN_CFG['robot']['gripper_center'][4]
+			roll = MAIN_CFG['robot']['gripper_center'][5]
+			quat_diff = tf_conversions.transformations.quaternion_from_euler(yaw, pitch, roll)
+			gripper_center_tf_msg.transform.rotation.x += quat_diff[0]
+			gripper_center_tf_msg.transform.rotation.y += quat_diff[1]
+			gripper_center_tf_msg.transform.rotation.z += quat_diff[2]
+			gripper_center_tf_msg.transform.rotation.w += quat_diff[3]
+
 		## Send tf message ##
-		self.br.sendTransform([calib_frame_tf_msg, sensor_frame_rgb_tf_msg, sensor_frame_ir_tf_msg])
+		self.tf2_br.sendTransform([calib_frame_tf_msg, sensor_frame_rgb_tf_msg, sensor_frame_ir_tf_msg, gripper_center_tf_msg])
 
 #################################################
 ## Main script ##################################

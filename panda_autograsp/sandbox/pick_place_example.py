@@ -312,7 +312,7 @@ def main(arg):
 	## Create scene commanders ##
 	# Used to get information about the world and update the robot
 	# its understanding of the world.
-	move_group = robot.get_group("panda_arm")
+	move_group = robot.get_group("panda_arm_hand")
 	planning_scene_interface = moveit_commander.PlanningSceneInterface(ns="/")
 
 	## Specify the planner we want to use ##

@@ -3,26 +3,31 @@
 
 ## Panda_autograsp visualization settings ##
 vis: # Show grasp images using opencv (Useful for debugging)
-  rgbd_state: 0
-  cropped_rgbd_image: 0
-  color_image: 0
-  depth_image: 0
-  segmask: 0
-  final_grasp: 0
+
+  figs: # Figures
+    rgbd_state: 0
+    cropped_rgbd_image: 0
+    color_image: 0
+    depth_image: 0
+    segmask: 0
+    final_grasp: 0
+
+  tf: # TF
+    publish_gripper_center: True # Publish gripper center as tf2 frame
 
 ## Panda_autograsp default values ##
 defaults:
   solution: gqcnn
   models_dir: ./models # Folder in which models are downloaded
 
-## Calibration settigns ##
+## Calibration settings ##
 calibration:
   pose_estimation_calib_board: aruco_board # [aruco_board or chessboard]
 
 ## Robot parameters ##
 robot:
   gripper_width: 0.08 # [m]
-  gripper_center:  [0.07, 0, 0, 0, 0, 0] # (x, y, z, yaw, pitch roll) in [m, rad] Relative to the panda_link8 frame
+  gripper_center:  [0.0, 0.0, 0.12, 0.0, 0.0, 0.0] # (x, y, z, yaw, pitch roll) in [m, rad] Relative to the panda_link8 frame
 
 ## Grasping detection solution settings ##
 grasp_detection_solutions:

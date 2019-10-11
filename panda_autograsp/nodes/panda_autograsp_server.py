@@ -28,13 +28,13 @@ from message_filters import (ApproximateTimeSynchronizer, Subscriber)
 from cv_bridge import CvBridge, CvBridgeError
 import tf_conversions
 import tf2_ros
-import tf
 import dynamic_reconfigure.client
 
-## Import third party automation packages ##
+## Import third berkeley automation packages ##
 from autolab_core import YamlConfig
 
 ## Import messages and services ##
+import tf2_geometry_msgs
 from gqcnn.srv import GQCNNGraspPlanner
 from panda_autograsp.srv import (ComputeGrasp, PlanGrasp, PlanToPoint, VisualizePlan, VisualizeGrasp, ExecutePlan, ExecuteGrasp, CalibrateSensor, SetSensorPose)
 import geometry_msgs.msg
@@ -160,10 +160,10 @@ class ComputeGraspServer():
 				"gqcnn_grasp_planner", GQCNNGraspPlanner)
 			rospy.loginfo("Grasp_planner service found!")
 		except rospy.ServiceException as e:
-   		    rospy.logerr("Panda_autograsp \'gqcnn_grasp_planner\' service initialization failed: %s" % e)
-		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.gqcnn_grasp_planning_srv.resolved_name)
-		    rospy.logerr(shutdown_msg)
-		    sys.exit(0)
+   			rospy.logerr("Panda_autograsp \'gqcnn_grasp_planner\' service initialization failed: %s" % e)
+			shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.gqcnn_grasp_planning_srv.resolved_name)
+			rospy.logerr(shutdown_msg)
+			sys.exit(0)
 
 		###############################################
 		## Initialize moveit_planner server services ##
@@ -177,10 +177,10 @@ class ComputeGraspServer():
 			self.plan_to_pose_srv = rospy.ServiceProxy(
 				"moveit/plan_to_point", PlanToPoint)
 		except rospy.ServiceException as e:
-   		    rospy.logerr("Panda_autograsp \'moveit/plan_to_point\' service initialization failed: %s" % e)
-		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.plan_to_pose_srv.resolved_name)
-		    rospy.logerr(shutdown_msg)
-		    sys.exit(0)
+   			rospy.logerr("Panda_autograsp \'moveit/plan_to_point\' service initialization failed: %s" % e)
+			shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.plan_to_pose_srv.resolved_name)
+			rospy.logerr(shutdown_msg)
+			sys.exit(0)
 
 		## Initialize plan visualization service ##
 		rospy.loginfo("Conneting to \'moveit/visualize_plan\' service.")
@@ -189,10 +189,10 @@ class ComputeGraspServer():
 			self.visualize_plan_srv = rospy.ServiceProxy(
 				"moveit/visualize_plan", VisualizePlan)
 		except rospy.ServiceException as e:
-   		    rospy.logerr("Panda_autograsp \'moveit/visualize_plan\' service initialization failed: %s" % e)
-		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.visualize_plan_srv.resolved_name)
-		    rospy.logerr(shutdown_msg)
-		    sys.exit(0)
+   			rospy.logerr("Panda_autograsp \'moveit/visualize_plan\' service initialization failed: %s" % e)
+			shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.visualize_plan_srv.resolved_name)
+			rospy.logerr(shutdown_msg)
+			sys.exit(0)
 
 		## Initialize execute plan service ##
 		rospy.loginfo("Conneting to \'moveit/execute_plan\' service.")
@@ -201,10 +201,10 @@ class ComputeGraspServer():
 			self.execute_plan_srv = rospy.ServiceProxy(
 				"moveit/execute_plan", ExecutePlan)
 		except rospy.ServiceException as e:
-  		    rospy.logerr("Panda_autograsp \'moveit/execute_plan\' service initialization failed: %s" % e)
-		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.execute_plan_srv.resolved_name)
-		    rospy.logerr(shutdown_msg)
-		    sys.exit(0)
+  			rospy.logerr("Panda_autograsp \'moveit/execute_plan\' service initialization failed: %s" % e)
+			shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.execute_plan_srv.resolved_name)
+			rospy.logerr(shutdown_msg)
+			sys.exit(0)
 
 		## Initialize send sensor pose service ##
 		rospy.loginfo("Conneting to \'send_sensor_pose\' service.")
@@ -213,10 +213,10 @@ class ComputeGraspServer():
 			self.set_sensor_pose_srv = rospy.ServiceProxy(
 				"set_sensor_pose", SetSensorPose)
 		except rospy.ServiceException as e:
-  		    rospy.logerr("Panda_autograsp \'set_sensor_pose\' service initialization failed: %s" % e)
-		    shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.set_sensor_pose_srv.resolved_name)
-		    rospy.logerr(shutdown_msg)
-		    sys.exit(0)
+  			rospy.logerr("Panda_autograsp \'set_sensor_pose\' service initialization failed: %s" % e)
+			shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), self.set_sensor_pose_srv.resolved_name)
+			rospy.logerr(shutdown_msg)
+			sys.exit(0)
 
 		###############################################
 		## Create panda_autograsp_server services #####
@@ -272,10 +272,16 @@ class ComputeGraspServer():
 		self.camera_frame_br = tf2_ros.StaticTransformBroadcaster()
 
 		## Create state listener ##
-		self.tf2_listener = tf.TransformListener()
+		self.tf2_buffer = tf2_ros.Buffer()
+		self.tf2_listener = tf2_ros.TransformListener(self.tf2_buffer)
+
+		## Create publisher to publish pose of translated grasp ##
+		self.pose_pub = rospy.Publisher("move_group/pose",
+										   geometry_msgs.msg.PoseStamped,
+										   queue_size=10)
 
 		## Create pose subscriber ##
-		rospy.Subscriber("gqcnn_grasp/pose", geometry_msgs.msg.PoseStamped, self.get_pose_callback)
+		self.pose_sub = rospy.Subscriber("gqcnn_grasp/pose", geometry_msgs.msg.PoseStamped, self.get_pose_callback)
 
 	def get_pose_callback(self, pose_msg):
 		"""Callback function of the 'gqcnn_graps/pose` subsriber. This function updates the
@@ -311,7 +317,7 @@ class ComputeGraspServer():
 		position = self.grasp.grasp.pose.position
 		orientation = self.grasp.grasp.pose.orientation
 		pose_array = [position.x, position.y, position.z, orientation.x, orientation.y, orientation.z, orientation.w]
-		rospy.loginfo("Grasp pose result in kinect2_rgb_camera_frame: x={0}, y={1}, z={2}, q1={3}, q2={4}, q3={5} and q4={6}".format(*pose_array))
+		rospy.logdebug("Grasp pose result in kinect2_rgb_camera_frame: x={0}, y={1}, z={2}, q1={3}, q2={4}, q3={5} and q4={6}".format(*pose_array))
 
 		## Test if successful ##
 		if self.grasp:
@@ -321,31 +327,43 @@ class ComputeGraspServer():
 
 	def plan_grasp_service(self, req):
 
+		## Get transform between panda_link8 and gripper center ##
+		try:
+			trans_p8_grip_center = self.tf2_buffer.lookup_transform("gripper_center", "panda_link8", rospy.Time(0))
+		except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+			return False
+
 		## Get pose expressed in the panda_link8 frame ##
-		self.pose_msg.header.frame_id = "kinect2_rgb_optical_frame"
-		self.pose_msg.header.stamp = rospy.Time(0)
-		panda_hand_grasp_pose = self.tf2_listener.transformPose('panda_link8', self.pose_msg) # Translate from camera to pandalink_8 frame
+		try:
+			pose_msg = self.tf2_buffer.transform(self.pose_msg, "panda_link8")
+		except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+			return False
 
-		## Translate pose to center of the gripper ##
-		# NOTE: Positions and orientations are relative to the panda_link8 frame
-		panda_hand_grasp_pose.pose.position.x += MAIN_CFG['robot']['gripper_center'][0] # Add x distance [m] from panda_link8 to the palm of the eef
-		panda_hand_grasp_pose.pose.position.y += MAIN_CFG['robot']['gripper_center'][1] # Add y distance [m] from panda_link8 to the palm of the eef
-		panda_hand_grasp_pose.pose.position.z += MAIN_CFG['robot']['gripper_center'][2] # Add x distance [m] from panda_link8 to the palm of the eef
-		yaw = MAIN_CFG['robot']['gripper_center'][3]
-		pitch = MAIN_CFG['robot']['gripper_center'][4]]
-		roll = MAIN_CFG['robot']['gripper_center'][5]
-		quat_diff = tf_conversions.transformations.quaternion_from_euler(yaw, pitch, roll)
-		panda_hand_grasp_pose.pose.orientation.x += quat_diff[0]
-		panda_hand_grasp_pose.pose.orientation.y += quat_diff[0]
-		panda_hand_grasp_pose.pose.orientation.z += quat_diff[0]
-		panda_hand_grasp_pose.pose.orientation.w += quat_diff[0]
+		## Transform grasp pose such that it aligns with the gripper_center frame ##
+		# This is needed since the move_group uses the panda_link8 frame as its
+		# end-effector.
+		pose_msg = tf2_geometry_msgs.do_transform_pose(pose_msg, trans_p8_grip_center)
+		pose_msg.header.frame_id = "panda_link8"
 
-		## Transform pose to the planning reference frame ##
-		panda_hand_grasp_pose.header.stamp = rospy.Time(0)
-		panda_hand_grasp_pose = self.tf2_listener.transformPose('panda_link0', panda_hand_grasp_pose) # Translate to planning reference frame (panda_link0)
+		## Get pose expressed in the panda_link0 frame ##
+		# Needed since the panda_link0 is the reference frame
+		# of the move group.
+		try:
+			pose_msg = self.tf2_buffer.transform(pose_msg, "panda_link0")
+		except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+			return False
+
+		## Display pose in panda_link0 frame ##
+		position = pose_msg.pose.position
+		orientation = pose_msg.pose.orientation
+		pose_array = [position.x, position.y, position.z, orientation.x, orientation.y, orientation.z, orientation.w]
+		rospy.logdebug("Grasp pose result in panda_link0: x={0}, y={1}, z={2}, q1={3}, q2={4}, q3={5} and q4={6}".format(*pose_array))
+
+		## Publish transformed pose ##
+		self.pose_pub.publish(pose_msg)
 
 		## Call grasp plan to pose service ##
-		result = self.plan_to_pose_srv(panda_hand_grasp_pose.pose)
+		result = self.plan_to_pose_srv(pose_msg.pose)
 
 		## Test if successful ##
 		if result.success:
@@ -630,7 +648,7 @@ class ComputeGraspServer():
 				"q3": float(quat[3]),
 				"q4": float(quat[0])
 			}
-			rospy.loginfo("Calibration result: x={x}, y={y}, z={z}, q1={q1}, q2={q2}, q3={q3} and q4={q4}".format(**cal_pose))
+			rospy.logdebug("Calibration result: x={x}, y={y}, z={z}, q1={q1}, q2={q2}, q3={q3} and q4={q4}".format(**cal_pose))
 
 			## Create geometry_msg ##
 			sensor_frame_tf_msg = geometry_msgs.msg.TransformStamped()
@@ -652,6 +670,11 @@ class ComputeGraspServer():
 ## Main script ##################################
 #################################################
 if __name__ == "__main__":
+
+	## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+	import ptvsd
+	ptvsd.wait_for_attach()
+	## ------------------------------ ##
 
 	## Initialize ros node ##
 	rospy.loginfo("Initializing panda_autograsp_server")

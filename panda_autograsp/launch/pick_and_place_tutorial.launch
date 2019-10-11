@@ -5,10 +5,10 @@
 <launch>
 
     <!--Launch file arguments-->
-    <arg name="base_name"           default="panda_autograsp"/>
-    <arg name="output"              default="log"/>
-    <arg name="calib_type"          default="aruco_board"/> <!--Supports "aruco_board" or "chessboard"-->
-    <arg name="debug"               default="False"/>
+    <arg name="base_name" default="panda_autograsp"/>
+    <arg name="output" default="log"/>
+    <arg name="calib_type" default="aruco_board"/><!--Supports "aruco_board" or "chessboard"-->
+    <arg name="debug" default="False"/>
 
     <!--Change loggin format-->
     <env name="ROSCONSOLE_FORMAT" value="[${severity}] [WallTime: ${time}]: [${node}] ${message}" if="$(arg debug)"/>
