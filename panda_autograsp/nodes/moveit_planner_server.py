@@ -42,7 +42,7 @@ JUMPT_THRESHOLD = MAIN_CFG["planning"]["cartesian"]["jump_threshold"]
 ## PandaPathPlanningService class ###############
 #################################################
 class PandaPathPlanningService:
-    def __init__(self, robot_description, args, pose_reference_frame="panda_link0", move_group="panda_arm", end_effector="panda_link8", planner='RRTConnectkConfigDefault', ):
+    def __init__(self, robot_description, args, planner='RRTConnectkConfigDefault'):
         """PandaPathPlannerService class initialization.
 
         Parameters
@@ -51,12 +51,6 @@ class PandaPathPlanningService:
             Where to find the URDF.
         args : objects
             Roscpp args, passed on.
-        move_group : str
-            Name of the pose planning reference frame, by default "panda_link0".
-        move_group : str
-            Name of the move group, by default "panda_arm_hand".
-        end_effector : str
-            Name of end effector, by default "panda_hand
         planner : str, optional
             The Path planning algorithm, by default 'RRTConnectkConfigDefault'.
         """
@@ -78,27 +72,33 @@ class PandaPathPlanningService:
 		    rospy.logerr(shutdown_msg)
 		    sys.exit(0)
 
-        ## Create robot commander ##
+        ## Create robot commander  and move_groups ##
+        # Used to get information about the robot and control it.
         self.robot = moveit_commander.RobotCommander(
             robot_description=robot_description, ns="/")
         rospy.logdebug("Robot Groups: %s", self.robot.get_group_names())
+        self.move_group_panda_hand = self.robot.get_group("panda_hand")
+        self.move_group_panda_arm = self.robot.get_group("panda_arm")
+        self.move_group_panda_arm_hand = self.robot.get_group("panda_arm_hand")
+        self.move_group_panda_hand.set_planning_time(MAIN_CFG["planning"]["general"]["planning_time"])
+        self.move_group_panda_arm.set_planning_time(MAIN_CFG["planning"]["general"]["planning_time"])
+        self.move_group_panda_arm_hand.set_planning_time(MAIN_CFG["planning"]["general"]["planning_time"])
 
         ## Create scene commanders ##
         # Used to get information about the world and update the robot
         # its understanding of the world.
-        self.move_group = self.robot.get_group(move_group)
-        self.move_group.set_pose_reference_frame(pose_reference_frame) # Set reference frame
-        self.move_group.set_end_effector_link(end_effector)            # Set end-effector link
-        self.move_group.set_planning_time(MAIN_CFG["planning"]["general"]["planning_time"])
         self.scene = moveit_commander.PlanningSceneInterface(
             ns="/")
 
         ## Specify the planner we want to use ##
-        self.move_group.set_planner_id(planner)
+        self.move_group_panda_hand.set_planner_id(planner)
+        self.move_group_panda_arm.set_planner_id(planner)
+        self.move_group_panda_arm_hand.set_planner_id(planner)
 
         ## Get end effector ##
-        self.eef_link = self.move_group.get_end_effector_link()
-        rospy.logdebug("End effector link: %s", self.eef_link)
+        self.eef_link = self.move_group_panda_arm_hand.get_end_effector_link()
+        rospy.logdebug("%s move group end effector link: %s", (self.move_group_panda_arm_hand.get_name(), self.eef_link))
+        rospy.logdebug("%s move group end effector link: %s", (self.move_group_panda_arm.get_name(), self.eef_link))
 
         ## Create a `DisplayTrajectory`_ ROS publisher to display the plan in RVIZ ##
         self.display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
@@ -108,7 +108,7 @@ class PandaPathPlanningService:
         ## Print some information about the planner configuration ##
         rospy.loginfo("Using planner: %s", planner)
         rospy.logdebug("Reference frame: %s",
-                       self.move_group.get_planning_frame())
+                       self.move_group_panda_arm_hand.get_planning_frame())
         rospy.logdebug("End effector: %s", self.eef_link)
         rospy.logdebug("Current robot state: %s",
                        self.robot.get_current_state())
@@ -150,8 +150,8 @@ class PandaPathPlanningService:
 
         ## Set joint targets and plan trajectory ##
         rospy.loginfo("Planning to: \n %s", joints.target)
-        self.move_group.set_joint_value_target(list(joints.target))
-        plan = self.move_group.plan()
+        self.move_group_panda_arm_hand.set_joint_value_target(list(joints.target))
+        plan = self.move_group_panda_arm_hand.plan()
 
         ## Validate whether planning was successful ##
         rospy.logdebug("Plan points: %d" % len(plan.joint_trajectory.points))
@@ -184,12 +184,12 @@ class PandaPathPlanningService:
 
         ## Set the target position ##
         rospy.loginfo("Planning to: \n %s", req.target)
-        self.move_group.set_pose_target(req.target)
+        self.move_group_panda_arm_hand.set_pose_target(req.target)
 
         ## Perform planning ##
         # Perform multiple time to get the best path.
         for i in range(POINT_N_STEP):
-            plans.append(self.move_group.plan())
+            plans.append(self.move_group_panda_arm_hand.plan())
             points.append(len(plans[i].joint_trajectory.points))
             rospy.logdebug("Found plan %d with %d points" % (i, points[i]))
 
@@ -202,12 +202,12 @@ class PandaPathPlanningService:
         if len(plan.joint_trajectory.points) > 1:
             rospy.loginfo("Plan found")
             self.current_plan = plan
-            self.move_group.clear_pose_targets()  # Clear pose targets
+            self.move_group_panda_arm_hand.clear_pose_targets()  # Clear pose targets
             return True
         else:
             rospy.logwarn("No plan found")
             self.current_plan = None
-            self.move_group.clear_pose_targets()  # Clear pose targets
+            self.move_group_panda_arm_hand.clear_pose_targets()  # Clear pose targets
             return False
 
     def plan_cartesian_path_service(self, req):
@@ -225,7 +225,7 @@ class PandaPathPlanningService:
         """
 
         ## Plan cartesain path ##
-        (plan, fraction) = self.move_group.compute_cartesian_path(
+        (plan, fraction) = self.move_group_panda_arm_hand.compute_cartesian_path(
             req.waypoints,       # waypoints to follow
             EEF_STEP,            # eef_step
             JUMPT_THRESHOLD)     # jump_threshold
@@ -285,7 +285,7 @@ class PandaPathPlanningService:
 
         ## Execute plan if available ##
         if self.current_plan is not None:
-            result = self.move_group.execute(
+            result = self.move_group_panda_arm_hand.execute(
                 plan_msg=self.current_plan, wait=True)
 
             ## Check if execution was successful ##
@@ -314,7 +314,7 @@ class PandaPathPlanningService:
 
         ## Create random pose ##
         rospy.loginfo("Creating random pose.")
-        rand_pose = self.move_group.get_random_pose()
+        rand_pose = self.move_group_panda_arm_hand.get_random_pose()
 
         ## Plan to random pose ##
         req = (lambda: None)  # Create dumpy request function object
@@ -343,7 +343,7 @@ class PandaPathPlanningService:
 
         ## Create random pose ##
         rospy.loginfo("Creating random joint goal.")
-        rand_joint = self.move_group.get_random_joint_values()
+        rand_joint = self.move_group_panda_arm_hand.get_random_joint_values()
 
         ## Plan to random pose ##
         req = (lambda: None)  # Create dumpy request function object
@@ -372,13 +372,13 @@ class PandaPathPlanningService:
         """
         ## Create local variables ##
         waypoints = []
-        w_pose = self.move_group.get_current_pose().pose
+        w_pose = self.move_group_panda_arm_hand.get_current_pose().pose
 
         ## Create a cartesian path ##
         for _ in range(req.n_waypoints):
 
             ## Generate random pose ##
-            rand_pose = self.move_group.get_random_pose()
+            rand_pose = self.move_group_panda_arm_hand.get_random_pose()
             w_pose.position.x = rand_pose.pose.position.x
             w_pose.position.y = rand_pose.pose.position.y
             w_pose.position.z = rand_pose.pose.position.z
@@ -437,58 +437,6 @@ class PandaPathPlanningService:
         posture.points[0].positions[1] = 0.00
         posture.points[0].time_from_start = rospy.Duration(0.5)
 
-    def pick(self):
-    	"""Pick an object."""
-
-    	## - BEGIN_SUB_TUTORIAL pick1 - ##
-    	## Create a vector of grasps to be attempted, currently only creating single grasp. ##
-    	# This is essentially useful when using a grasp generator to generate and test multiple grasps.
-    	grasps = [Grasp() for i in range(1)]
-
-    	## Setting grasp pose ##
-    	# This is the pose of panda_link8. |br|
-    	# From panda_link8 to the palm of the eef the distance is 0.058, the cube starts 0.01 before 5.0 (half of the length
-    	# of the cube). |br|
-    	# Therefore, the position for panda_link8 = 5 - (length of cube/2 - distance b/w panda_link8 and palm of eef - some
-    	# extra padding)
-    	grasps[0].grasp_pose.header.frame_id = "panda_link0"
-    	orientation = quaternion_from_euler(-math.pi /
-                                         2, -math.pi / 4, -math.pi / 2)
-    	grasps[0].grasp_pose.pose.orientation.x = orientation[0]
-    	grasps[0].grasp_pose.pose.orientation.y = orientation[1]
-    	grasps[0].grasp_pose.pose.orientation.z = orientation[2]
-    	grasps[0].grasp_pose.pose.orientation.w = orientation[3]
-    	grasps[0].grasp_pose.pose.position.x = 0.415
-    	grasps[0].grasp_pose.pose.position.y = 0
-    	grasps[0].grasp_pose.pose.position.z = 0.5
-
-    	## Setting pre-grasp approach ##
-    	# Defined with respect to frame_id
-    	grasps[0].pre_grasp_approach.direction.header.frame_id = "panda_link0"
-    	# Direction is set as positive x axis
-    	grasps[0].pre_grasp_approach.direction.vector.x = 1.0
-    	grasps[0].pre_grasp_approach.min_distance = 0.095
-    	grasps[0].pre_grasp_approach.desired_distance = 0.115
-
-    	## Setting post-grasp retreat ##
-    	# Defined with respect to frame_id
-    	grasps[0].post_grasp_retreat.direction.header.frame_id = "panda_link0"
-    	# Direction is set as positive z axis
-    	grasps[0].post_grasp_retreat.direction.vector.z = 1.0
-    	grasps[0].post_grasp_retreat.min_distance = 0.1
-    	grasps[0].post_grasp_retreat.desired_distance = 0.25
-
-    	## Setting posture of eef before grasp ##
-    	self.openGripper(grasps[0].pre_grasp_posture)
-
-    	## Setting posture of eef during grasp ##
-    	closedGripper(grasps[0].grasp_posture)
-
-    	# ## Set support surface as table1. ##
-    	# self.move_group.set_support_surface_name("table1")
-
-    	# Call pick to pick up the object using the grasps given
-    	self.move_group.pick("object", grasps)
 
 #################################################
 ## Main script ##################################
@@ -498,9 +446,13 @@ if __name__ == '__main__':
     ## Init service node ##
     rospy.init_node('moveit_planner_server')
 
+    ## DEBUG: WAIT FOR PTVSD DEBUGGER ##
+    import ptvsd
+    ptvsd.wait_for_attach()
+    ## ------------------------------ ##
+
     ## Create service object ##
-    path_planning_service = PandaPathPlanningService(robot_description='robot_description', pose_reference_frame="panda_link0", move_group="panda_arm", end_effector="panda_link8", args=sys.argv,
-                                                     planner="TRRTkConfigDefault")
+    path_planning_service = PandaPathPlanningService(robot_description='robot_description', args=sys.argv, planner="TRRTkConfigDefault")
 
     ## Spin forever ##
     rospy.spin()

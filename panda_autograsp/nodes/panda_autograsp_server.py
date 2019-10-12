@@ -328,45 +328,11 @@ class ComputeGraspServer():
 
 	def plan_grasp_service(self, req):
 
-		## Get transform between panda_link8 and gripper center ##
-		try:
-			trans_grip_center_p8 = self.tf2_buffer.lookup_transform("panda_link8", "gripper_center", rospy.Time(0))
-		except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-			return False
-
-		## Get pose expressed in the panda_link8 frame ##
-		try:
-			pose_msg = self.tf2_buffer.transform(self.pose_msg, "panda_link8", rospy.Duration(1))
-		except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-			return False
-
-		## Transform grasp pose such that it aligns with the gripper_center frame ##
-		# This is needed since the move_group uses the panda_link8 frame as its
-		# end-effector.
-
-		## Transform transformation to 4x4 homogeneous matrix ##
-		H_trans = conversions.transform_stamped_2_matrix(trans_grip_center_p8)
-		H_trans = tf_conversions.transformations.inverse_matrix(H_trans) # Use inverse to correct for planning in the wrong EEF
-		H_pose = conversions.pose_msg_stamped_2_matrix(pose_msg)
-
-		## New Pose ##
-		pose_new = np.dot(H_trans, H_pose)
-		trans = tf_conversions.transformations.translation_from_matrix(pose_new)
-		rot = tf_conversions.transformations.quaternion_from_matrix(pose_new)
-		pose_msg.pose.position.x = trans[0]
-		pose_msg.pose.position.y = trans[1]
-		pose_msg.pose.position.z = trans[2]
-		pose_msg.pose.orientation.x = rot[0]
-		pose_msg.pose.orientation.y = rot[1]
-		pose_msg.pose.orientation.z = rot[2]
-		pose_msg.pose.orientation.w = rot[3]
-		# pose_msg = tf2_geometry_msgs.do_transform_pose(pose_msg, trans_grip_center_p8)
-
 		## Get pose expressed in the panda_link0 frame ##
 		# Needed since the panda_link0 is the reference frame
 		# of the move group.
 		try:
-			pose_msg = self.tf2_buffer.transform(pose_msg, "panda_link0", rospy.Duration(1))
+			pose_msg = self.tf2_buffer.transform(self.pose_msg, "panda_link0", rospy.Duration(1))
 		except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
 			return False
 
