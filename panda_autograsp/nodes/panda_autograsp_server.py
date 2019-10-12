@@ -42,6 +42,7 @@ from std_msgs.msg import Header
 
 ## Import custom packages ##
 from panda_autograsp.functions import yes_or_no
+from panda_autograsp.functions import conversions
 
 #################################################
 ## Script settings ##############################
@@ -327,29 +328,11 @@ class ComputeGraspServer():
 
 	def plan_grasp_service(self, req):
 
-		## Get transform between panda_link8 and gripper center ##
-		try:
-			trans_p8_grip_center = self.tf2_buffer.lookup_transform("gripper_center", "panda_link8", rospy.Time(0))
-		except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-			return False
-
-		## Get pose expressed in the panda_link8 frame ##
-		try:
-			pose_msg = self.tf2_buffer.transform(self.pose_msg, "panda_link8")
-		except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-			return False
-
-		## Transform grasp pose such that it aligns with the gripper_center frame ##
-		# This is needed since the move_group uses the panda_link8 frame as its
-		# end-effector.
-		pose_msg = tf2_geometry_msgs.do_transform_pose(pose_msg, trans_p8_grip_center)
-		pose_msg.header.frame_id = "panda_link8"
-
 		## Get pose expressed in the panda_link0 frame ##
 		# Needed since the panda_link0 is the reference frame
 		# of the move group.
 		try:
-			pose_msg = self.tf2_buffer.transform(pose_msg, "panda_link0")
+			pose_msg = self.tf2_buffer.transform(self.pose_msg, "panda_link0", rospy.Duration(1))
 		except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
 			return False
 
@@ -670,11 +653,6 @@ class ComputeGraspServer():
 ## Main script ##################################
 #################################################
 if __name__ == "__main__":
-
-	## DEBUG: WAIT FOR PTVSD DEBUGGER ##
-	import ptvsd
-	ptvsd.wait_for_attach()
-	## ------------------------------ ##
 
 	## Initialize ros node ##
 	rospy.loginfo("Initializing panda_autograsp_server")

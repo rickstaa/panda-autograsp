@@ -17,7 +17,6 @@
 
     <!-- Load panda simulation and visualization -->
     <include file="$(find panda_autograsp)/launch/panda_moveit_config.launch">
-        <arg name="output" value="$(arg output)" />
         <arg name="gripper_center" value="$(arg gripper_center)" />
         <arg name="gripper_center_xyz" value="$(arg gripper_center_xyz)" />
     </include>
