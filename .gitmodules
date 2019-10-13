@@ -13,9 +13,6 @@
 [submodule "gqcnn"]
 	path = gqcnn
 	url = git@github.com:rickstaa/gqcnn
-[submodule "panda_moveit_config"]
-	path = panda_moveit_config
-	url = git@github.com:rickstaa/panda_moveit_config.git
 [submodule "franka_ros"]
 	path = franka_ros
 	url = git@github.com:rickstaa/franka_ros.git
@@ -25,3 +22,6 @@
 [submodule "ar_track_alvar"]
 	path = ar_track_alvar
 	url = git@github.com:rickstaa/ar_track_alvar.git
+[submodule "panda_moveit_config"]
+	path = panda_moveit_config
+	url = git@github.com:rickstaa/panda_moveit_config.git
