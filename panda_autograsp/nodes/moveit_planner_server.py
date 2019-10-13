@@ -99,7 +99,7 @@ class PandaPathPlanningService:
         try:
             self.move_group_gripper = self.robot.get_group(move_group_gripper)
         except:
-            rospy.logwarn("There is no group named %s. As a result you can not open or close the gripper." % move_group)
+            rospy.logwarn("There is no group named %s. As a result you can not open or close the gripper." % move_group_gripper)
         self.move_group_gripper.set_planning_time(MAIN_CFG["planning"]["general"]["planning_time"])
         self.move_group_gripper.set_planner_id(planner)
 
@@ -455,7 +455,7 @@ if __name__ == '__main__':
     rospy.init_node('moveit_planner_server')
 
     ## Create service object ##
-    path_planning_service = PandaPathPlanningService(robot_description='robot_description', move_group="panda_arm", move_group_gripper="panda_hand", pose_reference_frame="panda_link0", planner="TRRTkConfigDefault", args=sys.argv)
+    path_planning_service = PandaPathPlanningService(robot_description='robot_description', move_group="panda_arm", move_group_gripper="hand", pose_reference_frame="panda_link0", planner="TRRTkConfigDefault", args=sys.argv)
 
     ## Spin forever ##
     rospy.spin()

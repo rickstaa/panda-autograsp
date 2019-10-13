@@ -16,3 +16,4 @@ microsoft.gpg
 *.log
 *eggs-info
 .eggs
+workspace.code-workspace
