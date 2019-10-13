@@ -43,7 +43,7 @@ JUMPT_THRESHOLD = MAIN_CFG["planning"]["cartesian"]["jump_threshold"]
 ## PandaPathPlanningService class ###############
 #################################################
 class PandaPathPlanningService:
-    def __init__(self, robot_description, args, move_group="panda_arm_hand", move_group_gripper="panda_hand", pose_reference_frame="panda_link0", planner="TRRTkConfigDefault"):
+    def __init__(self, robot_description, args, move_group="panda_arm_hand", move_group_end_effector_link="panda_center_gripper", move_group_gripper="panda_hand", pose_reference_frame="panda_link0", planner="TRRTkConfigDefault"):
 
         """PandaPathPlannerService class initialization.
 
@@ -55,6 +55,8 @@ class PandaPathPlanningService:
             Roscpp args, passed on.
         move_group : str
             Name of the pose planning reference frame, by default "panda_link0".
+        move_group_end_effector_link : str
+            Name of the end effector link.
         move_group_gripper : str
             Name of the move group, by default "panda_arm_hand".
         pose_reference_frame : str
@@ -94,8 +96,9 @@ class PandaPathPlanningService:
         self.move_group.set_pose_reference_frame(pose_reference_frame) # Set pose reference frame
         self.move_group.set_planning_time(MAIN_CFG["planning"]["general"]["planning_time"])
         self.move_group.set_planner_id(planner)
+        self.move_group.set_end_effector_link(move_group_end_effector_link)
 
-        ## Create gripper move_group
+        ## Create gripper move_group ##
         try:
             self.move_group_gripper = self.robot.get_group(move_group_gripper)
         except:
