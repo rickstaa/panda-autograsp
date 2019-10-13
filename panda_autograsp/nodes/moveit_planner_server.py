@@ -43,7 +43,7 @@ JUMPT_THRESHOLD = MAIN_CFG["planning"]["cartesian"]["jump_threshold"]
 ## PandaPathPlanningService class ###############
 #################################################
 class PandaPathPlanningService:
-    def __init__(self, robot_description, args, move_group="panda_arm_hand", move_group_end_effector_link="panda_center_gripper", move_group_gripper="panda_hand", pose_reference_frame="panda_link0", planner="TRRTkConfigDefault"):
+    def __init__(self, robot_description, args, move_group="panda_arm_hand", move_group_end_effector_link="panda_gripper_center", move_group_gripper="panda_hand", pose_reference_frame="panda_link0", planner="TRRTkConfigDefault"):
 
         """PandaPathPlannerService class initialization.
 
