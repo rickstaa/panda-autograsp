@@ -1,4 +1,4 @@
-# Execute the planned movement. If no plan available, always fails.
+# Execute the planned movement. If no plan available, always fails
 
 ---
 bool success

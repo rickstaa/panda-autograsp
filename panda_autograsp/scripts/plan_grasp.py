@@ -1,39 +1,53 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Implementation of the `GQCNN grasp detection algorithm <https://berkeleyautomation.github.io/gqcnn>`_ on the Franka Emika Panda Robots. This file is
-based on the grasp_planner_node.py file that was supplied with the GQCNN package.
+""" This script can be used to test out the :py:mod:`gqcnn_grasp_planner` python module.
+
+Usage:
+    To visualize the grasp please set the ``vis`` settings in the ``cfg/main_config.yaml`.
 """
 
-## Standard library imports ##
+# Main python packages
 import os
 
-## Import custom modules ##
+# Panda_autograsp modules, msgs and srvs
 from panda_autograsp.grasp_planners.gqcnn_grasp_planner import GraspPlanner
 from panda_autograsp import Logger
 
+# Create script logger
+script_logger = Logger.get_logger("plan_grasp.py")
+
 #################################################
-## Script settings ##############################
+# Script settings ###############################
 #################################################
 MODEL_NAME = "GQCNN-4.0-PJ"
 
 #################################################
-## Main script ##################################
+# Main script ###################################
 #################################################
 if __name__ == "__main__":
 
-    ## set root logger format ##
-    root_logger = Logger.get_logger(log_file=os.path.abspath(os.path.join(os.path.dirname(
-    os.path.realpath(__file__)), ".." ,"logs/main_log.log"))) # Get root logger and format according to the panda_autograsp.loggers.Logger class
+    # Welcome message
+    print(
+        "== Plan grasp script ==\n",
+        "This script can be used to test the ",
+        "'gqcnn_grasp_planner python' module.",
+        "",
+        "Usage: To show the computed grasp edit ",
+        "the vis settings in the \`cfg/main_config.yaml` file.",
+    )
 
-    ## Create script logger ##
-    main_logger = Logger.get_logger("plan_grasp.py")
+    # set root logger format
+    root_logger = Logger.get_logger(
+        log_file=os.path.abspath(
+            os.path.join(
+                os.path.dirname(os.path.realpath(__file__)), "..", "logs/plan_grasp.log"
+            )
+        )
+    )
 
-    ## Create a grasp planner. ##
+    # Create a grasp planner
     grasp_planner = GraspPlanner(model=MODEL_NAME)
 
-    ## Start grasp planner ##
+    # Plan a grasp and display the result
     grasp_planner.start()
     grasp = grasp_planner.plan_grasp()
-
-    ## Stop for a moment ##
-    print("I want to stop here.")

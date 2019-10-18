@@ -1,4 +1,4 @@
-# Execute the planned movement. If no plan available, always fails.
+# Request world/sensor calibration
 
 ---
 bool success

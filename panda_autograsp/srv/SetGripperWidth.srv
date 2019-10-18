@@ -1,0 +1,5 @@
+# Request gripper width set signal
+
+float64 gripper_width
+---
+bool success

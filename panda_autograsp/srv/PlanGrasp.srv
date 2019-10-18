@@ -1,4 +1,5 @@
-## Service to start the grasp planner ##
+# Request grasp movement planning
+# Used by the panda_autograsp_server to evoke the moveit_planner_server PlanToPoint service.
 
 ---
 bool success

@@ -64,9 +64,10 @@ catkin_python_setup()
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 # Generate messages in the 'msg' folder
-# add_message_files(
-  # DEPENDENCIES sensor_msgs
-# )
+add_message_files(
+  FILES
+  GQCNNGrasp.msg
+)
 
 ## Generate services in the 'srv' folder
 add_service_files(
@@ -85,6 +86,15 @@ add_service_files(
   ExecuteGrasp.srv
   CalibrateSensor.srv
   SetSensorPose.srv
+  CloseGripper.srv
+  OpenGripper.srv
+  SetGripperWidth.srv
+  SetGripperOpen.srv
+  SetGripperClosed.srv
+  GQCNNGraspPlanner.srv
+  PlanGripper.srv
+  ExecuteGripperPlan.srv
+  PlanPlace.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -100,9 +110,10 @@ generate_messages(
   std_msgs
   geometry_msgs
   trajectory_msgs
+  sensor_msgs
 )
 
-######################geometry_msgs##########################
+################################################
 ## Declare ROS dynamic reconfigure parameters ##
 ################################################
 
@@ -141,6 +152,7 @@ catkin_package(
    tf2_geometry_msgs
    trajectory_msgs
    moveit_msgs
+   message_runtime
 #  DEPENDS system_lib
 )
 

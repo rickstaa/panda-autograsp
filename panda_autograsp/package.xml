@@ -62,12 +62,14 @@
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>message_generation</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>tf2_geometry_msgs</exec_depend>
   <exec_depend>trajectory_msgs</exec_depend>
   <exec_depend>moveit_msgs</exec_depend>
+  <exec_depend>ruemel.yaml</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

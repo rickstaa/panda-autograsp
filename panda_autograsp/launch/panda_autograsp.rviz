@@ -9,6 +9,10 @@ Panels:
         - /MotionPlanning1/Scene Robot1
         - /MotionPlanning1/Planning Request1
         - /TF1/Frames1
+        - /Camera1/Visibility1
+        - /Grasp Pose1
+        - /Grasp Pose1/Status1
+        - /Place Pose1
       Splitter Ratio: 0.7384615540504456
     Tree Height: 393
   - Class: rviz/Help
@@ -49,8 +53,7 @@ Visualization Manager:
       Enabled: true
       Marker Topic: /rviz_visual_tools
       Name: MarkerArray
-      Namespaces:
-        {}
+      Namespaces: {}
       Queue Size: 100
       Value: true
     - Class: moveit_rviz_plugin/Trajectory
@@ -500,10 +503,8 @@ Visualization Manager:
         world:
           panda_link0:
             calib_frame:
-              kinect2_ir_optical_frame:
-                {}
-              kinect2_rgb_optical_frame:
-                {}
+              kinect2_ir_optical_frame: {}
+              kinect2_rgb_optical_frame: {}
             panda_link1:
               panda_link2:
                 panda_link3:
@@ -513,12 +514,9 @@ Visualization Manager:
                         panda_link7:
                           panda_link8:
                             panda_hand:
-                              panda_gripper_center:
-                                {}
-                              panda_leftfinger:
-                                {}
-                              panda_rightfinger:
-                                {}
+                              panda_gripper_center: {}
+                              panda_leftfinger: {}
+                              panda_rightfinger: {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -533,7 +531,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: RGB8
       Decay Time: 0
-      Enabled: false
+      Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 4096
@@ -550,9 +548,9 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: false
+      Value: true
     - Class: rviz/Camera
-      Enabled: false
+      Enabled: true
       Image Rendering: background and overlay
       Image Topic: kinect2/hd/image_color
       Name: Camera
@@ -560,17 +558,18 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
-      Value: false
+      Value: true
       Visibility:
         Grasp Pose: true
         Grasp image: true
         Grid: false
         MarkerArray: false
         MotionPlanning: true
+        Place Pose: true
         PlanningScene: false
         PointCloud2: true
         TF: true
-        Trajectory: true
+        Trajectory: false
         Value: true
       Zoom Factor: 1
     - Alpha: 1
@@ -600,6 +599,21 @@ Visualization Manager:
       Transport Hint: raw
       Unreliable: false
       Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 92; 53; 102
+      Enabled: true
+      Head Length: 0.10000000149011612
+      Head Radius: 0.10000000149011612
+      Name: Place Pose
+      Shaft Length: 0.20000000298023224
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: moveit/place_pose
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -617,7 +631,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 1.911075472831726
+      Distance: 1.1766048669815063
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -632,10 +646,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.3897954821586609
+      Pitch: 0.8047959804534912
       Target Frame: panda_link0
       Value: XYOrbit (rviz)
-      Yaw: 5.799930095672607
+      Yaw: 1.9417386054992676
     Saved: ~
 Window Geometry:
   Camera:

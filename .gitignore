@@ -1,4 +1,4 @@
-# Folders to ignore #
+# Folders to ignore
 .vscode/
 vscode_ws/
 __pychache__/
@@ -8,8 +8,10 @@ _build/
 tmp/
 models/
 dist/
+data/frames
+data/
 
-# files to ignore ##
+# files to ignore
 /CMakeLists.txt
 *.pyc
 microsoft.gpg
@@ -17,3 +19,5 @@ microsoft.gpg
 *eggs-info
 .eggs
 *.code-workspace
+*.png
+*.jpg

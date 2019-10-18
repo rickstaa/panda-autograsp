@@ -1,145 +1,167 @@
-"""This script is used to process the Kinect images and qeury them to the
-GQCNN algorithm.
+"""This script can be used retrieve ir, color, depth and registered images from
+the Kinect camera. The images will be saved in the ``data/frames`` folder.
+
+Usage:
+    [q]: Stop the kinect_processing script.
+    [s]: Save kinect frames.
 """
 
-## pylibfrenect imports
+# Main python packages
 import numpy as np
+import os
+import datetime
 import cv2
 import sys
 from pylibfreenect2 import Freenect2, SyncMultiFrameListener
 from pylibfreenect2 import FrameType, Registration, Frame
-from pylibfreenect2 import createConsoleLogger, setGlobalLogger
-from pylibfreenect2 import LoggerLevel
 
-## Other imports ##
-import logging
+# Panda_autograsp modules, msgs and srvs
+from panda_autograsp import Logger
 
-################################
-## Kinect process settings #####
-################################
-## Optional parameters for registration. ##
-# Set true if you need.
-NEED_BIGDEPTH = False
-NEED_COLOR_DEPTH_MAP = False
+# Create script logger
+script_logger = Logger.get_logger("kinect_processing.py")
 
-## Other settings ##
-DATA_SAVE_FOLDER = "../data/"
+#################################################
+# Kinect process settings #######################
+#################################################
 
-################################
-## Initialize loggers ##########
-################################
+NEED_BIGDEPTH = False  # Use Full size depth image
+NEED_COLOR_DEPTH_MAP = False  # Overlay depth and colour
+DATA_SAVE_FOLDER = os.path.abspath(
+    os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "data/frames")
+)
 
-## Create and set pylibfrenect logger ##
-logger = createConsoleLogger(LoggerLevel.Info)
-setGlobalLogger(logger)
+#################################################
+# Main script ###################################
+#################################################
+if __name__ == "__main__":
 
-## Create panda autograsp logger ##
-logging.addLevelName(logging.INFO, 'Info') # Capitalize INFO logger level
-logging.addLevelName(logging.ERROR, 'Error') # Capitalize ERROR logger level
-logging.addLevelName(logging.DEBUG, 'Debug') # Capitalize DEBUG logger level
-logging.addLevelName(logging.WARNING, 'Warning') # Capitalize WARNING logger level
-logging.addLevelName(logging.CRITICAL, 'Critical') # Capitalize CRITICAL logger level
-logging.addLevelName(logging.NOTSET, 'Notset') # Capitalize NOTSET logger level
-logging.basicConfig(level=logging.INFO,
-                    format='[%(levelname)s] [%(processName)s] %(message)s')
-panda_logger = logging.getLogger("panda_logger")
+    # Welcome message
+    print(
+        "== Kinect processing script ==\n"
+        "This script can be used retrieve ir, color, \n"
+        "depth and registered images from the Kinect \n "
+        "camera. The images will be saved in the \n "
+        "``data/frames`` folder.\n"
+        "\n"
+        "Usage: \n"
+        "  [q]: Stop the kinect_processing script. \n"
+        "  [s]: Save kinect frames.\n"
+    )
 
-################################
-## Kinect process initiation ###
-################################
+    # set root logger format
+    root_logger = Logger.get_logger(
+        log_file=os.path.abspath(
+            os.path.join(
+                os.path.dirname(os.path.realpath(__file__)), "..", "logs/main_log.log"
+            )
+        )
+    )
 
-## Open depth package pipline ##
-try:  # Check if GPU can be used
-    from pylibfreenect2 import OpenCLPacketPipeline
-    pipeline = OpenCLPacketPipeline()
-except:  # Otherwise open CPU
-    from pylibfreenect2 import CpuPacketPipeline
-    pipeline = CpuPacketPipeline()
+    #############################################
+    # Kinect initiation settings ################
+    #############################################
 
-## Create freenect2 object and check sensor properties ##
-fn = Freenect2()
-num_devices = fn.enumerateDevices()
-if num_devices == 0:
-    print("No device connected!")
-    sys.exit(1)
-serial = fn.getDeviceSerialNumber(0)
-device = fn.openDevice(serial, pipeline=pipeline)
-listener = SyncMultiFrameListener(
-    FrameType.Color | FrameType.Ir | FrameType.Depth)
+    # Open depth package pipline
+    try:  # Check if GPU can be used
+        from pylibfreenect2 import OpenCLPacketPipeline
 
-## Register listeners ##
-device.setColorFrameListener(listener)
-device.setIrAndDepthFrameListener(listener)
+        pipeline = OpenCLPacketPipeline()
+    except ImportError:  # Otherwise open CPU
+        from pylibfreenect2 import CpuPacketPipeline
 
-## Start data processing ##
-# NOTE: must be called after device.start()
-device.start()
+        pipeline = CpuPacketPipeline()
 
-## Combine IR and Color data ##
-registration = Registration(device.getIrCameraParams(),
-                            device.getColorCameraParams())
+    # Create freenect2 object and check sensor properties
+    fn = Freenect2()
+    num_devices = fn.enumerateDevices()
+    if num_devices == 0:
+        script_logger.error("No device connected!")
+        sys.exit(0)
+    serial = fn.getDeviceSerialNumber(0)
+    device = fn.openDevice(serial, pipeline=pipeline)
+    listener = SyncMultiFrameListener(FrameType.Color | FrameType.Ir | FrameType.Depth)
 
-## Setup frames format ##
-undistorted = Frame(512, 424, 4)
-registered = Frame(512, 424, 4)
-bigdepth = Frame(1920, 1082, 4) if NEED_BIGDEPTH else None
-color_depth_map = np.zeros((424, 512),  np.int32).ravel() \
-    if NEED_COLOR_DEPTH_MAP else None
+    # Register frame listeners
+    device.setColorFrameListener(listener)
+    device.setIrAndDepthFrameListener(listener)
 
-################################
-## Kinect frame process loop ###
-################################
-while True:
+    # Start data processing
+    device.start()
 
-    ############################
-    ## Retreive frames        ##
-    ############################
-    ## Get frames ##
-    frames = listener.waitForNewFrame()
-    color = frames["color"]
-    ir = frames["ir"]
-    depth = frames["depth"]
+    # Combine IR and Color data
+    registration = Registration(
+        device.getIrCameraParams(), device.getColorCameraParams()
+    )
 
-    ## Process frames ##
-    registration.apply(color, depth, undistorted, registered,
-                       bigdepth=bigdepth,
-                       color_depth_map=color_depth_map)
+    # Set sensor frames formats
+    undistorted = Frame(512, 424, 4)
+    registered = Frame(512, 424, 4)
+    bigdepth = Frame(1920, 1082, 4) if NEED_BIGDEPTH else None
+    color_depth_map = (
+        np.zeros((424, 512), np.int32).ravel() if NEED_COLOR_DEPTH_MAP else None
+    )
 
-    ############################
-    ## Visualize frames       ##
-    ############################
-    # NOTE for visualization:
-    # cv2.imshow without OpenGL backend seems to be quite slow to draw all
-    # things below. Try commenting out some imshow if you don't have a fast
-    # visualization backend.
-    cv2.imshow("ir", ir.asarray() / 65535.)
-    cv2.imshow("depth", depth.asarray() / 4500.)
-    cv2.imshow("color", cv2.resize(color.asarray(),
-                                   (int(1920 / 3), int(1080 / 3))))
-    cv2.imshow("registered", registered.asarray(np.uint8))
-    if NEED_BIGDEPTH:
-        cv2.imshow("bigdepth", cv2.resize(bigdepth.asarray(np.float32),
-                                          (int(1920 / 3), int(1082 / 3))))
-    if NEED_COLOR_DEPTH_MAP:
-        cv2.imshow("color_depth_map", color_depth_map.reshape(424, 512))
-    listener.release(frames)
-    key = cv2.waitKey(delay=1)
-    if key == ord('q'):
-        break
+    #############################################
+    # Kinect frame process loop #################
+    #############################################
+    while True:
 
-    ############################
-    ## save frames            ##
-    ############################
-    # Save frames to datafolder if
-    # user clicks ctrl + s
-    if key == ord('s'):
+        # Get frames
+        frames = listener.waitForNewFrame()
+        color = frames["color"]
+        ir = frames["ir"]
+        depth = frames["depth"]
 
-        ## Save frames ##
-        panda_logger.info("Saving frames to data folder")
+        # Process frames
+        registration.apply(
+            color,
+            depth,
+            undistorted,
+            registered,
+            bigdepth=bigdepth,
+            color_depth_map=color_depth_map,
+        )
 
-################################
-## Shutdown kinect processing ##
-################################
-device.stop()
-device.close()
-sys.exit(0)
+        # Visualize frames
+        # NOTE for visualization:
+        # cv2.imshow without OpenGL backend seems to be quite slow to draw all
+        # things below. Try commenting out some imshow if you don't have a fast
+        # visualization backend.
+        ir_img = cv2.imshow("ir", ir.asarray() / 65535.0)
+        depth_img = cv2.imshow("depth", depth.asarray() / 4500.0)
+        color_img = cv2.imshow(
+            "color", cv2.resize(color.asarray(), (int(1920 / 3), int(1080 / 3)))
+        )
+        reg_img = cv2.imshow("registered", registered.asarray(np.uint8))
+        if NEED_BIGDEPTH:
+            cv2.imshow(
+                "bigdepth",
+                cv2.resize(
+                    bigdepth.asarray(np.float32), (int(1920 / 3), int(1082 / 3))
+                ),
+            )
+        if NEED_COLOR_DEPTH_MAP:
+            cv2.imshow("color_depth_map", color_depth_map.reshape(424, 512))
+        listener.release(frames)
+
+        # Break if someone presses q or esc
+        key = cv2.waitKey(delay=1)
+        if (key == 27) or (key == ord("q")):
+            break
+
+        # Save frames to datafolder if user presses ctrl + s
+        if key == ord("s"):
+
+            # Save frames
+            time_str = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+            cv2.imwrite(DATA_SAVE_FOLDER + "/ir_" + time_str + ".png", ir_img)
+            cv2.imwrite(DATA_SAVE_FOLDER + "/depth_" + time_str + ".png", depth_img)
+            cv2.imwrite(DATA_SAVE_FOLDER + "/color_" + time_str + ".png", color_img)
+            cv2.imwrite(DATA_SAVE_FOLDER + "/reg_" + time_str + ".png", reg_img)
+            script_logger.info("Saving frames to data folder")
+
+    # Shutdown kinect connection
+    device.stop()
+    device.close()
+    sys.exit(0)

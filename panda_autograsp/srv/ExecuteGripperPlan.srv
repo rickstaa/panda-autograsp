@@ -1,0 +1,4 @@
+# Execute previously planned gripper movement
+
+---
+bool success

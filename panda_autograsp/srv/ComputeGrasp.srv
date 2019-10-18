@@ -1,4 +1,4 @@
-## Service to start the grasp planner ##
+# Request grasp computation
 
 ---
 bool success

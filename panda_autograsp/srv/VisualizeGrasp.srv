@@ -1,4 +1,6 @@
-# Request a plan visualization. If no plan available, always fails.
+# Request a grasp plan visualization
+# This service is used by the panda_autograsp_server to
+# evoke the moveit_planner_server VizualizePlan service.
 
 ---
 bool success

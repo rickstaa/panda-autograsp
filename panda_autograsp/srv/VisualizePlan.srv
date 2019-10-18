@@ -1,4 +1,4 @@
-# Request a plan visualization. If no plan available, always fails.
+# Request a plan visualization. If no plan available, always fails
 
 ---
 bool success

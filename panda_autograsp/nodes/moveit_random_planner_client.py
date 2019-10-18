@@ -1,149 +1,241 @@
 #!/usr/bin/env python
-"""This node calls the ROS GQCNN message service.
+"""This ros node can be used to test out the different random planner services
+present in the :py:mod:`moveit_random_planner_client.py`.
 """
 
-## Make script both python2 and python3 compatible ##
+#  Make script both python2 and python3 compatible
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-## Import standard library packages ##
-import sys
-import tty
-import sys
-import termios
+try:
+    input = raw_input
+except NameError:
+    pass
 
-## Import ROS python packages ##
+#  Main python packages
+import sys
+
+#  ROS python packages
 import rospy
 
-## Import ROS services and messages ##
-from panda_autograsp.srv import (ExecutePlan, VisualizePlan, PlanToJoint, PlanToPath, PlanToPoint, PlanToRandomPath, PlanToRandomPoint)
+#  Panda_autograsp modules, msgs and srvs
+from panda_autograsp.functions import yes_or_no
+from panda_autograsp.srv import (
+    ExecutePlan,
+    VisualizePlan,
+    PlanToRandomPath,
+    PlanToRandomPoint,
+)
 
 #################################################
-## Main script ##################################
+#  Main script  #################################
 #################################################
 if __name__ == "__main__":
 
-    ## Initialize ros node ##
+    #  Initialize ros node
     rospy.loginfo("Initializing moveit_planner_client node")
-    rospy.init_node('moveit_planner_client', anonymous=True)
+    rospy.init_node("moveit_planner_client", anonymous=True)
 
-    ## Initialize grasp_planning service ##
+    ###############################################
+    #  Initialize moveit_planner server services ##
+    ###############################################
+
+    #  Initialize grasp_planning service
     rospy.loginfo("Conneting to moveit_planning_server service.")
 
-    ## Initialize random pose service ##
-    rospy.wait_for_service("moveit/plan_random_pose")
+    #  Initialize random pose service
+    rospy.wait_for_service("moveit_planner_server/plan_random_pose")
     try:
         plan_to_random_pose_srv = rospy.ServiceProxy(
-            "moveit/plan_random_pose", PlanToRandomPoint)
+            "moveit_planner_server/plan_random_pose", PlanToRandomPoint
+        )
     except rospy.ServiceException as e:
-   		rospy.logerr("Moveit \'plan_random_pose\' service initialization failed: %s" % e)
-		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), plan_to_random_pose_srv.resolved_name)
-		rospy.logerr(shutdown_msg)
-		sys.exit(0)
+        rospy.logerr(
+            "moveit_planner_server 'plan_random_pose' service initialization "
+            "failed: %s" % e
+        )
+        shutdown_msg = "Shutting down %s node because %s service connection failed." % (
+            rospy.get_name(),
+            plan_to_random_pose_srv.resolved_name,
+        )
+        rospy.logerr(shutdown_msg)
+        sys.exit(0)
 
-    ## Initialize random joint service ##
-    rospy.wait_for_service("moveit/plan_random_joint")
+    #  Initialize random joint service
+    rospy.wait_for_service("moveit_planner_server/plan_random_joint")
     try:
         plan_to_random_joint_srv = rospy.ServiceProxy(
-            "moveit/plan_random_joint", PlanToRandomPoint)
+            "moveit_planner_server/plan_random_joint", PlanToRandomPoint
+        )
     except rospy.ServiceException as e:
-   		rospy.logerr("Moveit \'plan_random_joint\' service initialization failed: %s" % e)
-		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), plan_to_random_joint_srv.resolved_name)
-		rospy.logerr(shutdown_msg)
-		sys.exit(0)
+        rospy.logerr(
+            "moveit_planner_server 'plan_random_joint' service initialization "
+            "failed: %s" % e
+        )
+        shutdown_msg = "Shutting down %s node because %s service connection failed." % (
+            rospy.get_name(),
+            plan_to_random_joint_srv.resolved_name,
+        )
+        rospy.logerr(shutdown_msg)
+        sys.exit(0)
 
-    ## Initialize random cartesian path service ##
-    rospy.wait_for_service("moveit/plan_random_path")
+    #  Initialize random cartesian path service
+    rospy.wait_for_service("moveit_planner_server/plan_random_path")
     try:
         plan_to_random_path_srv = rospy.ServiceProxy(
-            "moveit/plan_random_path", PlanToRandomPath)
+            "moveit_planner_server/plan_random_path", PlanToRandomPath
+        )
     except rospy.ServiceException as e:
-   		rospy.logerr("Moveit \'plan_random_path\' service initialization failed: %s" % e)
-		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), plan_to_random_path_srv.resolved_name)
-		rospy.logerr(shutdown_msg)
-		sys.exit(0)
+        rospy.logerr(
+            "moveit_planner_server 'plan_random_path' service initialization failed: %s"
+            % e
+        )
+        shutdown_msg = "Shutting down %s node because %s service connection failed." % (
+            rospy.get_name(),
+            plan_to_random_path_srv.resolved_name,
+        )
+        rospy.logerr(shutdown_msg)
+        sys.exit(0)
 
-    ## Initialize execute plan service ##
-    rospy.wait_for_service("moveit/execute_plan")
+    #  Initialize execute plan service
+    rospy.wait_for_service("moveit_planner_server/execute_plan")
     try:
         execute_plan_srv = rospy.ServiceProxy(
-            "moveit/execute_plan", ExecutePlan)
+            "moveit_planner_server/execute_plan", ExecutePlan
+        )
     except rospy.ServiceException as e:
-   		rospy.logerr("Moveit \'execute_plan\' service initialization failed: %s" % e)
-		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), execute_plan_srv.resolved_name)
-		rospy.logerr(shutdown_msg)
-		sys.exit(0)
+        rospy.logerr(
+            "moveit_planner_server 'execute_plan' service initialization failed: %s" % e
+        )
+        shutdown_msg = "Shutting down %s node because %s service connection failed." % (
+            rospy.get_name(),
+            execute_plan_srv.resolved_name,
+        )
+        rospy.logerr(shutdown_msg)
+        sys.exit(0)
 
-    ## Initialize plan visualization service ##
-    rospy.wait_for_service("moveit/visualize_plan")
+    #  Initialize plan visualization service
+    rospy.wait_for_service("moveit_planner_server/visualize_plan")
     try:
         visualize_plan_srv = rospy.ServiceProxy(
-            "moveit/visualize_plan", VisualizePlan)
+            "moveit_planner_server/visualize_plan", VisualizePlan
+        )
     except rospy.ServiceException as e:
-		rospy.logerr("Panda_autograsp \'visualize_plan\' service initialization failed: %s" % e)
-		shutdown_msg = "Shutting down %s node because %s service connection failed." % (rospy.get_name(), visualize_plan_srv.resolved_name)
-		rospy.logerr(shutdown_msg)
-		sys.exit(0)
+        rospy.logerr(
+            "Panda_autograsp 'visualize_plan' service initialization failed: %s" % e
+        )
+        shutdown_msg = "Shutting down %s node because %s service connection failed." % (
+            rospy.get_name(),
+            visualize_plan_srv.resolved_name,
+        )
+        rospy.logerr(shutdown_msg)
+        sys.exit(0)
 
-    ## Plan random pose ##
-    plan_to_random_pose_srv()
-    execute_plan_srv()
+    #  Print moveit services connection success message
+    rospy.loginfo("Successfully connected to all moveit_planner_server/ services.")
 
-    ## Plan random joint ##
-    plan_to_random_joint_srv()
-    execute_plan_srv()
-
-    ## Plan random cartesian trajectory ##
-    prompt_result = raw_input(
-            "Do you want to start a random trajectory planning [Y/n]? ")
+    ###############################################
+    #  Execute moveit plan services  ##############
+    ###############################################
+    print("Welcome to the moveit random planner client.")
     while True:
 
-        # Check user input #
-        # If yes start planning
-        if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
-            result = plan_to_random_path_srv(n_waypoints=4)
-
-            ## Check if planning was successful ##
-            if not result:
-                while True:
-                    prompt_result2 = raw_input("No successful trajectory was found. Do you want to try again [Y/n]? ")
-
-                    ## Check prompt 2 ##
-                    if (prompt_result2.lower() in ['y', 'yes']) or (prompt_result2 == ""):
-                        break
-                    elif prompt_result.lower() in ['n', 'no']:
-                        print("shutdown")
-                        sys.exit(0)
-                    else:
-                        print(
-                            prompt_result + " is not a valid response please answer with Y or N to continue. ")
+        ###########################################
+        #  Plan random pose  ######################
+        ###########################################
+        response = yes_or_no("Do you want to plan to a random pose?")
+        while True:
+            if not response:
+                rospy.loginfo("Shutting down %s node." % rospy.get_name())
+                sys.exit(0)
             else:
-                break
-        elif prompt_result.lower() in ['n', 'no']:
-            print("shutdown")
-            sys.exit(0)
-        else:
-            print(
-                prompt_result + " is not a valid response please answer with Y or N to continue.")
+                result = plan_to_random_pose_srv()
+                if not result:
+                    yes_or_no("Random pose planning failed. Do you want to try again?")
+                    if not response:
+                        break
+                else:
+                    raw_input(
+                        "Random pose planning successful. Press enter to visualize "
+                        "the plan>> "
+                    )
+                    visualize_plan_srv()
+                    response = yes_or_no("Do you want execute the plan?")
+                    if response:
+                        result = execute_plan_srv()
+                        if result:
+                            break
+                        else:
+                            response = yes_or_no(
+                                "Random pose execution failed. Do you want to try "
+                                "again?"
+                            )
+                            if not response:
+                                break
 
-    ## Visualize plan ##
-    prompt_result = raw_input("A successful plan was found press enter to visualize: ")
-    visualize_plan_srv()
+        ###########################################
+        #  Plan random joint  #####################
+        ###########################################
+        response = yes_or_no("Do you want to plan to a random joint position ?")
+        while True:
+            if not response:
+                rospy.loginfo("Shutting down %s node." % rospy.get_name())
+                sys.exit(0)
+            else:
+                result = plan_to_random_joint_srv()
+                if not result:
+                    yes_or_no("Random joint planning failed. Do you want to try again?")
+                    if not response:
+                        break
+                else:
+                    raw_input(
+                        "Random joint planning successful. Press enter to visualize "
+                        "the plan>> "
+                    )
+                    visualize_plan_srv()
+                    response = yes_or_no("Do you want execute the plan?")
+                    if response:
+                        result = execute_plan_srv()
+                        if result:
+                            break
+                        else:
+                            response = yes_or_no(
+                                "Random joint execution failed. Do you want to try "
+                                "again?"
+                            )
+                            if not response:
+                                break
 
-    ## Execute plan ##
-    while True:
-        prompt_result = raw_input(
-            "Do you want to execute the planned trajectory [Y/n]? ")
-        if (prompt_result.lower() in ['y', 'yes']) or (prompt_result == ""):
-            execute_plan_srv()
-            break
-        elif prompt_result.lower() in ['n', 'no']:
-            print("shutdown")
-            sys.exit(0)
-        else:
-            print(
-                prompt_result + " is not a valid response please answer with Y or N to continue.")
-
-    ## Loop till the service is shutdown. ##
-    rospy.spin()
+        ###########################################
+        #  Plan random path  ######################
+        ###########################################
+        response = yes_or_no("Do you want to plan to a random path?")
+        while True:
+            if not response:
+                rospy.loginfo("Shutting down %s node." % rospy.get_name())
+                sys.exit(0)
+            else:
+                result = plan_to_random_path_srv(n_waypoints=4)
+                if not result:
+                    yes_or_no("Random path planning failed. Do you want to try again?")
+                    if not response:
+                        break
+                else:
+                    raw_input(
+                        "Random path planning successful. Press enter to visualize "
+                        "the plan>> "
+                    )
+                    visualize_plan_srv()
+                    response = yes_or_no("Do you want execute the plan?")
+                    if response:
+                        result = execute_plan_srv()
+                        if result:
+                            break
+                        else:
+                            response = yes_or_no(
+                                "Random path execution failed. Do you want to try "
+                                "again?"
+                            )
+                            if not response:
+                                break

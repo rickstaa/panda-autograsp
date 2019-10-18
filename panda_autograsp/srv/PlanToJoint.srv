@@ -1,5 +1,6 @@
 # Request a plan to the given joint configuration
+
 float64[7] target
-# All the other parameters are left out here. If you want to control them use the Moveit interface and script something
+
 ---
 bool success

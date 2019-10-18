@@ -1,0 +1,4 @@
+# Set the gripper joint values to the values of the 'close' named target
+
+---
+bool success

@@ -1,7 +1,6 @@
-# Send sensor pose from the calibration to the tf2_broadcaster
+# Request sensor calibration tf publish
+# Sends end sensor pose from the calibration to the tf2_broadcaster.
 
-# request params
 geometry_msgs/TransformStamped sensor_pose
 ---
-# response params
 bool success

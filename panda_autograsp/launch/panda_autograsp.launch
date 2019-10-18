@@ -8,9 +8,12 @@
     <arg name="base_name" default="panda_autograsp"/>
     <arg name="output" default="log"/>
     <arg name="debug" default="false"/>
-    <arg name="calib_type" default="aruco_board"/> <!--Supports "aruco_board" or "chessboard"-->
-    <arg name="gripper_center" default="true"/> <!-- Enable or disale gripper center frame -->
-    <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/> <!-- Gripper center position relative to the panda_hand frame -->
+    <arg name="calib_type" default="aruco_board"/>
+    <!--Supports "aruco_board" or "chessboard"-->
+    <arg name="gripper_center" default="true"/>
+    <!-- Enable or disale gripper center frame -->
+    <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/>
+    <!-- Gripper center position relative to the panda_hand frame -->
 
     <!--Change loggin format-->
     <env name="ROSCONSOLE_FORMAT" value="[${severity}] [WallTime: ${time}]: [${node}] ${message}" if="$(arg debug)"/>
@@ -32,14 +35,14 @@
     <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="dyn_reconf_gui" output="$(arg output)"/>
 
     <!-- Create static TF for the calibration board (CB)
-        The pose for this static TF can be set in the calib_frame_pose.yaml file.
+        The pose for this static TF can be set in the calib_frames_poses.yaml file.
         TF broadcaster conventions:
             yaw: is rotation about Z (blue axis)
             pitch: is rotation about Y (red axis)
             roll: is rotation about X (green axis)
     -->
     <node name="tf2_broadcaster" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" output="$(arg output)">
-        <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frame_pose.yaml"/>
+        <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frames_poses.yaml"/>
         <!--Load calibration parameters-->
     </node>
     <!-- Load panda_autograsp services
@@ -58,14 +61,5 @@
         <remap from="sd/camera_info" to="kinect2/sd/camera_info"/>
     </node>
     <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="$(arg output)"/>
-    <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen">
-        <remap from="execute_plan" to="moveit/execute_plan"/>
-        <remap from="apply_planning_scene" to="/apply_planning_scene"/>
-        <remap from="plan_to_point" to="moveit/plan_to_point"/>
-        <remap from="plan_to_path" to="moveit/plan_to_path"/>
-        <remap from="plan_random_pose" to="moveit/plan_random_pose"/>
-        <remap from="plan_random_joint" to="moveit/plan_random_joint"/>
-        <remap from="plan_random_path" to="moveit/plan_random_path"/>
-        <remap from="visualize_plan" to="moveit/visualize_plan"/>
-    </node>
+    <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen"/>
 </launch>

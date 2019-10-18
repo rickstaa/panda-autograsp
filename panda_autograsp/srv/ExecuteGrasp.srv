@@ -1,4 +1,6 @@
-# Execute the planned movement. If no plan available, always fails.
+# Request execution of the planned grasp
+# Used by the panda_autograsp_server to evoke the
+# moveit_planner_server ExecutePlan service.
 
 ---
 bool success

@@ -1,5 +1,6 @@
 # Request a plan to the given path
+
 geometry_msgs/Pose[] waypoints
-# All the other parameters are left out here. If you want to control them use the Moveit interface and script something
+
 ---
 bool success
