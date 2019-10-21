@@ -1,9 +1,19 @@
 """ This script can be used to calibrate the kinect camera using a chessboard.
 calculates the intrinsic camera matrix and the distortion parameters.
 
-Usage:
-    [q]: Stop the chessboard_calibration script.
-    [s]: Save the frames/calibration results.
+.. note::
+
+    **Usage:**
+
+        - **[q]:** Stop the chessboard_calibration script.
+        - **[s]:** Save the frames/calibration results.
+
+Source code
+----------------------------
+.. literalinclude:: ../../../../panda_autograsp/scripts/chessboard_calibration.py
+   :language: python
+   :linenos:
+   :lines: 19-
 """
 
 # Main python packages

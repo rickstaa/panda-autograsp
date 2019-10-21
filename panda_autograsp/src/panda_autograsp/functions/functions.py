@@ -53,21 +53,22 @@ def download_model(
     model, model_output=MODELS_PATH, download_script_path=DEFAULT_DOWNLOAD_SCRIPT_PATH
 ):
     """This function downloads the Pretrained CNN models that are used in the
-    :py:mod:`panda_autograsp` package, when they are not yet present on the system.
+    ``panda_autograsp`` package, when they are not yet present on the system.
 
     Parameters
     ----------
-    model : :py:obj:`python2.str`
+    model : :py:obj:`str`
         Name of the model you want to download.
-    model_output : :py:obj:`python2.str`, optional
+    model_output : :py:obj:`str`, optional
         Path to the folder in which you want to place the downloaded models, by
         default MODELS_PATH
-    download_script_path : :py:obj:`python2.str`, optional
+    download_script_path : :py:obj:`str`, optional
         Path to the download description script, by default GQCNN_DOWNLOAD_SCRIPT_PATH
 
     Returns
     -------
-    int
+    :py:obj:`int`
+
         +------------+----------------------------+
         | Error code | Description                |
         +------------+----------------------------+
@@ -192,23 +193,23 @@ def list_files(path=".", exclude=[], recursive=True, prepent_parent=False):
 
     Parameters
     ----------
-    path : :py:obj:`python2.str`, optional
-        Parent folder of which you want to list the files, by default '.'
-    exclude : list, optional
-        A list of files you want to exclude, by default []
-    recursive : :py:obj:`python2.bool`, optional
+    path : :py:obj:`str`, optional
+        Parent folder of which you want to list the files, by default ``.``
+    exclude : :py:obj:`list`, optional
+        A list of files you want to exclude, by default `[]`
+    recursive : :py:obj:`bool`, optional
         Option specifying whether you also want to list files of subfolders,
         by default True
-    level : :py:obj:`python2.int`, optional
+    level : :py:obj:`int`, optional
         If recursive is enabled this specifies up till how many levels deep you want
         to list the files, by default 0 (Defined as all levels).
-    perpent_parent: :py:obj:`python2.bool`, optional
+    perpent_parent: :py:obj:`bool`, optional
         Options specifying whether you want to prepent the parent dir to the output
         paths.
 
     Returns
     -------
-    List
+    :py:obj:`List`
         A list containing the relative paths of all the files in the parent folder.
     """
 
@@ -239,14 +240,14 @@ def yes_or_no(question, add_options=True):
 
     Parameters
     ----------
-    question : :py:obj:`python2.str`
+    question : :py:obj:`str`
         Question of the yes or no prompt.
-    add_options : :py:obj:`python2.bool`
-        Include option statement "(Y/n)" after the question.
+    add_options : :py:obj:`bool`
+        Include option statement (Y/n) after the question.
 
     Returns
     -------
-    :py:obj:`python2.bool`
+    :py:obj:`bool`
         Boolean specifying if the user gave the right response.
     """
 
@@ -295,8 +296,8 @@ def draw_axis(img, corners, imgpts):
 
     Returns
     -------
-    [type]
-        [description]
+    :py:obj:`numpy.ndarray`
+        Image on which the chessboard corners have been drawn.
     """
     corner = tuple(corners[0].ravel())
     img = cv2.line(img, corner, tuple(imgpts[0].ravel()), (255, 0, 0), 5)

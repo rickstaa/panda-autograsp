@@ -5,12 +5,6 @@ panda\_autograsp.functions
 
    
    
-   .. rubric:: Functions
-
-   .. autosummary::
-   
-      download_model
-   
    
 
    

@@ -6,7 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
-GH_PAGES_SOURCES = docs panda_autograsp tools cfg
+GH_PAGES_SOURCES = docs panda_autograsp cfg
 
 # Put it first so that "make" without argument is like "make help".
 .PHONY: help Makefile
@@ -26,7 +26,6 @@ gh-pages:
 	git reset HEAD && \
 	cd docs && \
 	rm -rf build && \
-	sphinx-apidoc -o "${BUILDDIR}/_modules" ".." && \
 	make html && \
 	cd .. && \
 	mv -fv docs/build/html/* ./ && \
@@ -40,5 +39,6 @@ gh-pages:
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
-	@sphinx-apidoc -o "${BUILDDIR}/_modules" ".."
+	@sphinx-apidoc -f -o "${BUILDDIR}/_modules" "../panda_autograsp/src"
+	@sphinx-apidoc -f -o "${BUILDDIR}/_scripts" "../panda_autograsp/scripts"
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

@@ -178,9 +178,9 @@ class ComputeGraspServer:
 
     Attributes
     -------
-    rvec : :py:obj:`python2.list`
+    rvec : :py:obj:`list`
         The rotation vector of the camera/world calibration.
-    tvec : :py:obj:`python2.list`
+    tvec : :py:obj:`list`
         The translation vector of the camera/world calibration.
     """
 
@@ -836,17 +836,17 @@ class ComputeGraspServer:
 
         Parameters
         ----------
-        calib_type : :py:obj:`python2.str`
+        calib_type : :py:obj:`str`
             Calibration pattern type.
 
         Returns
         -------
-        retval : :py:obj:`python2.bool`
+        retval : :py:obj:`bool`
             Calibration succes bool.
         :py:obj:
-        rvec : :py:obj:`python2.list`
+        rvec : :py:obj:`list`
             Rotation vector.
-        tvec : :py:obj:`python2.list`
+        tvec : :py:obj:`list`
             Translation vector.
         """
 
@@ -866,11 +866,11 @@ class ComputeGraspServer:
 
         Returns
         -------
-        retval : :py:obj:`python2.bool`
+        retval : :py:obj:`bool`
             Calibration success bool.
-        rvec : :py:obj:`python2.list`
+        rvec : :py:obj:`list`
             Rotation vector.
-        tvec : :py:obj:`python2.list`
+        tvec : :py:obj:`list`
             Translation vector.
         """
 
@@ -973,11 +973,11 @@ class ComputeGraspServer:
 
         Returns
         -------
-        retval : :py:obj:`python2.bool`
+        retval : :py:obj:`bool`
             Calibration success bool.
-        rvec : :py:obj:`python2.list`
+        rvec : :py:obj:`list`
             Rotation vector.
-        tvec : :py:obj:`python2.list`
+        tvec : :py:obj:`list`
             Translation vector.
         """
 
@@ -1065,7 +1065,7 @@ class ComputeGraspServer:
 
         Parameters
         ----------
-        calib_type : :py:obj:`python2.str`, optional
+        calib_type : :py:obj:`str`, optional
             The calibration pattern you want to use, by default "aruco_board"
         """
 

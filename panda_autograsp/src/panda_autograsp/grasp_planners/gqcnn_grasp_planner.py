@@ -1,9 +1,7 @@
 #!/usr/bin/env python
-"""This module contains the :py:class:`gqcnn_grasp_planner` class which can be used
-to compute a grasp pose out of RBG-D sensor data. It uses the
-`BerkleyAutomation/GQCNN <https://berkeleyautomation.github.io/gqcnn>`_
-grasp detection python module to do this. It is based on the
-:py:class:`gqcnn.GraspPlanner` class.
+"""This module contains uses the `BerkleyAutomation GQCNN
+<https://berkeleyautomation.github.io/gqcnn>`_
+grasp detector to compute a valid grasp out of RBG-D sensor data.
 """
 
 # Make script both python2 and python3 compatible
@@ -99,7 +97,7 @@ DOWNLOAD_SCRIPT_PATH = os.path.abspath(
 #################################################
 class GQCNNGrasp(object):
     """Class for storing the computed grasps. This class is a trimmed
-    down version of the original `gqcnn.grasping.policy.policy.GraspAction.
+    down version of the original :py:class:`gqcnn.grasping.policy.policy.GraspAction`.
     """
 
     def __init__(self):
@@ -135,19 +133,19 @@ class GraspPlanner(object):
             The grasp ``yaml`` configuration file.
         policy_cfg: :py:obj:`autolab_core.YamlConfig`
             The policy ``yaml`` configuration file.
-        sensor_type : :py:obj:`python2.str`
+        sensor_type : :py:obj:`str`
             The type of sensor that is used.
-        gqcnn_model : :py:obj:`python2.str`
+        gqcnn_model : :py:obj:`str`
             The GQCNN model that is used.
-        gripper_mode : :py:obj:`python2.unicode`
+        gripper_mode : :py:obj:`unicode`
             The gripper that is used.
         sensor : :py:obj:`perception.Kinect2Sensor`
             The sensor object.
         grasping_policy : :py:obj:`gqcnn.CrossEntropyRobustGraspingPolicy`
             The grasp policy.
-        min_width: :py:obj:`python2.int`
+        min_width: :py:obj:`int`
             The minimum allowed image width.
-        min_height : :py:obj:`python2.int`
+        min_height : :py:obj:`int`
             The minimum allowed image height.
     """
 
@@ -156,9 +154,9 @@ class GraspPlanner(object):
 
         Parameters
         ----------------
-        model : :py:obj:`python2.str`, optional
+        model : :py:obj:`str`, optional
             Name of the grasp detection model, by default DEFAULT_MODEL.
-        sensor_type: :obj`python2.str`, optional
+        sensor_type: :py:obj:`str`, optional
             The name of the RGBD sensor, by default kinectv2.
         """
 
@@ -231,7 +229,7 @@ class GraspPlanner(object):
 
         Parameters
         ----------
-        model : :py:obj:`python2.str`
+        model : :py:obj:`str`
             Model used for the grasp detection CNN.
         """
 
@@ -365,7 +363,7 @@ class GraspPlanner(object):
 
         Parameters
         ----------
-        skip_registration : :py:obj:`python2.bool`, optional
+        skip_registration : :py:obj:`bool`, optional
             If True, the registration step is skipped, by default False.
 
         Returns
@@ -377,7 +375,7 @@ class GraspPlanner(object):
 
         Raises
         ------
-        RuntimeError
+        :py:obj:`exceptions.RuntimeError`
             If the Kinect stream is not running.
         """
 
@@ -407,7 +405,7 @@ class GraspPlanner(object):
 
         Returns
         -------
-        :py:obj:`gqcnn.GQCNNGrasp`
+        :py:class:`GQCNNGrasp`
             Computed optimal grasp.
         """
         # Get color, depth and ir image frames
@@ -425,7 +423,7 @@ class GraspPlanner(object):
 
         Returns
         -------
-        :py:class:`gqcnn.GQCNNGrasp`
+        :py:class:`GQCNNGrasp`
             Computed optimal grasp.
         """
 
@@ -446,7 +444,7 @@ class GraspPlanner(object):
 
         Returns
         -------
-        :py:obj:`gqcnn.GQCNNGrasp`
+        :py:obj:`GQCNNGrasp`
             Computed optimal grasp.
         """
 
@@ -584,12 +582,12 @@ class GraspPlanner(object):
 
         Parameters
         ----------
-        rgbd_image_state: :py:obj:`gqcnn.RgbdImageState`
-            The :py:obj:`gqcnn.RgbdImageState` that encapsulates the
+        rgbd_image_state : :py:class:`gqcnn.RgbdImageState`
+            The :py:class:`gqcnn.RgbdImageState` that encapsulates the
             depth and color image along with camera intrinsics.
-        grasping_policy: :py:obj:`gqcnn.GraspingPolicy`
+        grasping_policy : :py:class:`gqcnn.grasping.policy.policy.GraspingPolicy`
             Grasping policy to use.
-        pose_frame: :py:obj:`python2.str`
+        pose_frame : :py:obj:`str`
             Frame of reference to publish pose in.
         """
 

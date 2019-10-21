@@ -46,6 +46,7 @@ following grasping algorithms:
    :maxdepth: 2
    :caption: Developer Zone
 
+   dev/release_dev.rst
    dev/doc_dev.rst
 
 Indices and tables

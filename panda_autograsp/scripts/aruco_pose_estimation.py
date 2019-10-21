@@ -2,8 +2,17 @@
 it to determine the posture of the camera in relation to the plane
 of markers.
 
-# NOTE: This script assumes that all markers are on the same plane.
-# NOTE: THis script requires the camera to be calibrated.
+.. warning::
+
+    - This script assumes that all markers are on the same plane.
+    - This script requires the camera to be calibrated.
+
+Source code
+----------------------------
+.. literalinclude:: ../../../../panda_autograsp/scripts/aruco_pose_estimation.py
+   :language: python
+   :linenos:
+   :lines: 18-
 """
 
 # Main python packages
