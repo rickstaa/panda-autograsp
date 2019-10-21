@@ -3,7 +3,8 @@
 """ This script can be used to test out the :py:mod:`gqcnn_grasp_planner` python module.
 
 Usage:
-    To visualize the grasp please set the ``vis`` settings in the ``cfg/main_config.yaml`.
+    To visualize the grasp please set the ``vis`` settings in the
+    ``cfg/main_config.yaml``.
 """
 
 # Main python packages
@@ -28,12 +29,12 @@ if __name__ == "__main__":
 
     # Welcome message
     print(
-        "== Plan grasp script ==\n",
-        "This script can be used to test the ",
-        "'gqcnn_grasp_planner python' module.",
-        "",
-        "Usage: To show the computed grasp edit ",
-        "the vis settings in the \`cfg/main_config.yaml` file.",
+        "== Plan grasp script ==\n"
+        "This script can be used to test the "
+        "'gqcnn_grasp_planner python' module.\n"
+        "\n"
+        "Usage: To show the computed grasp edit "
+        "the vis settings in the `cfg/main_config.yaml` file."
     )
 
     # set root logger format
@@ -51,3 +52,13 @@ if __name__ == "__main__":
     # Plan a grasp and display the result
     grasp_planner.start()
     grasp = grasp_planner.plan_grasp()
+
+    # Print log message
+    if grasp:
+        script_logger.info(
+            "Grasp computed successfully shutting down plan_grasp.py script."
+        )
+    else:
+        script_logger.info(
+            "Grasp computation failed shutting down plan_grasp.py script."
+        )

@@ -53,7 +53,9 @@ if __name__ == "__main__":
     root_logger = Logger.get_logger(
         log_file=os.path.abspath(
             os.path.join(
-                os.path.dirname(os.path.realpath(__file__)), "..", "logs/main_log.log"
+                os.path.dirname(os.path.realpath(__file__)),
+                "..",
+                "logs/kinect_processing.log",
             )
         )
     )

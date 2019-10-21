@@ -21,7 +21,7 @@ from panda_autograsp import Logger
 SAVE_DIR_PATH = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
 
 # Create script logger
-script_logger = Logger.get_logger("kinect_processing.py")
+script_logger = Logger.get_logger("generate_arucoboard.py")
 
 #################################################
 # Script settings ###############################
@@ -44,17 +44,19 @@ if __name__ == "__main__":
     root_logger = Logger.get_logger(
         log_file=os.path.abspath(
             os.path.join(
-                os.path.dirname(os.path.realpath(__file__)), "..", "logs/plan_grasp.log"
+                os.path.dirname(os.path.realpath(__file__)),
+                "..",
+                "logs/generate_arucoboard.log",
             )
         )
     )
 
     # Welcome message
     print(
-        "== Generate arucoboard script ==\n",
-        "This script can be used to generate ",
-        "a Aruco marker board. This board is used ",
-        "in the camera pose estimation.",
+        "== Generate arucoboard script ==\n"
+        "This script can be used to generate "
+        "a Aruco marker board. This board is used "
+        "in the camera pose estimation.\n"
     )
 
     # Save config settings

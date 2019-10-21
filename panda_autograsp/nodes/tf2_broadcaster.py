@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-""" tf2 broadcaster node
-This node broadcasts a number of tf2 frames and ensures these frames
+"""This node broadcasts a number of tf2 frames and ensures these frames
 can be updated using a dynamic reconfigure server.
 """
+
 # Make script both python2 and python3 compatible
 from __future__ import absolute_import
 from __future__ import division
@@ -14,7 +14,6 @@ except NameError:
     pass
 
 # Main python packages
-import sys
 import os
 from autolab_core import YamlConfig
 
@@ -49,44 +48,85 @@ MAIN_CFG = YamlConfig(
 # tf2_broadcaster class #########################
 #################################################
 class tf2_broadcaster:
-    def __init__(self, parent_frame="panda_link0", child_id="calib_frame"):
-        """Calib_frame_tf2_broadcaster class initialization.
+    """Tf2 broadcaster class.
 
-        Parameters
-        ----------
-        parent_frame : :py:obj:`python2.str`, optional
-            Name of the parent frame, by default "panda_link0"
-        child_id : :py:obj:`python2.str`, optional
-            Name of the child frame, by default "calib_frame"
-        """
+    Attributes
+    -------
+    calib_frame_x_pos : :py:obj:`python2.float`
+        Calibration frame x position [m] (Relative to the 'panda_link0` frame).
+    calib_frame_y_pos : :py:obj:`python2.float`
+        Calibration frame y position [m] (Relative to the 'panda_link0` frame).
+    calib_frame_z_pos : :py:obj:`python2.float`
+        Calibration frame z position [m] (Relative to the 'panda_link0` frame).
+    calib_frame_yaw : :py:obj:`python2.float`
+        Calibration frame yaw orientation [rad] (Relative to the 'panda_link0` frame).
+    calib_frame_pitch : :py:obj:`python2.float`
+        Calibration frame pitch orientation [rad] (Relative to the 'panda_link0` frame).
+    calib_frame_roll : :py:obj:`python2.float`
+        Calibration frame roll orientation [rad] (Relative to the 'panda_link0` frame).
+    sensor_frame_x_pos : :py:obj:`python2.float`
+        Sensor frame x position [m] (Relative to the 'calib_frame` frame).
+    sensor_frame_y_pos : :py:obj:`python2.float`
+        Sensor frame y position [m] (Relative to the 'calib_frame` frame).
+    sensor_frame_z_pos : :py:obj:`python2.float`
+        Sensor frame z position [m] (Relative to the 'calib_frame` frame).
+    sensor_frame_q1 : :py:obj:`python2.float`
+        Sensor frame x quaternion orientation [rad] (Relative to the 'calib_frame`
+         frame).
+    sensor_frame_q2 : :py:obj:`python2.float`
+        Sensor frame y quaternion orientation [rad] (Relative to the 'calib_frame`
+         frame).
+    sensor_frame_q3 : :py:obj:`python2.float`
+        Sensor frame z quaternion orientation [rad] (Relative to the 'calib_frame`
+         frame).
+    sensor_frame_q4 : :py:obj:`python2.float`
+        Sensor frame w quaternion orientation [rad] (Relative to the 'calib_frame`
+         frame).
+    sensor_frame_yaw : :py:obj:`python2.float`
+        Sensor frame yaw orientation [rad] (Relative to the 'panda_link0` frame).
+    sensor_frame_pitch : :py:obj:`python2.float`
+        Sensor frame pitch orientation [rad] (Relative to the 'panda_link0` frame).
+    sensor_frame_roll : :py:obj:`python2.float`
+        Sensor frame roll orientation [rad] (Relative to the 'panda_link0` frame).
+    conf : :py:obj:`python2.dict`
+        Dynamic reconfigure server configuration dictionary.
+    """
+
+    def __init__(self):
 
         # Generate member variables
-        self.just_calibrated = False  # Specifies whether a calibration was just done
-
-        # Retrieve parameters
-        self.parent_frame = parent_frame
-        self.child_id = child_id
+        self._just_calibrated = False  # Specifies whether a calibration was just done
 
         # Set calib frame member variables
-        self.calib_frame_x_pos = rospy.get_param("~calib_frame_x_pos")
-        self.calib_frame_y_pos = rospy.get_param("~calib_frame_y_pos")
-        self.calib_frame_z_pos = rospy.get_param("~calib_frame_z_pos")
-        self.calib_frame_yaw = rospy.get_param("~calib_frame_yaw")
-        self.calib_frame_pitch = rospy.get_param("~calib_frame_pitch")
-        self.calib_frame_roll = rospy.get_param("~calib_frame_roll")
+        self.calib_frame_x_pos = self._get_dynamic_param("~calib_frame_x_pos")
+        self.calib_frame_y_pos = self._get_dynamic_param("~calib_frame_y_pos")
+        self.calib_frame_z_pos = self._get_dynamic_param("~calib_frame_z_pos")
+        self.calib_frame_yaw = self._get_dynamic_param("~calib_frame_yaw")
+        self.calib_frame_pitch = self._get_dynamic_param("~calib_frame_pitch")
+        self.calib_frame_roll = self._get_dynamic_param("~calib_frame_roll")
 
         # Set sensor starting parameters
-        quat = Quaternion(
-            rospy.get_param("~sensor_frame_q1"),
-            rospy.get_param("~sensor_frame_q2"),
-            rospy.get_param("~sensor_frame_q3"),
-            rospy.get_param("~sensor_frame_q4"),
-        ).normalised
+        self.sensor_frame_x_pos = self._get_dynamic_param("~sensor_frame_x_pos")
+        self.sensor_frame_y_pos = self._get_dynamic_param("~sensor_frame_y_pos")
+        self.sensor_frame_z_pos = self._get_dynamic_param("~sensor_frame_z_pos")
+        try:
+            quat_x = self._get_dynamic_param("~sensor_frame_q1")
+            quat_y = self._get_dynamic_param("~sensor_frame_q2")
+            quat_w = self._get_dynamic_param("~sensor_frame_q4")
+            quat_z = self._get_dynamic_param("~sensor_frame_q3")
+        except KeyError:  # If not found in parameter server
+            quat_from_euler = tf_conversions.transformations.quaternion_from_euler(
+                CalibFramesConfig.defaults["sensor_frame_yaw"],
+                CalibFramesConfig.defaults["sensor_frame_pitch"],
+                CalibFramesConfig.defaults["sensor_frame_roll"],
+            )
+            quat_x = quat_from_euler[0]
+            quat_y = quat_from_euler[1]
+            quat_z = quat_from_euler[2]
+            quat_w = quat_from_euler[3]
+        quat = Quaternion(quat_x, quat_y, quat_z, quat_w).normalised
         quat = Quaternion(0, 0, 0, 1) if not quat.__nonzero__() else quat
         euler = tf_conversions.transformations.euler_from_quaternion(list(quat))
-        self.sensor_frame_x_pos = rospy.get_param("~sensor_frame_x_pos")
-        self.sensor_frame_y_pos = rospy.get_param("~sensor_frame_y_pos")
-        self.sensor_frame_z_pos = rospy.get_param("~sensor_frame_z_pos")
         self.sensor_frame_q1 = float(quat[0])
         self.sensor_frame_q2 = float(quat[1])
         self.sensor_frame_q3 = float(quat[2])
@@ -96,18 +136,18 @@ class tf2_broadcaster:
         self.sensor_frame_roll = euler[2]
 
         # Initialize transform broadcaster
-        self.timer = rospy.Timer(
+        self._timer = rospy.Timer(
             rospy.Duration(1.0 / 10.0), self.tf2_broadcaster_callback
         )
-        self.tf2_br = tf2_ros.TransformBroadcaster()
+        self._tf2_br = tf2_ros.TransformBroadcaster()
 
         # Initialize dynamic reconfigure server
         self.config = CalibFramesConfig.defaults
-        self.dyn_reconfig_init = True
-        self.dyn_reconfig_srv = Server(CalibFramesConfig, self.dync_reconf_callback)
+        self._dyn_reconfig_init = True
+        self._dyn_reconfig_srv = Server(CalibFramesConfig, self.dync_reconf_callback)
 
         # Update dynamic reconfigure server
-        self.dyn_reconfig_srv.update_configuration(
+        self._dyn_reconfig_srv.update_configuration(
             {
                 "sensor_frame_x_pos": self.sensor_frame_x_pos,
                 "sensor_frame_y_pos": self.sensor_frame_y_pos,
@@ -117,12 +157,14 @@ class tf2_broadcaster:
                 "sensor_frame_roll": self.sensor_frame_roll,
             }
         )
-        self.dyn_reconfig_init = False
+        self._dyn_reconfig_init = False
 
         # Create set_sensor_pose service
         rospy.loginfo("Initializing %s services.", rospy.get_name())
-        self.set_sensor_pose_srv = rospy.Service(
-            "set_sensor_pose", SetSensorPose, self.set_sensor_pose_service
+        self._set_sensor_pose_srv = rospy.Service(
+            "%s/set_sensor_pose" % rospy.get_name()[1:],
+            SetSensorPose,
+            self.set_sensor_pose_service,
         )
 
     def set_sensor_pose_service(self, sensor_pose):
@@ -152,8 +194,8 @@ class tf2_broadcaster:
 
         # Set rotation angles to dynamic parameters server
         euler = tf_conversions.transformations.euler_from_quaternion(quat)
-        self.just_calibrated = True
-        self.dyn_reconfig_srv.update_configuration(
+        self._just_calibrated = True
+        self._dyn_reconfig_srv.update_configuration(
             {
                 "sensor_frame_x_pos": self.sensor_frame_x_pos,
                 "sensor_frame_y_pos": self.sensor_frame_y_pos,
@@ -176,15 +218,16 @@ class tf2_broadcaster:
         rospy.set_param("~calib_frame_pitch", euler[1])
         rospy.set_param("~calib_frame_roll", euler[2])
 
-        # Return succes bool
+        # Return success bool
         return True
 
     def dync_reconf_callback(self, config, level):
-        """Dynamic reconfigure callback function.
+        """Dynamic reconfigure callback function. This callback function
+        updates the values of the dynamic reconfigure server.
 
         Parameters
         ----------
-        config : dict
+        config : :py:obj:`python2.dict`
             Dictionary containing the dynamically reconfigured parameters.
         level : :py:obj:`python2.int`
             A bitmask which will later be passed to the dynamic reconfigure callback.
@@ -221,7 +264,7 @@ class tf2_broadcaster:
         # Update sensor frame parms ##########
         #########################################
         if (
-            self.just_calibrated or self.dyn_reconfig_init
+            self._just_calibrated or self._dyn_reconfig_init
         ):  # If dynamic reconfigure server was called by set_sensor_pose_service
 
             # Update sensor frame parameters
@@ -233,7 +276,7 @@ class tf2_broadcaster:
             rospy.set_param("~sensor_frame_roll", config["sensor_frame_roll"])
 
             # Change just calibrated variable
-            self.just_calibrated = False
+            self._just_calibrated = False
 
             # Save config
             self.config = config
@@ -292,13 +335,14 @@ class tf2_broadcaster:
             return config
 
     def tf2_broadcaster_callback(self, event=None):
-        """TF2 broadcaster callback function. This function broadcast the tf2 frames.
+        """TF2 broadcaster callback function. This callback function broadcasts
+        the tf2 frames.
 
         Parameters
         ----------
-        event : rospy.timer.TimerEvent, optional
+        event : :py:obj:`rospy.timer.TimerEvent`, optional
             Structure passed in provides you timing information that can be useful when
-            debugging or profiling. , by default None
+            debugging or profiling, by default None
         """
 
         #########################################
@@ -306,8 +350,8 @@ class tf2_broadcaster:
         #########################################
         calib_frame_tf_msg = geometry_msgs.msg.TransformStamped()
         calib_frame_tf_msg.header.stamp = rospy.Time.now()
-        calib_frame_tf_msg.header.frame_id = self.parent_frame
-        calib_frame_tf_msg.child_frame_id = self.child_id
+        calib_frame_tf_msg.header.frame_id = "panda_link0"
+        calib_frame_tf_msg.child_frame_id = "calib_frame"
         calib_frame_tf_msg.transform.translation.x = self.calib_frame_x_pos
         calib_frame_tf_msg.transform.translation.y = self.calib_frame_y_pos
         calib_frame_tf_msg.transform.translation.z = self.calib_frame_z_pos
@@ -353,9 +397,31 @@ class tf2_broadcaster:
         sensor_frame_ir_tf_msg.transform.rotation.w = self.sensor_frame_q4
 
         # Send tf message
-        self.tf2_br.sendTransform(
+        self._tf2_br.sendTransform(
             [calib_frame_tf_msg, sensor_frame_rgb_tf_msg, sensor_frame_ir_tf_msg]
         )
+
+    def _get_dynamic_param(self, parameter_name):
+        """This function retrieves a parameter from the parameter server
+        just like the :py:meth:`!rospy.get_param` function. Additionally
+        to the :py:meth:`!rospy.get_param` function, if a parameter is not
+        found on the parameter server it also tries to retrieve a value
+        for the parameter using the CalibFramesConfig.defaults dict.
+
+        Returns
+        -------
+        :py:obj:`python2.str`, :py:obj:`python2.int`, :py:obj:`python2.float`
+        and :py:obj:`python2.bool`.
+            The parameter value.
+        """
+
+        # Get parameters
+        try:
+            return rospy.get_param(parameter_name)
+        except KeyError:
+            param_value = CalibFramesConfig.defaults[parameter_name.replace("~", "")]
+            rospy.set_param(parameter_name, param_value)
+            return param_value
 
 
 #################################################
@@ -366,23 +432,8 @@ if __name__ == "__main__":
     # Initialize TF2 broadcaster node
     rospy.init_node("tf2_broadcaster", anonymous=False)
 
-    # Check if enough arguments are supplied
-    if len(sys.argv) < 3:
-        rospy.logerr(
-            "Invalid number of parameters\nusage: "
-            "./tf2_broadcaster.py "
-            "frame_id child_frame_name"
-        )
-        sys.exit(0)
-    else:
-
-        # Check if frame name is valid
-        if sys.argv[2] == "world":
-            rospy.logerr('Your frame cannot be named "world"')
-            sys.exit(0)
-
     # Initialize calib frame broadcaster
-    tf2_broadcaster(sys.argv[1], sys.argv[2])
+    tf2_broadcaster()
 
     # Spin forever
     rospy.spin()

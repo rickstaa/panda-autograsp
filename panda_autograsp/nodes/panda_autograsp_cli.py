@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-"""This node is used as a command line interface for the panda_autograsp package.
+"""This contains the command line interface (CLI) of the panda_autograsp
+autonomous grasping solution.
 """
 
 # Make script both python2 and python3 compatible
@@ -36,8 +37,7 @@ from panda_autograsp.functions import yes_or_no
 # PandaAutograspCLI class #######################
 #################################################
 class PandaAutograspCLI:
-    """Panda_autograsp command line interface class
-    """
+    """Panda_autograsp command line interface class."""
 
     def __init__(self):
         """Panda_autograsp command line interface initiation"""
@@ -62,7 +62,7 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'calibrate_sensor' service.")
         rospy.wait_for_service("calibrate_sensor")
         try:
-            self.calibrate_sensor_srv = rospy.ServiceProxy(
+            self._calibrate_sensor_srv = rospy.ServiceProxy(
                 "calibrate_sensor", CalibrateSensor
             )
         except rospy.ServiceException as e:
@@ -72,23 +72,23 @@ class PandaAutograspCLI:
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.calibrate_sensor_srv.resolved_name)
+                % (rospy.get_name(), self._calibrate_sensor_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
 
-        # Initialize Request grasp service
+        # Initialize request grasp service
         rospy.logdebug("Conneting to 'compute_grasp' service.")
         rospy.wait_for_service("compute_grasp")
         try:
-            self.compute_grasp_srv = rospy.ServiceProxy("compute_grasp", ComputeGrasp)
+            self._compute_grasp_srv = rospy.ServiceProxy("compute_grasp", ComputeGrasp)
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'compute_grasp' service initialization failed: %s" % e
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.compute_grasp_srv.resolved_name)
+                % (rospy.get_name(), self._compute_grasp_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -97,14 +97,14 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'plan_grasp' service.")
         rospy.wait_for_service("plan_grasp")
         try:
-            self.plan_grasp_srv = rospy.ServiceProxy("plan_grasp", PlanGrasp)
+            self._plan_grasp_srv = rospy.ServiceProxy("plan_grasp", PlanGrasp)
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'plan_grasp' service initialization failed: %s" % e
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.plan_grasp_srv.resolved_name)
+                % (rospy.get_name(), self._plan_grasp_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -113,7 +113,7 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'visualize_grasp' service.")
         rospy.wait_for_service("visualize_grasp")
         try:
-            self.visualize_grasp_srv = rospy.ServiceProxy(
+            self._visualize_grasp_srv = rospy.ServiceProxy(
                 "visualize_grasp", VisualizeGrasp
             )
         except rospy.ServiceException as e:
@@ -123,7 +123,7 @@ class PandaAutograspCLI:
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.visualize_grasp_srv.resolved_name)
+                % (rospy.get_name(), self._visualize_grasp_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -132,14 +132,14 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'execute_grasp' service.")
         rospy.wait_for_service("execute_grasp")
         try:
-            self.execute_grasp_srv = rospy.ServiceProxy("execute_grasp", ExecuteGrasp)
+            self._execute_grasp_srv = rospy.ServiceProxy("execute_grasp", ExecuteGrasp)
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'execute_grasp' service initialization failed: %s" % e
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.execute_grasp_srv.resolved_name)
+                % (rospy.get_name(), self._execute_grasp_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -148,7 +148,7 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'set_gripper_open' service.")
         rospy.wait_for_service("set_gripper_open")
         try:
-            self.set_gripper_open_srv = rospy.ServiceProxy(
+            self._set_gripper_open_srv = rospy.ServiceProxy(
                 "set_gripper_open", SetGripperOpen
             )
         except rospy.ServiceException as e:
@@ -158,7 +158,7 @@ class PandaAutograspCLI:
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.set_gripper_open_srv.resolved_name)
+                % (rospy.get_name(), self._set_gripper_open_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -167,7 +167,7 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'set_gripper_closed' service.")
         rospy.wait_for_service("set_gripper_closed")
         try:
-            self.set_gripper_closed_srv = rospy.ServiceProxy(
+            self._set_gripper_open_srv = rospy.ServiceProxy(
                 "set_gripper_closed", SetGripperClosed
             )
         except rospy.ServiceException as e:
@@ -177,7 +177,7 @@ class PandaAutograspCLI:
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.set_gripper_closed_srv.resolved_name)
+                % (rospy.get_name(), self._set_gripper_open_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -186,14 +186,14 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'plan_gripper' service.")
         rospy.wait_for_service("plan_gripper")
         try:
-            self.plan_gripper_srv = rospy.ServiceProxy("plan_gripper", PlanGripper)
+            self._set_gripper_open_srv = rospy.ServiceProxy("plan_gripper", PlanGripper)
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'plan_gripper' service initialization failed: %s" % e
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.plan_gripper_srv.resolved_name)
+                % (rospy.get_name(), self._set_gripper_open_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -202,7 +202,7 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'execute_gripper_plan' service.")
         rospy.wait_for_service("execute_gripper_plan")
         try:
-            self.execute_gripper_plan_srv = rospy.ServiceProxy(
+            self._execute_gripper_plan_srv = rospy.ServiceProxy(
                 "execute_gripper_plan", ExecuteGripperPlan
             )
         except rospy.ServiceException as e:
@@ -212,7 +212,7 @@ class PandaAutograspCLI:
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.execute_gripper_plan_srv.resolved_name)
+                % (rospy.get_name(), self._execute_gripper_plan_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -221,14 +221,14 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'close_gripper' service.")
         rospy.wait_for_service("close_gripper")
         try:
-            self.close_gripper_srv = rospy.ServiceProxy("close_gripper", CloseGripper)
+            self._close_gripper_srv = rospy.ServiceProxy("close_gripper", CloseGripper)
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'close_gripper' service initialization failed: %s" % e
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.close_gripper_srv.resolved_name)
+                % (rospy.get_name(), self._close_gripper_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -237,14 +237,14 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'open_gripper' service.")
         rospy.wait_for_service("open_gripper")
         try:
-            self.open_gripper_srv = rospy.ServiceProxy("open_gripper", CloseGripper)
+            self._open_gripper_srv = rospy.ServiceProxy("open_gripper", CloseGripper)
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'open_gripper' service initialization failed: %s" % e
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.open_gripper_srv.resolved_name)
+                % (rospy.get_name(), self._open_gripper_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -253,14 +253,14 @@ class PandaAutograspCLI:
         rospy.logdebug("Conneting to 'plan_place' service.")
         rospy.wait_for_service("plan_place")
         try:
-            self.plan_place_srv = rospy.ServiceProxy("plan_place", CloseGripper)
+            self._plan_place_srv = rospy.ServiceProxy("plan_place", CloseGripper)
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'plan_place' service initialization failed: %s" % e
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.plan_place_srv.resolved_name)
+                % (rospy.get_name(), self._plan_place_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -293,7 +293,7 @@ class PandaAutograspCLI:
                     rospy.loginfo("Shutting down %s node." % rospy.get_name())
                     sys.exit(0)
                 else:
-                    result = self.calibrate_sensor_srv()
+                    result = self._calibrate_sensor_srv()
                     if not result.success:
                         print("")
                         response = yes_or_no(
@@ -316,7 +316,7 @@ class PandaAutograspCLI:
                 raw_input("Click enter to compute a grasp>> ")
                 while True:
                     print("Computing grasp...")
-                    result = self.compute_grasp_srv()
+                    result = self._compute_grasp_srv()
                     if not result.success:
                         print("")
                         response = yes_or_no(
@@ -338,17 +338,17 @@ class PandaAutograspCLI:
                 # Grasp planning
                 print("Planning grasp...")
                 result1 = (
-                    self.set_gripper_open_srv()
+                    self._set_gripper_open_srv()
                 )  # Set gripper joint states to open
                 result2 = (
-                    self.plan_gripper_srv()
+                    self._set_gripper_open_srv()
                 )  # Plan for the set gripper joint states
                 if (not result1.success) or (not result2.success):
                     rospy.logwarn(
                         "Gripper could not be controlled please check the gripper "
                         "move_group."
                     )
-                result = self.plan_grasp_srv()
+                result = self._plan_grasp_srv()
                 if not result.success:
                     print("")
                     response = yes_or_no(
@@ -369,7 +369,7 @@ class PandaAutograspCLI:
 
                 # Grasp visualization
                 print("Visualizing grasp path...")
-                result = self.visualize_grasp_srv()
+                result = self._visualize_grasp_srv()
                 if not result.success:
                     print("")
                     response = yes_or_no(
@@ -392,13 +392,13 @@ class PandaAutograspCLI:
 
                 # Grasp execution
                 print("Executing grasp...")
-                result = self.execute_gripper_plan_srv()
+                result = self._execute_gripper_plan_srv()
                 if not result.success:
                     rospy.logwarn(
                         "Gripper could not be controlled please check the gripper "
                         "move_group."
                     )
-                result = self.execute_grasp_srv()
+                result = self._execute_grasp_srv()
                 if not result.success:
                     print("")
                     response = yes_or_no(
@@ -420,7 +420,7 @@ class PandaAutograspCLI:
                         sys.exit(0)
 
                 # Close gripper
-                result = self.close_gripper_srv()
+                result = self._close_gripper_srv()
                 if not result.success:
                     print("")
                     response = yes_or_no(
@@ -443,7 +443,7 @@ class PandaAutograspCLI:
                         sys.exit(0)
 
                 # Start place planning
-                result = self.plan_place_srv()
+                result = self._plan_place_srv()
                 if not result.success:
                     print("")
                     response = yes_or_no(
@@ -467,7 +467,7 @@ class PandaAutograspCLI:
 
                 # Grasp visualization
                 print("Visualizing grasp path...")
-                result = self.visualize_grasp_srv()
+                result = self._visualize_grasp_srv()
                 if not result.success:
                     print("")
                     response = yes_or_no(
@@ -490,7 +490,7 @@ class PandaAutograspCLI:
 
                 # Grasp execution
                 print("Executing grasp...")
-                result = self.execute_grasp_srv()
+                result = self._execute_grasp_srv()
                 if not result.success:
                     print("")
                     response = yes_or_no(
@@ -513,7 +513,7 @@ class PandaAutograspCLI:
                         sys.exit(0)
 
                 # Close gripper
-                result = self.open_gripper_srv()
+                result = self._open_gripper_srv()
                 if not result.success:
                     print("")
                     response = yes_or_no(

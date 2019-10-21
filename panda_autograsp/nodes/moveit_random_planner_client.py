@@ -133,12 +133,21 @@ if __name__ == "__main__":
         sys.exit(0)
 
     #  Print moveit services connection success message
-    rospy.loginfo("Successfully connected to all moveit_planner_server/ services.")
+    rospy.loginfo("Successfully connected to all moveit_planner_server services.")
 
     ###############################################
     #  Execute moveit plan services  ##############
     ###############################################
-    print("Welcome to the moveit random planner client.")
+    print(
+        "== Random planner client ==\n"
+        "This ros node can be used to test "
+        "out the different random planner "
+        "services present in the "
+        " :py:mod:`moveit_random_planner_client.py`."
+        "\n\n"
+    )
+
+    # Keep running the same protocol till exit
     while True:
 
         ###########################################

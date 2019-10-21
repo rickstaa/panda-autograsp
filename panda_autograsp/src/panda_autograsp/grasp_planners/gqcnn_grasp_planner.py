@@ -145,14 +145,10 @@ class GraspPlanner(object):
             The sensor object.
         grasping_policy : :py:obj:`gqcnn.CrossEntropyRobustGraspingPolicy`
             The grasp policy.
-        grasp_pose_publisher : :py:obj:`!rospy.Publisher`
-            The grasp pose publisher.
         min_width: :py:obj:`python2.int`
             The minimum allowed image width.
         min_height : :py:obj:`python2.int`
             The minimum allowed image height.
-        image_pub : :py:obj:`!rospy.Publisher`
-            The grasp image publisher.
     """
 
     def __init__(self, model=DEFAULT_MODEL, sensor_type="kinectv2"):
@@ -596,6 +592,7 @@ class GraspPlanner(object):
         pose_frame: :py:obj:`python2.str`
             Frame of reference to publish pose in.
         """
+
         # Execute the policy"s action
         grasp_planning_start_time = time.time()
         action = grasping_policy(rgbd_image_state)

@@ -1,25 +1,18 @@
 #!/usr/bin/env python
-"""This module contains the ``gqcnn_grasp_planner`` ROS python service which can be used
-to compute a grasp pose out of RBG-D image data. It uses the
+"""This module contains the ``grasp_planner_server`` ROS python service.
+This server set up a number of grasp computation services. These services
+can be used used to compute a grasp pose out of RBG-D image data. It uses the
 `BerkleyAutomation/GQCNN <https://berkeleyautomation.github.io/gqcnn>`_
 grasp detection python module to do this. The module is implemented in the
-:py:class::GraspPlanner class.
+:py:class::GraspPlanner class. The services that are currently set up by the
+``grasp_planner_server`` are listed below:
 
-Service details:
-
-    name: ``gqcnn_grasp_planner``
-
-    srv:
-        request:
-            color_image: :py:obj:`sensor_msgs/Image`
-                Color input image.
-            depth_image : :py:obj:`sensor_msgs/Image`
-                Depth input image.
-            camera_info : :py:obj:`sensor_msgs/CameraInfo`
-                Camera info object.
-
-        response:
-            grasp(GQCNNGrasp): The grasp pose object.
+Services:
+    - gqcnn_grasp_planner: Computes a grasp pose out of RGB-D images.
+    - gqcnn_grasp_planner_bounding_box: Also computes the grasp but allows
+    you to supply a bounding box.
+    - gqcnn_grasp_planner_segmask: Also computes the grasp but allows you
+    to supply a segmask.
 """
 
 # Make script both python2 and python3 compatible
@@ -109,23 +102,19 @@ DOWNLOAD_SCRIPT_PATH = os.path.abspath(
 # Grasp planner class ###########################
 #################################################
 class GraspPlanner(object):
-    """ Class used to compute the grasp pose out of the RGB-D data.
+    """Class used to compute the grasp pose out of the RGB-D data.
 
-    Attributes:
+    Attributes
+    -----------
+
         cfg : :py:obj:`YamlConfig`
             The grasp ``yaml`` configuration file.
-        cv_bridge : :py:obj:`CvBridge`
-            The cv_bridge.
         grasping_policy : :py:obj:`CrossEntropyRobustGraspingPolicy`
             The grasp policy.
-        grasp_pose_publisher : :py:obj:`Publisher`
-            The grasp pose publisher.
         min_width: :py:obj:`python2.int`
             The minimum allowed image width.
         min_height : :py:obj:`python2.int`
             The minimum allowed image height.
-        image_pub : :py:obj:`Publisher`
-            The grasp image publisher.
     """
 
     def __init__(self, cfg, cv_bridge, grasping_policy, grasp_pose_publisher):
@@ -142,9 +131,9 @@ class GraspPlanner(object):
         grasp_pose_publisher: :py:obj:`Publisher`
         """
         self.cfg = cfg
-        self.cv_bridge = cv_bridge
+        self._cv_bridge = cv_bridge
         self.grasping_policy = grasping_policy
-        self.grasp_pose_publisher = grasp_pose_publisher
+        self._grasp_pose_publisher = grasp_pose_publisher
 
         # Set minimum input dimensions.
         pad = max(
@@ -159,7 +148,7 @@ class GraspPlanner(object):
         self.min_height = 2 * pad + self.cfg["policy"]["metric"]["crop_height"]
 
         # Initialize image publisher
-        self.image_pub = rospy.Publisher("grasp_image", Image, queue_size=10)
+        self._image_pub = rospy.Publisher("grasp_image", Image, queue_size=10)
 
     def read_images(self, req):
         """Retreibes the input images from a ROS service request.
@@ -193,10 +182,13 @@ class GraspPlanner(object):
         # Create wrapped BerkeleyAutomation/perception RGB and depth images
         try:
             color_im = ColorImage(
-                self.cv_bridge.imgmsg_to_cv2(raw_color, "rgb8"), frame=camera_intr.frame
+                self._cv_bridge.imgmsg_to_cv2(raw_color, "rgb8"),
+                frame=camera_intr.frame,
             )
             depth_im = DepthImage(
-                self.cv_bridge.imgmsg_to_cv2(raw_depth, desired_encoding="passthrough"),
+                self._cv_bridge.imgmsg_to_cv2(
+                    raw_depth, desired_encoding="passthrough"
+                ),
                 frame=camera_intr.frame,
             )
         except CvBridgeError as cv_bridge_exception:
@@ -267,7 +259,7 @@ class GraspPlanner(object):
         # Create segmask
         try:
             segmask = BinaryImage(
-                self.cv_bridge.imgmsg_to_cv2(
+                self._cv_bridge.imgmsg_to_cv2(
                     raw_segmask, desired_encoding="passthrough"
                 ),
                 frame=camera_intr.frame,
@@ -369,7 +361,7 @@ class GraspPlanner(object):
             return self.execute_policy(
                 rgbd_state,
                 self.grasping_policy,
-                self.grasp_pose_publisher,
+                self._grasp_pose_publisher,
                 camera_intr.frame,
             )
         except NoValidGraspsException:
@@ -472,7 +464,7 @@ class GraspPlanner(object):
 
         # Publish final grasp image
         try:
-            self.image_pub.publish(self.cv_bridge.cv2_to_imgmsg(grasp_image, "bgr8"))
+            self._image_pub.publish(self._cv_bridge.cv2_to_imgmsg(grasp_image, "bgr8"))
         except CvBridgeError as e:
             rospy.logerr(e)
 

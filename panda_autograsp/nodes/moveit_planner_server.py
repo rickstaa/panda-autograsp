@@ -1,9 +1,39 @@
 #!/usr/bin/env python
-""" Moveit_service
-This sets up a service where you can give a goal position for the robot, and it will
-plan a path to it (optionally executing it). This is standard moveit functionality, but
-this module wraps it specially
-for the franka panda robot.
+""" This module contains the ``moveit_planner_server`. This server sets up a number
+of services that can be used to control the Panda emika franka robot. It contains
+two types of services: services that work on the main_move group (by default the
+panda_arm group) and services that work on the gripper move group.
+
+Services
+---------
+
+    General services
+    -----------------
+        - visualize_plan: Visualizes a given plan.
+
+    Main_move_group services
+    -------------------------
+
+        - execute_plan: Executes the plan that has been computed by any of the other
+        planner services.
+        - plan_to_point: Plans to a given pose.
+        - plan_to_joint: Plans to a sequence of joint angles.
+        - plan_to_path: Plans for a given path.
+        - plan_random_pose: Computes a plan to a random pose.
+        - plan_random_joint: Computes a plan to a random sequence of joint angles.
+        - plan_random_path: Copmutes a plan to a random path.
+
+    Gripper move group services
+    ----------------------------
+        - open_gripper: Open the gripper. This service both plans and executes.
+        - close_gripper: Close the gripper. This both plans and executes.
+        - set_gripper_width: Set the gripper joint state targets to a
+        certain width.
+        - set_gripper_open: Set the gripper joint state targets to open.
+        - set_gripper_closed: Set the gripper joint state targets to closed.
+        - execute_gripper_plan: Execute a previously computed plan.
+        - plan_gripper: Compute a plan for the currently set joint target. If no
+        joint state targets are set no plan is computed.
 """
 
 # Make script both python2 and python3 compatible
@@ -21,7 +51,6 @@ import sys
 import os
 import copy
 import time
-import random
 from autolab_core import YamlConfig
 
 # ROS python packages
@@ -30,9 +59,7 @@ import moveit_commander
 from moveit_commander import MoveItCommanderException
 
 # ROS messages and services
-from moveit_msgs.msg import CollisionObject, DisplayTrajectory, RobotTrajectory
-from shape_msgs.msg import SolidPrimitive, Mesh
-from geometry_msgs.msg import Pose
+from moveit_msgs.msg import DisplayTrajectory, RobotTrajectory
 from moveit_msgs.srv import ApplyPlanningScene
 
 # Panda_autograsp modules, msgs and srvs
@@ -73,9 +100,33 @@ JUMP_THRESHOLD = MAIN_CFG["planning"]["cartesian"]["jump_threshold"]
 
 
 #################################################
-# PandaPathPlanningService class ################
+# MoveitPlannerServer class ################
 #################################################
-class PandaPathPlanningService:
+class MoveitPlannerServer:
+    """Class used for controlling the panda emika franka robot.
+
+    Attributes
+    ------------
+        robot : :py:obj:`!moveit_commander.RobotCommander`
+            The moveit robot commander.
+        move_group : :py:obj:`!moveit_commander.MoveGroupCommander`
+            The main robot move group.
+        move_group_gripper : :py:obj:`!moveit_commander.MoveGroupCommander`
+            The gripper move group.
+        scene : :py:obj:`~moveit_commander.PlanningSceneInterface`
+            The moveit scene commander.
+        current_plan :
+            The last computed plan of the main move group.
+        current_plan_gripper :
+            The last computed plan of the gripper.
+        desired_pose : :py:obj:`python2.list`
+            The main move group goal pose.
+        desired_joint_values: :py:obj:`python2.list`
+            The main move group target joint values.
+        desired_gripper_joint_values : :py:obj:`python2.list`
+            The gripper target joint values.
+    """
+
     def __init__(
         self,
         robot_description,
@@ -113,7 +164,7 @@ class PandaPathPlanningService:
         rospy.loginfo("Conneting moveit default moveit 'apply_planning_scene' service.")
         rospy.wait_for_service("apply_planning_scene")
         try:
-            self.planning_scene_srv = rospy.ServiceProxy(
+            self._moveit_apply_planning_srv = rospy.ServiceProxy(
                 "apply_planning_scene", ApplyPlanningScene
             )
             rospy.loginfo("Moveit 'apply_planning_scene' service found!")
@@ -123,7 +174,7 @@ class PandaPathPlanningService:
             )
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
-                % (rospy.get_name(), self.planning_scene_srv.resolved_name)
+                % (rospy.get_name(), self._moveit_apply_planning_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -153,10 +204,13 @@ class PandaPathPlanningService:
             ):  # Try to set end to user specified link (Keep default if fails).k
                 self.move_group.set_end_effector_link(move_group_end_effector_link)
         except MoveItCommanderException:
-            rospy.logerr(
-                "Main move_group creation failed. Check if move group %s exists. "
-                % move_group
+            self.move_group = None
+            shutdown_msg = (
+                "Shutting down %s node because main move_group could not be created."
+                "Please check if move group %s exists." % (rospy.get_name(), move_group)
             )
+            rospy.logerr(shutdown_msg)
+            sys.exit(0)
 
         # Create gripper move_group
         try:
@@ -166,9 +220,9 @@ class PandaPathPlanningService:
             )
             self.move_group_gripper.set_planner_id(planner)
         except MoveItCommanderException:
-            self.move_group_gripper = False
+            self.move_group_gripper = None
             rospy.logwarn(
-                "Main move_group creation failed. Check if move group %s exists. "
+                "Gripper move_group creation failed. Check if move group %s exists. "
                 % move_group
             )
 
@@ -178,7 +232,7 @@ class PandaPathPlanningService:
         self.scene = moveit_commander.PlanningSceneInterface(ns="/")
 
         # Create a `DisplayTrajectory`_ ROS publisher to display the plan in RVIZ
-        self.display_trajectory_publisher = rospy.Publisher(
+        self._display_trajectory_publisher = rospy.Publisher(
             "/move_group/display_planned_path", DisplayTrajectory, queue_size=20
         )
 
@@ -187,14 +241,8 @@ class PandaPathPlanningService:
         rospy.logdebug("Reference frame: %s", self.move_group.get_planning_frame())
         rospy.logdebug("End effector: %s", self.move_group.get_end_effector_link())
         rospy.logdebug("Current robot state: %s", self.robot.get_current_state())
-
         # Add our custom services
         rospy.loginfo("Initializing %s services.", rospy.get_name())
-        rospy.Service(
-            "%s/execute_plan" % rospy.get_name()[1:],
-            ExecutePlan,
-            self.execute_plan_service,
-        )
         rospy.Service(
             "%s/plan_to_point" % rospy.get_name()[1:],
             PlanToPoint,
@@ -231,6 +279,16 @@ class PandaPathPlanningService:
             self.visualize_plan_service,
         )
         rospy.Service(
+            "%s/execute_plan" % rospy.get_name()[1:],
+            ExecutePlan,
+            self.execute_plan_service,
+        )
+        rospy.Service(
+            "%s/plan_gripper" % rospy.get_name()[1:],
+            PlanGripper,
+            self.plan_gripper_service,
+        )
+        rospy.Service(
             "%s/open_gripper" % rospy.get_name()[1:],
             OpenGripper,
             self.open_gripper_service,
@@ -260,11 +318,6 @@ class PandaPathPlanningService:
             ExecuteGripperPlan,
             self.execute_gripper_plan_service,
         )
-        rospy.Service(
-            "%s/plan_gripper" % rospy.get_name()[1:],
-            PlanGripper,
-            self.plan_gripper_service,
-        )
 
         # Display service initiation success message
         rospy.loginfo(
@@ -275,30 +328,30 @@ class PandaPathPlanningService:
         # Create additional class members
         self.current_plan = RobotTrajectory()  # Empty plan
         self.current_plan_gripper = RobotTrajectory()  # Empty plan
-        self.desired_gripper_joint_values = []
+        self.desired_pose = []
         self.desired_joint_values = []
         self.desired_gripper_joint_values = []
-        self.desired_pose = []
 
-    def plan_to_joint_service(self, joints):
-        """Plans to a given joint position (incl obstacle avoidance etc)
+    def plan_to_joint_service(self, req):
+        """Plan to a given joint position.
 
         Parameters
         ----------
-        joints : panda_autograsp.msg.PlanToJoint
-                Joint message of the type float64[7].
+        req : :py:obj:`panda_autograsp.msg.PlanToJoint`
+            The service request message containing the joint targets you
+            want to plan to.
 
         Returns
         -------
         Bool
-                Boolean specifying whether the planning was successful.
+            Boolean specifying whether the planning was successful.
         """
 
         # Set joint targets and plan trajectory
-        rospy.loginfo("Planning to: \n %s", joints.target)
-        self.move_group.set_joint_value_target(list(joints.target))
+        rospy.loginfo("Planning to: \n %s", req.target)
+        self.move_group.set_joint_value_target(list(req.target))
         plan = self.move_group.plan()
-        self.desired_joint_values = joints.target
+        self.desired_joint_values = req.target
 
         # Validate whether planning was successful
         rospy.logdebug("Plan points: %d" % len(plan.joint_trajectory.points))
@@ -316,13 +369,13 @@ class PandaPathPlanningService:
 
         Parameters
         ----------
-        req : geometry_msgs/Pose target
-                Pose you want to plan to.
+        req : :py:obj:`panda_autograsp.msg.PlanToPoint`
+            The service request message containing the pose you want to plan to.
 
         Returns
         -------
         bool
-                Boolean specifying whether the planning was successful.
+            Boolean specifying whether the planning was successful.
         """
 
         # Initialize local variables
@@ -362,13 +415,13 @@ class PandaPathPlanningService:
 
         Parameters
         ----------
-        req : array<geometry_msgs/Pose>
-                An array of poses (waypoints) specifying a desired path.
+        req : :py:obj:`panda_autograsp.msg.PlanToPath`
+            The service request message containing the path you want to plan to.
 
         Returns
         -------
         bool
-                Boolean specifying whether the planning was successful.
+            Boolean specifying whether the planning was successful.
         """
 
         # Plan cartesian path
@@ -391,9 +444,8 @@ class PandaPathPlanningService:
 
         Parameters
         ----------
-        req : empty service request
-            Request dummy arguments. Needed since ros can be started with multiple
-            srv's.
+        req : :py:obj:`panda_autograsp.msg.PlanToRandomPoint`
+            Empty service request.
 
         Returns
         -------
@@ -406,7 +458,9 @@ class PandaPathPlanningService:
         rand_pose = self.move_group.get_random_pose()
 
         # Plan to random pose
-        req = lambda: None  # Create dumpy request function object
+        def req():
+            None  # Create dumpy request function object
+
         req.target = rand_pose  # set random pose as a property
         result = self.plan_to_point_service(req)
 
@@ -423,9 +477,8 @@ class PandaPathPlanningService:
 
         Parameters
         ----------
-        req : empty service request
-            Request dummy arguments. Needed since ros can be started with multiple
-            srv's.
+        req : :py:obj:`panda_autograsp.msg.PlanToRandomJoint`
+            Empty service request.
 
         Returns
         -------
@@ -438,7 +491,9 @@ class PandaPathPlanningService:
         rand_joint = self.move_group.get_random_joint_values()
 
         # Plan to random pose
-        req = lambda: None  # Create dumpy request function object
+        def req():
+            None  # Create dumpy request function object
+
         req.target = rand_joint  # set random joint goal as a property
         result = self.plan_to_joint_service(req)
 
@@ -455,9 +510,8 @@ class PandaPathPlanningService:
 
         Parameters
         ----------
-        req : PlanRandomPath.srv
-            This message specifies the n_waypoints of the random path and the
-            random path step scale.
+        req : :py:obj:`panda_autograsp.msg.PlanToRandomPath`
+            Empty service request.
 
         Returns
         -------
@@ -480,9 +534,11 @@ class PandaPathPlanningService:
             waypoints.append(copy.deepcopy(w_pose))
 
         # Plan cartesian path
-        req_new = lambda: None  # Create dumpy request function object
-        req_new.waypoints = waypoints  # set random pose as a property
-        result = self.plan_cartesian_path_service(req_new)
+        def req():
+            None  # Create dumpy request function object
+
+        req.waypoints = waypoints  # set random pose as a property
+        result = self.plan_cartesian_path_service(req)
 
         # Check whether path planning was successful
         if result:
@@ -493,13 +549,12 @@ class PandaPathPlanningService:
             return False
 
     def visualize_plan_service(self, req):
-        """Vizualize the plan that has been computed by the other plan services.
+        """Visualize the plan that has been computed by the other plan services.
 
         Parameters
         ----------
-        req : empty service request
-            Request dummy arguments. Needed since ros can be started with multiple
-            srv's.
+        req : :py:obj:`panda_autograsp.msg.VisualizePlan`
+            Empty service request.
 
         Returns
         -------
@@ -520,7 +575,7 @@ class PandaPathPlanningService:
             duration = get_trajectory_duration(display_trajectory)
 
             # Publish plan
-            self.display_trajectory_publisher.publish(display_trajectory)
+            self._display_trajectory_publisher.publish(display_trajectory)
 
             # Sleep till trajectory is visualized
             time.sleep(duration)
@@ -538,9 +593,8 @@ class PandaPathPlanningService:
 
         Parameters
         ----------
-        req : empty service request
-            Request dummy arguments. Needed since ros can be started with multiple
-            srv's.
+        req : :py:obj:`panda_autograsp.msg.ExecutePlan`
+            Empty service request.
 
         Returns
         -------
@@ -567,20 +621,19 @@ class PandaPathPlanningService:
         else:
 
             # Check if the robot state is already at the desired state
-            joint_now = self.move_group.get_current_joint_values()
-            pose_now = self.move_group.get_current_pose()
-            if (joint_now =)
+            # joint_now = self.move_group.get_current_joint_values()
+            # pose_now = self.move_group.get_current_pose()
+            # # if (joint_now =)
             rospy.logwarn("No movement plan available for the execution.")
             return False
 
     def plan_gripper_service(self, req):
-        """Plan for set gripper joint values.
+        """Compute plan for the currently set gripper target joint values.
 
         Parameters
         ----------
-        req : empty service request
-            Request dummy arguments. Needed since ros can be started with multiple
-            srv's.
+        req : :py:obj:`panda_autograsp.msg.PlanGripper.`
+            Empty service request.
 
         Returns
         -------
@@ -589,7 +642,7 @@ class PandaPathPlanningService:
         """
 
         # Check if gripper controller exists
-        if self.move_group_gripper == False:
+        if self.move_group_gripper is not None:
             rospy.logwarn(
                 "Gripper move group appears to be missing. As a result the gripper can "
                 "not be controlled."
@@ -608,13 +661,12 @@ class PandaPathPlanningService:
             return False
 
     def execute_gripper_plan_service(self, req):
-        """Execute previously planned gripper movement.
+        """Execute previously planned gripper plan.
 
         Parameters
         ----------
-        req : empty service request
-            Request dummy arguments. Needed since ros can be started with multiple
-            srv's.
+        req : :py:obj:`panda_autograsp.msg.ExecuteGripperPlan.`
+            Empty service request.
 
         Returns
         -------
@@ -623,7 +675,7 @@ class PandaPathPlanningService:
         """
 
         # Check if gripper controller exists
-        if self.move_group_gripper == False:
+        if self.move_group_gripper is not None:
             rospy.logwarn(
                 "Gripper move group appears to be missing. As a result the gripper "
                 "can not be controlled."
@@ -666,9 +718,8 @@ class PandaPathPlanningService:
 
         Parameters
         ----------
-        req : empty service request
-            Request dummy arguments. Needed since ros can be started with multiple
-            srv's.
+        req :  :py:obj:`panda_autograsp.msg.OpenGripper.`
+            Empty service request.
 
         Returns
         -------
@@ -677,7 +728,7 @@ class PandaPathPlanningService:
         """
 
         # Check if gripper controller exists
-        if self.move_group_gripper == False:
+        if self.move_group_gripper is not None:
             rospy.logwarn(
                 "Gripper move group appears to be missing. As a result the gripper "
                 "can not be controlled."
@@ -702,10 +753,8 @@ class PandaPathPlanningService:
 
         Parameters
         ----------
-        req : empty service request
-            Request dummy arguments. Needed since ros can be started with multiple
-            srv's.
-
+        req :  :py:obj:`panda_autograsp.msg.CloseGripper.`
+            Empty service request.
         Returns
         -------
         bool
@@ -713,7 +762,7 @@ class PandaPathPlanningService:
         """
 
         # Check if gripper controller exists
-        if self.move_group_gripper == False:
+        if self.move_group_gripper is not None:
             rospy.logwarn(
                 "Gripper move group appears to be missing. As a result the gripper "
                 "can not be controlled."
@@ -726,7 +775,7 @@ class PandaPathPlanningService:
         )
         if not result:
             rospy.logwarn(
-                "Gripper could not be opened. Make sure the 'open' named does exist
+                "Gripper could not be opened. Make sure the 'open' named does exist"
                 "in the moveit srdf."
             )
             return False
@@ -734,13 +783,12 @@ class PandaPathPlanningService:
             return True  # Return success bool
 
     def set_gripper_open_service(self, req):
-        """Set gripper joint values to the values of named target \'open\'.
+        """Set gripper joint targets values to open.
 
         Parameters
         ----------
-        req : empty service request
-            Request dummy arguments. Needed since ros can be started with multiple
-            srv's.
+        req :  :py:obj:`panda_autograsp.msg.SetGripperOpen.`
+            Empty service request.
 
         Returns
         -------
@@ -749,7 +797,7 @@ class PandaPathPlanningService:
         """
 
         # Check if gripper controller exists
-        if self.move_group_gripper == False:
+        if self.move_group_gripper is not None:
             rospy.logwarn(
                 "Gripper move group appears to be missing. As a result the gripper "
                 "can not be controlled."
@@ -758,9 +806,12 @@ class PandaPathPlanningService:
 
         # Get gripper 'open' target values
         try:
-            self.desired_gripper_joint_values = self.move_group_gripper.get_named_target_values(
+            desired_joint_values = self.move_group_gripper.get_named_target_values(
                 "open"
-            ).values()  # Save desired joint targets
+            ).values()  # Get desired joint targets
+            self.desired_gripper_joint_values = (
+                desired_joint_values
+            )  # Save desired joint targets
         except MoveItCommanderException as e:
             rospy.logwarn(e)
             return False
@@ -776,13 +827,12 @@ class PandaPathPlanningService:
             return False
 
     def set_gripper_closed_service(self, req):
-        """Set gripper joint values to the values of named target \'close\'.
+        """Set gripper joint target values to closed.
 
         Parameters
         ----------
-        req : empty service request
-            Request dummy arguments. Needed since ros can be started with multiple
-            srv's.
+        req : :py:obj:`panda_autograsp.msg.SetGripperClosed.`
+            Empty service request.
 
         Returns
         -------
@@ -791,7 +841,7 @@ class PandaPathPlanningService:
         """
 
         # Check if gripper controller exists
-        if self.move_group_gripper == False:
+        if self.move_group_gripper is not None:
             rospy.logwarn(
                 "Gripper move group appears to be missing. As a result the gripper "
                 "can not be controlled."
@@ -800,9 +850,12 @@ class PandaPathPlanningService:
 
         # Get gripper 'close' target values
         try:
-            self.desired_gripper_joint_values = self.move_group_gripper.get_named_target_values(
+            desired_joint_values = self.move_group_gripper.get_named_targets(
                 "close"
-            ).values()  # Save desired joint targets
+            ).values()  # Get desired joint targets
+            self.desired_gripper_joint_values = (
+                desired_joint_values
+            )  # Save desired joint targets
         except MoveItCommanderException as e:
             rospy.logwarn(e)
             return False
@@ -818,12 +871,12 @@ class PandaPathPlanningService:
             return False
 
     def set_gripper_width_service(self, req):
-        """Set gripper joint values.
+        """Set gripper joint target values to a given value.
 
         Parameters
         ----------
-        req : SetGripperWidth.srv
-                This message specifies the gripper width.
+        req :  :py:obj:`panda_autograsp.msg.SetGripperWidth.`
+            This message specifies the gripper width.
 
         Returns
         -------
@@ -832,7 +885,7 @@ class PandaPathPlanningService:
         """
 
         # Check if gripper controller exists
-        if self.move_group_gripper == False:
+        if self.move_group_gripper is not None:
             rospy.logwarn(
                 "Gripper move group appears to be missing. As a result the gripper "
                 "can not be controlled."
@@ -863,7 +916,7 @@ if __name__ == "__main__":
     rospy.init_node("moveit_planner_server")
 
     # Create service object
-    path_planning_service = PandaPathPlanningService(
+    path_planning_service = MoveitPlannerServer(
         robot_description="robot_description",
         move_group="panda_arm",
         move_group_gripper="hand",

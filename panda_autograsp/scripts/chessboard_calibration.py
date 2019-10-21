@@ -12,6 +12,7 @@ import cv2
 import os
 import sys
 import copy
+import datetime
 
 from perception import Kinect2Sensor, CameraIntrinsics
 
@@ -27,6 +28,7 @@ script_logger = Logger.get_logger("chessboard_calibration.py")
 #################################################
 
 # General settings
+FULL_SCREEN = True  # full screen
 FACTORY = True  # Use libfreenect2 factory camera parameters
 
 # Calibration settings
@@ -56,7 +58,6 @@ fontColor = (0, 0, 0)
 lineType = 1
 rectangle_bgr = (255, 255, 255)
 
-
 #################################################
 # Main script ###################################
 #################################################
@@ -66,7 +67,9 @@ if __name__ == "__main__":
     root_logger = Logger.get_logger(
         log_file=os.path.abspath(
             os.path.join(
-                os.path.dirname(os.path.realpath(__file__)), "..", "logs/plan_grasp.log"
+                os.path.dirname(os.path.realpath(__file__)),
+                "..",
+                "logs/chessboard_calibration.log",
             )
         )
     )
@@ -101,8 +104,16 @@ if __name__ == "__main__":
     #############################################
 
     # Setup results save name
-    NUMPY_SAVE = os.path.abspath(os.path.join(SAVE_PATH, "calib_intr.npy"))
-    BERKLEY_SAVE = os.path.abspath(os.path.join(SAVE_PATH, "calib_intr.intr"))
+    time_str = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    NUMPY_SAVE = os.path.abspath(
+        os.path.join(SAVE_PATH, ("calib_intr_%s.npz" % time_str))
+    )
+    BERKLEY_SAVE = os.path.abspath(
+        os.path.join(SAVE_PATH, ("calib_intr_%s.intr" % time_str))
+    )
+    CAMERA_POSE_SAVE = os.path.abspath(
+        os.path.join(SAVE_PATH, ("calib_pose_%s.npz" % time_str))
+    )
 
     # Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
     # Multiply with size of square to et the result in mm
@@ -124,7 +135,11 @@ if __name__ == "__main__":
         script_logger.info("Starting kinect2 calibration procedure.")
 
         # Create opencv window
-        cv2.namedWindow("Calibration", cv2.WND_PROP_FULLSCREEN)
+        if FULL_SCREEN:
+            cv2.namedWindow("Calibration", cv2.WND_PROP_FULLSCREEN)
+            cv2.setWindowProperty(
+                "Calibration", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN
+            )
 
         # Get a number of images
         images = []
@@ -223,9 +238,6 @@ if __name__ == "__main__":
                     )
 
                     # Show image
-                    cv2.setWindowProperty(
-                        "Calibration", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN
-                    )
                     cv2.imshow("Calibration", screen_img)
                 else:
 
@@ -381,7 +393,7 @@ if __name__ == "__main__":
         ##################################################
 
         # Save as numpy array
-        np.savez(NUMPY_SAVE, color_mtx=color_mtx, dst=dist, rvecs=rvecs, tvec=tvecs)
+        np.savez(NUMPY_SAVE, color_mtx=color_mtx, dist=dist, rvecs=rvecs, tvecs=tvecs)
 
         # Save as berkeley format file
         camera_intr_obj = CameraIntrinsics("none", f_x, f_y, c_x, c_y, s)
@@ -404,7 +416,8 @@ if __name__ == "__main__":
 
         # Load camera parameters
         try:
-            with np.load("B.npz") as X:
+            time_str = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+            with np.load(NUMPY_SAVE) as X:
                 color_mtx, dist, _, _ = [
                     X[item] for item in ("color_mtx", "dist", "rvecs", "tvecs")
                 ]
@@ -420,7 +433,9 @@ if __name__ == "__main__":
     )
 
     # Create opencv window
-    cv2.namedWindow("Pose", cv2.WND_PROP_FULLSCREEN)
+    if FULL_SCREEN:
+        cv2.namedWindow("Pose", cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty("Pose", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
     # Show results
     while True:
@@ -489,9 +504,6 @@ if __name__ == "__main__":
 
             # Show image
             screen_img = draw_axis(screen_img, corners2, imgpts)
-            cv2.setWindowProperty(
-                "Pose", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN
-            )
             cv2.imshow("Pose", screen_img)
 
             # Check for user commands
@@ -500,16 +512,20 @@ if __name__ == "__main__":
 
                 # Save rotation and transformation matrix
                 script_logger.info(
-                    "Saving chessboard calibration results at %s." % SAVE_CALIB
+                    "Saving chessboard calibration results at %s." % (CAMERA_POSE_SAVE)
                 )
                 np.savez(
-                    SAVE_CALIB,
+                    CAMERA_POSE_SAVE,
                     mtx=color_mtx,
                     dst=dist,
                     rvecs=rvecs,
                     tvecs=tvecs,
                     inliers=inliers,
                 )
+
+                # Close figure
+                script_logger.info("Closing aruco pose estimation script.")
+                sys.exit(0)
 
             # Break if someone presses q or esc
             if (key == 27) or (key == ord("q")):

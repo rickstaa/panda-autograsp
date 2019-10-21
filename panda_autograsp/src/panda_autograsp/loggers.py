@@ -140,6 +140,9 @@ def add_root_log_file(log_file, mode="a", encoding=None, delay=False):
 # Logger class ##################################
 #################################################
 class Logger(object):
+    """Panda autograsp Logger class.
+    """
+
     ROOT_CONFIGURED = False
 
     @staticmethod

@@ -26,12 +26,14 @@ script_logger = Logger.get_logger("aruco_pose_estimation.py")
 #################################################
 # Script settings ###############################
 #################################################
+FULL_SCREEN = False  # Open result on full screen
 POSE_ARROW_SIZE = 0.1  # [M]
 LOAD_DIR_PATH = os.path.abspath(
     os.path.join(
         os.path.dirname(os.path.realpath(__file__)), "../cfg/_cfg/aruco_config.dict"
     )
 )  # Retrieve full path
+
 # Result save location
 SAVE_CALIB_POSE_PATH = os.path.abspath(
     os.path.join(
@@ -77,22 +79,24 @@ if __name__ == "__main__":
     root_logger = Logger.get_logger(
         log_file=os.path.abspath(
             os.path.join(
-                os.path.dirname(os.path.realpath(__file__)), "..", "logs/plan_grasp.log"
+                os.path.dirname(os.path.realpath(__file__)),
+                "..",
+                "logs/aruco_pose_estimation.log",
             )
         )
     )
 
     # Welcome message
     print(
-        "== Aruco pose estimation script ==\n",
-        "This script can be used to watch a video ",
-        "stream, detect a Aruco board, and use ",
-        "it to determine the posture of the camera ",
-        " in relation to the plane of markers.",
-        "",
+        "== Aruco pose estimation script ==\n"
+        "This script can be used to watch a video "
+        "stream, detect a Aruco board, and use "
+        "it to determine the posture of the camera "
+        " in relation to the plane of markers.\n"
+        "\n"
         "Usage: \n"
         "  [q]: Stop the kinect_processing script. \n"
-        "  [s]: Save pose estimation results.\n",
+        "  [s]: Save pose estimation results.\n"
     )
 
     #################################################
@@ -100,6 +104,15 @@ if __name__ == "__main__":
     #################################################
     sensor = Kinect2Sensor()
     sensor.start()
+
+    # Create opencv window
+    if FULL_SCREEN:
+        cv2.namedWindow("Acuco_pose", cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty(
+            "Acuco_pose", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN
+        )
+
+    # Sensor processing loop
     while sensor.is_running:
 
         # Retreive camera calibration values
@@ -155,7 +168,7 @@ if __name__ == "__main__":
                 )
 
         # Display our image
-        cv2.imshow("Show Marker", screen_img)
+        cv2.imshow("Acuco_pose", screen_img)
         k = cv2.waitKey(delay=1)
         if k == ord("s"):
 
