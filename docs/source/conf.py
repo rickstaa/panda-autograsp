@@ -15,7 +15,14 @@ import sys
 import sphinx_rtd_theme
 
 # -- Include module src paths --
+sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath("../.."))
+sys.path.insert(
+    0, os.path.abspath("../../panda_autograsp/src")
+)  # Add panda_autograsp modules
+sys.path.insert(
+    0, os.path.abspath("../../panda_autograsp/scripts")
+)  # Add panda_autograsp scripts
 
 # -- Project information -----------------------------------------------------
 project = "panda_autograsp"
@@ -36,6 +43,8 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.githubpages",
 ]
 autoclass_content = "class"
 autodoc_member_order = "bysource"
@@ -46,11 +55,11 @@ napoleon_include_init_with_doc = True
 
 # Add mappings
 intersphinx_mapping = {
-    "perception": ("https://berkeleyautomation.github.io/perception/", None),
-    "python2": ("http://docs.python.org/2/", None),
-    "gqcnn": ("https://berkeleyautomation.github.io/gqcnn/", None),
-    "autolab_core": ("https://berkeleyautomation.github.io/autolab_core/", None),
-    "numpy": ("http://docs.scipy.org/doc/numpy/", None),
+    "python2": ("http://docs.python.org/2", None),
+    "perception": ("https://berkeleyautomation.github.io/perception", None),
+    "gqcnn": ("https://berkeleyautomation.github.io/gqcnn", None),
+    "autolab_core": ("https://berkeleyautomation.github.io/autolab_core", None),
+    "numpy": ("http://docs.scipy.org/doc/numpy", None),
 }
 
 # Add any paths that contain templates here, relative to this directory.
@@ -156,7 +165,7 @@ htmlhelp_basename = "panda_autograsp_doc"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ["_static"]
+html_static_path = ["_static"]
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -304,4 +313,3 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node"s menu.
 # texinfo_no_detailmenu = False
-

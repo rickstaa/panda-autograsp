@@ -119,11 +119,11 @@ class MoveitPlannerServer:
             The last computed plan of the main move group.
         current_plan_gripper :
             The last computed plan of the gripper.
-        desired_pose : :py:obj:`python2.list`
+        desired_pose : :py:obj:`list`
             The main move group goal pose.
-        desired_joint_values: :py:obj:`python2.list`
+        desired_joint_values: :py:obj:`list`
             The main move group target joint values.
-        desired_gripper_joint_values : :py:obj:`python2.list`
+        desired_gripper_joint_values : :py:obj:`list`
             The gripper target joint values.
     """
 
@@ -141,19 +141,19 @@ class MoveitPlannerServer:
 
         Parameters
         ----------
-        robot_description : :py:obj:`python2.str`
+        robot_description : :py:obj:`str`
                 Where to find the URDF.
         args : objects
                 Roscpp args, passed on.
-        move_group : :py:obj:`python2.str`
+        move_group : :py:obj:`str`
                 Name of the pose planning reference frame, by default "panda_link0".
-        move_group_end_effector_link : :py:obj:`python2.str`
+        move_group_end_effector_link : :py:obj:`str`
                 Name of the end effector link.
-        move_group_gripper : :py:obj:`python2.str`
+        move_group_gripper : :py:obj:`str`
                 Name of the move group, by default "panda_arm_hand".
-        pose_reference_frame : :py:obj:`python2.str`
+        pose_reference_frame : :py:obj:`str`
                 Name of the planner reference frame.
-        planner : :py:obj:`python2.str`, optional
+        planner : :py:obj:`str`, optional
                 The Path planning algorithm, by default 'RRTConnectkConfigDefault'.
         """
 

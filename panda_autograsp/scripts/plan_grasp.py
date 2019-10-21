@@ -2,9 +2,18 @@
 # -*- coding: utf-8 -*-
 """ This script can be used to test out the :py:mod:`gqcnn_grasp_planner` python module.
 
-Usage:
+.. note::
+
+    **Usage:**
     To visualize the grasp please set the ``vis`` settings in the
-    ``cfg/main_config.yaml``.
+    :file:`../cfg/main_config.yaml`.
+
+Source code
+----------------------------
+.. literalinclude:: ../../../../panda_autograsp/scripts/plan_grasp.py
+   :language: python
+   :linenos:
+   :lines: 19-
 """
 
 # Main python packages

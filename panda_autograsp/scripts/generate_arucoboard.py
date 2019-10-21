@@ -1,10 +1,20 @@
 """This script can be used to generate a Aruco marker board. This board is used in the
 camera pose estimation.
 
-Printing instructions:
-    - Make sure Scale to fit is selected.
-    - Verify the size of the markers after the board is printed. If
-      size does not match change the settings below or in the detection algorithm.
+.. note::
+
+    **Printing instructions:**
+
+        - Make sure Scale to fit is selected.
+        - Verify the size of the markers after the board is printed. If
+          size does not match change the settings below or in the detection algorithm.
+
+Source code
+----------------------------
+.. literalinclude:: ../../../../panda_autograsp/scripts/generate_arucoboard.py
+   :language: python
+   :linenos:
+   :lines: 20-
 """
 
 # Main python packages

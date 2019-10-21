@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Utility class for logging. This class is a wrapper around the original
-logging module :py:mod:`logging` and can be used to apply the panda_autograsp
+logging module :py:mod:`logging` and can be used to apply the
+`panda_autograsp <https://github.com/rickstaa/panda_autograsp>`_
 formatters, filters and handlers to the logging object.
 """
 
@@ -48,12 +49,12 @@ def configure_root(log_level=ROOT_LOG_LEVEL):
 
     Parameters
     ----------
-    log_level : :py:obj:`python2.int`, optional
-        [description], by default ROOT_LOG_LEVEL
+    log_level : :py:obj:`int`, optional
+        The log level, by default ROOT_LOG_LEVEL
 
     Returns
     -------
-    :py:obj:`python2.Logger`
+    :py:obj:`Logger`
         Root logger.
     """
     root_logger = logging.getLogger()
@@ -101,13 +102,13 @@ def add_root_log_file(log_file, mode="a", encoding=None, delay=False):
 
     Parameters
     ----------
-    log_file :py:obj:`python2.str`
+    log_file : :py:obj:`str`
         The path to the log file.
-    mode :py:obj:`python2.str`
+    mode : :py:obj:`str`
         Log file writing mode, by default 'a'.
-    encoding: :py:obj:`python2.str`
+    encoding : :py:obj:`str`
         File encoding used, by default None.
-    delay: :py:obj:`python2.str`
+    delay : :py:obj:`str`
         If delay is true, then file opening is deferred until the first call
         to emit(), by default False.
     """
@@ -173,28 +174,28 @@ class Logger(object):
 
         Parameters
         ----------
-        name :py:obj:`python2.str`
+        name : :py:obj:`str`
             The name of the logger to be built, by default "" thus formatting the
             root logger.
-        log_level : `python2.int`
+        log_level : :py:obj:`int`
             The log level. See the python logging module documentation for possible
             enum values.
-        log_file :py:obj:`python2.str`
+        log_file : :py:obj:`str`
             The path to the log file to log to.
-        silence :py:obj:`python2.bool`
+        silence : :py:obj:`bool`
             Whether or not to silence this logger. If it is silenced, the only way
             to get output from this logger is through a non-global log file.
-        mode :py:obj:`python2.str`
+        mode : :py:obj:`str`
             Log file writing mode, by default 'a'.
-        encoding: :py:obj:`python2.str`
+        encoding : :py:obj:`str`
             File encoding used, by default None.
-        delay: :py:obj:`python2.str`
+        delay : :py:obj:`str`
             If delay is true, then file opening is deferred until the first call
             to emit(), by default False.
 
         Returns
         -------
-        :py:obj:`python2.Logger`
+        :py:obj:`Logger`
             A custom logger.
         """
 
@@ -259,15 +260,15 @@ class Logger(object):
 
         Parameters
         ----------
-        log_file :py:obj:`python2.str`
+        log_file : :py:obj:`str`
             The path to the log file to log to.
-        logger :py:obj:`logging.Logger`
+        logger : :py:obj:`logging.Logger`
             The logger.
-        mode :py:obj:`python2.str`
+        mode : :py:obj:`str`
             Log file writing mode, by default 'a'.
-        encoding: :py:obj:`python2.str`
+        encoding : :py:obj:`str`
             File encoding used, by default None.
-        delay: :py:obj:`python2.str`
+        delay : :py:obj:`str`
             If delay is true, then file opening is deferred until the first call
             to emit(), by default False.
         """

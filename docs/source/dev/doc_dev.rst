@@ -23,5 +23,6 @@ a set of web pages inside the ``docsrc/_build`` directory.
 Deploying
 ---------------------------
 To deploy documentation to the Github Pages site for the repository,
-simply push the documentation to the ``master`` branch and run the ``make gh-pages`` command inside the ``panda_autograsp/docsrc``
+simply push the documentation to the ``master`` branch and run the
+``make gh-pages`` command inside the ``panda_autograsp/docsrc``
 directory.

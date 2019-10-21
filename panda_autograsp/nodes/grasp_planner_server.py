@@ -111,9 +111,9 @@ class GraspPlanner(object):
             The grasp ``yaml`` configuration file.
         grasping_policy : :py:obj:`CrossEntropyRobustGraspingPolicy`
             The grasp policy.
-        min_width: :py:obj:`python2.int`
+        min_width: :py:obj:`int`
             The minimum allowed image width.
-        min_height : :py:obj:`python2.int`
+        min_height : :py:obj:`int`
             The minimum allowed image height.
     """
 
@@ -392,7 +392,7 @@ class GraspPlanner(object):
             Grasping policy to use.
         grasp_pose_publisher: :py:obj:`Publisher`
             ROS publisher to publish pose of planned grasp for visualization.
-        pose_frame: :py:obj:`python2.str`
+        pose_frame: :py:obj:`str`
             Frame of reference to publish pose in.
         """
         # Execute the policy"s action.

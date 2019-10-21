@@ -18,7 +18,7 @@ def get_trajectory_duration(trajectory):
 
     Returns
     -------
-    :py:obj:`python2.float`
+    :py:obj:`float`
         Trajectory duration in seconds.
     """
 
@@ -58,7 +58,7 @@ def plan_exists(plan):
 
     Returns
     -------
-    :py:obj:`python2.bool`
+    :py:obj:`bool`
         Bool specifying if a trajectory is present
     """
 

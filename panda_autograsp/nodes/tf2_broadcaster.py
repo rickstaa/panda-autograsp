@@ -52,43 +52,43 @@ class tf2_broadcaster:
 
     Attributes
     -------
-    calib_frame_x_pos : :py:obj:`python2.float`
+    calib_frame_x_pos : :py:obj:`float`
         Calibration frame x position [m] (Relative to the 'panda_link0` frame).
-    calib_frame_y_pos : :py:obj:`python2.float`
+    calib_frame_y_pos : :py:obj:`float`
         Calibration frame y position [m] (Relative to the 'panda_link0` frame).
-    calib_frame_z_pos : :py:obj:`python2.float`
+    calib_frame_z_pos : :py:obj:`float`
         Calibration frame z position [m] (Relative to the 'panda_link0` frame).
-    calib_frame_yaw : :py:obj:`python2.float`
+    calib_frame_yaw : :py:obj:`float`
         Calibration frame yaw orientation [rad] (Relative to the 'panda_link0` frame).
-    calib_frame_pitch : :py:obj:`python2.float`
+    calib_frame_pitch : :py:obj:`float`
         Calibration frame pitch orientation [rad] (Relative to the 'panda_link0` frame).
-    calib_frame_roll : :py:obj:`python2.float`
+    calib_frame_roll : :py:obj:`float`
         Calibration frame roll orientation [rad] (Relative to the 'panda_link0` frame).
-    sensor_frame_x_pos : :py:obj:`python2.float`
+    sensor_frame_x_pos : :py:obj:`float`
         Sensor frame x position [m] (Relative to the 'calib_frame` frame).
-    sensor_frame_y_pos : :py:obj:`python2.float`
+    sensor_frame_y_pos : :py:obj:`float`
         Sensor frame y position [m] (Relative to the 'calib_frame` frame).
-    sensor_frame_z_pos : :py:obj:`python2.float`
+    sensor_frame_z_pos : :py:obj:`float`
         Sensor frame z position [m] (Relative to the 'calib_frame` frame).
-    sensor_frame_q1 : :py:obj:`python2.float`
+    sensor_frame_q1 : :py:obj:`float`
         Sensor frame x quaternion orientation [rad] (Relative to the 'calib_frame`
          frame).
-    sensor_frame_q2 : :py:obj:`python2.float`
+    sensor_frame_q2 : :py:obj:`float`
         Sensor frame y quaternion orientation [rad] (Relative to the 'calib_frame`
          frame).
-    sensor_frame_q3 : :py:obj:`python2.float`
+    sensor_frame_q3 : :py:obj:`float`
         Sensor frame z quaternion orientation [rad] (Relative to the 'calib_frame`
          frame).
-    sensor_frame_q4 : :py:obj:`python2.float`
+    sensor_frame_q4 : :py:obj:`float`
         Sensor frame w quaternion orientation [rad] (Relative to the 'calib_frame`
          frame).
-    sensor_frame_yaw : :py:obj:`python2.float`
+    sensor_frame_yaw : :py:obj:`float`
         Sensor frame yaw orientation [rad] (Relative to the 'panda_link0` frame).
-    sensor_frame_pitch : :py:obj:`python2.float`
+    sensor_frame_pitch : :py:obj:`float`
         Sensor frame pitch orientation [rad] (Relative to the 'panda_link0` frame).
-    sensor_frame_roll : :py:obj:`python2.float`
+    sensor_frame_roll : :py:obj:`float`
         Sensor frame roll orientation [rad] (Relative to the 'panda_link0` frame).
-    conf : :py:obj:`python2.dict`
+    conf : :py:obj:`dict`
         Dynamic reconfigure server configuration dictionary.
     """
 
@@ -227,9 +227,9 @@ class tf2_broadcaster:
 
         Parameters
         ----------
-        config : :py:obj:`python2.dict`
+        config : :py:obj:`dict`
             Dictionary containing the dynamically reconfigured parameters.
-        level : :py:obj:`python2.int`
+        level : :py:obj:`int`
             A bitmask which will later be passed to the dynamic reconfigure callback.
             When the callback is called all of the level values for parameters that have
             been changed are added together and the resulting value is passed to the
@@ -410,8 +410,8 @@ class tf2_broadcaster:
 
         Returns
         -------
-        :py:obj:`python2.str`, :py:obj:`python2.int`, :py:obj:`python2.float`
-        and :py:obj:`python2.bool`.
+        :py:obj:`str`, :py:obj:`int`, :py:obj:`float`
+        and :py:obj:`bool`.
             The parameter value.
         """
 

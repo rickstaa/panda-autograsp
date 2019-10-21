@@ -14,7 +14,7 @@ currently contains the following grasping algorithms:
 
 .. note:: These solutions work both on a physical as well as a simulated version of the panda robot. A simulated version of the panda robot is shipped with this package.
 
-Package flow diagram
+Package overview
 ---------------------------
 
 .. figure:: ../_images/algorithm_overview.svg
@@ -57,15 +57,3 @@ randomization for sim-to-real transfer. See the ongoing
 .. _FC-GQ-CNN: https://berkeleyautomation.github.io/fcgqcnn
 
 .. note:: Currently only the parallel jaw variants of the GQ-CNN and FC-GQ-CNN networks are supported by the `panda_autograsp`_ package.
-
-Other submodules contained in this package
--------------------------------------------------
-
-- `autolab-core <https://github.com/rickstaa/autolab_core>`_
-- `franka_ros <https://github.com/rickstaa/franka_ros>`_
-- `gqcnn <https://github.com/BerkeleyAutomation/gqcnn>`_
-- `iai_kinect2 <https://github.com/code-iai/iai_kinect2>`_
-- `movit_tutorials <https://github.com/ros-planning/moveit_tutorials>`_
-- `panda_movit_config <https://github.com/rickstaa/panda_moveit_config>`_
-- `panda_simulation <https://github.com/rickstaa/panda_simulation>`_
-- `perception <https://github.com/rickstaa/perception>`_
