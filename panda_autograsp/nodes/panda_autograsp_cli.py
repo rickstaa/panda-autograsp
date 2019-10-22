@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""This contains the command line interface (CLI) of the panda_autograsp
+"""This node contains the command line interface (CLI) of the panda_autograsp
 autonomous grasping solution.
 """
 

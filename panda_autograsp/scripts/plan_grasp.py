@@ -20,7 +20,7 @@ Source code
 import os
 
 # Panda_autograsp modules, msgs and srvs
-from panda_autograsp.grasp_planners.gqcnn_grasp_planner import GraspPlanner
+from panda_autograsp import GraspPlanner
 from panda_autograsp import Logger
 
 # Create script logger

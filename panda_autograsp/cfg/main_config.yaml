@@ -83,4 +83,12 @@ grasp_detection_result:
 # Calibration settings ##########################
 #################################################
 calibration:
+
   pose_estimation_calib_board: aruco_board # [aruco_board or chessboard]
+  calib_try_duration: 30 # How long [s] we should search for the pattern before giving up
+
+  chessboard_settings:
+    N_FRAMES: 10  # Number of frames of which to take the median
+    N_ROWS: 5  # The number of corners in the y direction.
+    N_COLUMNS: 7 # The number of corners in the x direction.
+    SQUARE_SIZE: 30 # The size of one square in [mm]

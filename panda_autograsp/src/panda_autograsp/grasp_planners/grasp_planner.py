@@ -21,6 +21,7 @@ import time
 import sys
 import json
 import numpy as np
+import matplotlib.pyplot as plt
 
 from perception import (
     Kinect2Sensor,
@@ -45,6 +46,10 @@ from autolab_core import YamlConfig
 # Panda_autograsp modules, msgs and srvs
 from panda_autograsp.functions import download_model
 from panda_autograsp import Logger
+
+# Set right matplotlib backend
+# Needed in order to show images inside imported modules
+plt.switch_backend("TkAgg")
 
 # Delete logger format set by the autolab_core
 Logger.clear_root()
@@ -243,9 +248,7 @@ class GraspPlanner(object):
                 "to continue."
             )
             while True:
-                prompt_result = input(
-                    "Do you want to download this model now? [Y/n] "
-                )
+                prompt_result = input("Do you want to download this model now? [Y/n] ")
 
                 # Check user input
                 # If yes download sample

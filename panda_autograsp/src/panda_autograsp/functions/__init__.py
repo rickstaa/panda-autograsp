@@ -10,6 +10,9 @@
    functions.draw_axis
    moveit.get_trajectory_duration
    moveit.plan_exists
+   moveit.at_joint_target
+   conversions.transform_stamped_2_matrix
+   conversions.pose_msg_stamped_2_matrix
 """
 
 # Import functions

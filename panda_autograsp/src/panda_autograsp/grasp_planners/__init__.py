@@ -4,5 +4,9 @@ included in the ``panda_autograsp`` package.
 .. autosummary::
    :toctree: _autosummary
 
-   gqcnn_grasp_planner
+   grasp_planner
+   grasp_planner_ros
 """
+
+from .grasp_planner import GraspPlanner
+from .grasp_planner_ros import GraspPlannerROS
