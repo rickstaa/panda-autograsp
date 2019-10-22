@@ -3,6 +3,16 @@
 of a specific module.
 """
 
+# Make script both python2 and python3 compatible
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+try:
+    input = raw_input
+except NameError:
+    pass
+
 # Main python packages
 import os
 import subprocess
@@ -258,7 +268,7 @@ def yes_or_no(question, add_options=True):
         option_str = ""
 
     # Create prompt
-    answer = raw_input(question + option_str).lower().strip()
+    answer = input(question + option_str).lower().strip()
     answer = [answer] if answer == "" else answer  # Make sure enter i
 
     # Keep repeating prompt until right answer is given
@@ -271,7 +281,7 @@ def yes_or_no(question, add_options=True):
     ):
         print("")
         print("Input yes or no")
-        answer = raw_input(question + option_str).lower().strip()
+        answer = input(question + option_str).lower().strip()
         answer = [answer] if answer == "" else answer  # Make sure enter i
 
     # Check answer

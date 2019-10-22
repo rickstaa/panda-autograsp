@@ -19,3 +19,4 @@ from .functions import yes_or_no
 from .functions import draw_axis
 from .moveit import get_trajectory_duration
 from .moveit import plan_exists
+from .moveit import at_joint_target

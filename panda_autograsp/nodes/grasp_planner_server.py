@@ -54,7 +54,7 @@ import rospy
 
 # ROS messages and services
 from gqcnn.srv import GQCNNGraspPlannerBoundingBox, GQCNNGraspPlannerSegmask
-from geometry_msgs.msg import PoseStamped
+from tf2_geometry_msgs import PoseStamped  # Needed because we use tf2
 from std_msgs.msg import Header
 from panda_autograsp.msg import GQCNNGrasp
 
@@ -504,7 +504,7 @@ if __name__ == "__main__":
             "to continue."
         )
         while True:
-            prompt_result = raw_input("Do you want to download this model now? [Y/n] ")
+            prompt_result = input("Do you want to download this model now? [Y/n] ")
             # Check user input #
             # If yes download sample
             if prompt_result.lower() in ["y", "yes"]:

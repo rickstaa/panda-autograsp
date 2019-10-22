@@ -5,6 +5,16 @@ logging module :py:mod:`logging` and can be used to apply the
 formatters, filters and handlers to the logging object.
 """
 
+# Make script both python2 and python3 compatible
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+try:
+    input = raw_input
+except NameError:
+    pass
+
 # Main python packages
 import logging
 import sys

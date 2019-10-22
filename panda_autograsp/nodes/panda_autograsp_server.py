@@ -41,7 +41,8 @@ import tf2_ros
 
 # ROS messages and services
 import sensor_msgs
-from geometry_msgs.msg import PoseStamped, TransformStamped
+from tf2_geometry_msgs import PoseStamped  # Needed because we use tf2
+from geometry_msgs.msg import TransformStamped
 from std_msgs.msg import Header
 
 # Panda_autograsp modules, msgs and srvs
@@ -197,7 +198,7 @@ class ComputeGraspServer:
         # Initialize grasp computation services #######
         ###############################################
 
-        rospy.loginfo("Conneting to 'gqcnn_grasp_planner' service...")
+        rospy.loginfo("Connecting to 'gqcnn_grasp_planner' service...")
         rospy.wait_for_service("gqcnn_grasp_planner")
         try:
             self._gqcnn_grasp_planning_srv = rospy.ServiceProxy(
@@ -223,13 +224,14 @@ class ComputeGraspServer:
 
         # Initialize Plan to point service
         rospy.loginfo("Connecting to moveit_planner services.")
-        rospy.loginfo("Conneting to 'moveit_planner_server/plan_to_point' service...")
+        rospy.logdebug("Connecting to 'moveit_planner_server/plan_to_point' service...")
         rospy.wait_for_service("moveit_planner_server/plan_to_point")
         try:
             self._plan_to_pose_srv = rospy.ServiceProxy(
                 "moveit_planner_server/plan_to_point", PlanToPoint
             )
-            rospy.loginfo("Connected to 'moveit_planner_server/plan_to_point' service.")
+            rospy.logdebug("Connected to 'moveit_planner_server/plan_to_point' "
+                           "service.")
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'moveit_planner_server/plan_to_point' service "
@@ -243,13 +245,13 @@ class ComputeGraspServer:
             sys.exit(0)
 
         # Initialize random cartesian path service
-        rospy.loginfo("Conneting to 'moveit_planner_server/plan_to_path' service...")
+        rospy.logdebug("Connecting to 'moveit_planner_server/plan_to_path' service...")
         rospy.wait_for_service("moveit_planner_server/plan_to_path")
         try:
             self._plan_to_path_srv = rospy.ServiceProxy(
                 "moveit_planner_server/plan_to_path", PlanToPath
             )
-            rospy.loginfo("Connected to 'moveit_planner_server/plan_to_path' service.")
+            rospy.logdebug("Connected to 'moveit_planner_server/plan_to_path' service.")
         except rospy.ServiceException as e:
             rospy.logerr(
                 "moveit_planner_server 'plan_to_path' service initialization failed: %s"
@@ -263,14 +265,15 @@ class ComputeGraspServer:
             sys.exit(0)
 
         # Initialize plan visualization service
-        rospy.loginfo("Conneting to 'moveit_planner_server/visualize_plan' service...")
+        rospy.logdebug("Connecting to 'moveit_planner_server/visualize_plan' "
+                       "service...")
         rospy.wait_for_service("moveit_planner_server/visualize_plan")
         try:
             self._visualize_plan_srv = rospy.ServiceProxy(
                 "moveit_planner_server/visualize_plan", VisualizePlan
             )
-            rospy.loginfo("Connected to 'moveit_planner_server/visualize_plan' "
-                          "service.")
+            rospy.logdebug("Connected to 'moveit_planner_server/visualize_plan' "
+                           "service.")
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'moveit_planner_server/visualize_plan' service "
@@ -284,13 +287,13 @@ class ComputeGraspServer:
             sys.exit(0)
 
         # Initialize execute plan service
-        rospy.loginfo("Conneting to 'moveit_planner_server/execute_plan' service...")
+        rospy.logdebug("Connecting to 'moveit_planner_server/execute_plan' service...")
         rospy.wait_for_service("moveit_planner_server/execute_plan")
         try:
             self._execute_plan_srv = rospy.ServiceProxy(
                 "moveit_planner_server/execute_plan", ExecutePlan
             )
-            rospy.loginfo("Connected to 'moveit_planner_server/execute_plan' service.")
+            rospy.logdebug("Connected to 'moveit_planner_server/execute_plan' service.")
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'moveit_planner_server/execute_plan' service "
@@ -304,13 +307,13 @@ class ComputeGraspServer:
             sys.exit(0)
 
         # Initialize send sensor pose service
-        rospy.loginfo("Conneting to 'tf2_broadcaster/send_sensor_pose' service...")
+        rospy.logdebug("Connecting to 'tf2_broadcaster/send_sensor_pose' service...")
         rospy.wait_for_service("tf2_broadcaster/set_sensor_pose")
         try:
             self._set_sensor_pose_srv = rospy.ServiceProxy(
                 "tf2_broadcaster/set_sensor_pose", SetSensorPose
             )
-            rospy.loginfo("Connected to 'tf2_broadcaster/set_sensor_pose' service.")
+            rospy.logdebug("Connected to 'tf2_broadcaster/set_sensor_pose' service.")
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'tf2_broadcaster/set_sensor_pose' service "
@@ -325,15 +328,15 @@ class ComputeGraspServer:
             sys.exit(0)
 
         # Initialize set gripper_width service
-        rospy.loginfo("Conneting to 'moveit_planner_server/set_gripper_width' "
-                      "service...")
+        rospy.logdebug("Connecting to 'moveit_planner_server/set_gripper_width' "
+                       "service...")
         rospy.wait_for_service("moveit_planner_server/set_gripper_width")
         try:
             self._set_gripper_width_srv = rospy.ServiceProxy(
                 "moveit_planner_server/set_gripper_width", SetGripperWidth
             )
-            rospy.loginfo("Connected to 'moveit_planner_server/set_gripper_width' "
-                          "service.")
+            rospy.logdebug("Connected to 'moveit_planner_server/set_gripper_width' "
+                           "service.")
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'moveit_planner_server/set_gripper_width' service "
@@ -348,15 +351,15 @@ class ComputeGraspServer:
             sys.exit(0)
 
         # Initialize set gripper_width service
-        rospy.loginfo("Conneting to 'moveit_planner_server/set_gripper_open' "
-                      "service...")
+        rospy.logdebug("Connecting to 'moveit_planner_server/set_gripper_open' "
+                       "service...")
         rospy.wait_for_service("moveit_planner_server/set_gripper_open")
         try:
             self._set_gripper_open_srv = rospy.ServiceProxy(
                 "moveit_planner_server/set_gripper_open", SetGripperOpen
             )
-            rospy.loginfo("Connected to 'moveit_planner_server/set_gripper_open' "
-                          "service.")
+            rospy.logdebug("Connected to 'moveit_planner_server/set_gripper_open' "
+                           "service.")
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'moveit_planner_server/set_gripper_open' service "
@@ -371,15 +374,15 @@ class ComputeGraspServer:
             sys.exit(0)
 
         # Initialize set gripper_width service
-        rospy.loginfo("Conneting to 'moveit_planner_server/set_gripper_closed' "
-                      "service...")
+        rospy.logdebug("Connecting to 'moveit_planner_server/set_gripper_closed' "
+                       "service...")
         rospy.wait_for_service("moveit_planner_server/set_gripper_closed")
         try:
             self._set_gripper_closed_srv = rospy.ServiceProxy(
                 "moveit_planner_server/set_gripper_closed", SetGripperClosed
             )
-            rospy.loginfo("Connected to 'moveit_planner_server/set_gripper_width' "
-                          "service.")
+            rospy.logdebug("Connected to 'moveit_planner_server/set_gripper_width' "
+                           "service.")
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp 'moveit_planner_server/set_gripper_closed' "
@@ -402,37 +405,37 @@ class ComputeGraspServer:
 
         # Calibrate sensor
         rospy.loginfo("Initializing %s services.", rospy.get_name())
-        rospy.loginfo("Initializing panda_autograsp/calibrate_sensor service.")
+        rospy.logdebug("Initializing 'calibrate_sensor' service...")
         self._calibrate_sensor_srv = rospy.Service(
             "calibrate_sensor", CalibrateSensor, self.calibrate_sensor_service
         )
 
         # Compute grasp service
-        rospy.loginfo("Initializing panda_autograsp/compute_grasp service.")
+        rospy.logdebug("Initializing 'compute_grasp' service...")
         self._compute_grasp_srv = rospy.Service(
             "compute_grasp", ComputeGrasp, self.compute_grasp_service
         )
 
         # Plan grasp service
-        rospy.loginfo("Initializing panda_autograsp/plan_grasp service.")
+        rospy.logdebug("Initializing 'plan_grasp' service...")
         self._plan_grasp_srv = rospy.Service(
             "plan_grasp", PlanGrasp, self.plan_grasp_service
         )
 
         # Visualize grasp service
-        rospy.loginfo("Initializing panda_autograsp/visualize_grasp service.")
+        rospy.logdebug("Initializing 'visualize_grasp' service...")
         self._visualize_grasp_srv = rospy.Service(
             "visualize_grasp", VisualizeGrasp, self.visualize_grasp_service
         )
 
         # Execute grasp service
-        rospy.loginfo("Initializing panda_autograsp/execute_grasp service.")
+        rospy.logdebug("Initializing 'execute_grasp' service...")
         self._execute_grasp_srv = rospy.Service(
             "execute_grasp", ExecuteGrasp, self.execute_grasp_service
         )
 
         # Object place planning service
-        rospy.loginfo("Initializing panda_autograsp/plan_place service.")
+        rospy.logdebug("Initializing 'plan_place' service...")
         self.plan_place_srv = rospy.Service(
             "plan_place", PlanPlace, self.plan_place_service
         )
@@ -448,7 +451,7 @@ class ComputeGraspServer:
         ###############################################
 
         # Create msg filter subscribers
-        rospy.loginfo("Creating camera sensor message_filter.")
+        rospy.logdebug("Creating camera sensor message_filter...")
         self._color_image_sub = Subscriber("image_color", sensor_msgs.msg.Image)
         self._color_image_rect_sub = Subscriber(
             "image_color_rect", sensor_msgs.msg.Image
@@ -480,21 +483,25 @@ class ComputeGraspServer:
             slop=0.1,
         )
         self._ats.registerCallback(self.msg_filter_callback)
-        rospy.loginfo("Camera sensor message_filter created.")
+        rospy.logdebug("Camera sensor message_filter created.")
 
         # Create state listener
         self._tf2_buffer = tf2_ros.Buffer()
         self._tf2_listener = tf2_ros.TransformListener(self._tf2_buffer)
 
         # Create publisher to publish the place pose
+        rospy.logdebug("Creating place pose publisher...")
         self._place_pose_pub = rospy.Publisher(
             "moveit/place_pose", PoseStamped, queue_size=10
         )
+        rospy.logdebug("Place pose publisher created.")
 
         # Create pose subscriber
+        rospy.logdebug("Creating grasp pose subscriber...")
         self._pose_sub = rospy.Subscriber(
             "gqcnn_grasp/pose", PoseStamped, self.get_pose_callback
         )
+        rospy.logdebug("Grasp pose subscriber created.")
 
     def get_pose_callback(self, pose_msg):
         """Callback function of the 'gqcnn_graps/pose' subscriber. This function updates the
@@ -610,12 +617,12 @@ class ComputeGraspServer:
         # Needed since the panda_link0 is the reference frame
         # of the move group.
         try:
-            pose_msg = copy.copy(self.pose_msg)  # Create copy
-            pose_msg.header.stamp = (
+            grasp_pose_msg = copy.copy(self.pose_msg)  # Create copy
+            grasp_pose_msg.header.stamp = (
                 rospy.Time.now()
             )  # As we use the default tf buffer we will set the time to be now
             pose_msg = self._tf2_buffer.transform(
-                self.pose_msg, "panda_link0", rospy.Duration(1)
+                grasp_pose_msg, "panda_link0", rospy.Duration(1)
             )
         except (
             tf2_ros.LookupException,

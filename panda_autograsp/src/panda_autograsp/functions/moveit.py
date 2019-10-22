@@ -1,9 +1,18 @@
 """Additional moveit helper functions.
 """
 
+# Make script both python2 and python3 compatible
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+try:
+    input = raw_input
+except NameError:
+    pass
+
 # ROS messages and services
 from moveit_msgs.msg import DisplayTrajectory
-
 
 #################################################
 # Functions #####################################
@@ -79,3 +88,34 @@ def plan_exists(plan):
 
         # No trajectory was found
         return False
+
+
+def at_joint_target(current, desired, goal_tolerance):
+    """This function can be used to check if the move_group is already at the desired
+    joint target.
+
+    Parameters
+    ----------
+    current : :py:obj:`list`
+        The current joint configuration.
+    desired : :py:obj:`list`
+        The desired joint target.
+    goal_tolerance : :py:obj:`float`
+        The planner target goal tolerance.
+
+    Returns
+    -------
+    :py:obj:`bool`
+        Bool specifying if move_group is already at the goal target.
+    """
+
+    # Round to the goal tolerance
+    accuracy = str(goal_tolerance)[::-1].find(".")
+    current = [round(item, accuracy) for item in current]
+    desired = [round(item, accuracy) for item in desired]
+
+    # Check if move_group is at joint target
+    if current == desired:
+        return True  # Already at goal
+    else:
+        return False  # Not already at goal

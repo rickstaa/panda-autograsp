@@ -243,7 +243,7 @@ class GraspPlanner(object):
                 "to continue."
             )
             while True:
-                prompt_result = raw_input(
+                prompt_result = input(
                     "Do you want to download this model now? [Y/n] "
                 )
 

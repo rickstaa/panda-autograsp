@@ -61,5 +61,5 @@
         <remap from="sd/camera_info" to="kinect2/sd/camera_info"/>
     </node>
     <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="$(arg output)"/>
-    <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen"/>
+    <!-- <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen"/> -->
 </launch>
