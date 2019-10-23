@@ -21,3 +21,4 @@ microsoft.gpg
 *.code-workspace
 *.png
 *.jpg
+*.egg-info
