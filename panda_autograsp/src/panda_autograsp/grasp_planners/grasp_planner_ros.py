@@ -87,7 +87,7 @@ class GraspPlannerROS(object):
         self._image_pub = rospy.Publisher("grasp_image", Image, queue_size=10)
 
     def read_images(self, req):
-        """Retreibes the input images from a ROS service request.
+        """Retrieves the input images from a ROS service request.
 
         Parameters
         ---------

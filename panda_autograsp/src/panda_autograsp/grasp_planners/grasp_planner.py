@@ -78,7 +78,7 @@ MAIN_CFG = YamlConfig(
 
 # Get settings out of main_cfg
 GRASP_SOLUTION = "gqcnn"
-DEFAULT_MODEL = MAIN_CFG["grasp_detection_solutions"][GRASP_SOLUTION]["defaults"][
+DEFAULT_MODEL = MAIN_CFG["grasp_detection"][GRASP_SOLUTION]["defaults"][
     "model"
 ]
 MODELS_PATH = os.path.abspath(
@@ -173,14 +173,14 @@ class GraspPlanner(object):
         try:
             if (
                 "cross_entropy"
-                == MAIN_CFG["grasp_detection_solutions"]["gqcnn"]["parameters"][
+                == MAIN_CFG["grasp_detection"]["gqcnn"]["parameters"][
                     "available"
                 ][model]
             ):
                 self.grasping_policy = CrossEntropyRobustGraspingPolicy(self.policy_cfg)
             elif (
                 "fully_conv"
-                == MAIN_CFG["grasp_detection_solutions"]["gqcnn"]["parameters"][
+                == MAIN_CFG["grasp_detection"]["gqcnn"]["parameters"][
                     "available"
                 ][model]
             ):
