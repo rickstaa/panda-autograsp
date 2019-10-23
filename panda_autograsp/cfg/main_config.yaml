@@ -26,14 +26,18 @@ main:
 #################################################
 # Panda_autograsp visualization settings ########
 #################################################
-vis: # Show grasp images using opencv (Useful for debugging)
-  figs: # Grasp computation visualization figures
-    rgbd_state: 0
-    cropped_rgbd_image: 0
-    color_image: 0
-    depth_image: 0
-    segmask: 0
-    final_grasp: 0
+vis: # Show images using opencv
+  grasp: # Grasp computation visualization figures (Useful for debugging)
+    figs:
+      rgbd_state: 0
+      cropped_rgbd_image: 0
+      color_image: 0
+      depth_image: 0
+      segmask: 0
+      final_grasp: 0
+  calib: # Pose estimation and calibration figures
+    figs:
+      calib_frame: 1
 
 #################################################
 # Robot parameters ##############################

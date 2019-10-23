@@ -510,15 +510,15 @@ class GraspPlanner(object):
             )
 
         # Visualize
-        if MAIN_CFG["vis"]["figs"]["color_image"]:
+        if MAIN_CFG["vis"]["grasp"]["figs"]["color_image"]:
             vis.imshow(color_im)
             vis.title("Color image")
             vis.show()
-        if MAIN_CFG["vis"]["figs"]["depth_image"]:
+        if MAIN_CFG["vis"]["grasp"]["figs"]["depth_image"]:
             vis.imshow(depth_im)
             vis.title("Depth image")
             vis.show()
-        if MAIN_CFG["vis"]["figs"]["segmask"] and segmask is not None:
+        if MAIN_CFG["vis"]["grasp"]["figs"]["segmask"] and segmask is not None:
             vis.imshow(segmask)
             vis.title("Segmask image")
             vis.show()
@@ -553,7 +553,7 @@ class GraspPlanner(object):
             segmask = segmask.mask_binary(bb_segmask)
 
         # Visualize
-        if MAIN_CFG["vis"]["figs"]["rgbd_state"]:
+        if MAIN_CFG["vis"]["grasp"]["figs"]["rgbd_state"]:
             masked_rgbd_im = rgbd_im.mask_binary(segmask)
             vis.figure()
             vis.title("Masked RGBD state")
@@ -644,7 +644,7 @@ class GraspPlanner(object):
                 gqcnn_grasp.thumbnail = thumbnail
 
         # Visualize result
-        if MAIN_CFG["vis"]["figs"]["final_grasp"]:
+        if MAIN_CFG["vis"]["grasp"]["figs"]["final_grasp"]:
             vis.figure(size=(10, 10))
             vis.imshow(
                 rgbd_image_state.rgbd_im.color,

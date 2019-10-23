@@ -238,13 +238,13 @@ class GraspPlannerROS(object):
             )
 
         # Visualize
-        if self.cfg["vis"]["figs"]["color_image"]:
+        if self.cfg["vis"]["grasp"]["figs"]["color_image"]:
             vis.imshow(color_im)
             vis.show()
-        if self.cfg["vis"]["figs"]["depth_image"]:
+        if self.cfg["vis"]["grasp"]["figs"]["depth_image"]:
             vis.imshow(depth_im)
             vis.show()
-        if self.cfg["vis"]["figs"]["segmask"] and segmask is not None:
+        if self.cfg["vis"]["grasp"]["figs"]["segmask"] and segmask is not None:
             vis.imshow(segmask)
             vis.show()
 
@@ -279,7 +279,7 @@ class GraspPlannerROS(object):
             segmask = segmask.mask_binary(bb_segmask)
 
         # Visualize.
-        if self.cfg["vis"]["figs"]["rgbd_state"]:
+        if self.cfg["vis"]["grasp"]["figs"]["rgbd_state"]:
             masked_rgbd_im = rgbd_im.mask_binary(segmask)
             vis.figure()
             vis.subplot(1, 2, 1)
@@ -387,7 +387,7 @@ class GraspPlannerROS(object):
             fontsize=20,
         )
         fig.tight_layout()
-        if self.cfg["vis"]["figs"]["final_grasp"]:
+        if self.cfg["vis"]["grasp"]["figs"]["final_grasp"]:
             vis.show()
         else:
             fig.canvas.draw()
@@ -397,6 +397,7 @@ class GraspPlannerROS(object):
         grasp_image = grasp_image.reshape(fig.canvas.get_width_height()[::-1] + (3,))[
             ..., ::-1
         ].copy()
+        plt.close()  # Close figure
 
         # Publish final grasp image
         try:
@@ -406,4 +407,3 @@ class GraspPlannerROS(object):
 
         # Return grasp
         return gqcnn_grasp
-

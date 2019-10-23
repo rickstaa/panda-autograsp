@@ -904,9 +904,10 @@ class PandaAutograspServer:
                     )
 
                     # Show projection to user
-                    plt.figure("Reference frame")
-                    plt.imshow(screen_img)
-                    plt.show()
+                    if MAIN_CFG["vis"]["calib"]["figs"]["calib_frame"]:
+                        plt.figure("Reference frame")
+                        plt.imshow(screen_img)
+                        plt.show()
                     return retval, rvec, tvec
                 else:
                     rospy.logwarn(
