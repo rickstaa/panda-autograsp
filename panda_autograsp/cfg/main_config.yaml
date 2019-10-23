@@ -59,18 +59,21 @@ planning:
 #################################################
 # Grasp computation algorithm settings ##########
 #################################################
-grasp_detection_solutions:
+grasp_detection:
+
   # GQCNN grasping solution settings
   gqcnn:
+
     # GQCNN default values
     defaults:
-      # Uncomment the model you want to use
+
+      # Default model
+      # NOTE: Uncomment the model you want to use
       # model: GQCNN-2.0 # Trained on images of objects in simulation
       # model: GQCNN-2.1 # Model fine-tuned on images of objects in clutter
-      model: GQCNN-4.0-PJ # Trained on images of objects in clutter with parameters
-      # model: FC-GQCNN-4.0-PJ # Improved network trained on images of objects in clutter
+      # model: GQCNN-4.0-PJ # Trained on images of objects in clutter with parameters
+      model: FC-GQCNN-4.0-PJ # Improved network trained on images of objects in clutter
 
-    # Important GQCNN paths
     parameters:
       !include ./_cfg/gqcnn_parms.yaml
 

@@ -20,8 +20,8 @@ Source code
 import os
 
 # Panda_autograsp modules, msgs and srvs
-from panda_autograsp import GraspPlanner
 from panda_autograsp import Logger
+from panda_autograsp.grasp_planners import GraspPlanner
 
 # Create script logger
 script_logger = Logger.get_logger("plan_grasp.py")

@@ -27,16 +27,18 @@ from autolab_core import YamlConfig
 
 # ROS python packages
 import rospy
+from rospy.exceptions import ROSException
 from cv_bridge import CvBridge
 from gqcnn.srv import GQCNNGraspPlannerBoundingBox, GQCNNGraspPlannerSegmask
 
 # ROS messages and services
+from sensor_msgs.msg import Image
 from tf2_geometry_msgs import PoseStamped  # Needed because we use tf2
 
 # Panda_autograsp modules, msgs and srvs
 from panda_autograsp.functions import download_model
 from panda_autograsp.srv import GQCNNGraspPlanner
-from panda_autograsp import GraspPlannerROS
+from panda_autograsp.grasp_planners import GraspPlannerROS
 
 #################################################
 # Main script ###################################
@@ -54,9 +56,7 @@ if __name__ == "__main__":
 
     # Get settings out of main_cfg
     DEFAULT_SOLUTION = MAIN_CFG["main"]["solution"]
-    DEFAULT_MODEL = MAIN_CFG["grasp_detection_solutions"][DEFAULT_SOLUTION]["defaults"][
-        "model"
-    ]
+    DEFAULT_MODEL = MAIN_CFG["grasp_detection"][DEFAULT_SOLUTION]["defaults"]["model"]
     MODELS_PATH = os.path.abspath(
         os.path.join(
             os.path.dirname(os.path.realpath(__file__)),
@@ -78,17 +78,21 @@ if __name__ == "__main__":
     # Initialize `CvBridge`
     cv_bridge = CvBridge()
 
-    # Argument parser
+    # Get private parameters specified in the launch file
     try:
         model_name = rospy.get_param("~model_name")
     except KeyError:
         model_name = DEFAULT_MODEL
     try:
-        model_dir = rospy.get_param("~ymodel_dir")
-        if model_dir == "default":
-            model_dir = os.path.abspath(os.path.join(MODELS_PATH, model_name))
+        model_dir = rospy.get_param("~model_dir")
     except KeyError:
         model_dir = os.path.abspath(os.path.join(MODELS_PATH, model_name))
+
+    # Check if fully connected GQCNN is requested
+    fully_conv = (
+        "fully_conv"
+        == MAIN_CFG["grasp_detection"]["gqcnn"]["parameters"]["available"][model_name]
+    )
 
     # Download CNN model if not present
     model_dir = os.path.join(MODELS_PATH, model_name)
@@ -161,29 +165,96 @@ if __name__ == "__main__":
             )
 
     # Get the policy based config parameters
-    config_filename = os.path.abspath(
-        os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            "../..",
-            "gqcnn/cfg/examples/gqcnn_suction.yaml",
-        )
-    )
     if (
         gripper_mode == GripperMode.LEGACY_PARALLEL_JAW
         or gripper_mode == GripperMode.PARALLEL_JAW
     ):
-        config_filename = os.path.abspath(
-            os.path.join(
-                os.path.dirname(os.path.realpath(__file__)),
-                "../..",
-                "gqcnn/cfg/examples/gqcnn_pj.yaml",
+
+        # Check if fully connected is requested
+        if fully_conv:
+            # Read policy config
+            config_filename = os.path.abspath(
+                os.path.join(
+                    os.path.dirname(os.path.realpath(__file__)),
+                    "../..",
+                    "gqcnn/cfg/examples/fc_gqcnn_pj.yaml",
+                )
             )
+        else:
+
+            # Read policy config
+            config_filename = os.path.abspath(
+                os.path.join(
+                    os.path.dirname(os.path.realpath(__file__)),
+                    "../..",
+                    "gqcnn/cfg/examples/gqcnn_pj.yaml",
+                )
+            )
+    elif (
+        gripper_mode == GripperMode.LEGACY_SUCTION
+        or gripper_mode == GripperMode.SUCTION
+    ):
+
+        # Check if fully connected is requested
+        if fully_conv:
+            # Read policy config
+            config_filename = os.path.abspath(
+                os.path.join(
+                    os.path.dirname(os.path.realpath(__file__)),
+                    "../..",
+                    "gqcnn/cfg/examples/fc_gqcnn_suction.yaml",
+                )
+            )
+        else:
+
+            # Read policy config
+            config_filename = os.path.abspath(
+                os.path.join(
+                    os.path.dirname(os.path.realpath(__file__)),
+                    "../..",
+                    "gqcnn/cfg/examples/gqcnn_suction.yaml",
+                )
+            )
+    else:
+        rospy.logwarn(
+            "The %s gripper is not yet implemented. "
+            "Please change the gripper mode and try again." % (gripper_mode)
         )
+        sys.exit(0)
 
     # Get CNN and Policy files
     cfg = YamlConfig(config_filename)
     policy_cfg = cfg["policy"]
     policy_cfg["metric"]["gqcnn_model"] = model_dir
+
+    # Get one image message to get the image size
+    try:
+        rospy.logdebug("Retrieving depth image size...")
+        depth_img_msg = rospy.wait_for_message(
+            "image_depth_rect_32FC1", Image, timeout=5
+        )
+        policy_cfg["metric"]["fully_conv_gqcnn_config"][
+            "im_height"
+        ] = depth_img_msg.height
+        policy_cfg["metric"]["fully_conv_gqcnn_config"][
+            "im_width"
+        ] = depth_img_msg.width
+        rospy.logdebug(
+            "Depth image size: %ix%i"
+            % (
+                policy_cfg["metric"]["fully_conv_gqcnn_config"]["im_height"],
+                policy_cfg["metric"]["fully_conv_gqcnn_config"]["im_width"],
+            )
+        )
+    except ROSException:  # If timed out set defaults
+        rospy.logdebug("Image size could not be retrieved used defaults instead.")
+        rospy.logdebug(
+            "Depth image size: %ix%i"
+            % (
+                policy_cfg["metric"]["fully_conv_gqcnn_config"]["im_height"],
+                policy_cfg["metric"]["fully_conv_gqcnn_config"]["im_width"],
+            )
+        )
 
     # Add main policy values to the GQCNN based cfg. This allows
     # us to add and overwrite to the original GQCNN config file
@@ -191,6 +262,7 @@ if __name__ == "__main__":
     cfg["policy"]["gripper_width"] = MAIN_CFG["robot"][
         "gripper_width"
     ]  # Update gripper width
+    cfg["policy"]["metric"]["crop_width"]
 
     # Create publisher to publish pose of final grasp
     grasp_pose_publisher = rospy.Publisher(
@@ -198,33 +270,34 @@ if __name__ == "__main__":
     )
 
     # Create grasping policy
-    rospy.loginfo("Creating Grasping Policy")
+    grasp_policy_type = policy_cfg["type"]
+    rospy.loginfo("Creating %s grasping Policy..." % grasp_policy_type)
     try:
-        if (
-            "cross_entropy"
-            == MAIN_CFG["grasp_detection_solutions"]["gqcnn"]["parameters"][
-                "available"
-            ][model_name]
-        ):
-            grasping_policy = CrossEntropyRobustGraspingPolicy(policy_cfg)
-        elif (
-            "fully_conv"
-            == MAIN_CFG["grasp_detection_solutions"]["gqcnn"]["parameters"][
-                "available"
-            ][model_name]
-        ):
+        if fully_conv:
             if "pj" in model_name.lower():
                 grasping_policy = FullyConvolutionalGraspingPolicyParallelJaw(
                     policy_cfg
                 )
             elif "suction" in model_name.lower():
                 grasping_policy = FullyConvolutionalGraspingPolicySuction(policy_cfg)
+        elif (
+            "cross_entropy"
+            == MAIN_CFG["grasp_detection"]["gqcnn"]["parameters"]["available"][
+                model_name
+            ]
+        ):
+            grasping_policy = CrossEntropyRobustGraspingPolicy(policy_cfg)
     except KeyError:
         rospy.loginfo(
             "The %s model of the %s policy is not yet implemented."
             % (model_name, "gqcnn")
         )
         sys.exit(0)
+
+    # Display policy succes message
+    rospy.loginfo(
+        "%s grasping policy created successfully." % grasp_policy_type.capitalize()
+    )
 
     # Create a grasp planner
     grasp_planner = GraspPlannerROS(

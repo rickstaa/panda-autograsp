@@ -8,12 +8,15 @@
     <arg name="base_name" default="panda_autograsp"/>
     <arg name="output" default="log"/>
     <arg name="debug" default="false"/>
+    <!-- Grasp detection image input quality -->
+    <arg name="grasp_detect_color_quality" default="sd"/>
+    <arg name="grasp_detect_depth_quality" default="sd"/>
+    <!-- Supports "aruco_board" or "chessboard"-->
     <arg name="calib_type" default="aruco_board"/>
-    <!--Supports "aruco_board" or "chessboard"-->
-    <arg name="gripper_center" default="true"/>
     <!-- Enable or disale gripper center frame -->
-    <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/>
+    <arg name="gripper_center" default="true"/>
     <!-- Gripper center position relative to the panda_hand frame -->
+    <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/>
 
     <!--Change loggin format-->
     <env name="ROSCONSOLE_FORMAT" value="[${severity}] [WallTime: ${time}]: [${node}] ${message}" if="$(arg debug)"/>
@@ -54,12 +57,17 @@
     <node name="panda_autograsp_server" pkg="panda_autograsp" type="panda_autograsp_server.py" output="screen">
         <param name="calib_type" type="str" value="$(arg calib_type)"/>
         <remap from="image_color" to="kinect2/hd/image_color"/>
-        <remap from="image_color_rect" to="kinect2/sd/image_color_rect"/>
-        <remap from="image_depth_rect_32FC1" to="kinect2/sd/image_depth_rect_32FC1"/>
+        <!-- Grasp detection color input quality -->
+        <remap from="image_color_rect" to="kinect2/$(arg grasp_detect_color_quality)/image_color_rect"/>
+        <!-- Grasp detection depth input quality -->
+        <remap from="image_depth_rect_32FC1" to="kinect2/$(arg grasp_detect_depth_quality)/image_depth_rect_32FC1"/>
         <remap from="hd/camera_info" to="kinect2/hd/camera_info"/>
         <remap from="qhd/camera_info" to="kinect2/qhd/camera_info"/>
         <remap from="sd/camera_info" to="kinect2/sd/camera_info"/>
     </node>
-    <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="$(arg output)"/>
+    <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="$(arg output)">
+        <!-- Remap so that it contains the right depth topic -->
+        <remap from="image_depth_rect_32FC1" to="kinect2/$(arg grasp_detect_depth_quality)/image_depth_rect_32FC1"/>
+    </node>
     <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen"/>
 </launch>

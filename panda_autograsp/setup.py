@@ -32,7 +32,11 @@ date_files_relative_path = os.path.join(relative_site_packages, "panda_autograsp
 TF_MAX_VERSION = "1.13.1"
 
 # Package requirements
-requirements = ["pylibfreenect2", "tensorflow-estimator >= 1.13.0, <1.14.0rc0"]
+requirements = [
+    "pylibfreenect2",
+    "tensorflow-estimator >= 1.13.0, <1.14.0rc0",
+    "pyyaml",
+]
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -46,7 +50,7 @@ def get_tf_dep():
     """Check whether or not the Nvidia driver and GPUs are available and add the
     corresponding Tensorflow dependency."""
 
-    ## Find the right tensorflow version to install ##
+    # Find the right tensorflow version to install
     tf_dep = "tensorflow<={}".format(TF_MAX_VERSION)
     try:
         gpus = (
@@ -83,12 +87,14 @@ def list_files(path=".", exclude=[], recursive=True, prepent_parent=False):
     exclude : list, optional
         A list of files you want to exclude, by default []
     recursive : bool, optional
-        Option specifying whether you also want to list files of subfolders, by default True
+        Option specifying whether you also want to list files of subfolders,
+        by default True
     level : int, optional
-        If recursive is enabled this specifies up till how many levels deep you want to list
-        the files, by default 0 (Defined as all levels).
+        If recursive is enabled this specifies up till how many levels deep
+        you want to list the files, by default 0 (Defined as all levels).
     perpent_parent: bool, optional
-        Options specifying whether you want to prepent the parent dir to the output paths.
+        Options specifying whether you want to prepent the parent dir to the
+        output paths.
 
     Returns
     -------
@@ -96,23 +102,23 @@ def list_files(path=".", exclude=[], recursive=True, prepent_parent=False):
         A list containing the relative paths of all the files in the parent folder.
     """
 
-    ## Get a list of files that are contained in the given path
+    #  Get a list of files that are contained in the given path
     file_list = list()
     for dir_, _, files in os.walk(path):
         for file_name in files:
             rel_dir = os.path.relpath(dir_, path)
 
-            ## Prepent parent folder if specified ##
+            # Prepent parent folder if specified
             if not prepent_parent:
                 rel_file = os.path.join(rel_dir, file_name)
             else:
                 rel_file = os.path.join(dir_, file_name).replace("./", "")
 
-            ## Add files to file list if they are not in exclude list ##
+            # Add files to file list if they are not in exclude list
             if file_name not in exclude:
                 file_list.append(rel_file)
 
-        ## Break out of loop if recursive is disabled
+        #  Break out of loop if recursive is disabled
         if not recursive:
             break
     return file_list
