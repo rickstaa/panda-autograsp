@@ -41,7 +41,7 @@ if __name__ == "__main__":
     rospy.loginfo("Initializing panda_autograsp_server")
     rospy.init_node("panda_autograsp_server")
 
-    # Argument parser
+    # Get private parameters specified in the launch file
     try:
         POSE_CALIB_METHOD = rospy.get_param("~calib_type")
     except KeyError:
