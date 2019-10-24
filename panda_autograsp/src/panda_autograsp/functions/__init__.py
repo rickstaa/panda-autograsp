@@ -11,6 +11,8 @@
    moveit.get_trajectory_duration
    moveit.plan_exists
    moveit.at_joint_target
+   moveit.add_collision_objects
+   moveit.wait_for_state_update
    conversions.transform_stamped_2_matrix
    conversions.pose_msg_stamped_2_matrix
 """
@@ -23,3 +25,5 @@ from .functions import draw_axis
 from .moveit import get_trajectory_duration
 from .moveit import plan_exists
 from .moveit import at_joint_target
+from .moveit import add_collision_objects
+from .moveit import wait_for_state_update
