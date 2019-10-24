@@ -34,6 +34,7 @@ from panda_autograsp.functions.moveit import (
     get_trajectory_duration,
     plan_exists,
     at_joint_target,
+    add_collision_objects,
 )
 from panda_autograsp.srv import (
     ExecutePlan,
@@ -57,21 +58,25 @@ from panda_autograsp.srv import (
 # Script parameters #############################
 #################################################
 
+# Get file path
+FILE_PATH = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
+
 # Read panda_autograsp configuration file
 MAIN_CFG = YamlConfig(
-    os.path.abspath(
-        os.path.join(
-            os.path.dirname(os.path.realpath(__file__)), "../../cfg/main_config.yaml"
-        )
-    )
+    os.path.abspath(os.path.join(FILE_PATH, "../../cfg/main_config.yaml"))
 )
 POINT_N_STEP = MAIN_CFG["planning"]["point"]["point_n_step"]
 EEF_STEP = MAIN_CFG["planning"]["cartesian"]["eef_step"]
 JUMP_THRESHOLD = MAIN_CFG["planning"]["cartesian"]["jump_threshold"]
 
+# Read collision object configuration file
+COLLISION_OBJ_CFG = YamlConfig(
+    os.path.abspath(os.path.join(FILE_PATH, "../../cfg/moveit_scene_constraints.yaml"))
+)
+
 
 #################################################
-# MoveitPlannerServer class ################
+# MoveitPlannerServer class #####################
 #################################################
 class MoveitPlannerServer:
     """Class used for controlling the panda emika franka robot.
@@ -84,7 +89,7 @@ class MoveitPlannerServer:
             The main robot move group.
         move_group_gripper : :py:obj:`!moveit_commander.MoveGroupCommander`
             The gripper move group.
-        scene : :py:obj:`~moveit_commander.PlanningSceneInterface`
+        scene : :py:obj:`!moveit_commander.PlanningSceneInterface`
             The moveit scene commander.
         current_plan :
             The last computed plan of the main move group.
@@ -127,6 +132,13 @@ class MoveitPlannerServer:
         planner : :py:obj:`str`, optional
                 The Path planning algorithm, by default 'RRTConnectkConfigDefault'.
         """
+
+        # Initialize class attributes
+        self.current_plan = RobotTrajectory()  # Empty plan
+        self.current_plan_gripper = RobotTrajectory()  # Empty plan
+        self.desired_pose = []
+        self.desired_joint_values = []
+        self.desired_gripper_joint_values = {}
 
         # initialize moveit_commander and robot commander
         moveit_commander.roscpp_initialize(args)
@@ -214,6 +226,7 @@ class MoveitPlannerServer:
         rospy.logdebug("Reference frame: %s", self.move_group.get_planning_frame())
         rospy.logdebug("End effector: %s", self.move_group.get_end_effector_link())
         rospy.logdebug("Current robot state: %s", self.robot.get_current_state())
+
         # Add our custom services
         rospy.loginfo("Initializing %s services.", rospy.get_name())
         rospy.Service(
@@ -298,12 +311,14 @@ class MoveitPlannerServer:
             rospy.get_name(),
         )
 
-        # Create additional class members
-        self.current_plan = RobotTrajectory()  # Empty plan
-        self.current_plan_gripper = RobotTrajectory()  # Empty plan
-        self.desired_pose = []
-        self.desired_joint_values = []
-        self.desired_gripper_joint_values = {}
+        # Wait some time to give moveit the time to initialize
+        rospy.sleep(2)
+
+        # Add collision objects to scene
+        self._collision_obj_cfg = COLLISION_OBJ_CFG
+        rospy.loginfo("Adding collision objects to the planning scene...")
+        add_collision_objects(self.scene, self._collision_obj_cfg)
+        rospy.loginfo("Collision objects added to the planning scene.")
 
     def plan_to_joint_service(self, req):
         """Plan to a given joint position.

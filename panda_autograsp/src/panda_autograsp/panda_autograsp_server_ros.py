@@ -763,8 +763,8 @@ class PandaAutograspServer:
         """This service can be used to perform the sensor/world
         calibration. To do this you need to place a chessboard/aruco
         board in the bottom left corner of the robot table. You have
-        to define which calibration patern you use in the ``cfg/main_config.yaml
-        file``. After a succesfull camera/world transformation matrix is computed
+        to define which calibration pattern you use in the ``cfg/main_config.yaml
+        file``. After a successful camera/world transformation matrix is computed
         this matrix is send to the :py:mod:`tf2_broadcaster` module and the
         sensor frame position is updated.
 
