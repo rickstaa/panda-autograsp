@@ -53,12 +53,6 @@ if __name__ == "__main__":
     # Init service node
     rospy.init_node("moveit_planner_server")
 
-    # DEBUG: WAIT FOR PTVSD DEBUGGER #
-    import ptvsd
-
-    ptvsd.wait_for_attach()
-    # ------------------------------ #
-
     # Create service object
     path_planning_service = MoveitPlannerServer(
         robot_description="robot_description",
