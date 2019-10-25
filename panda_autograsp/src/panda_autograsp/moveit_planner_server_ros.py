@@ -337,18 +337,18 @@ class MoveitPlannerServer:
 
         # Set joint targets and plan trajectory
         rospy.loginfo("Planning to: \n %s", req.target)
-        plan = self.move_group.plan(joints=list(req.target))
+        self.current_plan = self.move_group.plan(joints=list(req.target))
         self.desired_joint_values = req.target
 
         # Validate whether planning was successful
-        rospy.logdebug("Plan points: %d" % len(plan.joint_trajectory.points))
-        if plan_exists(plan):
+        rospy.logdebug(
+            "Plan points: %d" % len(self.current_plan.joint_trajectory.points)
+        )
+        if plan_exists(self.current_plan):
             rospy.loginfo("Plan to joint path planning successful.")
-            self.current_plan = plan
             return True
         else:
             rospy.logwarn("Plan to joint path planning failed.")
-            self.current_plan = None
             return False
 
     def plan_to_point_service(self, req):
@@ -637,11 +637,12 @@ class MoveitPlannerServer:
             return False
 
         # Plan for gripper command
-        desired_values = self.desired_gripper_joint_values
-        plan = self.move_group_gripper.plan(joints=desired_values)
+        self.current_plan_gripper = self.move_group_gripper.plan(
+            joints=self.desired_gripper_joint_values
+        )
 
         # Validate whether planning was successful
-        if plan_exists(plan):
+        if plan_exists(self.current_plan_gripper):
             rospy.loginfo("Gripper plan found.")
             return True  # Return success bool
         elif at_joint_target(
@@ -684,6 +685,7 @@ class MoveitPlannerServer:
             self.move_group_gripper.get_goal_joint_tolerance(),
         ):  # Plan empty because already at goal
             rospy.loginfo("Gripper already at desired location.")
+            self.current_plan_gripper = RobotTrajectory()  # Reset plan
             return True
         else:
 
@@ -691,11 +693,12 @@ class MoveitPlannerServer:
             result = self.move_group_gripper.execute(
                 self.current_plan_gripper, wait=True
             )
-            self.current_plan_gripper = RobotTrajectory()  # Reset plan
             if not result:
                 rospy.logwarn("Gripper plan could not be executed.")
+                self.current_plan_gripper = RobotTrajectory()  # Reset plan
                 return False
             else:
+                self.current_plan_gripper = RobotTrajectory()  # Reset plan
                 return True
 
     def open_gripper_service(self, req):
@@ -728,7 +731,7 @@ class MoveitPlannerServer:
 
         # Plan and execute
         # Note: I used execute instead of go since it failed in some cases.
-        plan = self.move_group_gripper.plan(joints=desired_values.values())
+        plan = self.move_group_gripper.plan(joints=desired_values)
         result = self.move_group_gripper.execute(plan, wait=True)
         if not result:
             return False
@@ -756,7 +759,7 @@ class MoveitPlannerServer:
             )
             return False
 
-        # Set named target
+        # Get named target
         try:
             desired_values = self.move_group_gripper.get_named_target_values("close")
         except MoveItCommanderException as e:
@@ -765,7 +768,7 @@ class MoveitPlannerServer:
 
         # Plan and execute
         # Note: I used execute instead of go since it failed in some cases.
-        plan = self.move_group_gripper.plan(joints=desired_values.values())
+        plan = self.move_group_gripper.plan(joints=desired_values)
         result = self.move_group_gripper.execute(plan, wait=True)
         if not result:
             return False
@@ -794,18 +797,18 @@ class MoveitPlannerServer:
             )
             return False
 
-        # Get gripper target value to open
+        # Get named target
         try:
-            # Get desired joint targets
-            desired_joint_values = self.move_group_gripper.get_named_target_values(
-                "open"
-            )
+            desired_values = self.move_group_gripper.get_named_target_values("open")
+        except MoveItCommanderException as e:
+            rospy.logwarn(e)
+            return False
 
-            # Set the named joint targets
-            self.move_group_gripper.set_named_target("open")
+        # Set gripper target value to open
+        try:
 
             # Save desired joint targets
-            self.desired_gripper_joint_values = desired_joint_values
+            self.desired_gripper_joint_values = desired_values
             return True
         except MoveItCommanderException as e:
             rospy.logwarn(e)
@@ -833,18 +836,18 @@ class MoveitPlannerServer:
             )
             return False
 
+        # Get named target
+        try:
+            desired_values = self.move_group_gripper.get_named_target_values("close")
+        except MoveItCommanderException as e:
+            rospy.logwarn(e)
+            return False
+
         # Get gripper target value to closed
         try:
-            # Get desired joint targets
-            desired_joint_values = self.move_group_gripper.get_named_target_values(
-                "close"
-            )
-
-            # Set the named joint targets
-            self.move_group_gripper.set_named_target("close")
 
             # Save desired joint targets
-            self.desired_gripper_joint_values = desired_joint_values
+            self.desired_gripper_joint_values = desired_values
             return True
         except MoveItCommanderException as e:
             rospy.logwarn(e)
