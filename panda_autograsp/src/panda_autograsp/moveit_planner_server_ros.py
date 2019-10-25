@@ -130,7 +130,7 @@ class MoveitPlannerServer:
         pose_reference_frame : :py:obj:`str`
                 Name of the planner reference frame.
         planner : :py:obj:`str`, optional
-                The Path planning algorithm, by default 'RRTConnectkConfigDefault'.
+                The Path planning algorithm, by default 'TRRTkConfigDefault'.
         """
 
         # Initialize class attributes
@@ -203,7 +203,7 @@ class MoveitPlannerServer:
             self.move_group_gripper.set_planning_time(
                 MAIN_CFG["planning"]["general"]["planning_time"]
             )
-            self.move_group_gripper.set_planner_id(planner)
+            # self.move_group_gripper.set_planner_id(planner)
         except MoveItCommanderException:
             self.move_group_gripper = None
             rospy.logwarn(
@@ -311,7 +311,7 @@ class MoveitPlannerServer:
             rospy.get_name(),
         )
 
-        # Wait some time to give moveit the time to initialize
+        # Wait some time to give moveit the time to initialize and rviz to load
         rospy.sleep(2)
 
         # Add collision objects to scene
@@ -337,8 +337,7 @@ class MoveitPlannerServer:
 
         # Set joint targets and plan trajectory
         rospy.loginfo("Planning to: \n %s", req.target)
-        self.move_group.set_joint_value_target(list(req.target))
-        plan = self.move_group.plan()
+        plan = self.move_group.plan(joints=list(req.target))
         self.desired_joint_values = req.target
 
         # Validate whether planning was successful
@@ -639,9 +638,7 @@ class MoveitPlannerServer:
 
         # Plan for gripper command
         desired_values = self.desired_gripper_joint_values
-        self.move_group_gripper.set_joint_value_target(desired_values.values())
-        rospy.sleep(0.1)
-        plan = self.move_group_gripper.plan()
+        plan = self.move_group_gripper.plan(joints=desired_values)
 
         # Validate whether planning was successful
         if plan_exists(plan):
@@ -731,7 +728,7 @@ class MoveitPlannerServer:
 
         # Plan and execute
         # Note: I used execute instead of go since it failed in some cases.
-        plan = self.move_group_gripper.plan(desired_values.values())
+        plan = self.move_group_gripper.plan(joints=desired_values.values())
         result = self.move_group_gripper.execute(plan, wait=True)
         if not result:
             return False
@@ -768,7 +765,7 @@ class MoveitPlannerServer:
 
         # Plan and execute
         # Note: I used execute instead of go since it failed in some cases.
-        plan = self.move_group_gripper.plan(desired_values.values())
+        plan = self.move_group_gripper.plan(joints=desired_values.values())
         result = self.move_group_gripper.execute(plan, wait=True)
         if not result:
             return False

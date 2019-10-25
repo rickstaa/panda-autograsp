@@ -4,16 +4,13 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /PlanningScene1
         - /PlanningScene1/Scene Geometry1
         - /MotionPlanning1/Scene Geometry1
         - /MotionPlanning1/Scene Robot1
         - /MotionPlanning1/Planning Request1
         - /TF1/Frames1
         - /Camera1/Visibility1
-        - /Grasp Pose1
         - /Grasp Pose1/Status1
-        - /Place Pose1
       Splitter Ratio: 0.7384615540504456
     Tree Height: 404
   - Class: rviz/Help
@@ -653,10 +650,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5297959446907043
+      Pitch: 0.43979594111442566
       Target Frame: panda_link0
       Value: XYOrbit (rviz)
-      Yaw: 6.09491491317749
+      Yaw: 4.719914436340332
     Saved: ~
 Window Geometry:
   Camera:

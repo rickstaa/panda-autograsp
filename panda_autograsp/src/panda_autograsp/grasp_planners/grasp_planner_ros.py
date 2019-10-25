@@ -30,7 +30,7 @@ from std_msgs.msg import Header
 from panda_autograsp.msg import GQCNNGrasp
 
 # Set right matplotlib backend
-# Needed in order to show images inside imported modules
+# Needed in order to     show images inside imported modules
 plt.switch_backend("TkAgg")
 
 
