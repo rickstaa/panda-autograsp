@@ -5,20 +5,31 @@
 Release documentation
 ===================================
 
-Building
+Install requirements
 --------------------------
 Building `panda_autograsp`_'s documentation requires `sphinx <http://www.sphinx-doc.org/en/master>`_,
-the panda_autograsp package and several plugins.
+and `doxygen <http://www.doxygen.nl/download.html>`_ the panda_autograsp package and several plugins.
 
-To install the required dependencies, go to the ``panda_autograsp``
-directory and run ::
+To install doxygen see the (`doxygen documentation <http://www.doxygen.nl/download.html>`_)
+after doxygen is installed the other required dependencies can be installed by
+going into the ``panda_autograsp`` directory and running the following
+commands ::
 
     $ pip install .
     $ pip install .[docs]
 
-Then, go to the ``docsrc`` directory and run ``make html``
-to build the documentation. This command will generate
-a set of web pages inside the ``docsrc/_build`` directory.
+.. note::
+    If you get a ``Could NOT find FLEX (missing: FLEX_EXECUTABLE)`` error while trying to install
+    doxygen please install the flex and bison packages using the following commands::
+
+        $ sudo apt-get install flex
+        $ sudo apt-get install bison
+
+Build the documentation
+--------------------------
+To build the documentation go into the ``docsrc`` directory and run the
+``make html`` command. This command will generate the html documentation
+inside the ``docsrc/_build`` directory.
 
 Deploying
 ---------------------------

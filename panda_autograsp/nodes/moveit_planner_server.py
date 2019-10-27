@@ -51,6 +51,14 @@ if __name__ == "__main__":
     # Init service node
     rospy.init_node("moveit_planner_server")
 
+    # Get private parameters specified in the launch file
+    try:
+        moveit_add_scene_collision_objects = rospy.get_param(
+            "~moveit_add_scene_collision_objects"
+        )
+    except KeyError:
+        moveit_add_scene_collision_objects = True
+
     # Create service object
     path_planning_service = MoveitPlannerServer(
         robot_description="robot_description",
@@ -59,6 +67,7 @@ if __name__ == "__main__":
         pose_reference_frame="panda_link0",
         planner="TRRTkConfigDefault",
         args=sys.argv,
+        add_scene_collision_objects=moveit_add_scene_collision_objects,
     )
 
     # Spin forever

@@ -36,6 +36,7 @@ import sensor_msgs
 from tf2_geometry_msgs import PoseStamped  # Needed because we use tf2
 from geometry_msgs.msg import TransformStamped
 from std_msgs.msg import Header
+from std_srvs.srv import Empty
 
 # Panda_autograsp modules, msgs and srvs
 from panda_autograsp.srv import (
@@ -425,6 +426,11 @@ class PandaAutograspServer:
         self._camera_info_sd_sub = Subscriber(
             "sd/camera_info", sensor_msgs.msg.CameraInfo
         )
+
+        # Wait till camera is online
+        rospy.loginfo("Waiting for first camera message...")
+        rospy.wait_for_message("image_color", sensor_msgs.msg.Image)
+        rospy.loginfo("Camera is online and publishing messages.")
 
         # Create msg filter
         self._ats = ApproximateTimeSynchronizer(

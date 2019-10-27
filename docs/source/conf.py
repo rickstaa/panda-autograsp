@@ -167,7 +167,7 @@ html_static_path = ["_static"]
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
 # directly to the root of the documentation.
-# html_extra_path = []
+# html_extra_path = ["../build/html"]
 
 # If not "", a "Last updated on:" timestamp is inserted at every page bottom,
 # using the given strftime format.
@@ -226,29 +226,29 @@ html_static_path = ["_static"]
 
 # -- Options for LaTeX output ---------------------------------------------
 
-latex_elements = {
-    # The paper size ("letterpaper" or "a4paper").
-    # "papersize": "letterpaper",
-    # The font size ("10pt", "11pt" or "12pt").
-    # "pointsize": "10pt",
-    # Additional stuff for the LaTeX preamble.
-    # "preamble": "",
-    # Latex figure (float) alignment
-    # "figure_align": "htbp",
-}
+# latex_elements = {
+#     # The paper size ("letterpaper" or "a4paper").
+#     # "papersize": "letterpaper",
+#     # The font size ("10pt", "11pt" or "12pt").
+#     # "pointsize": "10pt",
+#     # Additional stuff for the LaTeX preamble.
+#     # "preamble": "",
+#     # Latex figure (float) alignment
+#     # "figure_align": "htbp",
+# }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-    (
-        master_doc,
-        "panda_autograsp.tex",
-        u"Panda autograsp documentation",
-        u"Rick Staa",
-        "manual",
-    )
-]
+# latex_documents = [
+#     (
+#         master_doc,
+#         "panda_autograsp.tex",
+#         u"Panda autograsp documentation",
+#         u"Rick Staa",
+#         "manual",
+#     )
+# ]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.

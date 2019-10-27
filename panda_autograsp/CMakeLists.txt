@@ -9,17 +9,15 @@ project(panda_autograsp)
 ## Find catkin macros and libraries (Build dependencies)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
+# (BUILD DEPENDENCIES)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   message_generation
+  dynamic_reconfigure
   std_msgs
   sensor_msgs
   geometry_msgs
-  tf2_geometry_msgs
-  trajectory_msgs
-  moveit_msgs
-  dynamic_reconfigure
 )
 
 ################################################
@@ -95,6 +93,7 @@ add_service_files(
   PlanGripper.srv
   ExecuteGripperPlan.srv
   PlanPlace.srv
+  ResetOctomap.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -109,7 +108,6 @@ generate_messages(
   DEPENDENCIES
   std_msgs
   geometry_msgs
-  trajectory_msgs
   sensor_msgs
 )
 
@@ -135,17 +133,20 @@ generate_dynamic_reconfigure_options(
 ###################################
 ## catkin specific configuration ##
 ###################################
+## (RUNTIME DEPENDENCIES)
 ## The catkin_package macro generates cmake config files for your package
-## Declare things to be passed to dependent projects
+## Declare things to be passed to dependent projects (Runtime)
 ## INCLUDE_DIRS: uncomment this if your package contains header files
+##  To make them availble for packages that depend on this package.
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES ${PROJECT_NAME}
+   INCLUDE_DIRS include
+  #  LIBRARIES ${PROJECT_NAME}
    CATKIN_DEPENDS
-   roscpp rospy
+   roscpp
+   rospy
    sensor_msgs
    std_msgs
    geometry_msgs
@@ -162,8 +163,9 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+## Make the headers availble for the compiler
 include_directories(
-  # include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -172,15 +174,26 @@ include_directories(
 #   src/${PROJECT_NAME}/panda_autograsp.cpp
 # )
 
-## Add cmake target dependencies of the library
-## as an example, code may need to be generated before libraries
-## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/panda_autograsp_node.cpp)
+add_executable(octomap_server src/octomap_server.cpp)
+
+
+## Specify libraries to link a library or executable target against
+target_link_libraries(
+  octomap_server
+  ${catkin_LIBRARIES}
+)
+
+## Add cmake target dependencies of the library
+## as an example, code may need to be generated before libraries
+## either from message generation or dynamic reconfigure
+add_dependencies(
+  octomap_server
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} # Msgs, srv, actions of your package
+  ${catkin_EXPORTED_TARGETS}  # Msg, svr, action srv from other packages
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -192,11 +205,6 @@ include_directories(
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
 
 #############
 ## Install ##
