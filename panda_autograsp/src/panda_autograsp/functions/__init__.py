@@ -1,4 +1,4 @@
-"""This module contains a number of functions which are used by the
+"""Module containing a number of functions that are used by the
 ``panda_autograsp`` package.
 
 .. autosummary::
@@ -22,8 +22,3 @@ from .functions import download_model
 from .functions import list_files
 from .functions import yes_or_no
 from .functions import draw_axis
-from .moveit import get_trajectory_duration
-from .moveit import plan_exists
-from .moveit import at_joint_target
-from .moveit import add_collision_objects
-from .moveit import wait_for_state_update

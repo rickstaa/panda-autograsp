@@ -5,11 +5,13 @@ can be used used to compute a grasp pose out of RBG-D image data. It uses the
 set up by the ``grasp_planner_server`` node are listed below:
 
 Services:
+----------------
+
     - gqcnn_grasp_planner: Computes a grasp pose out of RGB-D images.
     - gqcnn_grasp_planner_bounding_box: Also computes the grasp but allows
-    you to supply a bounding box.
-    - gqcnn_grasp_planner_segmask: Also computes the grasp but allows you
-    to supply a segmask.
+      you to supply a bounding box.
+    - gqcnn_grasp_planner_segmask: Also computes the grasp but allows you to
+      supply a segmask.
 """
 
 # Main python packages
@@ -322,3 +324,4 @@ if __name__ == "__main__":
 
     # Spin forever
     rospy.spin()
+

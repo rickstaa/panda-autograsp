@@ -1,6 +1,5 @@
-"""This module contains the :py:class:`MoveitPlannerServer` class. This class
-sets up a number of services that can be used to control the Panda Emika Franka
-robot.
+"""Module which sets up a number of services that can
+be used to control the Panda Emika Franka robot.
 """
 
 # Make script both python2 and python3 compatible

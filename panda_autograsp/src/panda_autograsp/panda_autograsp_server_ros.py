@@ -1,6 +1,5 @@
-"""This module contains the :py:class:`PandaAutograspServer` class
-This class sets up a number of services which can be used by the
-:py:mod:`panda_autograsp_cli` command line interface (CLI) to
+"""Module that sets up a number of services that enable
+the :py:mod:`panda_autograsp_cli` command line interface (CLI) to
 communicate with the components of the `panda_autograps` solution.
 """
 
@@ -467,7 +466,7 @@ class PandaAutograspServer:
 
         Parameters
         ----------
-        pose_msg : :py:obj:`!geometry_msgs.PosedStamed!
+        pose_msg : :py:obj:`!geometry_msgs.PosedStamed`
             Grasp pose msgs.
         """
 

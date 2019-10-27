@@ -8,12 +8,11 @@ It sets up a number of services which can be called from the
 :py:class:`PandaAutograspServer` to do this. The services that are
 set up by the ``panda_autograsp_server`` node are listed below:
 
-Services:
-    - gqcnn_grasp_planner: Computes a grasp pose out of RGB-D images.
-    - gqcnn_grasp_planner_bounding_box: Also computes the grasp but allows
-    you to supply a bounding box.
-    - gqcnn_grasp_planner_segmask: Also computes the grasp but allows you
-    to supply a segmask.
+**Services:**
+
+    - gqcnn_grasp_planner: Computes a grasp pose out of RGB-D images
+    - gqcnn_grasp_planner_bounding_box: Also computes the grasp but allows you to supply a bounding box.
+    - gqcnn_grasp_planner_segmask: Also computes the grasp but allows you to supply a segmask.
 """
 
 # Make script both python2 and python3 compatible

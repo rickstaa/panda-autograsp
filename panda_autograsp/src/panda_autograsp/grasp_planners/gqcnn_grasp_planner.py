@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""This module contains uses the `BerkleyAutomation GQCNN
+"""This module uses the `BerkleyAutomation GQCNN
 <https://berkeleyautomation.github.io/gqcnn>`_
 grasp detector to compute a valid grasp out of RBG-D sensor data.
 """
@@ -78,9 +78,7 @@ MAIN_CFG = YamlConfig(
 
 # Get settings out of main_cfg
 GRASP_SOLUTION = "gqcnn"
-DEFAULT_MODEL = MAIN_CFG["grasp_detection"][GRASP_SOLUTION]["defaults"][
-    "model"
-]
+DEFAULT_MODEL = MAIN_CFG["grasp_detection"][GRASP_SOLUTION]["defaults"]["model"]
 MODELS_PATH = os.path.abspath(
     os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
@@ -173,16 +171,16 @@ class GraspPlanner(object):
         try:
             if (
                 "cross_entropy"
-                == MAIN_CFG["grasp_detection"]["gqcnn"]["parameters"][
-                    "available"
-                ][model]
+                == MAIN_CFG["grasp_detection"]["gqcnn"]["parameters"]["available"][
+                    model
+                ]
             ):
                 self.grasping_policy = CrossEntropyRobustGraspingPolicy(self.policy_cfg)
             elif (
                 "fully_conv"
-                == MAIN_CFG["grasp_detection"]["gqcnn"]["parameters"][
-                    "available"
-                ][model]
+                == MAIN_CFG["grasp_detection"]["gqcnn"]["parameters"]["available"][
+                    model
+                ]
             ):
                 if "pj" in model.lower():
                     self.grasping_policy = FullyConvolutionalGraspingPolicyParallelJaw(

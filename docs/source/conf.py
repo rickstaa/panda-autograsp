@@ -14,15 +14,12 @@ import os
 import sys
 import sphinx_rtd_theme
 
-# -- Include module src paths --
-sys.path.insert(0, os.path.abspath(".."))
+# -- Add module, and scripts paths to the system path --
 sys.path.insert(0, os.path.abspath("../.."))
 sys.path.insert(
-    0, os.path.abspath("../../panda_autograsp/src")
-)  # Add panda_autograsp modules
-sys.path.insert(
-    0, os.path.abspath("../../panda_autograsp/scripts")
+    1, os.path.abspath("../../panda_autograsp/scripts")
 )  # Add panda_autograsp scripts
+sys.path.insert(2, os.path.abspath("../../panda_autograsp/nodes"))
 
 # -- Project information -----------------------------------------------------
 project = "panda_autograsp"
