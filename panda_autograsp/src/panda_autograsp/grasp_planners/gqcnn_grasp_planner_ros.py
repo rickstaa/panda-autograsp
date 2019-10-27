@@ -1,3 +1,9 @@
+"""This is the ROS version of the :py:mod:`gqcnn_grap_planner` module.
+This module uses the `BerkleyAutomation GQCNN
+<https://berkeleyautomation.github.io/gqcnn>`_
+grasp detector to compute a valid grasp out of RBG-D sensor data.
+"""
+
 # Make script both python2 and python3 compatible
 from __future__ import absolute_import
 from __future__ import division

@@ -1,4 +1,4 @@
-"""This module contains a number of constraint object classes
+"""Module that contains a number of constraint object classes
 that can be used to add constraint to the moveit planning
 scene. It was created since the moveit_commander doesn't yet
 contain a addCollisionObjects method. As a result using the

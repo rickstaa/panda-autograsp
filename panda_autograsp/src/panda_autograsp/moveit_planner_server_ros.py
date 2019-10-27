@@ -1,6 +1,5 @@
-"""This module contains the :py:class:`MoveitPlannerServer` class. This class
-sets up a number of services that can be used to control the Panda Emika Franka
-robot.
+"""Module which sets up a number of services that can
+be used to control the Panda Emika Franka robot.
 """
 
 # Make script both python2 and python3 compatible
@@ -79,7 +78,7 @@ COLLISION_OBJ_CFG = YamlConfig(
 # MoveitPlannerServer class #####################
 #################################################
 class MoveitPlannerServer:
-    """Class used for controlling the panda emika franka robot.
+    """Class used for controlling the Panda Emika Franka robot.
 
     Attributes
     ------------
@@ -112,25 +111,29 @@ class MoveitPlannerServer:
         move_group_gripper="hand",
         pose_reference_frame="panda_link0",
         planner="TRRTkConfigDefault",
+        add_scene_collision_objects=True,
     ):
         """PandaPathPlannerService class initialization.
 
         Parameters
         ----------
         robot_description : :py:obj:`str`
-                Where to find the URDF.
+            Where to find the URDF.
         args : objects
-                Roscpp args, passed on.
+            Roscpp args, passed on.
         move_group : :py:obj:`str`
-                Name of the pose planning reference frame, by default "panda_link0".
+            Name of the pose planning reference frame, by default "panda_link0".
         move_group_end_effector_link : :py:obj:`str`
-                Name of the end effector link.
+            Name of the end effector link.
         move_group_gripper : :py:obj:`str`
-                Name of the move group, by default "panda_arm_hand".
+            Name of the move group, by default "panda_arm_hand".
         pose_reference_frame : :py:obj:`str`
-                Name of the planner reference frame.
+            Name of the planner reference frame.
         planner : :py:obj:`str`, optional
-                The Path planning algorithm, by default 'TRRTkConfigDefault'.
+            The Path planning algorithm, by default 'TRRTkConfigDefault'.
+        add_scene_collision_objects : :py:obj:`bool`
+            If true the collision objects specified in the
+            ``moveit_scene_constraints.yaml`` file will be added to the scene.
         """
 
         # Initialize class attributes
@@ -145,7 +148,7 @@ class MoveitPlannerServer:
 
         # Connect to moveit services
         rospy.loginfo(
-            "Connecting moveit default moveit 'apply_planning_scene' " "service."
+            "Connecting moveit default moveit 'apply_planning_scene' service."
         )
         rospy.wait_for_service("apply_planning_scene")
         try:
@@ -315,10 +318,11 @@ class MoveitPlannerServer:
         rospy.sleep(2)
 
         # Add collision objects to scene
-        self._collision_obj_cfg = COLLISION_OBJ_CFG
-        rospy.loginfo("Adding collision objects to the planning scene...")
-        add_collision_objects(self.scene, self._collision_obj_cfg)
-        rospy.loginfo("Collision objects added to the planning scene.")
+        if add_scene_collision_objects:
+            self._collision_obj_cfg = COLLISION_OBJ_CFG
+            rospy.loginfo("Adding collision objects to the planning scene...")
+            add_collision_objects(self.scene, self._collision_obj_cfg)
+            rospy.loginfo("Collision objects added to the planning scene.")
 
     def plan_to_joint_service(self, req):
         """Plan to a given joint position.

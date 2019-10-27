@@ -1,5 +1,4 @@
-"""This module contains the :py:class:`Tf2Broadcaster` class
-which can be used to broadcasts a number of tf2 frames and
+"""Module that can be used to broadcasts a number of tf2 frames and
 ensures these frames can be updated using a dynamic reconfigure
 server.
 """

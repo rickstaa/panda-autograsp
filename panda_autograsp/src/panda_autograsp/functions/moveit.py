@@ -19,7 +19,7 @@ from pyassimp.errors import AssimpError
 from moveit_msgs.msg import DisplayTrajectory
 
 # Panda_autograsp modules, msgs and srvs
-from panda_autograsp import Box, Plane, Cylinder, Sphere, Mesh
+from panda_autograsp.moveit_collision_objects import Box, Plane, Cylinder, Sphere, Mesh
 
 # Valid collision objects types
 COLLISION_OBJ_TYPES = ["box", "plane", "cylinder", "sphere", "mesh"]
@@ -136,10 +136,12 @@ def add_collision_objects(scene_commander, collision_cfg):
     """Add the collision objects that are specified in the
     collision_cfg :py:obj:`collections.OrderedDict` to the
     moveit planner scene. Supported constraint types are:
+
         * Box
         * Cube
         * Cylinder
         * Mesh
+
     For more information see http://bit.ly/32GuuMN.
 
     Parameters

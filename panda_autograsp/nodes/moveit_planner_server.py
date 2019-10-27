@@ -7,17 +7,16 @@ on the main_move group (by default the panda_arm group) and services
 that work on the gripper move group.
 
 Services
----------
+--------
 
-    General services
-    -----------------
+    **General services:**
+
         - visualize_plan: Visualizes a given plan.
 
-    Main_move_group services
-    -------------------------
+    **Main_move_group services:**
 
         - execute_plan: Executes the plan that has been computed by any of the other
-        planner services.
+          planner services.
         - plan_to_point: Plans to a given pose.
         - plan_to_joint: Plans to a sequence of joint angles.
         - plan_to_path: Plans for a given path.
@@ -25,17 +24,16 @@ Services
         - plan_random_joint: Computes a plan to a random sequence of joint angles.
         - plan_random_path: Copmutes a plan to a random path.
 
-    Gripper move group services
-    ----------------------------
+    **Gripper move group services:**
+
         - open_gripper: Open the gripper. This service both plans and executes.
         - close_gripper: Close the gripper. This both plans and executes.
-        - set_gripper_width: Set the gripper joint state targets to a
-        certain width.
+        - set_gripper_width: Set the gripper joint state targets to a certain width.
         - set_gripper_open: Set the gripper joint state targets to open.
         - set_gripper_closed: Set the gripper joint state targets to closed.
         - execute_gripper_plan: Execute a previously computed plan.
         - plan_gripper: Compute a plan for the currently set joint target. If no
-        joint state targets are set no plan is computed.
+          joint state targets are set no plan is computed.
 """
 
 # Import ROS packages
@@ -53,6 +51,14 @@ if __name__ == "__main__":
     # Init service node
     rospy.init_node("moveit_planner_server")
 
+    # Get private parameters specified in the launch file
+    try:
+        moveit_add_scene_collision_objects = rospy.get_param(
+            "~moveit_add_scene_collision_objects"
+        )
+    except KeyError:
+        moveit_add_scene_collision_objects = True
+
     # Create service object
     path_planning_service = MoveitPlannerServer(
         robot_description="robot_description",
@@ -61,6 +67,7 @@ if __name__ == "__main__":
         pose_reference_frame="panda_link0",
         planner="TRRTkConfigDefault",
         args=sys.argv,
+        add_scene_collision_objects=moveit_add_scene_collision_objects,
     )
 
     # Spin forever
