@@ -1,0 +1,98 @@
+## Moveit scene constraint configuration file
+# This file allows you to add a number of static constraints
+# to the moveit planning scene. Supported constraint types are:
+#  - Box
+#  - Plane
+#  - Cylinder
+#  - Sphere
+#  - Mesh
+#
+# NOTE: For more information see http://bit.ly/32GuuMN.
+# NOTE: If no reference frame is given world frame is assumed.
+# NOTE: The position is set to be the center of the object.
+
+#################################################
+# Our table object ##############################
+#################################################
+constraints: # Dictionary containing our constraint objects
+  robot_table: # Our robot table object
+    type: box
+    dimensions:
+      x: 1.2
+      y: 1.2
+      z: 0.05
+    position:
+      x: 0.40
+      y: 0.20
+      z: -0.025 # Possibly add safety range
+    orientation:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      w: 1.0
+    reference_frame: panda_link0
+
+#################################################
+# Other examples ################################
+#################################################
+  # # - PLANE -
+  # example_plane: # FIXME: For some reason not showing up in RVIZ
+  #   type: plane
+  #   normal:
+  #     x: 1.0
+  #     y: 1.0
+  #     z: 1.0 # Add 1 cm safety range
+  #   position:
+  #     x: 2.0
+  #     y: 2.0
+  #     z: 1.0 # Add 1 cm safety range
+  #   orientation:
+  #     x: 0.0
+  #     y: 0.0
+  #     z: 0.0
+  #     w: 1.0
+  #   offset: 0.2
+  #   reference_frame: world
+  # # - Cylinder -
+  # example_cylinder:
+  #   type: cylinder
+  #   height: 1.0
+  #   radius: 1.0
+  #   position:
+  #     x: 2.0
+  #     y: -2.0
+  #     z: 1.0 # Add 1 cm safety range
+  #   orientation:
+  #     x: 0.0
+  #     y: 0.0
+  #     z: 0.0
+  #     w: 1.0
+  #   reference_frame: world
+  # # - Sphere -
+  # example_sphere:
+  #   type: sphere
+  #   radius: 1.0
+  #   position:
+  #     x: 4.0
+  #     y: 4.0
+  #     z: 4.0
+  #   orientation:
+  #     x: 0.0
+  #     y: 0.0
+  #     z: 0.0
+  #     w: 1.0
+  #   reference_frame: world
+  # # - Mesh -
+  # example_mesh: # FIXME: For some reason crashing my node.
+  #   type: mesh
+  #   file_name: ../../../meshes/visual/hand.dae
+  #   position:
+  #     x: -2.0
+  #     y: -2.0
+  #     z: 1.0
+  #   orientation:
+  #     x: 0.0
+  #     y: 0.0
+  #     z: 0.0
+  #     w: 1.0
+  #   reference_frame: world

@@ -3,25 +3,33 @@
     This CLI can be opened using the 'rosrun panda_autograsp panda_autograsp_cli.py' command.
 -->
 <launch>
-
-    <!--Launch file arguments-->
+    <!-- Launch file arguments-->
+    <!-- Main launch file arguments -->
     <arg name="base_name" default="panda_autograsp"/>
     <arg name="output" default="log"/>
     <arg name="debug" default="false"/>
+    <!-- Moveit planning obtions scene -->
+    <arg name="moveit_perception" default="true"/>
+    <arg name="moveit_perception_frame" default="kinect2_ir_optical_frame"/>
+    <arg name="moveit_add_scene_collision_objects" default="false"/>
+    <!-- Grasp detection image input quality -->
+    <arg name="grasp_detect_color_quality" default="sd"/>
+    <arg name="grasp_detect_depth_quality" default="sd"/>
+    <!-- Supports "aruco_board" or "chessboard"-->
     <arg name="calib_type" default="aruco_board"/>
-    <!--Supports "aruco_board" or "chessboard"-->
-    <arg name="gripper_center" default="true"/>
     <!-- Enable or disale gripper center frame -->
-    <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/>
+    <arg name="gripper_center" default="true"/>
     <!-- Gripper center position relative to the panda_hand frame -->
-
-    <!--Change loggin format-->
+    <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/>
+    <!-- Change loggin formatg -->
     <env name="ROSCONSOLE_FORMAT" value="[${severity}] [WallTime: ${time}]: [${node}] ${message}" if="$(arg debug)"/>
 
     <!-- Load panda simulation and visualization -->
     <include file="$(find panda_autograsp)/launch/panda_moveit_config.launch">
         <arg name="gripper_center" value="$(arg gripper_center)" />
         <arg name="gripper_center_xyz" value="$(arg gripper_center_xyz)" />
+        <arg name="moveit_perception" value="$(arg moveit_perception)" />
+        <arg name="moveit_perception_frame" value="$(arg moveit_perception_frame)"/>
     </include>
 
     <!-- Start the Kinect processing ROS nodes
@@ -42,9 +50,10 @@
             roll: is rotation about X (green axis)
     -->
     <node name="tf2_broadcaster" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" output="$(arg output)">
-        <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frames_poses.yaml"/>
         <!--Load calibration parameters-->
+        <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frames_poses.yaml"/>
     </node>
+
     <!-- Load panda_autograsp services
         Panda_autograsp services:
            - panda_autograsp: Main panda_autograsp server. Used for calling all the other services.
@@ -54,12 +63,19 @@
     <node name="panda_autograsp_server" pkg="panda_autograsp" type="panda_autograsp_server.py" output="screen">
         <param name="calib_type" type="str" value="$(arg calib_type)"/>
         <remap from="image_color" to="kinect2/hd/image_color"/>
-        <remap from="image_color_rect" to="kinect2/sd/image_color_rect"/>
-        <remap from="image_depth_rect_32FC1" to="kinect2/sd/image_depth_rect_32FC1"/>
+        <!-- Grasp detection color input quality -->
+        <remap from="image_color_rect" to="kinect2/$(arg grasp_detect_color_quality)/image_color_rect"/>
+        <!-- Grasp detection depth input quality -->
+        <remap from="image_depth_rect_32FC1" to="kinect2/$(arg grasp_detect_depth_quality)/image_depth_rect_32FC1"/>
         <remap from="hd/camera_info" to="kinect2/hd/camera_info"/>
         <remap from="qhd/camera_info" to="kinect2/qhd/camera_info"/>
         <remap from="sd/camera_info" to="kinect2/sd/camera_info"/>
     </node>
-    <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="$(arg output)"/>
-    <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen"/>
+    <node name="grasp_planner" pkg="panda_autograsp" type="grasp_planner_server.py" output="$(arg output)">
+        <!-- Remap so that it contains the right depth topic -->
+        <remap from="image_depth_rect_32FC1" to="kinect2/$(arg grasp_detect_depth_quality)/image_depth_rect_32FC1"/>
+    </node>
+    <node name="moveit_planner_server" pkg="panda_autograsp" type="moveit_planner_server.py" output="screen">
+        <param name="moveit_add_scene_collision_objects" value="$(arg moveit_add_scene_collision_objects)"/>
+    </node>
 </launch>

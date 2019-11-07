@@ -1,15 +1,8 @@
-.. panda_autograsp documentation master file
-
-.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
-
-Welcome to panda_autograsp's documentation!
+Welcome to panda_autograsp documentation!
 ===========================================
 
 `Panda_autograsp`_ is an autonomous ROS based grasping solution that works with the
-`Panda Emika Franka robot <https://www.franka.de/panda>`_. It currently contains the
-following grasping algorithms:
-
--   `BerkleyAutomation/gqcnn <https://github.com/BerkeleyAutomation/gqcnn>`_
+`Panda Emika Franka robot <https://www.franka.de/panda>`_.
 
 .. toctree::
    :maxdepth: 2
@@ -52,6 +45,8 @@ following grasping algorithms:
 Indices and tables
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+    - :ref:`genindex`
+    - :ref:`modindex`
+    - :ref:`search`
+
+.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp

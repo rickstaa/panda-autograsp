@@ -1,35 +1,46 @@
-Sensor calibration
-========================
+Sensor calibration instructions
+====================================
 
-Calibration instructions
-------------------------------------
-The Kinect camera is calibrated using the
-:py:mod:`tools.chessboard_calibration`.
-
-Checkerboard pattern
-------------------------------------
-
-.. figure:: ../_images/chessboard.png
-    :scale: 7%
-    :alt: Calibration checkerboard
-
-The calibration ``checkerboard_A3.svg`` were downloaded from  created
-using the `rgbdemo repository <https://github.com/rgbdemo/rgbdemo>`_
-and can be found in the ``./data/calib/checkerboard`` folder.
-
-Calibration configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The calibration configuration settings can be found in the
-``./cfg/calib/register_camera.yaml`` file.
-
-Generate ar markers
+Camera calibration
 ----------------------------------------
-To generate the ar markers run the ``rosrun ar_track_alvar createMarker -s 4.5`` command. The 4.5 stands for the size.
-Then following use 0,1,2 as the tag ids. 
 
-- This toolbox asks for the [x,y] position of the bottom left corner of the marker.
+The Kinect camera can be calibrated using the `kinect2_calibration module of the IAI_kinect2 package <iai_kinect2>`_.
+The instructions for performing this calibration can be
+`found here <_calib_instructions>`_.
 
--Print the pattern
--Measure the marker size and adjust the relative positions in the xml so that the cluster is well defined.
+Robot eye-hand calibration
+---------------------------------
 
-positive-z comes out of the front of the tag toward the viewer, positive-x is to the right, and positive-y is up.
+To be able to control the real robot, we also need to know the
+location of the robot relative to the camera. A robot eye-hand calibration is
+therefore performed at the start of the `panda_autograsp` solution.
+During this eye-hand calibration, you are asked asked to place a calibration
+pattern on the upper left corner of the table. The `panda_autograsp`_ algorithm
+supports two types of calibration patterns, an Aruco Board and a
+chessboard. Due to its higher calibration accuracy, by default, the algorithm
+assumes you are using an Aruco Board. If you want to use the chessboard
+instead, you have to change the ``pose_estimation_calib_board`` parameter
+in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_ 
+file.
+
+
+Generate chessboard pattern
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Different chessboard patterns can be found in the
+`IAI_kinect2/kinect2_calibration <iai_kinect2>`_ repository.
+If you specified, you are using a chessboard the algorithm
+currently assumed you are using 5x7x0.03 chessboard.
+You can change it by changing the ``chessboard_settings``
+of the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_
+file.
+
+Generate Aruco Board
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To generate the Aruco Board please run the :py:mod:`generate_arucoboard.py`
+python script. This script is found in the ``./scripts`` folder.
+
+
+.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
+.. _iai_kinect2: https://github.com/code-iai/iai_kinect2
+.. _calib_instructions: https://github.com/code-iai/iai_kinect2/tree/master/kinect2_calibration>`_images

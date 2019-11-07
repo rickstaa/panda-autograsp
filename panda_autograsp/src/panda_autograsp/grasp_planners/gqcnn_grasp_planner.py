@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""This module contains uses the `BerkleyAutomation GQCNN
+"""This module uses the `BerkleyAutomation GQCNN
 <https://berkeleyautomation.github.io/gqcnn>`_
 grasp detector to compute a valid grasp out of RBG-D sensor data.
 """
@@ -21,6 +21,7 @@ import time
 import sys
 import json
 import numpy as np
+import matplotlib.pyplot as plt
 
 from perception import (
     Kinect2Sensor,
@@ -45,6 +46,10 @@ from autolab_core import YamlConfig
 # Panda_autograsp modules, msgs and srvs
 from panda_autograsp.functions import download_model
 from panda_autograsp import Logger
+
+# Set right matplotlib backend
+# Needed in order to show images inside imported modules
+plt.switch_backend("TkAgg")
 
 # Delete logger format set by the autolab_core
 Logger.clear_root()
@@ -73,9 +78,7 @@ MAIN_CFG = YamlConfig(
 
 # Get settings out of main_cfg
 GRASP_SOLUTION = "gqcnn"
-DEFAULT_MODEL = MAIN_CFG["grasp_detection_solutions"][GRASP_SOLUTION]["defaults"][
-    "model"
-]
+DEFAULT_MODEL = MAIN_CFG["grasp_detection"][GRASP_SOLUTION]["defaults"]["model"]
 MODELS_PATH = os.path.abspath(
     os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
@@ -168,16 +171,16 @@ class GraspPlanner(object):
         try:
             if (
                 "cross_entropy"
-                == MAIN_CFG["grasp_detection_solutions"]["gqcnn"]["parameters"][
-                    "available"
-                ][model]
+                == MAIN_CFG["grasp_detection"]["gqcnn"]["parameters"]["available"][
+                    model
+                ]
             ):
                 self.grasping_policy = CrossEntropyRobustGraspingPolicy(self.policy_cfg)
             elif (
                 "fully_conv"
-                == MAIN_CFG["grasp_detection_solutions"]["gqcnn"]["parameters"][
-                    "available"
-                ][model]
+                == MAIN_CFG["grasp_detection"]["gqcnn"]["parameters"]["available"][
+                    model
+                ]
             ):
                 if "pj" in model.lower():
                     self.grasping_policy = FullyConvolutionalGraspingPolicyParallelJaw(
@@ -243,9 +246,7 @@ class GraspPlanner(object):
                 "to continue."
             )
             while True:
-                prompt_result = raw_input(
-                    "Do you want to download this model now? [Y/n] "
-                )
+                prompt_result = input("Do you want to download this model now? [Y/n] ")
 
                 # Check user input
                 # If yes download sample
@@ -507,15 +508,15 @@ class GraspPlanner(object):
             )
 
         # Visualize
-        if MAIN_CFG["vis"]["figs"]["color_image"]:
+        if MAIN_CFG["vis"]["grasp"]["figs"]["color_image"]:
             vis.imshow(color_im)
             vis.title("Color image")
             vis.show()
-        if MAIN_CFG["vis"]["figs"]["depth_image"]:
+        if MAIN_CFG["vis"]["grasp"]["figs"]["depth_image"]:
             vis.imshow(depth_im)
             vis.title("Depth image")
             vis.show()
-        if MAIN_CFG["vis"]["figs"]["segmask"] and segmask is not None:
+        if MAIN_CFG["vis"]["grasp"]["figs"]["segmask"] and segmask is not None:
             vis.imshow(segmask)
             vis.title("Segmask image")
             vis.show()
@@ -550,7 +551,7 @@ class GraspPlanner(object):
             segmask = segmask.mask_binary(bb_segmask)
 
         # Visualize
-        if MAIN_CFG["vis"]["figs"]["rgbd_state"]:
+        if MAIN_CFG["vis"]["grasp"]["figs"]["rgbd_state"]:
             masked_rgbd_im = rgbd_im.mask_binary(segmask)
             vis.figure()
             vis.title("Masked RGBD state")
@@ -641,7 +642,7 @@ class GraspPlanner(object):
                 gqcnn_grasp.thumbnail = thumbnail
 
         # Visualize result
-        if MAIN_CFG["vis"]["figs"]["final_grasp"]:
+        if MAIN_CFG["vis"]["grasp"]["figs"]["final_grasp"]:
             vis.figure(size=(10, 10))
             vis.imshow(
                 rgbd_image_state.rgbd_im.color,

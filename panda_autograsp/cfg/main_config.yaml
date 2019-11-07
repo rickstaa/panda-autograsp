@@ -26,14 +26,18 @@ main:
 #################################################
 # Panda_autograsp visualization settings ########
 #################################################
-vis: # Show grasp images using opencv (Useful for debugging)
-  figs: # Grasp computation visualization figures
-    rgbd_state: 0
-    cropped_rgbd_image: 0
-    color_image: 0
-    depth_image: 0
-    segmask: 0
-    final_grasp: 0
+vis: # Show images using opencv
+  grasp: # Grasp computation visualization figures (Useful for debugging)
+    figs:
+      rgbd_state: 0
+      cropped_rgbd_image: 0
+      color_image: 0
+      depth_image: 0
+      segmask: 0
+      final_grasp: 0
+  calib: # Pose estimation and calibration figures
+    figs:
+      calib_frame: 1
 
 #################################################
 # Robot parameters ##############################
@@ -59,18 +63,21 @@ planning:
 #################################################
 # Grasp computation algorithm settings ##########
 #################################################
-grasp_detection_solutions:
+grasp_detection:
+
   # GQCNN grasping solution settings
   gqcnn:
+
     # GQCNN default values
     defaults:
-      # Uncomment the model you want to use
+
+      # Default model
+      # NOTE: Uncomment the model you want to use
       # model: GQCNN-2.0 # Trained on images of objects in simulation
       # model: GQCNN-2.1 # Model fine-tuned on images of objects in clutter
-      model: GQCNN-4.0-PJ # Trained on images of objects in clutter with parameters
-      # model: FC-GQCNN-4.0-PJ # Improved network trained on images of objects in clutter
+      # model: GQCNN-4.0-PJ # Trained on images of objects in clutter with parameters
+      model: FC-GQCNN-4.0-PJ # Improved network trained on images of objects in clutter
 
-    # Important GQCNN paths
     parameters:
       !include ./_cfg/gqcnn_parms.yaml
 
@@ -83,4 +90,12 @@ grasp_detection_result:
 # Calibration settings ##########################
 #################################################
 calibration:
+
   pose_estimation_calib_board: aruco_board # [aruco_board or chessboard]
+  calib_try_duration: 30 # How long [s] we should search for the pattern before giving up
+
+  chessboard_settings:
+    N_FRAMES: 10  # Number of frames of which to take the median
+    N_ROWS: 5  # The number of corners in the y direction.
+    N_COLUMNS: 7 # The number of corners in the x direction.
+    SQUARE_SIZE: 30 # The size of one square in [mm]

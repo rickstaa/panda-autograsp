@@ -42,7 +42,7 @@ if __name__ == "__main__":
     ###############################################
 
     #  Initialize grasp_planning service
-    rospy.loginfo("Conneting to moveit_planning_server service.")
+    rospy.loginfo("Connecting to moveit_planning_server service.")
 
     #  Initialize random pose service
     rospy.wait_for_service("moveit_planner_server/plan_random_pose")
@@ -165,7 +165,7 @@ if __name__ == "__main__":
                     if not response:
                         break
                 else:
-                    raw_input(
+                    input(
                         "Random pose planning successful. Press enter to visualize "
                         "the plan>> "
                     )
@@ -198,7 +198,7 @@ if __name__ == "__main__":
                     if not response:
                         break
                 else:
-                    raw_input(
+                    input(
                         "Random joint planning successful. Press enter to visualize "
                         "the plan>> "
                     )
@@ -231,7 +231,7 @@ if __name__ == "__main__":
                     if not response:
                         break
                 else:
-                    raw_input(
+                    input(
                         "Random path planning successful. Press enter to visualize "
                         "the plan>> "
                     )

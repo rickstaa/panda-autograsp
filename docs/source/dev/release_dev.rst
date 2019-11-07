@@ -5,7 +5,7 @@
 Release package
 ===================================
 
-Before releasing the package make sure the following steps are performed:
+Before releasing the package, make sure the following steps are performed:
 
     #. Squash and merge your branch with the ``melodic_devel`` branch.
     #. :doc:`doc_dev` if needed.

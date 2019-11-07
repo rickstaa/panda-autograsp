@@ -27,22 +27,22 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
     Version: v0.0.5
     Type: Private
 %environment
-    ## Set language options ##
+    # Set language options
     LANG=C.UTF-8 LC_ALL=C.UTF-8
 
-    ## Set ROS distro var ##
+    # Set ROS distro var
     ROS_DISTRO=kinetic
 
-    ## Cuda samples env var ##
+    # Cuda samples env var
     export NVCUDASAMPLES_ROOT=/opt/NVIDIA_CUDA-10.0_Samples
 
-    ## Libfreenect2 conf env var ##
+    # Libfreenect2 conf env var
     export LIBFREENECT2_INSTALL_PREFIX=/opt/freenect2/
 
-    ## Freenect2 lib env var ##
+    # Freenect2 lib env var
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/freenect2/lib
 %post
-    ## Install system package dependencies ##
+    # Install system package dependencies
     apt update --fix-missing
     apt install -q -y\
         wget \
@@ -106,11 +106,11 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
 	    python3 get-pip.py && \
         rm get-pip.py
 
-    ## Install virtual env package ##
+    # Install virtual env package
     python -m pip install virtualenv
     python2 -m pip install virtualenv
 
-    ## Add container resources to the container ##
+    # Add container resources to the container
     bash -c "cd / \
         && git clone https://github.com/rickstaa/deep_robotics_singularity_recipes.git \
         && cp ./deep_robotics_singularity_recipes/resources/.singularity_bashrc /.singularity_bashrc \
@@ -123,7 +123,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
         && git clone https://github.com/rickstaa/ros_conda_wrapper.git \
         && cp ./ros_conda_wrapper/.conda_wrapper /.conda_wrapper"
 
-    ## Install miniconda3 ##
+    # Install miniconda3
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh
     /bin/bash /miniconda.sh -b -p /opt/conda
     rm /miniconda.sh
@@ -134,21 +134,21 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh
     chmod -R a+w /opt/conda # Make env available to all singularity users
 
-    ## Add conda enviroment activation command to .singularity_bashrc ##
+    # Add conda enviroment activation command to .singularity_bashrc
     echo "" >> /.singularity_bashrc
     echo "## Activate autograsp enviroment" >> /.singularity_bashrc
     echo "conda activate autograsp" >> /.singularity_bashrc
 
-    ## Create autograsp enviroment ##
+    # Create autograsp enviroment
     conda create -q -y -n autograsp python=3.7
     conda activate autograsp
 
-    ## Install python packages ##
+    # Install python packages
     conda install -y tensorflow-gpu
     #conda install -y jupyter
     conda update --all
 
-    ## Install ros dependencies ##
+    # Install ros dependencies
     pip uninstall opencv-python -y
     conda install -y -c conda-forge opencv
     pip install empy \
@@ -161,15 +161,15 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
 	    python3 get-pip.py && \
         rm get-pip.py
 
-    ## Install additional ROS package system dependencies ##
+    # Install additional ROS package system dependencies
     apt install -q -y python3-empy \
         python3-yaml
 
-    ## setup ROS keys and sources.list ##
+    # setup ROS keys and sources.list
     echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
     apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-    ## Install ROS kinetic desktop full ##
+    # Install ROS kinetic desktop full
     apt update
     apt install -q -y ros-kinetic-desktop-full
 
@@ -198,7 +198,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
        python-rosinstall \
        python-rosinstall-generator
 
-    ## Install libfranca from source ##
+    # Install libfranca from source
     bash -c "cd / \
         && apt install -q -y ros-kinetic-libfranka ros-kinetic-franka-ros \
         && apt install -q -y libpoco-dev libeigen3-dev \
@@ -210,7 +210,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
         && cmake -DCMAKE_BUILD_TYPE=Release .. \
         && cmake --build ."
 
-    ## Download cuda10.0 samples and set cmake variables ##
+    # Download cuda10.0 samples and set cmake variables
     bash -c "cd /opt \
         && git clone https://github.com/NVIDIA/cuda-samples \
         && mv cuda-samples NVIDIA_CUDA-10.0_Samples \
@@ -223,7 +223,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
         && git checkout v10.0"
     export NVCUDASAMPLES_ROOT=/opt/NVIDIA_CUDA-10.0_Samples
 
-    ## Install kinect2.0 Library ##
+    # Install kinect2.0 Library
     apt update
     apt install -q -y \
         libusb-1.0-0-dev \
@@ -246,13 +246,13 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
         && cp ../platform/linux/udev/90-kinect2.rules /etc/udev/rules.d/ \
         && make install-openni2"
 
-    ## Upgrade packages and remove unused packages ##
+    # Upgrade packages and remove unused packages
     apt upgrade -y -q
     apt autoremove -y -q
     apt autoclean -y -q
     rm -rf /var/lib/apt/lists/*
 %runscript
-	## Execute the .singularity_bashrc file ##
+	# Execute the .singularity_bashrc file
 	OCI_CMD='/bin/bash'
 	OCI_ARGS='-rcfile /.singularity_bashrc'
 	SINGULARITY_OCI_RUN="${OCI_CMD} ${OCI_ARGS}"

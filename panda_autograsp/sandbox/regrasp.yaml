@@ -1,0 +1,223 @@
+# general experiment parameters		
+logging_dir: /home/autolab/Public/data/dex-net/experiments/regrasping
+supervisor: jeff
+planner: baseline
+target_stp_id: pose_7
+
+wiggle_delta: 0.01
+
+# database params
+database_dir: &id_database_dir /home/autolab/Public/data/dex-net/data/db
+database_cache_dir: *id_database_dir
+database_name: lego.hdf5
+database_access_level: READ_ONLY
+dataset_name: lego
+datapoints_per_file: 1000
+
+# grasping params
+data_dir: /home/autolab/Public/data/dex-net/data/regrasping/lego_04_04_17
+output_dir: /home/autolab/Public/data/dex-net/experiments/regrasping/single_lego_brick_07_29_17
+gripper: yumi_metal_spline
+
+grasping:
+  lift_height: 0.1
+  min_gripper_height: 0.01
+  approach_dist: 0.075
+  delta_theta: 30
+
+table_clearance: 0.01
+min_gripper_width: 0.001
+grasp_approach_table_angle_thresh: 5 # in degrees
+grasp_metric: robust_ferrari_canny
+
+adjacency_matrix_filename: adjacency_matrix.pkl
+graph_filename: graph.pkl
+shortest_paths_filename: shortest_paths.pkl
+stp_vertex_map_filename: stp_vertex_map
+
+# assembly params
+assemble_approach_dist: 0.1
+assemble_delta: 0.0075
+assemble_depth: 0.0025
+assemble_translation:
+  - 0.354
+  - -0.03
+  - 0.018
+
+target_dir:
+  - 0.5
+  - -1.0
+  - 0
+
+# collision checking params
+table_delta: 0.001
+table_mesh_filename: /home/autolab/Public/alan/meshes/table/table.obj
+approach_dist: 0.1
+delta_approach: 0.005
+
+# image proc params
+image_proc:
+  inpaint: 1
+  inpaint_rescale_factor: 0.5
+
+  num_throw_away: 10
+
+  color_median_win_size: 5
+  color_bilateral_win_size: 7
+  color_bilateral_range_sigma: 2.5
+  color_bilateral_spatial_sigma: 2.5
+
+  depth_median_win_size: 5
+  depth_bilateral_win_size: 5
+  depth_bilateral_range_sigma: 0.005
+  depth_bilateral_spatial_sigma: 2.0  
+
+# sensor params
+calib_dir: /home/autolab/Public/alan/calib
+num_depth_images: 3
+sensor:
+  type: primesense_ros
+  frame: primesense_overhead
+  auto_white_balance: 0
+table_to_world_z_offset: -0.0025
+
+# control params
+control:
+  use_left: 1
+  approach_velocity: 100
+  approach_zoning: z1
+  standard_velocity: 500
+  standard_zoning: fine
+
+# detection params
+detection:
+  foreground_mask_tolerance: 50
+  min_contour_area: 160.0
+  max_contour_area: 100000.0
+  min_box_area: 2000.0
+  max_box_area: 30000.0
+  box_padding_px: 15
+
+  rescale_factor: 1.5
+  interpolation: bilinear
+  depth_grad_thresh: 10.0
+  contour_dist_thresh: 2.5
+
+  kinect2_noise_offset: -0.02
+  kinect2_noise_table_depth_offset: 0.02
+
+  image_width: 227
+  image_height: 227
+
+  color_seg_num_clusters: 2
+  color_seg_rgb_weight: 1.0
+  color_seg_hsv_weight: 10.0
+  color_seg_dist_pctile: 5.0
+  color_seg_dist_thresh: 30.0
+  color_seg_min_bg_dist: 260.0
+
+  filter_dim: 5
+
+  workspace:
+    crop_center_px:
+      - 230
+      - 320
+    crop_dim:
+      - 400
+      - 400
+
+# registration params
+registration:
+  crop_center_px:
+    - 200
+    - 210
+  crop_dim:
+    - 200
+    - 200
+
+  index_im_dim: 227
+
+  depth_im_median_filter_dim: 5
+  depth_im_erosion_filter_dim: 3
+  depth_im_close_filter_dim: 3
+  binary_im_close_filter_dim: 3
+  depth_im_grad_thresh: 0.015
+  depth_im_rescale_factor: 2.0
+  contour_dist_thresh: 2.5
+  foreground_mask_tolerance: 30
+  area_thresh: 1000
+  cache_im_filename: data/cnn/cnn_grayscale_im.jpg
+
+  segment_kmeans: 1
+  color_seg_num_clusters: 2
+  color_seg_rgb_weight: 1.0
+  color_seg_hsv_weight: 10.0
+  color_seg_dist_pctile: 5.0
+  color_seg_dist_thresh: 30.0
+  color_seg_min_bg_dist: 275.0
+
+  num_nearest_neighbors: 3
+
+  solver_type: single_stage
+  num_pred_classes: 1
+
+  icp_sample_size: 1000
+  icp_cost_eval_sample_size: 2500
+  icp_relative_point_plane_cost: 100
+  icp_regularization_lambda: 0.01
+  feature_matcher_dist_thresh: 0.025
+  feature_matcher_norm_thresh: 0.75
+  num_registration_iters: 5
+  compute_total_registration_cost: 1
+  early_term_cost: 0.025
+  threshold_cost: 0.038
+  align_stable_pose: 1
+
+  workspace_min_pt:
+    - 0.13
+    - -0.25
+    - 0.01
+  workspace_max_pt:
+    - 0.5
+    - 0.25
+    - 0.25
+
+# tensorflow params for classification
+tf:
+  batch_size: 64
+  im_width: 227
+  im_height: 227
+  channels: 3
+  out_layer: conv5
+  feature_layer: conv5
+  out_size: 10
+  caffe_weights: /home/autolab/Public/data/dex-net/data/models/bvlc_alexnet.npy
+  mean_file: /home/autolab/Public/data/dex-net/data/models/classification/cnn_lego_color_04_05_17/mean.npy
+  use_stable_poses: 1
+  render_mode: segmask
+  cache_file: /home/autolab/Public/data/dex-net/data/classification/features/lego_primesense_07_29_17
+  model_dir: /home/autolab/Public/data/dex-net/data/models/classification/cnn_lego_color_04_05_17
+
+# visualization params
+vis:
+  raw: 0
+  input: 0
+  object_detection: 1
+  tf_images: 0
+  plan: 0
+  predictions: 0
+  point_cloud: 0
+  debug_registration: 0
+  final_registration: 0
+  planned_regrasps: 0
+  final_grasp: 0
+  k: 16
+ 
+  foreground: 0
+  segmentation: 0
+
+  grasp_sampling: 0
+
+# debugging
+debug: 1
+robot_off: 0

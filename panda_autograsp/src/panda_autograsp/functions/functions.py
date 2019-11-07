@@ -3,6 +3,16 @@
 of a specific module.
 """
 
+# Make script both python2 and python3 compatible
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+try:
+    input = raw_input
+except NameError:
+    pass
+
 # Main python packages
 import os
 import subprocess
@@ -26,7 +36,7 @@ MAIN_CFG = YamlConfig(
 )
 
 # Create script contants
-MODELS_PATH = os.path.abspath(
+DEFAULT_MODELS_PATH = os.path.abspath(
     os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
         "../..",
@@ -50,7 +60,9 @@ MODEL_RENAME_DICT = {
 # Functions #####################################
 #################################################
 def download_model(
-    model, model_output=MODELS_PATH, download_script_path=DEFAULT_DOWNLOAD_SCRIPT_PATH
+    model,
+    model_output=DEFAULT_MODELS_PATH,
+    download_script_path=DEFAULT_DOWNLOAD_SCRIPT_PATH,
 ):
     """This function downloads the Pretrained CNN models that are used in the
     ``panda_autograsp`` package, when they are not yet present on the system.
@@ -61,7 +73,7 @@ def download_model(
         Name of the model you want to download.
     model_output : :py:obj:`str`, optional
         Path to the folder in which you want to place the downloaded models, by
-        default MODELS_PATH
+        default DEFAULT_MODELS_PATH
     download_script_path : :py:obj:`str`, optional
         Path to the download description script, by default GQCNN_DOWNLOAD_SCRIPT_PATH
 
@@ -98,11 +110,10 @@ def download_model(
 
         # Download start message
         func_log.info("Downloading the " + model + " model.")
+
         # Get solution group
         solution = [
-            s
-            for s in list(MAIN_CFG["grasp_detection_solutions"].keys())
-            if s in model.lower()
+            s for s in list(MAIN_CFG["grasp_detection"].keys()) if s in model.lower()
         ]
         if len(solution) > 1 or len(solution) == 0:  # Check if model name is vallid
             msg = "Model name is invalid. Please check the name and try again."
@@ -258,7 +269,7 @@ def yes_or_no(question, add_options=True):
         option_str = ""
 
     # Create prompt
-    answer = raw_input(question + option_str).lower().strip()
+    answer = input(question + option_str).lower().strip()
     answer = [answer] if answer == "" else answer  # Make sure enter i
 
     # Keep repeating prompt until right answer is given
@@ -271,7 +282,7 @@ def yes_or_no(question, add_options=True):
     ):
         print("")
         print("Input yes or no")
-        answer = raw_input(question + option_str).lower().strip()
+        answer = input(question + option_str).lower().strip()
         answer = [answer] if answer == "" else answer  # Make sure enter i
 
     # Check answer
