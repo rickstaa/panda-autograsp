@@ -38,17 +38,17 @@ found in the `readme of the repository <https://github.com/OpenKinect/libfreenec
 Virtualenv
 -------------------
 
-We highly recommend using a Python environment management system like `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_ or `conda <https://conda.io/en/latest/>`_ with the Pip and ROS installations.
+Although the package can be installed on the system python you are advised
+to use a python environment management system like `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_
+or `conda <https://conda.io/en/latest/>`_.
 
-Package build instructions
+Package build from source instructions
 ========================================
 
 Clone the repository and build the package
 --------------------------------------------------------
 
-Clone or download the `panda_autograsp`_ package from Github
-and build the catkin_package
-using the following command.
+Clone or download the `panda_autograsp`_ catkin package from Github:
 
 .. code-block:: bash
 
@@ -59,6 +59,16 @@ using the following command.
     && rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys libfranka \
     && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
 
+Install the ros system and python dependencies
+----------------------------------------
+
+Install the ros package dependencies using the following command:
+
+.. code-block:: bash
+
+    rosdep install --from-paths src --ignore-src --rosdistro melodic -y
+
+
 Install python package using pip
 ----------------------------------------
 
@@ -67,7 +77,14 @@ python packages, we need to install some additional packages using
 the `pip install command`. To ease this process a ``setup.py`` file
 was created. This file can be invoked using the following commands:
 
-.. code-block:: bash
+Build the package
+-------------------------
+
+The catkin package can be build by executing one of the following commands:
+
+```
+catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
+```
 
     $ cd ~/panda_autograsp
     $ pip install .
@@ -94,7 +111,9 @@ registry as follows:
 
     $ build <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-xenial
 
-It can also be built from the recipe file using the following command:
+Go to the ``panda_autograsp/containers/singularity`` folder and
+built the container using the recipe file. This is done by running the
+following command:
 
 .. code-block:: bash
 

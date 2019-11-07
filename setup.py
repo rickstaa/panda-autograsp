@@ -305,6 +305,7 @@ requirements = [
     j for j in requirements if not any([i.replace("_", "-") in j for i in sub_mods])
 ]  # Remove submodule packages from requirements
 
+
 # Run python setup
 setup(
     name="panda_autograsp_ws",
@@ -334,6 +335,7 @@ setup(
             "sphinx-autobuild",
             "docutils",
             "doc8",
+            "breathe==4.13.0",
         ],
         "dev": ["pytest", "bumpversion", "pylint"],
     },

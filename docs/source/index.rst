@@ -28,6 +28,7 @@ Welcome to panda_autograsp documentation!
    :glob:
 
    api/api.rst
+   api/c_api.rst
 
 .. toctree::
    :maxdepth: 2

@@ -3,11 +3,11 @@
 
 .. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
 
-Code API
-==========
+Python Code API
+======================
 
-All modules, classes, script and functions of the `panda_autograsp`_ package
-will be documented here.
+All python modules, classes, script and functions of the `panda_autograsp`_
+package will be documented here.
 
 Panda autograsp modules
 ------------------------------------

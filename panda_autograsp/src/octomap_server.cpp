@@ -1,28 +1,31 @@
 /** This server is used to control the moveit octomap. It contains the following
  * services:
- *  - reset_ocotomap
-*/
+ *  - reset_octomap
+ */
 
-#include "ros/ros.h"
+#include "octomap_server.h"
 #include "panda_autograsp/ResetOctomap.h"
 
-bool reset_octomap_service(panda_autograsp::ResetOctomap::Request  &req,
-         panda_autograsp::ResetOctomap::Response &res)
+#include <moveit/move_group_interface/move_group_interface.h>
+
+OctomapServer::OctomapServer() : planning_group_("panda_arm")
 {
-  res.sum = req.a + req.b;
-  ROS_INFO("request: x=%ld, y=%ld", (long int)req.a, (long int)req.b);
-  ROS_INFO("sending back response: [%ld]", (long int)res.sum);
+  // Initialize octomap server services
+  ROS_INFO("Initialising \'reset_octomap\' service...");
+  reset_ocotomap_srv_ = nh_.advertiseService(
+      "reset_octomap", &OctomapServer::ResetOctomapService, this);
+  ROS_INFO("\'reset_octomap\' service initialized successfully.");
+
+  // Create move group
+  // moveit::planning_interface::MoveGroupInterface move_group_(planning_group_);
+};
+
+bool OctomapServer::ResetOctomapService(
+    panda_autograsp::ResetOctomap::Request &req,
+    panda_autograsp::ResetOctomap::Response &res)
+{
+  // ClearOctomap
+  // move_group_.clearOctomap()
+  ROS_INFO("Hello World");
   return true;
-}
-
-int main(int argc, char **argv)
-{
-  ros::init(argc, argv, "octomap_server");
-  ros::NodeHandle n;
-
-  ros::ServiceServer service = n.advertiseService("reset_octomap", reset_octomap_service);
-  ROS_INFO("Ready to add two ints.");
-  ros::spin();
-
-  return 0;
 }

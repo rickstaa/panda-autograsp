@@ -20,6 +20,9 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
 )
 
+## Needed for using moveit
+find_package(Eigen3 REQUIRED)
+
 ################################################
 ## Python CMAKE arguments ######################
 ################################################
@@ -142,7 +145,7 @@ generate_dynamic_reconfigure_options(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-   INCLUDE_DIRS include
+  #  INCLUDE_DIRS include
   #  LIBRARIES ${PROJECT_NAME}
    CATKIN_DEPENDS
    roscpp
@@ -167,6 +170,7 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  SYSTEM ${EIGEN3_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -177,12 +181,12 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(octomap_server src/octomap_server.cpp)
+add_executable(octomap_server_node src/octomap_server_node.cpp src/octomap_server.cpp)
 
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(
-  octomap_server
+  octomap_server_node
   ${catkin_LIBRARIES}
 )
 
@@ -190,7 +194,7 @@ target_link_libraries(
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
 add_dependencies(
-  octomap_server
+  octomap_server_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS} # Msgs, srv, actions of your package
   ${catkin_EXPORTED_TARGETS}  # Msg, svr, action srv from other packages
 )

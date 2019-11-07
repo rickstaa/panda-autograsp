@@ -10,10 +10,10 @@ Install requirements
 Building `panda_autograsp`_'s documentation requires `sphinx <http://www.sphinx-doc.org/en/master>`_,
 and `Doxygen <http://www.doxygen.nl/download.html>`_ the panda_autograsp package and several plugins.
 
-To install Doxygen see the (`Doxygen documentation <http://www.doxygen.nl/download.html>`_)
-after Doxygen is installed the other required dependencies can be installed by
-going into the ``panda_autograsp`` directory and running the following
-commands::
+The easiest way of installing Doxygen is by installing the binary ``sudo apt install doxygen``.
+For the other available installation methods see the `Doxygen documentation <http://www.doxygen.nl/download.html>`_).
+After Doxygen is installed the other required dependencies can be installed
+by going into the ``panda_autograsp`` directory and running the following commands::
 
  $ pip install .
  $ pip install .[docs]
@@ -30,9 +30,9 @@ commands::
 
 Build the documentation
 --------------------------
-To build the documentation go into the ``docsrc`` directory and run the
-``make html`` command. This command will generate the HTML documentation
-inside the ``docsrc/_build`` directory.
+To build the documentation go into the ``docs`` directory and run the
+``make html`` command. This command will generate the html documentation
+inside the ``docs/build`` directory.
 
 Deploying
 ---------------------------
