@@ -324,4 +324,3 @@ if __name__ == "__main__":
 
     # Spin forever
     rospy.spin()
-

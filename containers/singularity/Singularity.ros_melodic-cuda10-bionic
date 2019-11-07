@@ -1,0 +1,129 @@
+## Ros melodic container for the panda_autograsp package
+# NOTE: This container is for Nvidia graphics card. A amd version
+# Will be released as soon singularity support is added.
+
+Bootstrap: docker
+From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+
+%help
+    A HPC Singularity container containing the following packages:
+        - ROS melodic
+        - moveit
+        - tensorflow_gpu
+        - opencv2
+        - miniconda3
+        - CUDA 10
+        - CUDNN 7
+
+    Container aliases:
+        - rsource:  Source the ROS kinetic setup file
+        - rossu:    Source a setup.bash file in ./devel/setup.bash
+        - agrasp:   Activate the autograsp conda enviroment
+        - dgrasp:   Deactivate autograsp conda enviroment
+        - dconda:   Deactivate conda enviroment
+        - pbuild:   Panda autograsp build build command.
+
+    For more information see https://rickstaa.github.io/panda_autograsp/.
+%labels
+    Maintainer: Rick Staa
+    Github: https://github.com/rickstaa
+    Version: v0.0.5
+    Type: Private
+
+%environment
+    # Set language options
+    LANG=C.UTF-8 LC_ALL=C.UTF-8
+
+    # Set ROS distro var
+    ROS_DISTRO=melodic
+
+    # Cuda samples env var
+    export NVCUDASAMPLES_ROOT=/opt/NVIDIA_CUDA-10.0_Samples
+
+    # Libfreenect2 conf env var
+    export LIBFREENECT2_INSTALL_PREFIX=/opt/freenect2/
+
+    # Freenect2 lib env var
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/freenect2/lib
+%post
+
+    # Set TZDATA region
+    echo 'Etc/UTC' > /etc/timezone
+    ln -s /usr/share/zoneinfo/Etc/UTC /etc/localtime
+
+    # Install system package dependencies
+    apt update --fix-missing
+
+    #  Install additional system packages
+    apt install -q -y \
+        vim \
+        git \
+        bash-completion \
+        htop \
+        wget \
+        lsb-release
+
+    # Add container resources to the container
+    bash -c "cd / \
+        && git clone https://github.com/rickstaa/deep_robotics_singularity_recipes.git \
+        && cp ./deep_robotics_singularity_recipes/resources/.singularity_bashrc /.singularity_bashrc \
+        && cp ./deep_robotics_singularity_recipes/resources/welcome_msgs/panda_autograsp-ros_melodic-cuda10-bionic.txt /.welcome_msg \
+        && cp ./deep_robotics_singularity_recipes/resources/bash_aliases/.singularity_bash_aliases /.singularity_bash_aliases \
+        && cp ./deep_robotics_singularity_recipes/resources/bash_aliases/panda_autograsp_aliases.txt /container_aliases.txt \
+        && rm -rf /deep_robotics_singularity_recipes"
+
+    # setup ROS keys and sources.list
+    echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
+    apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
+    # Install ROS melodic desktop full
+    apt update
+    apt install -q -y ros-melodic-desktop-full
+
+    # Initiate and update rosdep repository
+    rosdep init
+    rosdep update
+
+    # Install ROS dependencies for building packages
+    apt install -y -q \
+        python-rosinstall \
+        python-rosinstall-generator \
+        python-wstool build-essential
+
+    # Install miniconda3
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh
+    /bin/bash /miniconda.sh -b -p /opt/conda
+    rm /miniconda.sh
+    . /opt/conda/etc/profile.d/conda.sh
+    conda clean -y --all
+    conda install -q -y python=2.7
+    conda update -y conda
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh
+    chmod -R a+w /opt/conda # Make env available to all singularity users
+
+    # Add conda enviroment activation command to .singularity_bashrc
+    echo "" >> /.singularity_bashrc
+    echo "## Activate autograsp enviroment" >> /.singularity_bashrc
+    echo "conda activate autograsp" >> /.singularity_bashrc
+
+    # Create autograsp enviroment
+    conda create -q -y -n autograsp python=2.7
+    conda activate autograsp
+
+    # Install python packages
+    conda install -y tensorflow-gpu
+    conda update --all
+
+    # Upgrade packages and remove unused packages
+    apt upgrade -y -q
+    apt autoremove -y -q
+    apt clean -y -q
+    apt autoclean -y -q
+    rm -rf /var/lib/apt/lists/*
+
+%runscript
+	# Execute the .singularity_bashrc file
+	OCI_CMD='/bin/bash'
+	OCI_ARGS='-rcfile /.singularity_bashrc'
+	SINGULARITY_OCI_RUN="${OCI_CMD} ${OCI_ARGS}"
+	exec $SINGULARITY_OCI_RUN
