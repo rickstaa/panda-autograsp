@@ -10,7 +10,7 @@ Install requirements
 Building `panda_autograsp`_'s documentation requires `sphinx <http://www.sphinx-doc.org/en/master>`_,
 and `Doxygen <http://www.doxygen.nl/download.html>`_ the panda_autograsp package and several plugins.
 
-The easiest way of installing Doxygen is by installing the binary ``sudo apt install doxygen``.
+The easiest way of installing Doxygen is by installing the binary ``sudo apt-get install doxygen``.
 For the other available installation methods see the `Doxygen documentation <http://www.doxygen.nl/download.html>`_).
 After Doxygen is installed the other required dependencies can be installed
 by going into the ``panda_autograsp`` directory and running the following commands::

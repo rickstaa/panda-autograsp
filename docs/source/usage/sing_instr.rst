@@ -30,6 +30,27 @@ such a ``~/.singularity_bashrc`` file is present in your home folder,
 it will be sourced after the container its
 ``~/.singularity_bashrc`` file.
 
+Container run instructions
+--------------------------------------
+
+You can use the singularity ``shell``,
+``start`` and ``run`` commands to interact with the container.
+You are advised to use the ``run`` command since this also sources
+a ``.singularity_bashrc`` file that is present in each of the containers.
+This file can be used as a ``.bashrc`` file. You can run the singularity
+container using one of the following ``run`` commands:
+
+- **With Nvidia GPU:** ``$ singularity run --nv <YOUR_CONTAINER_NAME>``
+- **Without Nvidia GPU:** ``$ singularity run <YOUR_CONTAINER_NAME>``
+
+.. note:: Additionally, you can also add the ``--writable`` parameter to the ``run command`` to receive write permissions.
+
+.. warning::
+
+    Please not that singularity currently only links to the NVIDIA drivers when you are using the container in read mode.
+    As a result when you start the container using the ``--writable`` tag you can not leverage the GPU computation capabilities
+    of your NVIDIA graphics card.
+
 Container permissions
 --------------------------------
 

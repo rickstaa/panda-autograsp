@@ -35,7 +35,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
     LANG=C.UTF-8 LC_ALL=C.UTF-8
 
     # Set ROS distro var
-    ROS_DISTRO=melodic
+    export ROS_DISTRO=melodic
 
     # Cuda samples env var
     export NVCUDASAMPLES_ROOT=/opt/NVIDIA_CUDA-10.0_Samples
@@ -61,15 +61,19 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
         bash-completion \
         htop \
         wget \
-        lsb-release
+        lsb-release \
+        doxygen
 
     # Add container resources to the container
     bash -c "cd / \
         && git clone https://github.com/rickstaa/deep_robotics_singularity_recipes.git \
         && cp ./deep_robotics_singularity_recipes/resources/.singularity_bashrc /.singularity_bashrc \
+        && cp ./deep_robotics_singularity_recipes/resources/.conda_init /.conda_init \
         && cp ./deep_robotics_singularity_recipes/resources/welcome_msgs/panda_autograsp-ros_melodic-cuda10-bionic.txt /.welcome_msg \
         && cp ./deep_robotics_singularity_recipes/resources/bash_aliases/.singularity_bash_aliases /.singularity_bash_aliases \
         && cp ./deep_robotics_singularity_recipes/resources/bash_aliases/panda_autograsp_aliases.txt /container_aliases.txt \
+        && sed -e \"s/#_CONTAINER_ALIASES/\$(</container_aliases.txt sed -e 's/[\&/]/\\\&/g' -e 's/$/\\\n/' | tr -d '\n')/g\" -i .singularity_bash_aliases \
+        && rm /container_aliases.txt \
         && rm -rf /deep_robotics_singularity_recipes"
 
     # setup ROS keys and sources.list
@@ -86,9 +90,71 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 
     # Install ROS dependencies for building packages
     apt install -y -q \
+        cmake \
+        pkg-config \
         python-rosinstall \
         python-rosinstall-generator \
-        python-wstool build-essential
+        python-wstool build-essential \
+        ros-melodic-catkin \
+        python-catkin-tools
+
+    # Install moveit
+    sudo apt-get install -y -q \
+        ros-melodic-moveit
+
+    # Download cuda10.0 samples and set cmake variables
+    bash -c "cd /opt \
+        && git clone https://github.com/NVIDIA/cuda-samples \
+        && mv cuda-samples NVIDIA_CUDA-10.0_Samples \
+        && cd NVIDIA_CUDA-10.0_Samples \
+        && mv Samples samples \
+        && mv Common common \
+        && mkdir inc \
+        && mv common/* inc \
+        && mv inc common/inc \
+        && git checkout v10.0"
+    export NVCUDASAMPLES_ROOT=/opt/NVIDIA_CUDA-10.0_Samples
+
+    # Install kinect2.0 Library
+    apt update
+    apt install -q -y \
+        libusb-1.0-0-dev \
+        libturbojpeg0-dev \
+        libglfw3-dev \
+        libopenni2-dev \
+        openni2-utils
+    bash -c "cd /opt \
+                && git clone https://github.com/OpenKinect/libfreenect2.git \
+                && cd libfreenect2 \
+                && mkdir -p build \
+                && cd build \
+                && cmake .. -DCMAKE_INSTALL_PREFIX=/opt/freenect2 \
+                && make \
+                && make install \
+                && mkdir -p /etc/udev/rules.d/ \
+                && cp ../platform/linux/udev/90-kinect2.rules /etc/udev/rules.d/ \
+                && make install-openni2"
+
+    # Install libfranka from source
+    apt update
+    apt install -q -y \
+        libpoco-dev \
+        libeigen3-dev
+    bash -c "cd / \
+        && apt remove -y \"*libfranka*\" \
+        && git clone --recursive https://github.com/frankaemika/libfranka.git \
+        && cd libfranka \
+        && mkdir build \
+        && cd build \
+        && cmake -DCMAKE_BUILD_TYPE=Release .. \
+        && cmake --build ."
+
+    # Install additional panda_autograsp system dependencies
+    apt install -q -y \
+       ros-melodic-controller-manager* \
+       ros-melodic-effort-controllers \
+       ros-melodic-joint-trajectory-controller \
+       ros-melodic-joint-state-controller*
 
     # Install miniconda3
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh
