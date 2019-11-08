@@ -335,7 +335,7 @@ setup(
             "sphinx-autobuild",
             "docutils",
             "doc8",
-            "breathe==4.13.0",
+            "breathe==4.13.1",
         ],
         "dev": ["pytest", "bumpversion", "pylint"],
     },
