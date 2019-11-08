@@ -60,7 +60,7 @@ Clone or download the `panda_autograsp`_ catkin package from Github:
     && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
 
 Install the ros system and python dependencies
-----------------------------------------
+------------------------------------------------------
 
 Install the ros package dependencies using the following command:
 
