@@ -14,6 +14,16 @@ Services:
       supply a segmask.
 """
 
+# Make script both python2 and python3 compatible
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+try:
+    input = raw_input
+except NameError:
+    pass
+
 # Main python packages
 import json
 import sys

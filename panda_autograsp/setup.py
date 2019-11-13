@@ -39,6 +39,7 @@ requirements = [
     "pyyaml",
     "pyquaternion",
     "ruamel.yaml",
+    "opencv-contrib-python",
 ]
 
 # Set up logger
