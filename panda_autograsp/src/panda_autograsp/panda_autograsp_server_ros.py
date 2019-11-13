@@ -873,8 +873,8 @@ class PandaAutograspServer:
                 image=gray,
                 dictionary=ARUCO_DICT,
                 parameters=aruco.DetectorParameters_create(),
-                cameraMatrix=camera_matrix,
-                distCoeff=dist_coeffs,
+                # cameraMatrix=camera_matrix,
+                # distCoeffs=dist_coeffs,
             )
 
             # Refine detected markers

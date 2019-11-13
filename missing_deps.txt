@@ -1,0 +1,22 @@
+# Missing packages
+colorlog
+pyquaternion
+ruamel.yaml
+scipyp
+sklearn
+multiprocess
+setproctitle
+joblib
+opencv-contrib-python
+skimage
+
+# System #IMPORTANT
+libosmesa6-dev
+mesa-utils
+
+# Set enviromental variables
+export LIBFREENECT2_INSTALL_PREFIX=~/freenect2/
+
+# Freenect2 lib env var
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/freenect2/lib
+pip install git+https://github.com/r9y9/pylibfreenect2

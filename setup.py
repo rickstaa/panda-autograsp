@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 Setup file of the `panda_autograsp` python package. This setup file
-was based upon the gqcnn setup.py file.
+was based upon the gqcnn setup.py file. This file makes sure that all
+the dependencies of the submodules are installed. This can be done in
+two ways:
+
+    - METHOD1: You can use the `add_submods_requirements` function
+    to add the requirements of each submodule to the setup.py requirements
+    list.
+    - METHOD2: You can use the `install_submods` to run the setup.py of each
+    submodule as a subprocess. To do this set install_dependencies to true.
 
 Author
 ------
@@ -27,6 +35,9 @@ import shutil
 # General setup.py parameters
 TF_MAX_VERSION = "1.13.1"
 
+# Pre-install requirements
+install_requirements = ["scipy, numpy, cython"]
+
 # Package requirements
 if sys.version_info > (3, 0):  # Py 2 requirements
     requirements = [
@@ -37,9 +48,20 @@ if sys.version_info > (3, 0):  # Py 2 requirements
         "pyQt5",
         "PySide2",
         "pyassimp",
+        "scikit-image",
+        "opencv-contrib-python",
+        "pyglet"
     ]
 else:  # Py 3 requirements
-    requirements = ["rospkg", "defusedxml", "empy", "catkin-pkg", "PySide2", "pyassimp"]
+    requirements = ["rospkg",
+                    "defusedxml",
+                    "empy",
+                    "catkin-pkg",
+                    "PySide2",
+                    "pyassimp",
+                    "scikit-image",
+                    "opencv-contrib-python",
+                    "pyglet"]
 
 # Set up logger.
 logger = logging.getLogger(__name__)
@@ -233,7 +255,9 @@ class DevelopCmd(develop):
         )
 
         # Install submodules
-        install_submods(sub_mods, "develop", install_dependencies=False)
+        # NOTE: Set install_dependencies=True for method 2
+        global sub_mods
+        install_submods(sub_mods, "develop", install_dependencies=True)
 
         # Run parent run method
         develop.run(self)  # Disabled because no top level python packages are present
@@ -272,7 +296,9 @@ class InstallCmd(install, object):
         )
 
         # Install submodules
-        install_submods(sub_mods, "install", install_dependencies=False)
+        # NOTE: Set install_dependencies=True for method 2
+        global sub_mods
+        install_submods(sub_mods, "install", install_dependencies=True)
 
         # Run parent run method
         install.run(self)  # Disabled because no top level python packages are present
@@ -299,12 +325,21 @@ __version__ = re.sub(
     ).read(),
 )
 
-# Add submodule requirements to the requirements list
-requirements, sub_mods, sub_mods_egg_names = add_submods_requirements(requirements)
-requirements = [
-    j for j in requirements if not any([i.replace("_", "-") in j for i in sub_mods])
-]  # Remove submodule packages from requirements
+# Install pre-install requirements
+for req in install_requirements:
+    subprocess.call(
+        [sys.executable, "-m", "pip", "install", req]
+    )
 
+# Add submodule requirements to the requirements list
+# NOTE: Comment to use method 1
+_, sub_mods, sub_mods_egg_names = add_submods_requirements(requirements)
+# NOTE: Uncomment for method 1
+# requirements, sub_mods, sub_mods_egg_names = add_submods_requirements(requirements) # Add submodule dependencies to requirements
+# requirements = [
+#     j for j in requirements if not any([i.replace("_", "-") in j for i in sub_mods])
+# ]  # Remove submodule packages from requirements
+# print(requirements)
 
 # Run python setup
 setup(
@@ -341,3 +376,11 @@ setup(
     },
     cmdclass={"install": InstallCmd, "develop": DevelopCmd},
 )
+
+# # Remove pip opencv and install conda opencv
+# subprocess.call(
+#     [sys.executable, "-m", "pip", "uninstall", "opencv"]
+# )
+# subprocess.call(
+#     ["conda", "install", "-y", "opencv"]
+# )
