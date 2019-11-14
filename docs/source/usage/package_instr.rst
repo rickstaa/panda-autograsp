@@ -42,6 +42,7 @@ Launch file arguments
 The panda_autograsp launch file accepts the following launch file arguments:
 
     - **real**: Specifies whether you want to use the `panda_autograsp`_ solution on the real robot, by default False.
+    - **real_sensor**: Specifies whether you want to use a real or a simulated kinect.
     - **calib_type**: The robot hand-eye calibration board type (chessboard vs arucoboard), overwrites the default that is set in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_ file.
     - **debug**: If true the verbosity of the ROS log messages will be increased, and the process name will be displayed with each log messages, by default set to false.
     - **moveit_perception**: This enables the Moveit perception module which integrates sensor data into the path planning, by default set to false.

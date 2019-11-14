@@ -55,15 +55,25 @@ Although the package can be installed on the system python you are advised
 to use a python environment management system like `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_
 or `conda <https://conda.io/en/latest/>`_.
 
+.. warning::
+
+    As ROS doesn't play nicely with anaconda I wrote a small
+    `ROS Conda_wrapper <https://github.com/rickstaa/.ros_conda_wrapper>`_.
+    Unfortunately, I wasn't yet able to solve all the problems caused
+    case by this CONDA ROS incompatibility. You are therfore currently
+    advised to use a `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_
+    instead.
+
 CUDA & CUDNN (NVIDIA GPUs only)
 -----------------------------------
 
-To leverage the GPU computing capabilities of your NVIDIA
+Since Tensorflow needs GPU computing capabilities of your NVIDIA
 graphics card, the CUDA v10.0 and CDNN v7.6.5 toolkits
 need to be installed. For installation instructions, you are referred to the
-`CUDA <https://docs.nvidia.com/cuda/archive/10.0/>`_
-and `CUDNN <https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html>`_
-documentation. Additionally, these toolkits are included in the Conda version
+`CUDA <https://docs.nvidia.com/cuda/archive/10.0/>`_,
+ `CUDNN <https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html>`_
+or `tensorflow <https://www.tensorflow.org/install/gpu>`_ documentation.
+Additionally, these toolkits are included in the Conda version
 of the python opencv package. You can install this package by running the
 ``conda install -c conda-forge opencv``
 command in your Conda environment.
@@ -131,6 +141,12 @@ container is provided. This container can be build using the
 recipe files found in the ``panda_autograsp/containers/singularity``
 folder or by pulling directly from the `singularity-hub.org <https://www.singularity-hub.org>`_
 container registry.
+
+.. note::
+
+    Due to the fact that I wasn't able to solve the ros_conda_wrapper problem explained above the
+    container, which uses anaconda is not fully ready. I will update the container with the stable
+    `ROS Conda_wrapper <https://github.com/rickstaa/.ros_conda_wrapper>`_ when it is stable.
 
 .. warning::
 

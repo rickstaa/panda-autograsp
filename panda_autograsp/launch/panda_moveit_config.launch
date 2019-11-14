@@ -1,6 +1,9 @@
 <launch>
 
   <!-- Launch file arguments-->
+  <arg name="load_gripper" default="true"/>
+  <arg name="real" default="false"/>
+  <arg name="gazebo" default="false"/>
   <!-- By default, we do not start a database (it can be large) -->
   <arg name="db" default="false" />
   <!-- Allow user to specify database location -->
@@ -28,6 +31,7 @@
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
   <include file="$(find panda_moveit_config)/launch/planning_context.launch">
+    <arg name="load_gripper" default="$(arg load_gripper)"/>
     <arg name="load_robot_description" value="true"/>
     <arg name="gripper_center" value="$(arg gripper_center)"/>
     <arg name="gripper_center_xyz" value="$(arg gripper_center_xyz)"/>
@@ -39,15 +43,13 @@
   <!-- We do not have a robot connected, so publish fake joint states -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="/use_gui" value="$(arg use_gui)"/>
-    <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
+    <rosparam param="/source_list" if="$(eval arg('real') and not arg('gazebo'))">[/move_group/fake_controller_joint_states]</rosparam>
   </node>
   <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" />
 
-  <!-- Given the published joint states, publish tf for the robot links -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
-
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
   <include file="$(find panda_moveit_config)/launch/move_group.launch">
+    <arg name="load_gripper" default="$(arg load_gripper)"/>
     <arg name="allow_trajectory_execution" value="true"/>
     <arg name="fake_execution" value="true"/>
     <arg name="info" value="true"/>
@@ -64,6 +66,9 @@
     <arg name="rviz_tutorial" value="$(arg rviz_tutorial)"/>
     <arg name="debug" value="$(arg debug)"/>
   </include>
+
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
 
   <!-- If database loading was enabled, start mongodb as well -->
   <include file="$(find panda_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">

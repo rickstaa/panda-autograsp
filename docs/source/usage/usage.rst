@@ -8,3 +8,6 @@
 
 .. _sing_instr:
 .. include:: sing_instr.rst
+
+.. _troubleshooting:
+.. include:: trouble_instr.rst

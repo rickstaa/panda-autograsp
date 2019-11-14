@@ -8,6 +8,9 @@
     <arg name="base_name" default="panda_autograsp"/>
     <arg name="output" default="log"/>
     <arg name="debug" default="false"/>
+    <arg name="real" default="false"/>
+    <arg name="gazebo" default="true"/>
+    <arg name="real_sensor" default="true"/>
     <!-- Moveit planning obtions scene -->
     <arg name="moveit_perception" default="true"/>
     <arg name="moveit_perception_frame" default="kinect2_ir_optical_frame"/>
@@ -23,19 +26,38 @@
     <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/>
     <!-- Change loggin formatg -->
     <env name="ROSCONSOLE_FORMAT" value="[${severity}] [WallTime: ${time}]: [${node}] ${message}" if="$(arg debug)"/>
+    <!-- GAZEBO arguments -->
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="load_gripper" default="true"/>
 
     <!-- Load panda simulation and visualization -->
     <include file="$(find panda_autograsp)/launch/panda_moveit_config.launch">
+        <arg name="real" default="$(arg real)"/>
+        <arg name="gazebo" default="$(arg gazebo)"/>
+        <arg name="load_gripper" default="$(arg load_gripper)"/>
         <arg name="gripper_center" value="$(arg gripper_center)" />
         <arg name="gripper_center_xyz" value="$(arg gripper_center_xyz)" />
         <arg name="moveit_perception" value="$(arg moveit_perception)" />
         <arg name="moveit_perception_frame" value="$(arg moveit_perception_frame)"/>
     </include>
 
+    <!-- Load gazebo simulation if real==false-->
+    <include file="$(find panda_autograsp)/launch/panda_gazebo.launch" unless="$(eval arg('real') and arg('gazebo'))">
+        <arg name="paused" default="$(arg paused)"/>
+        <arg name="use_sim_time" default="$(arg use_sim_time)"/>
+        <arg name="gui" default="$(arg gui)"/>
+        <arg name="headless" default="$(arg headless)"/>
+        <arg name="debug" default="$(arg debug)"/>
+        <arg name="load_gripper" default="$(arg load_gripper)"/>
+    </include>
+
     <!-- Start the Kinect processing ROS nodes
         The IAI_kinect2 package was used for the kinect processing.
     -->
-    <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch">
+    <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" if="$(arg real_sensor)">
         <arg name="output" value="$(arg output)" />
     </include>
 
