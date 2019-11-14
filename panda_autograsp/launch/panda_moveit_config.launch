@@ -11,12 +11,14 @@
   <!-- Get moveit perception settings -->
   <arg name="moveit_perception" default="false" />
   <arg name="moveit_perception_frame" default="kinect2_ir_optical_frame"/>
-  <!-- By default, we are not in debug mode -->
-  <arg name="debug" default="false" />
   <arg name="pipeline" default="ompl" />
   <!-- Allow user to specify if they want an extra gripper center frame -->
   <arg name="gripper_center" default="false"/>
   <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/>
+  <!-- By default, we are not in debug mode -->
+  <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg if="$(arg debug)" name="launch_prefix" value="gdb -x $(find panda_moveit_config)/launch/gdb_settings.gdb --ex run --args" />
 
   <!--
   By default, hide joint_state_publisher's GUI

@@ -354,6 +354,30 @@ class PandaAutograspServer:
             rospy.logerr(shutdown_msg)
             sys.exit(0)
 
+        # Initialize reset octomap service
+        rospy.logdebug(
+            "Connecting to '/clear_octomap/' service..."
+        )
+        rospy.wait_for_service("/clear_octomap")
+        try:
+            self._clear_octomap_srv = rospy.ServiceProxy(
+                "/clear_octomap", Empty
+            )
+            rospy.logdebug(
+                "Connected to '/clear_octomap' service."
+            )
+        except rospy.ServiceException as e:
+            rospy.logerr(
+                "Panda_autograsp '/clear_octomap' "
+                "service initialization failed: %s" % e
+            )
+            shutdown_msg = (
+                "Shutting down %s node because %s service connection failed."
+                % (rospy.get_name(), self._clear_octomap_srv.resolved_name)
+            )
+            rospy.logerr(shutdown_msg)
+            sys.exit(0)
+
         # Print moveit_planner_server services connection success message
         rospy.loginfo("Successfully connected to all moveit_planner_server services.")
 
@@ -1089,7 +1113,11 @@ class PandaAutograspServer:
             sensor_frame_tf_msg.transform.rotation.w = float(quat[0])
 
             # Communicate sensor_frame_pose to the tf2_broadcaster node
-            self._set_sensor_pose_srv(sensor_frame_tf_msg)
+            result = self._set_sensor_pose_srv(sensor_frame_tf_msg)
+
+            # Reset the octomap if pose was succesfully set
+            if result.success:
+                self._clear_octomap_srv()
         else:
 
             # Get rotation matrix
@@ -1138,4 +1166,8 @@ class PandaAutograspServer:
             sensor_frame_tf_msg.transform.rotation.w = float(quat[0])
 
             # Communicate sensor_frame_pose to the tf2_broadcaster node
-            self._set_sensor_pose_srv(sensor_frame_tf_msg)
+            result = self._set_sensor_pose_srv(sensor_frame_tf_msg)
+
+            # Reset the octomap if pose was succesfully set
+            if result.success:
+                self._clear_octomap_srv()

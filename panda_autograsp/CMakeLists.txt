@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   dynamic_reconfigure
   std_msgs
+  std_srvs
   sensor_msgs
   geometry_msgs
   moveit_ros_planning_interface
@@ -148,16 +149,17 @@ generate_dynamic_reconfigure_options(
 catkin_package(
   #  INCLUDE_DIRS include
   #  LIBRARIES ${PROJECT_NAME}
-   CATKIN_DEPENDS
-   roscpp
-   rospy
-   sensor_msgs
-   std_msgs
-   geometry_msgs
-   tf2_geometry_msgs
-   trajectory_msgs
-   moveit_msgs
-   message_runtime
+  CATKIN_DEPENDS
+  roscpp
+  rospy
+  sensor_msgs
+  std_msgs
+  std_srvs
+  geometry_msgs
+  tf2_geometry_msgs
+  trajectory_msgs
+  moveit_msgs
+  message_runtime
 #  DEPENDS system_lib
 )
 
