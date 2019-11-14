@@ -74,7 +74,10 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
         && cp ./deep_robotics_singularity_recipes/resources/bash_aliases/panda_autograsp_aliases.txt /container_aliases.txt \
         && sed -e \"s/#_CONTAINER_ALIASES/\$(</container_aliases.txt sed -e 's/[\&/]/\\\&/g' -e 's/$/\\\n/' | tr -d '\n')/g\" -i .singularity_bash_aliases \
         && rm /container_aliases.txt \
-        && rm -rf /deep_robotics_singularity_recipes"
+        && rm -rf /deep_robotics_singularity_recipes \
+        && git clone https://github.com/rickstaa/.ros_conda_wrapper.git \
+        && cp ./.ros_conda_wrapper/.ros_conda_wrapper_rc \.ros_conda_wrapper_rc \
+        && rm -rf /.ros_conda_wrapper"
 
     # setup ROS keys and sources.list
     echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
