@@ -18,6 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   sensor_msgs
   geometry_msgs
+  moveit_ros_planning_interface
 )
 
 ## Needed for using moveit
@@ -182,12 +183,18 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(octomap_server_node src/octomap_server_node.cpp src/octomap_server.cpp)
-
+add_executable(clear_octomap_loader src/clear_octomap_loader.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(
   octomap_server_node
   ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+target_link_libraries(
+  clear_octomap_loader
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
 )
 
 ## Add cmake target dependencies of the library
@@ -198,7 +205,11 @@ add_dependencies(
   ${${PROJECT_NAME}_EXPORTED_TARGETS} # Msgs, srv, actions of your package
   ${catkin_EXPORTED_TARGETS}  # Msg, svr, action srv from other packages
 )
-
+add_dependencies(
+  clear_octomap_loader
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} # Msgs, srv, actions of your package
+  ${catkin_EXPORTED_TARGETS}  # Msg, svr, action srv from other packages
+)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
