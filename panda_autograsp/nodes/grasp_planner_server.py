@@ -100,6 +100,10 @@ if __name__ == "__main__":
     except KeyError:
         model_dir = os.path.abspath(os.path.join(MODELS_PATH, model_name))
 
+    # Check model_name
+    if model_name == "":
+        model_name = DEFAULT_MODEL
+
     # Check if fully connected GQCNN is requested
     fully_conv = (
         "fully_conv"

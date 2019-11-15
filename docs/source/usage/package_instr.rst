@@ -9,6 +9,14 @@ All of the `panda_autograsp`_ settings can be found in the
 file. As described below you can temporarily override some of These
 settings by supplying launch arguments.
 
+Add planning constraints
+---------------------------------------
+
+To add extra planning constraints to the scene you can add additional
+``json`` files to the ``/home/<USER>/.panda_simulation`` folder. This
+folder is created the first time the `panda_autograsp`_ solution is launched.
+A guide on how this can be done can be found `here <https://erdalpekel.de/?p=123>`_.
+
 Run instructions
 ----------------------------------
 
@@ -42,12 +50,16 @@ Launch file arguments
 The panda_autograsp launch file accepts the following launch file arguments:
 
     - **real**: Specifies whether you want to use the `panda_autograsp`_ solution on the real robot, by default False.
+    - **gazebo**: Specifies wheter the gazebo gui should be loaded.
+    - **rviz_bui**: Specifies wheter the rviz gui should be loaded.
     - **real_sensor**: Specifies whether you want to use a real or a simulated kinect.
     - **calib_type**: The robot hand-eye calibration board type (chessboard vs arucoboard), overwrites the default that is set in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_ file.
     - **debug**: If true the verbosity of the ROS log messages will be increased, and the process name will be displayed with each log messages, by default set to false.
     - **moveit_perception**: This enables the Moveit perception module which integrates sensor data into the path planning, by default set to false.
+    - **octomap_type**: The data type used by the Moveit perception module (pointcloud or depthmap), defaults to depthmap.
+    - **octomap_resolution**: The resolution of the octomap.
     - **moveit_add_scene_collision_objects**: This specifies if the robot table should be added as a collision object to the moveit planning space, By default set to true.
-    - **grasping_solution**: Specify which grasping solution you want to use, this overwrites the solution that is set in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_ file.
+    - **grasp_solution**: Specify which grasping solution you want to use, this overwrites the solution that is set in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_ file.
 
 Grasping solutions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -63,3 +75,21 @@ Currently, the following grasping solutions are supported:
 .. _Dex-Net 4.0: https://berkeleyautomation.github.io/dex-net/#dexnet_4
 .. _FC-GQ-CNN: https://berkeleyautomation.github.io/fcgqcnn
 .. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
+
+Moveit perception
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Change settings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Appart from the launch file setings additional moveit perception
+settings can be found in the
+``./panda_moveit_config/config/sensor_kinect_deptmap.yaml``
+and ``sensor_kinect_pointcloud.yaml`` files.
+
+Clear the octomap
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The octomap can be reset during execution by calling the ``reset_octomap``
+service. This is done using the ``rosservice call /reset_octomap``
+command.

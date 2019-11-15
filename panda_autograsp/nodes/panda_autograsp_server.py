@@ -42,12 +42,12 @@ if __name__ == "__main__":
 
     # Get private parameters specified in the launch file
     try:
-        POSE_CALIB_METHOD = rospy.get_param("~calib_type")
+        pose_Calib_method = rospy.get_param("~calib_type")
     except KeyError:
-        pass
+        pose_Calib_method = ""
 
     # Create GraspPlannerClient object
-    grasp_planner_client = PandaAutograspServer()
+    grasp_planner_client = PandaAutograspServer(pose_calib_method=pose_Calib_method)
 
     # Loop till the service is shutdown
     rospy.spin()

@@ -106,6 +106,16 @@
 
   <!-- Convert rectified depth images from uint16_t to 32FC1 data type -->
 
+  <!-- hd depth_image (1920 x 1080) -->
+  <node pkg="nodelet" type="nodelet" name="$(arg base_name)_depth_image_proc_hd" machine="$(arg machine)" args="load depth_image_proc/convert_metric $(arg nodelet_manager)" respawn="$(arg respawn)">
+
+    <!-- subscribes to (16 bit input image) topic -->
+    <remap from="image_raw" to="$(arg base_name)/hd/image_depth_rect/"/>
+
+    <!-- output (32bit modified image) topic -->
+    <remap from="image" to="$(arg base_name)/hd/image_depth_rect_32FC1"/>
+  </node>
+
   <!-- qhd depth_image (960 x 540) -->
   <node pkg="nodelet" type="nodelet" name="$(arg base_name)_depth_image_proc_qhd" machine="$(arg machine)" args="load depth_image_proc/convert_metric $(arg nodelet_manager)" respawn="$(arg respawn)">
 
@@ -116,7 +126,7 @@
     <remap from="image" to="$(arg base_name)/qhd/image_depth_rect_32FC1"/>
   </node>
 
-  <!-- qhd depth_image (960 x 540) -->
+  <!-- sd depth_image (960 x 540) -->
   <node pkg="nodelet" type="nodelet" name="$(arg base_name)_depth_image_proc_sd" machine="$(arg machine)" args="load depth_image_proc/convert_metric $(arg nodelet_manager)" respawn="$(arg respawn)">
 
     <!-- subscribes to (16 bit input image) topic -->
