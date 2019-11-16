@@ -52,7 +52,6 @@ The panda_autograsp launch file accepts the following launch file arguments:
     - **real**: Specifies whether you want to use the `panda_autograsp`_ solution on the real robot, by default False.
     - **gazebo**: Specifies wheter the gazebo gui should be loaded.
     - **rviz_bui**: Specifies wheter the rviz gui should be loaded.
-    - **real_sensor**: Specifies whether you want to use a real or a simulated kinect.
     - **calib_type**: The robot hand-eye calibration board type (chessboard vs arucoboard), overwrites the default that is set in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_ file.
     - **debug**: If true the verbosity of the ROS log messages will be increased, and the process name will be displayed with each log messages, by default set to false.
     - **moveit_perception**: This enables the Moveit perception module which integrates sensor data into the path planning, by default set to false.
@@ -93,3 +92,22 @@ Clear the octomap
 The octomap can be reset during execution by calling the ``reset_octomap``
 service. This is done using the ``rosservice call /reset_octomap``
 command.
+
+Panda simulations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A gazebo simulation of the panda robot can be used by setting the
+``real`` and ``gazebo`` launch file arguments.
+
+.. image:: http://my.url.com/my-picture1.png
+    :alt: gaebo_simulation
+
+.. warning::
+
+    As the simulated kinect outputs the `openni_launch <https://wiki.ros.org/openni_launch>`_
+    to simulate the kinect while I am using the
+    `iai_kinect2 package <https://github.com/code-iai/iai_kinect2>`_ the
+    simulation is not fully ready. To get it to work one has to or replace
+    the iai_kinect2 package in the real setup with the openni_launch or
+    write an modified version of the ``iai_kienct2/kinect2_bridge`` that
+    works with the simulated camera instead of looking for a real one.

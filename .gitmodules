@@ -22,3 +22,6 @@
 [submodule "panda_moveit_config"]
 	path = panda_moveit_config
 	url = git@github.com:rickstaa/panda_moveit_config.git
+[submodule "common-sensors"]
+	path = common-sensors
+	url = git@github.com:JenniferBuehler/common-sensors.git

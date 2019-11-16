@@ -137,12 +137,14 @@ class PandaAutograspServer:
         The translation vector of the camera/world calibration.
     """
 
-    def __init__(self, pose_calib_method=POSE_CALIB_METHOD):
+    def __init__(self, pose_calib_method=POSE_CALIB_METHOD, gazebo=False):
         """
         Parameters
         ----------
         pose_calib_method : :py:obj:`str`, optional
             Calibration pattern type., by default read from main_config.yaml.
+        gazebo : :py:obj:`bool`, optional
+            Specifies whether we are in a gazebo simulation, by default false.
         """
 
         # Get pose calib method from input
@@ -152,6 +154,9 @@ class PandaAutograspServer:
             self.pose_calib_method = POSE_CALIB_METHOD
         else:
             self.pose_calib_method = pose_calib_method
+
+        # Get gazebo bool
+        self.gazebo=gazebo
 
         # Setup cv_bridge
         self._cv_bridge = CvBridge()
@@ -824,20 +829,29 @@ class PandaAutograspServer:
         """
 
         # Retrieve camera pose
-        retval, self.rvec, self.tvec = self._camera_world_calibration(
-            calib_type=self.pose_calib_method
-        )
+        if self.gazebo:
 
-        # Test if successful
-        if retval:
-
-            # Publish the camera frame
-            self.broadcast_camera_frame(calib_type=self.pose_calib_method)
-
-            # return result
+            # Return True as we don't need a calibration in simulation
             return True
         else:
-            return False
+
+            # Perform calibration
+            retval, self.rvec, self.tvec = self._camera_world_calibration(
+                calib_type=self.pose_calib_method
+            )
+
+            # Test if successful
+            if retval:
+
+                # Publish the camera frame
+                self.broadcast_camera_frame(calib_type=self.pose_calib_method)
+
+                # return result
+                return True
+            else:
+                return False
+
+
 
     def _camera_world_calibration(self, calib_type=POSE_CALIB_METHOD):
         """Perform camera world calibration (External camera matrix) using
