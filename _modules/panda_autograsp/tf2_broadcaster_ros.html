@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>panda_autograsp.tf2_broadcaster_ros &mdash; panda_autograsp 1.0.0 documentation</title>
+  <title>panda_autograsp.tf2_broadcaster_ros &mdash; panda_autograsp 1.0.1 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -202,6 +202,32 @@
 <span class="c1">#################################################</span>
 <span class="c1"># tf2_broadcaster class #########################</span>
 <span class="c1">#################################################</span>
+<div class="viewcode-block" id="get_dynamic_param"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.tf2_broadcaster_ros.html#panda_autograsp.tf2_broadcaster_ros.get_dynamic_param">[docs]</a><span class="k">def</span> <span class="nf">get_dynamic_param</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function retrieves a parameter from the parameter server</span>
+<span class="sd">    just like the :py:meth:`!rospy.get_param` function. Additionally</span>
+<span class="sd">    to the :py:meth:`!rospy.get_param` function, if a parameter is not</span>
+<span class="sd">    found on the parameter server it also tries to retrieve a value</span>
+<span class="sd">    for the parameter using the CalibFramesConfig.defaults dict.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :py:obj:`str`, :py:obj:`int`, :py:obj:`float`</span>
+<span class="sd">    and :py:obj:`bool`.</span>
+<span class="sd">        The parameter value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Get parameters</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">param_value</span> <span class="o">=</span> <span class="n">CalibFramesConfig</span><span class="o">.</span><span class="n">defaults</span><span class="p">[</span><span class="n">parameter_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)]</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">,</span> <span class="n">param_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">param_value</span></div>
+
+
+<span class="c1">#################################################</span>
+<span class="c1"># tf2_broadcaster class #########################</span>
+<span class="c1">#################################################</span>
 <div class="viewcode-block" id="Tf2Broadcaster"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.tf2_broadcaster_ros.html#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster">[docs]</a><span class="k">class</span> <span class="nc">Tf2Broadcaster</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Tf2 broadcaster class.</span>
 
@@ -253,22 +279,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_just_calibrated</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Specifies whether a calibration was just done</span>
 
         <span class="c1"># Set calib frame member variables</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_x_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_x_pos&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_y_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_y_pos&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_z_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_z_pos&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_yaw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_yaw&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_pitch&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_roll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_roll&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_x_pos</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_x_pos&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_y_pos</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_y_pos&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_z_pos</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_z_pos&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_yaw</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_yaw&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_pitch</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_pitch&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_roll</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~calib_frame_roll&quot;</span><span class="p">)</span>
 
         <span class="c1"># Set sensor starting parameters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_x_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_x_pos&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_y_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_y_pos&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_z_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_z_pos&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_x_pos</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_x_pos&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_y_pos</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_y_pos&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_z_pos</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_z_pos&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">quat_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_q1&quot;</span><span class="p">)</span>
-            <span class="n">quat_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_q2&quot;</span><span class="p">)</span>
-            <span class="n">quat_w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_q4&quot;</span><span class="p">)</span>
-            <span class="n">quat_z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_q3&quot;</span><span class="p">)</span>
+            <span class="n">quat_x</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_q1&quot;</span><span class="p">)</span>
+            <span class="n">quat_y</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_q2&quot;</span><span class="p">)</span>
+            <span class="n">quat_w</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_q4&quot;</span><span class="p">)</span>
+            <span class="n">quat_z</span> <span class="o">=</span> <span class="n">get_dynamic_param</span><span class="p">(</span><span class="s2">&quot;~sensor_frame_q3&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>  <span class="c1"># If not found in parameter server</span>
             <span class="n">quat_from_euler</span> <span class="o">=</span> <span class="n">tf_conversions</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_from_euler</span><span class="p">(</span>
                 <span class="n">CalibFramesConfig</span><span class="o">.</span><span class="n">defaults</span><span class="p">[</span><span class="s2">&quot;sensor_frame_yaw&quot;</span><span class="p">],</span>
@@ -399,7 +425,7 @@
         <span class="p">}</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">diff_items</span> <span class="o">==</span> <span class="p">{}:</span>
             <span class="n">log_msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">diff_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">diff_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">log_msg</span> <span class="o">=</span> <span class="n">log_msg</span> <span class="o">+</span> <span class="s2">&quot;, </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">diff_items</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Reconfigure Request: &quot;</span> <span class="o">+</span> <span class="n">log_msg</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
 
@@ -554,29 +580,7 @@
         <span class="c1"># Send tf message</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tf2_br</span><span class="o">.</span><span class="n">sendTransform</span><span class="p">(</span>
             <span class="p">[</span><span class="n">calib_frame_tf_msg</span><span class="p">,</span> <span class="n">sensor_frame_rgb_tf_msg</span><span class="p">,</span> <span class="n">sensor_frame_ir_tf_msg</span><span class="p">]</span>
-        <span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_get_dynamic_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;This function retrieves a parameter from the parameter server</span>
-<span class="sd">        just like the :py:meth:`!rospy.get_param` function. Additionally</span>
-<span class="sd">        to the :py:meth:`!rospy.get_param` function, if a parameter is not</span>
-<span class="sd">        found on the parameter server it also tries to retrieve a value</span>
-<span class="sd">        for the parameter using the CalibFramesConfig.defaults dict.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        :py:obj:`str`, :py:obj:`int`, :py:obj:`float`</span>
-<span class="sd">        and :py:obj:`bool`.</span>
-<span class="sd">            The parameter value.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># Get parameters</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="n">param_value</span> <span class="o">=</span> <span class="n">CalibFramesConfig</span><span class="o">.</span><span class="n">defaults</span><span class="p">[</span><span class="n">parameter_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)]</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">,</span> <span class="n">param_value</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">param_value</span></div>
+        <span class="p">)</span></div></div>
 </pre></div>
 
            </div>

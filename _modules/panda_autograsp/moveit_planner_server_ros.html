@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>panda_autograsp.moveit_planner_server_ros &mdash; panda_autograsp 1.0.0 documentation</title>
+  <title>panda_autograsp.moveit_planner_server_ros &mdash; panda_autograsp 1.0.1 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -631,10 +631,13 @@
 
         <span class="c1"># Plan to random pose</span>
         <span class="k">def</span> <span class="nf">req</span><span class="p">():</span>
-            <span class="kc">None</span>  <span class="c1"># Create dumpy request function object</span>
+            <span class="kc">None</span>  <span class="c1"># Create dummy request function object</span>
 
         <span class="n">req</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">rand_pose</span>  <span class="c1"># set random pose as a property</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plan_to_point_service</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+        <span class="c1"># Remove req dummy function</span>
+        <span class="k">del</span> <span class="n">req</span>
 
         <span class="c1"># Check whether path planning was successful</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
@@ -664,10 +667,13 @@
 
         <span class="c1"># Plan to random pose</span>
         <span class="k">def</span> <span class="nf">req</span><span class="p">():</span>
-            <span class="kc">None</span>  <span class="c1"># Create dumpy request function object</span>
+            <span class="kc">None</span>  <span class="c1"># Create dummy request function object</span>
 
         <span class="n">req</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">rand_joint</span>  <span class="c1"># set random joint goal as a property</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plan_to_joint_service</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+        <span class="c1"># Remove req dummy function</span>
+        <span class="k">del</span> <span class="n">req</span>
 
         <span class="c1"># Check whether path planning was successful</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
@@ -707,10 +713,13 @@
 
         <span class="c1"># Plan cartesian path</span>
         <span class="k">def</span> <span class="nf">req</span><span class="p">():</span>
-            <span class="kc">None</span>  <span class="c1"># Create dumpy request function object</span>
+            <span class="kc">None</span>  <span class="c1"># Create dummy request function object</span>
 
         <span class="n">req</span><span class="o">.</span><span class="n">waypoints</span> <span class="o">=</span> <span class="n">waypoints</span>  <span class="c1"># set random pose as a property</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plan_cartesian_path_service</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+        <span class="c1"># Remove req dummy function</span>
+        <span class="k">del</span> <span class="n">req</span>
 
         <span class="c1"># Check whether path planning was successful</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>

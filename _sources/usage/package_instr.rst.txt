@@ -108,6 +108,7 @@ A gazebo simulation of the panda robot can be used by setting the
 
 .. figure:: https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png
     :alt: gazebo_simulation
+    :target: https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png
 
     Overview of the gazebo simulation environment.
 
