@@ -1,7 +1,7 @@
 # Folders to ignore
 __pychache__/
 .egg-info/
-build/
+build/*
 _build/
 tmp/
 models/
