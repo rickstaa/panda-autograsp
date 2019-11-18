@@ -1,0 +1,882 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>panda_autograsp.grasp_planners.gqcnn_grasp_planner &mdash; panda_autograsp 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> panda_autograsp
+          
+
+          
+            
+            <img src="../../../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/install.html#package-build-from-source-instructions">Package build from source instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/install.html#singularity-container-installation-instructions">Singularity Container installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/install.html#docker-container-installation-instructions">Docker container installation instructions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/usage.html">Sensor calibration instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/usage.html#package-use-instructions">Package use instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/usage.html#singularity-container-instructions">Singularity container instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/usage.html#troubleshooting-information">Troubleshooting information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/api.html">Python Code API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../license/license.html">License</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Zone</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/release_dev.html">Release package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/doc_dev.html">Release documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">panda_autograsp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>panda_autograsp.grasp_planners.gqcnn_grasp_planner</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for panda_autograsp.grasp_planners.gqcnn_grasp_planner</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;This module uses the `BerkleyAutomation GQCNN</span>
+<span class="sd">&lt;https://berkeleyautomation.github.io/gqcnn&gt;`_</span>
+<span class="sd">grasp detector to compute a valid grasp out of RBG-D sensor data.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Make script both python2 and python3 compatible</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">raw_input</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># Main python packages</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">perception</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">Kinect2Sensor</span><span class="p">,</span>
+    <span class="n">ColorImage</span><span class="p">,</span>
+    <span class="n">BinaryImage</span><span class="p">,</span>
+    <span class="n">RgbdImage</span><span class="p">,</span>
+    <span class="n">Kinect2PacketPipelineMode</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">perception.image</span> <span class="k">import</span> <span class="n">imresize</span>
+<span class="kn">from</span> <span class="nn">visualization</span> <span class="k">import</span> <span class="n">Visualizer2D</span> <span class="k">as</span> <span class="n">vis</span>
+<span class="kn">from</span> <span class="nn">gqcnn.grasping</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">Grasp2D</span><span class="p">,</span>
+    <span class="n">SuctionPoint2D</span><span class="p">,</span>
+    <span class="n">CrossEntropyRobustGraspingPolicy</span><span class="p">,</span>
+    <span class="n">RgbdImageState</span><span class="p">,</span>
+    <span class="n">FullyConvolutionalGraspingPolicyParallelJaw</span><span class="p">,</span>
+    <span class="n">FullyConvolutionalGraspingPolicySuction</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">gqcnn.utils</span> <span class="k">import</span> <span class="n">NoValidGraspsException</span><span class="p">,</span> <span class="n">GripperMode</span>
+<span class="kn">from</span> <span class="nn">autolab_core</span> <span class="k">import</span> <span class="n">YamlConfig</span>
+
+<span class="c1"># Panda_autograsp modules, msgs and srvs</span>
+<span class="kn">from</span> <span class="nn">panda_autograsp.functions</span> <span class="k">import</span> <span class="n">download_model</span>
+<span class="kn">from</span> <span class="nn">panda_autograsp</span> <span class="k">import</span> <span class="n">Logger</span>
+
+<span class="c1"># Set right matplotlib backend</span>
+<span class="c1"># Needed in order to show images inside imported modules</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">switch_backend</span><span class="p">(</span><span class="s2">&quot;TkAgg&quot;</span><span class="p">)</span>
+
+<span class="c1"># Delete logger format set by the autolab_core</span>
+<span class="n">Logger</span><span class="o">.</span><span class="n">clear_root</span><span class="p">()</span>
+
+<span class="c1"># Create Logger</span>
+<span class="n">mod_logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1">#################################################</span>
+<span class="c1"># Script parameters #############################</span>
+<span class="c1">#################################################</span>
+
+<span class="c1"># Setup PacketPipeline mode dictionary</span>
+<span class="n">packet_modes</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">Kinect2PacketPipelineMode</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">:</span>
+        <span class="n">packet_modes</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">value</span><span class="p">:</span> <span class="n">attr</span><span class="p">})</span>
+
+<span class="c1"># Read panda_autograsp configuration file</span>
+<span class="n">MAIN_CFG</span> <span class="o">=</span> <span class="n">YamlConfig</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;../../../cfg/main_config.yaml&quot;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Get settings out of main_cfg</span>
+<span class="n">GRASP_SOLUTION</span> <span class="o">=</span> <span class="s2">&quot;gqcnn&quot;</span>
+<span class="n">DEFAULT_MODEL</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection&quot;</span><span class="p">][</span><span class="n">GRASP_SOLUTION</span><span class="p">][</span><span class="s2">&quot;defaults&quot;</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+<span class="n">MODELS_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span>
+        <span class="s2">&quot;../../..&quot;</span><span class="p">,</span>
+        <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;models_dir&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">DOWNLOAD_SCRIPT_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span>
+        <span class="s2">&quot;../../../..&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gqcnn/scripts/downloads/models/download_models.sh&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="c1">#################################################</span>
+<span class="c1"># GQCNN grasp class #############################</span>
+<span class="c1">#################################################</span>
+<div class="viewcode-block" id="GQCNNGrasp"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner.html#panda_autograsp.grasp_planners.gqcnn_grasp_planner.GQCNNGrasp">[docs]</a><span class="k">class</span> <span class="nc">GQCNNGrasp</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class for storing the computed grasps. This class is a trimmed</span>
+<span class="sd">    down version of the original :py:class:`gqcnn.grasping.policy.policy.GraspAction`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pose</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q_value</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grasp_type</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center_px</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">PARALLEL_JAW</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:py:obj:`PARALLEL_JAW` Specifies parallel jaw gripper type information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">SUCTION</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:py:obj:`SUCTION` Specifies suction jaw gripper type information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span></div>
+
+
+<span class="c1">#################################################</span>
+<span class="c1"># Grasp planner Class ###########################</span>
+<span class="c1">#################################################</span>
+<div class="viewcode-block" id="GraspPlanner"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner.html#panda_autograsp.grasp_planners.gqcnn_grasp_planner.GraspPlanner">[docs]</a><span class="k">class</span> <span class="nc">GraspPlanner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Class used to compute the grasp pose out of the RGB-D data.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        cfg : :py:obj:`autolab_core.YamlConfig`</span>
+<span class="sd">            The grasp ``yaml`` configuration file.</span>
+<span class="sd">        policy_cfg: :py:obj:`autolab_core.YamlConfig`</span>
+<span class="sd">            The policy ``yaml`` configuration file.</span>
+<span class="sd">        sensor_type : :py:obj:`str`</span>
+<span class="sd">            The type of sensor that is used.</span>
+<span class="sd">        gqcnn_model : :py:obj:`str`</span>
+<span class="sd">            The GQCNN model that is used.</span>
+<span class="sd">        gripper_mode : :py:obj:`unicode`</span>
+<span class="sd">            The gripper that is used.</span>
+<span class="sd">        sensor : :py:obj:`perception.Kinect2Sensor`</span>
+<span class="sd">            The sensor object.</span>
+<span class="sd">        grasping_policy : :py:obj:`gqcnn.CrossEntropyRobustGraspingPolicy`</span>
+<span class="sd">            The grasp policy.</span>
+<span class="sd">        min_width: :py:obj:`int`</span>
+<span class="sd">            The minimum allowed image width.</span>
+<span class="sd">        min_height : :py:obj:`int`</span>
+<span class="sd">            The minimum allowed image height.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GraspPlanner.__init__"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner.html#panda_autograsp.grasp_planners.gqcnn_grasp_planner.GraspPlanner.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">DEFAULT_MODEL</span><span class="p">,</span> <span class="n">sensor_type</span><span class="o">=</span><span class="s2">&quot;kinectv2&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------------</span>
+<span class="sd">        model : :py:obj:`str`, optional</span>
+<span class="sd">            Name of the grasp detection model, by default DEFAULT_MODEL.</span>
+<span class="sd">        sensor_type: :py:obj:`str`, optional</span>
+<span class="sd">            The name of the RGBD sensor, by default kinectv2.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Load model and policy configuration files</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_cfg</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="c1"># Create grasping policy</span>
+        <span class="n">mod_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating Grasping Policy&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="s2">&quot;cross_entropy&quot;</span>
+                <span class="o">==</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection&quot;</span><span class="p">][</span><span class="s2">&quot;gqcnn&quot;</span><span class="p">][</span><span class="s2">&quot;parameters&quot;</span><span class="p">][</span><span class="s2">&quot;available&quot;</span><span class="p">][</span>
+                    <span class="n">model</span>
+                <span class="p">]</span>
+            <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">grasping_policy</span> <span class="o">=</span> <span class="n">CrossEntropyRobustGraspingPolicy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy_cfg</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="s2">&quot;fully_conv&quot;</span>
+                <span class="o">==</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection&quot;</span><span class="p">][</span><span class="s2">&quot;gqcnn&quot;</span><span class="p">][</span><span class="s2">&quot;parameters&quot;</span><span class="p">][</span><span class="s2">&quot;available&quot;</span><span class="p">][</span>
+                    <span class="n">model</span>
+                <span class="p">]</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="s2">&quot;pj&quot;</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">grasping_policy</span> <span class="o">=</span> <span class="n">FullyConvolutionalGraspingPolicyParallelJaw</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">policy_cfg</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="s2">&quot;suction&quot;</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">grasping_policy</span> <span class="o">=</span> <span class="n">FullyConvolutionalGraspingPolicySuction</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">policy_cfg</span>
+                    <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">mod_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;The </span><span class="si">%s</span><span class="s2"> model of the </span><span class="si">%s</span><span class="s2"> policy is not yet implemented.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;gqcnn&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Create usefull class properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_type</span> <span class="o">=</span> <span class="n">sensor_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gqcnn_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grasping_policy</span><span class="o">.</span><span class="n">grasp_quality_fn</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+            <span class="s2">&quot;gqcnn_model&quot;</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gripper_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grasping_policy</span><span class="o">.</span><span class="n">_grasp_quality_fn</span><span class="o">.</span><span class="n">_gqcnn</span><span class="o">.</span><span class="n">gripper_mode</span>
+
+        <span class="c1"># Initiate RBGD sensor</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_type</span> <span class="o">==</span> <span class="s2">&quot;kinectv2&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span> <span class="o">=</span> <span class="n">Kinect2Sensor</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mod_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;Unfortunately the &quot;</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_type</span>
+                <span class="o">+</span> <span class="s2">&quot; camera is not yet supported.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Exit script</span>
+
+        <span class="c1"># Set minimum sensor input dimensions</span>
+        <span class="n">pad</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+            <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;policy&quot;</span><span class="p">][</span><span class="s2">&quot;metric&quot;</span><span class="p">][</span><span class="s2">&quot;crop_width&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;policy&quot;</span><span class="p">][</span><span class="s2">&quot;metric&quot;</span><span class="p">][</span><span class="s2">&quot;crop_height&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_width</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pad</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;policy&quot;</span><span class="p">][</span><span class="s2">&quot;metric&quot;</span><span class="p">][</span><span class="s2">&quot;crop_width&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_height</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pad</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;policy&quot;</span><span class="p">][</span><span class="s2">&quot;metric&quot;</span><span class="p">][</span><span class="s2">&quot;crop_height&quot;</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_cfg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Function retrieves the model and policy configuration files for a given model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : :py:obj:`str`</span>
+<span class="sd">            Model used for the grasp detection CNN.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Download CNN model if not present</span>
+        <span class="n">model_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">MODELS_PATH</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_dir</span><span class="p">):</span>
+            <span class="n">mod_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;The &quot;</span>
+                <span class="o">+</span> <span class="n">model</span>
+                <span class="o">+</span> <span class="s2">&quot; model was not found in the models folder. This model is required &quot;</span>
+                <span class="s2">&quot;to continue.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">prompt_result</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Do you want to download this model now? [Y/n] &quot;</span><span class="p">)</span>
+
+                <span class="c1"># Check user input</span>
+                <span class="c1"># If yes download sample</span>
+                <span class="k">if</span> <span class="n">prompt_result</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">]:</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">download_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">MODELS_PATH</span><span class="p">,</span> <span class="n">DOWNLOAD_SCRIPT_PATH</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Check if download was successful</span>
+                        <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because grasp model could not &quot;</span>
+                            <span class="s2">&quot;downloaded.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model</span><span class="p">)</span>
+                        <span class="p">)</span>
+                        <span class="n">mod_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+                        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">prompt_result</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">]:</span>
+                    <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because grasp model is not downloaded.&quot;</span>
+                        <span class="o">%</span> <span class="p">(</span><span class="n">model</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">mod_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">prompt_result</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="n">download_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">MODELS_PATH</span><span class="p">,</span> <span class="n">DOWNLOAD_SCRIPT_PATH</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Check if download was successful</span>
+                        <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because grasp model could not &quot;</span>
+                            <span class="s2">&quot;downloaded.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model</span><span class="p">)</span>
+                        <span class="p">)</span>
+                        <span class="n">mod_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+                        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="n">prompt_result</span>
+                        <span class="o">+</span> <span class="s2">&quot; is not a valid response please answer with Y or N &quot;</span>
+                        <span class="s2">&quot;to continue.&quot;</span>
+                    <span class="p">)</span>
+
+        <span class="c1"># Retrieve model related configuration values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s2">&quot;config.json&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">gqcnn_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="p">[</span><span class="s2">&quot;gqcnn&quot;</span><span class="p">]</span>
+            <span class="n">gripper_mode</span> <span class="o">=</span> <span class="n">gqcnn_config</span><span class="p">[</span><span class="s2">&quot;gripper_mode&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">gqcnn_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="p">[</span><span class="s2">&quot;gqcnn_config&quot;</span><span class="p">]</span>
+            <span class="n">input_data_mode</span> <span class="o">=</span> <span class="n">gqcnn_config</span><span class="p">[</span><span class="s2">&quot;input_data_mode&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">input_data_mode</span> <span class="o">==</span> <span class="s2">&quot;tf_image&quot;</span><span class="p">:</span>
+                <span class="n">gripper_mode</span> <span class="o">=</span> <span class="n">GripperMode</span><span class="o">.</span><span class="n">LEGACY_PARALLEL_JAW</span>
+            <span class="k">elif</span> <span class="n">input_data_mode</span> <span class="o">==</span> <span class="s2">&quot;tf_image_suction&quot;</span><span class="p">:</span>
+                <span class="n">gripper_mode</span> <span class="o">=</span> <span class="n">GripperMode</span><span class="o">.</span><span class="n">LEGACY_SUCTION</span>
+            <span class="k">elif</span> <span class="n">input_data_mode</span> <span class="o">==</span> <span class="s2">&quot;suction&quot;</span><span class="p">:</span>
+                <span class="n">gripper_mode</span> <span class="o">=</span> <span class="n">GripperMode</span><span class="o">.</span><span class="n">SUCTION</span>
+            <span class="k">elif</span> <span class="n">input_data_mode</span> <span class="o">==</span> <span class="s2">&quot;multi_suction&quot;</span><span class="p">:</span>
+                <span class="n">gripper_mode</span> <span class="o">=</span> <span class="n">GripperMode</span><span class="o">.</span><span class="n">MULTI_SUCTION</span>
+            <span class="k">elif</span> <span class="n">input_data_mode</span> <span class="o">==</span> <span class="s2">&quot;parallel_jaw&quot;</span><span class="p">:</span>
+                <span class="n">gripper_mode</span> <span class="o">=</span> <span class="n">GripperMode</span><span class="o">.</span><span class="n">PARALLEL_JAW</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Input data mode </span><span class="si">{}</span><span class="s2"> not supported!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">input_data_mode</span><span class="p">)</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Get the policy based config parameters</span>
+        <span class="n">config_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span>
+                <span class="s2">&quot;../../../..&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gqcnn/cfg/examples/gqcnn_suction.yaml&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">gripper_mode</span> <span class="o">==</span> <span class="n">GripperMode</span><span class="o">.</span><span class="n">LEGACY_PARALLEL_JAW</span>
+            <span class="ow">or</span> <span class="n">gripper_mode</span> <span class="o">==</span> <span class="n">GripperMode</span><span class="o">.</span><span class="n">PARALLEL_JAW</span>
+        <span class="p">):</span>
+            <span class="n">config_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span>
+                    <span class="s2">&quot;../../../..&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;gqcnn/cfg/examples/gqcnn_pj.yaml&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Get CNN and Policy files</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">YamlConfig</span><span class="p">(</span><span class="n">config_filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">policy_cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;policy&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">policy_cfg</span><span class="p">[</span><span class="s2">&quot;metric&quot;</span><span class="p">][</span><span class="s2">&quot;gqcnn_model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_dir</span>
+
+<div class="viewcode-block" id="GraspPlanner.start"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner.html#panda_autograsp.grasp_planners.gqcnn_grasp_planner.GraspPlanner.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calls the _start_sensor method.&quot;&quot;&quot;</span>
+        <span class="n">start_msg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;Starting &quot;</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">gqcnn_model</span>
+            <span class="o">+</span> <span class="s2">&quot; grasp planner for a &quot;</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">gripper_mode</span>
+            <span class="o">+</span> <span class="s2">&quot; robot.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">mod_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">start_msg</span><span class="p">)</span>
+
+        <span class="c1"># Start sensor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_sensor</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_start_sensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start sensor.&quot;&quot;&quot;</span>
+
+        <span class="c1"># Start sensor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+        <span class="c1"># Print packet pipeline information</span>
+        <span class="n">mod_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Packet pipeline: &quot;</span> <span class="o">+</span> <span class="n">packet_modes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">_packet_pipeline_mode</span><span class="p">]</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="GraspPlanner.read_images"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner.html#panda_autograsp.grasp_planners.gqcnn_grasp_planner.GraspPlanner.read_images">[docs]</a>    <span class="k">def</span> <span class="nf">read_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_registration</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves data frames from the sensor.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        skip_registration : :py:obj:`bool`, optional</span>
+<span class="sd">            If True, the registration step is skipped, by default False.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :py:obj:`tuple` of :py:obj:`perception.ColorImage`,</span>
+<span class="sd">        :py:obj:`perception.DepthImage`, :py:obj:`perception.IrImage`,</span>
+<span class="sd">        :py:obj:`numpy.ndarray`</span>
+<span class="sd">            The ColorImage, DepthImage, and IrImage of the current frame.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        :py:obj:`exceptions.RuntimeError`</span>
+<span class="sd">            If the Kinect stream is not running.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get color, depth and ir image frames</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_type</span> <span class="o">==</span> <span class="s2">&quot;kinectv2&quot;</span><span class="p">:</span>
+            <span class="n">color_im</span><span class="p">,</span> <span class="n">depth_im</span><span class="p">,</span> <span class="n">ir_im</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">frames</span><span class="p">(</span><span class="n">skip_registration</span><span class="p">)</span>
+
+        <span class="c1"># Validate whether depth and color images are the same size</span>
+        <span class="k">if</span> <span class="n">color_im</span><span class="o">.</span><span class="n">height</span> <span class="o">!=</span> <span class="n">depth_im</span><span class="o">.</span><span class="n">height</span> <span class="ow">or</span> <span class="n">color_im</span><span class="o">.</span><span class="n">width</span> <span class="o">!=</span> <span class="n">depth_im</span><span class="o">.</span><span class="n">width</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Color image and depth image must be the same shape! Color&quot;</span>
+                <span class="s2">&quot; is </span><span class="si">%d</span><span class="s2"> x </span><span class="si">%d</span><span class="s2"> but depth is </span><span class="si">%d</span><span class="s2"> x </span><span class="si">%d</span><span class="s2">&quot;</span>
+            <span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">color_im</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">color_im</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">depth_im</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">depth_im</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+            <span class="n">mod_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">color_im</span><span class="o">.</span><span class="n">height</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_height</span> <span class="ow">or</span> <span class="n">color_im</span><span class="o">.</span><span class="n">width</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_width</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Color image is too small! Must be at least </span><span class="si">%d</span><span class="s2"> x </span><span class="si">%d</span><span class="s2">&quot;</span>
+                <span class="s2">&quot; resolution but the requested image is only </span><span class="si">%d</span><span class="s2"> x </span><span class="si">%d</span><span class="s2">&quot;</span>
+            <span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_width</span><span class="p">,</span> <span class="n">color_im</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">color_im</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+            <span class="n">mod_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="c1"># Return color and depth frames</span>
+        <span class="k">return</span> <span class="n">color_im</span><span class="p">,</span> <span class="n">depth_im</span><span class="p">,</span> <span class="n">ir_im</span></div>
+
+<div class="viewcode-block" id="GraspPlanner.plan_grasp"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner.html#panda_autograsp.grasp_planners.gqcnn_grasp_planner.GraspPlanner.plan_grasp">[docs]</a>    <span class="k">def</span> <span class="nf">plan_grasp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Samples the image and computes possible grasps.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :py:class:`GQCNNGrasp`</span>
+<span class="sd">            Computed optimal grasp.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get color, depth and ir image frames</span>
+        <span class="n">color_im</span><span class="p">,</span> <span class="n">depth_im</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_images</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plan_grasp</span><span class="p">(</span><span class="n">color_im</span><span class="p">,</span> <span class="n">depth_im</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">ir_intrinsics</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraspPlanner.plan_grasp_bb"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner.html#panda_autograsp.grasp_planners.gqcnn_grasp_planner.GraspPlanner.plan_grasp_bb">[docs]</a>    <span class="k">def</span> <span class="nf">plan_grasp_bb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bounding_box</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Samples the image and computes possible grasps while taking</span>
+<span class="sd">        into account the supplied bounding box.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bounding_box : :py:obj:`perception.RgbdDetection`, optional</span>
+<span class="sd">            A bounding box specifying the object, by default None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :py:class:`GQCNNGrasp`</span>
+<span class="sd">            Computed optimal grasp.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get color, depth and ir image frames</span>
+        <span class="n">color_im</span><span class="p">,</span> <span class="n">depth_im</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_images</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plan_grasp</span><span class="p">(</span>
+            <span class="n">color_im</span><span class="p">,</span> <span class="n">depth_im</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">ir_intrinsics</span><span class="p">,</span> <span class="n">bounding_box</span><span class="o">=</span><span class="n">bounding_box</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraspPlanner.plan_grasp_segmask"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner.html#panda_autograsp.grasp_planners.gqcnn_grasp_planner.GraspPlanner.plan_grasp_segmask">[docs]</a>    <span class="k">def</span> <span class="nf">plan_grasp_segmask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segmask</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Samples the image and computes possible grasps while taking</span>
+<span class="sd">        into account the supplied segmask.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        segmask : :py:obj:`perception.BinaryImage`</span>
+<span class="sd">            Binary segmask of detected object</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :py:obj:`GQCNNGrasp`</span>
+<span class="sd">            Computed optimal grasp.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get color, depth and ir image frames</span>
+        <span class="n">color_im</span><span class="p">,</span> <span class="n">depth_im</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_images</span><span class="p">()</span>
+
+        <span class="c1"># Check whether segmask</span>
+        <span class="n">raw_segmask</span> <span class="o">=</span> <span class="n">segmask</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">segmask</span> <span class="o">=</span> <span class="n">BinaryImage</span><span class="p">(</span><span class="n">raw_segmask</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">ir_intrinsics</span><span class="o">.</span><span class="n">frame</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">plan_grasp_segmask_exception</span><span class="p">:</span>
+            <span class="n">mod_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">plan_grasp_segmask_exception</span><span class="p">)</span>
+
+        <span class="c1"># Validate whether image and segmask are the same size</span>
+        <span class="k">if</span> <span class="n">color_im</span><span class="o">.</span><span class="n">height</span> <span class="o">!=</span> <span class="n">segmask</span><span class="o">.</span><span class="n">height</span> <span class="ow">or</span> <span class="n">color_im</span><span class="o">.</span><span class="n">width</span> <span class="o">!=</span> <span class="n">segmask</span><span class="o">.</span><span class="n">width</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Images and segmask must be the same shape! Color image is&quot;</span>
+                <span class="s2">&quot; </span><span class="si">%d</span><span class="s2"> x </span><span class="si">%d</span><span class="s2"> but segmask is </span><span class="si">%d</span><span class="s2"> x </span><span class="si">%d</span><span class="s2">&quot;</span>
+            <span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">color_im</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">color_im</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">segmask</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">segmask</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+            <span class="n">mod_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plan_grasp</span><span class="p">(</span>
+            <span class="n">color_im</span><span class="p">,</span> <span class="n">depth_im</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">ir_intrinsics</span><span class="p">,</span> <span class="n">segmask</span><span class="o">=</span><span class="n">segmask</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_plan_grasp</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">color_im</span><span class="p">,</span> <span class="n">depth_im</span><span class="p">,</span> <span class="n">camera_intr</span><span class="p">,</span> <span class="n">bounding_box</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">segmask</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plan grasp function that is effectually computes the grasp.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        color_im : :py:obj:`perception.ColorImage`</span>
+<span class="sd">            Color image.</span>
+<span class="sd">        depth_im : :py:obj:`perception.DepthImage`</span>
+<span class="sd">            Depth image.</span>
+<span class="sd">        camera_intr : :obj;`perception.CameraIntrinsics`</span>
+<span class="sd">            Intrinsic camera object.</span>
+<span class="sd">        bounding_box : :py:obj:`gqcnn.RgbdImageState`, optional</span>
+<span class="sd">            A bounding box specifying the object, by default None</span>
+<span class="sd">        segmask : :py:obj:`perception.BinaryImage`</span>
+<span class="sd">            Binary segmask of detected object</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        GQCNNGrasp</span>
+<span class="sd">            Computed grasp.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mod_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Planning Grasp&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Inpaint images</span>
+        <span class="n">color_im</span> <span class="o">=</span> <span class="n">color_im</span><span class="o">.</span><span class="n">inpaint</span><span class="p">(</span><span class="n">rescale_factor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;inpaint_rescale_factor&quot;</span><span class="p">])</span>
+        <span class="n">depth_im</span> <span class="o">=</span> <span class="n">depth_im</span><span class="o">.</span><span class="n">inpaint</span><span class="p">(</span><span class="n">rescale_factor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;inpaint_rescale_factor&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Init segmask</span>
+        <span class="k">if</span> <span class="n">segmask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">segmask</span> <span class="o">=</span> <span class="n">BinaryImage</span><span class="p">(</span>
+                <span class="mi">255</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">depth_im</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">frame</span><span class="o">=</span><span class="n">color_im</span><span class="o">.</span><span class="n">frame</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Visualize</span>
+        <span class="k">if</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;vis&quot;</span><span class="p">][</span><span class="s2">&quot;grasp&quot;</span><span class="p">][</span><span class="s2">&quot;figs&quot;</span><span class="p">][</span><span class="s2">&quot;color_image&quot;</span><span class="p">]:</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">color_im</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Color image&quot;</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;vis&quot;</span><span class="p">][</span><span class="s2">&quot;grasp&quot;</span><span class="p">][</span><span class="s2">&quot;figs&quot;</span><span class="p">][</span><span class="s2">&quot;depth_image&quot;</span><span class="p">]:</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">depth_im</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Depth image&quot;</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;vis&quot;</span><span class="p">][</span><span class="s2">&quot;grasp&quot;</span><span class="p">][</span><span class="s2">&quot;figs&quot;</span><span class="p">][</span><span class="s2">&quot;segmask&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">segmask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">segmask</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Segmask image&quot;</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="c1"># Aggregate color and depth images into a single</span>
+        <span class="c1"># BerkeleyAutomation/perception `RgbdImage`.</span>
+        <span class="n">rgbd_im</span> <span class="o">=</span> <span class="n">RgbdImage</span><span class="o">.</span><span class="n">from_color_and_depth</span><span class="p">(</span><span class="n">color_im</span><span class="p">,</span> <span class="n">depth_im</span><span class="p">)</span>
+
+        <span class="c1"># Mask bounding box</span>
+        <span class="k">if</span> <span class="n">bounding_box</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Calc bb parameters.</span>
+            <span class="n">min_x</span> <span class="o">=</span> <span class="n">bounding_box</span><span class="o">.</span><span class="n">minX</span>
+            <span class="n">min_y</span> <span class="o">=</span> <span class="n">bounding_box</span><span class="o">.</span><span class="n">minY</span>
+            <span class="n">max_x</span> <span class="o">=</span> <span class="n">bounding_box</span><span class="o">.</span><span class="n">maxX</span>
+            <span class="n">max_y</span> <span class="o">=</span> <span class="n">bounding_box</span><span class="o">.</span><span class="n">maxY</span>
+
+            <span class="c1"># Contain box to image-&gt;don&#39;t let it exceed image height/width</span>
+            <span class="c1"># bounds.</span>
+            <span class="k">if</span> <span class="n">min_x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">min_x</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="n">min_y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">min_y</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="n">max_x</span> <span class="o">&gt;</span> <span class="n">rgbd_im</span><span class="o">.</span><span class="n">width</span><span class="p">:</span>
+                <span class="n">max_x</span> <span class="o">=</span> <span class="n">rgbd_im</span><span class="o">.</span><span class="n">width</span>
+            <span class="k">if</span> <span class="n">max_y</span> <span class="o">&gt;</span> <span class="n">rgbd_im</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
+                <span class="n">max_y</span> <span class="o">=</span> <span class="n">rgbd_im</span><span class="o">.</span><span class="n">height</span>
+
+            <span class="c1"># Mask whole image</span>
+            <span class="n">bb_segmask_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">rgbd_im</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">rgbd_im</span><span class="o">.</span><span class="n">width</span><span class="p">])</span>
+            <span class="n">bb_segmask_arr</span><span class="p">[</span><span class="n">min_y</span><span class="p">:</span><span class="n">max_y</span><span class="p">,</span> <span class="n">min_x</span><span class="p">:</span><span class="n">max_x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">255</span>
+            <span class="n">bb_segmask</span> <span class="o">=</span> <span class="n">BinaryImage</span><span class="p">(</span><span class="n">bb_segmask_arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">segmask</span><span class="o">.</span><span class="n">frame</span><span class="p">)</span>
+            <span class="n">segmask</span> <span class="o">=</span> <span class="n">segmask</span><span class="o">.</span><span class="n">mask_binary</span><span class="p">(</span><span class="n">bb_segmask</span><span class="p">)</span>
+
+        <span class="c1"># Visualize</span>
+        <span class="k">if</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;vis&quot;</span><span class="p">][</span><span class="s2">&quot;grasp&quot;</span><span class="p">][</span><span class="s2">&quot;figs&quot;</span><span class="p">][</span><span class="s2">&quot;rgbd_state&quot;</span><span class="p">]:</span>
+            <span class="n">masked_rgbd_im</span> <span class="o">=</span> <span class="n">rgbd_im</span><span class="o">.</span><span class="n">mask_binary</span><span class="p">(</span><span class="n">segmask</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Masked RGBD state&quot;</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_rgbd_im</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_rgbd_im</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="c1"># Create an `RgbdImageState` with the cropped `RgbdImage` and</span>
+        <span class="c1"># `CameraIntrinsics`.</span>
+        <span class="n">rgbd_state</span> <span class="o">=</span> <span class="n">RgbdImageState</span><span class="p">(</span><span class="n">rgbd_im</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">ir_intrinsics</span><span class="p">,</span> <span class="n">segmask</span><span class="o">=</span><span class="n">segmask</span><span class="p">)</span>
+
+        <span class="c1"># Execute policy</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_policy</span><span class="p">(</span>
+                <span class="n">rgbd_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grasping_policy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">ir_intrinsics</span><span class="o">.</span><span class="n">frame</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">NoValidGraspsException</span><span class="p">:</span>
+            <span class="n">mod_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="s2">&quot;While executing policy found no valid grasps from sampled&quot;</span>
+                    <span class="s2">&quot; antipodal point pairs. Aborting Policy!&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+<div class="viewcode-block" id="GraspPlanner.execute_policy"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner.html#panda_autograsp.grasp_planners.gqcnn_grasp_planner.GraspPlanner.execute_policy">[docs]</a>    <span class="k">def</span> <span class="nf">execute_policy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rgbd_image_state</span><span class="p">,</span> <span class="n">grasping_policy</span><span class="p">,</span> <span class="n">pose_frame</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Executes a grasping policy on an `RgbdImageState`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rgbd_image_state : :py:class:`gqcnn.RgbdImageState`</span>
+<span class="sd">            The :py:class:`gqcnn.RgbdImageState` that encapsulates the</span>
+<span class="sd">            depth and color image along with camera intrinsics.</span>
+<span class="sd">        grasping_policy : :py:class:`gqcnn.grasping.policy.policy.GraspingPolicy`</span>
+<span class="sd">            Grasping policy to use.</span>
+<span class="sd">        pose_frame : :py:obj:`str`</span>
+<span class="sd">            Frame of reference to publish pose in.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Execute the policy&quot;s action</span>
+        <span class="n">grasp_planning_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">grasping_policy</span><span class="p">(</span><span class="n">rgbd_image_state</span><span class="p">)</span>
+        <span class="n">mod_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Total grasp planning time: &quot;</span>
+            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">grasp_planning_start_time</span><span class="p">)</span>
+            <span class="o">+</span> <span class="s2">&quot; secs.&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Create `GQCNNGrasp` object and populate it</span>
+        <span class="n">gqcnn_grasp</span> <span class="o">=</span> <span class="n">GQCNNGrasp</span><span class="p">()</span>
+        <span class="n">gqcnn_grasp</span><span class="o">.</span><span class="n">q_value</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">q_value</span>
+        <span class="n">gqcnn_grasp</span><span class="o">.</span><span class="n">pose</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">pose</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">grasp</span><span class="p">,</span> <span class="n">Grasp2D</span><span class="p">):</span>
+            <span class="n">gqcnn_grasp</span><span class="o">.</span><span class="n">grasp_type</span> <span class="o">=</span> <span class="n">GQCNNGrasp</span><span class="o">.</span><span class="n">PARALLEL_JAW</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">grasp</span><span class="p">,</span> <span class="n">SuctionPoint2D</span><span class="p">):</span>
+            <span class="n">gqcnn_grasp</span><span class="o">.</span><span class="n">grasp_type</span> <span class="o">=</span> <span class="n">GQCNNGrasp</span><span class="o">.</span><span class="n">SUCTION</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mod_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Grasp type not supported!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Store grasp representation in image space</span>
+        <span class="n">gqcnn_grasp</span><span class="o">.</span><span class="n">center_px</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">gqcnn_grasp</span><span class="o">.</span><span class="n">center_px</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">gqcnn_grasp</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">angle</span>
+        <span class="n">gqcnn_grasp</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">depth</span>
+
+        <span class="c1"># Create small thumbnail and add to the grasp</span>
+        <span class="k">if</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection_result&quot;</span><span class="p">][</span><span class="s2">&quot;include_thumbnail&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection_result&quot;</span><span class="p">][</span><span class="s2">&quot;thumbnail_resize&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection_result&quot;</span><span class="p">][</span><span class="s2">&quot;thumbnail_resize&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span>
+            <span class="p">):</span>
+                <span class="n">mod_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="s2">&quot;Tumnail_resize vallue is invallid. Please check your &quot;</span>
+                    <span class="s2">&quot;configuration file and try again.&quot;</span>
+                <span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">scale_factor</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection_result&quot;</span><span class="p">][</span><span class="s2">&quot;tumbnail_resize&quot;</span><span class="p">]</span>
+                <span class="n">resized_data</span> <span class="o">=</span> <span class="n">imresize</span><span class="p">(</span>
+                    <span class="n">rgbd_image_state</span><span class="o">.</span><span class="n">rgbd_im</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                    <span class="n">scale_factor</span><span class="p">,</span>
+                    <span class="s2">&quot;bilinear&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">ColorImage</span><span class="p">(</span>
+                    <span class="n">resized_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">rgbd_image_state</span><span class="o">.</span><span class="n">rgbd_im</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">_frame</span>
+                <span class="p">)</span>
+                <span class="n">gqcnn_grasp</span><span class="o">.</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="n">thumbnail</span>
+
+        <span class="c1"># Visualize result</span>
+        <span class="k">if</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;vis&quot;</span><span class="p">][</span><span class="s2">&quot;grasp&quot;</span><span class="p">][</span><span class="s2">&quot;figs&quot;</span><span class="p">][</span><span class="s2">&quot;final_grasp&quot;</span><span class="p">]:</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+                <span class="n">rgbd_image_state</span><span class="o">.</span><span class="n">rgbd_im</span><span class="o">.</span><span class="n">color</span><span class="p">,</span>
+                <span class="n">vmin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;policy&quot;</span><span class="p">][</span><span class="s2">&quot;vis&quot;</span><span class="p">][</span><span class="s2">&quot;vmin&quot;</span><span class="p">],</span>
+                <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;policy&quot;</span><span class="p">][</span><span class="s2">&quot;vis&quot;</span><span class="p">][</span><span class="s2">&quot;vmax&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">grasp</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">grasp</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">show_center</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_axis</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+                <span class="s2">&quot;Planned grasp at depth </span><span class="si">{0:.3f}</span><span class="s2">m with Q=</span><span class="si">{1:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">action</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">action</span><span class="o">.</span><span class="n">q_value</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">gqcnn_grasp</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Rick Staa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

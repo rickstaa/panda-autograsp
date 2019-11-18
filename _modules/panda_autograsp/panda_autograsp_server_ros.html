@@ -1,0 +1,1430 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>panda_autograsp.panda_autograsp_server_ros &mdash; panda_autograsp 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> panda_autograsp
+          
+
+          
+            
+            <img src="../../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html#package-build-from-source-instructions">Package build from source instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html#singularity-container-installation-instructions">Singularity Container installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html#docker-container-installation-instructions">Docker container installation instructions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/usage.html">Sensor calibration instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/usage.html#package-use-instructions">Package use instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/usage.html#singularity-container-instructions">Singularity container instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/usage.html#troubleshooting-information">Troubleshooting information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">Python Code API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../license/license.html">License</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Zone</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/release_dev.html">Release package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/doc_dev.html">Release documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">panda_autograsp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>panda_autograsp.panda_autograsp_server_ros</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for panda_autograsp.panda_autograsp_server_ros</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Module that sets up a number of services that enable</span>
+<span class="sd">the :py:mod:`panda_autograsp_cli` command line interface (CLI) to</span>
+<span class="sd">communicate with the components of the `panda_autograps` solution.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Make script both python2 and python3 compatible</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">raw_input</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># Main python packages</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">cv2.aruco</span> <span class="k">as</span> <span class="nn">aruco</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">pyquaternion</span> <span class="k">import</span> <span class="n">Quaternion</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">autolab_core</span> <span class="k">import</span> <span class="n">YamlConfig</span>
+
+<span class="c1"># ROS python packages</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">message_filters</span> <span class="k">import</span> <span class="n">ApproximateTimeSynchronizer</span><span class="p">,</span> <span class="n">Subscriber</span>
+<span class="kn">from</span> <span class="nn">cv_bridge</span> <span class="k">import</span> <span class="n">CvBridge</span>
+<span class="kn">import</span> <span class="nn">tf2_ros</span>
+
+<span class="c1"># ROS messages and services</span>
+<span class="kn">import</span> <span class="nn">sensor_msgs</span>
+<span class="kn">from</span> <span class="nn">tf2_geometry_msgs</span> <span class="k">import</span> <span class="n">PoseStamped</span>  <span class="c1"># Needed because we use tf2</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="k">import</span> <span class="n">TransformStamped</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="k">import</span> <span class="n">Header</span>
+<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="k">import</span> <span class="n">Empty</span>
+
+<span class="c1"># Panda_autograsp modules, msgs and srvs</span>
+<span class="kn">from</span> <span class="nn">panda_autograsp.srv</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">ComputeGrasp</span><span class="p">,</span>
+    <span class="n">PlanGrasp</span><span class="p">,</span>
+    <span class="n">PlanToPoint</span><span class="p">,</span>
+    <span class="n">VisualizePlan</span><span class="p">,</span>
+    <span class="n">VisualizeGrasp</span><span class="p">,</span>
+    <span class="n">ExecutePlan</span><span class="p">,</span>
+    <span class="n">ExecuteGrasp</span><span class="p">,</span>
+    <span class="n">CalibrateSensor</span><span class="p">,</span>
+    <span class="n">SetSensorPose</span><span class="p">,</span>
+    <span class="n">SetGripperWidth</span><span class="p">,</span>
+    <span class="n">SetGripperOpen</span><span class="p">,</span>
+    <span class="n">SetGripperClosed</span><span class="p">,</span>
+    <span class="n">PlanPlace</span><span class="p">,</span>
+    <span class="n">PlanToPath</span><span class="p">,</span>
+    <span class="n">GQCNNGraspPlanner</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Panda_autograsp modules, msgs and srvs</span>
+<span class="kn">from</span> <span class="nn">panda_autograsp.functions</span> <span class="k">import</span> <span class="n">draw_axis</span>
+
+<span class="c1"># Set right matplotlib backend</span>
+<span class="c1"># Needed in order to show images inside imported modules</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">switch_backend</span><span class="p">(</span><span class="s2">&quot;TkAgg&quot;</span><span class="p">)</span>
+
+<span class="c1">#################################################</span>
+<span class="c1"># Read main config ##############################</span>
+<span class="c1">#################################################</span>
+
+<span class="c1"># Open panda_autograsp configuration file</span>
+<span class="n">MAIN_CFG</span> <span class="o">=</span> <span class="n">YamlConfig</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;../../cfg/main_config.yaml&quot;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Get important parameters</span>
+<span class="n">POSE_CALIB_METHOD</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;calibration&quot;</span><span class="p">][</span><span class="s2">&quot;pose_estimation_calib_board&quot;</span><span class="p">]</span>
+
+<span class="c1">#################################################</span>
+<span class="c1"># Script settings ###############################</span>
+<span class="c1">#################################################</span>
+<span class="n">CALIB_TRY_DURATION</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;calibration&quot;</span><span class="p">][</span><span class="s2">&quot;calib_try_duration&quot;</span><span class="p">]</span>  <span class="c1"># [s]</span>
+<span class="n">CABLIB_METHODS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;chessboard&quot;</span><span class="p">,</span> <span class="s2">&quot;aruco_board&quot;</span><span class="p">]</span>
+
+<span class="c1">###############################</span>
+<span class="c1"># Chessboard settings #########</span>
+<span class="c1">###############################</span>
+
+<span class="c1"># Board parameters</span>
+<span class="n">calib_config</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;calibration&quot;</span><span class="p">]</span>
+<span class="n">N_FRAMES</span> <span class="o">=</span> <span class="n">calib_config</span><span class="p">[</span><span class="s2">&quot;chessboard_settings&quot;</span><span class="p">][</span><span class="s2">&quot;N_FRAMES&quot;</span><span class="p">]</span>
+<span class="n">N_ROWS</span> <span class="o">=</span> <span class="n">calib_config</span><span class="p">[</span><span class="s2">&quot;chessboard_settings&quot;</span><span class="p">][</span><span class="s2">&quot;N_ROWS&quot;</span><span class="p">]</span>
+<span class="n">N_COLMNS</span> <span class="o">=</span> <span class="n">calib_config</span><span class="p">[</span><span class="s2">&quot;chessboard_settings&quot;</span><span class="p">][</span><span class="s2">&quot;N_COLUMNS&quot;</span><span class="p">]</span>
+<span class="n">SQUARE_SIZE</span> <span class="o">=</span> <span class="n">calib_config</span><span class="p">[</span><span class="s2">&quot;chessboard_settings&quot;</span><span class="p">][</span><span class="s2">&quot;SQUARE_SIZE&quot;</span><span class="p">]</span>
+
+<span class="c1">#################################################</span>
+<span class="c1"># Aruco settings ################################</span>
+<span class="c1">#################################################</span>
+
+<span class="c1"># Initialize board parameters</span>
+<span class="n">load_dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;../../cfg/_cfg/aruco_config.dict&quot;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">load_dir_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_dict_file</span><span class="p">:</span>
+    <span class="n">ARUCO_CFG</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config_dict_file</span><span class="p">)</span>  <span class="c1"># Load the aruco board settings</span>
+
+<span class="c1"># Overwrite settings based on measurements</span>
+<span class="n">ARUCO_CFG</span><span class="p">[</span><span class="s2">&quot;MARKER_LENGTH&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.032</span>  <span class="c1"># [M]</span>
+<span class="n">ARUCO_CFG</span><span class="p">[</span><span class="s2">&quot;MARKER_SEPERATION&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.009</span>  <span class="c1"># [M]</span>
+<span class="n">ARUCO_DICT</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">Dictionary_get</span><span class="p">(</span><span class="n">ARUCO_CFG</span><span class="p">[</span><span class="s2">&quot;ARUCO_DICT_TYPE&quot;</span><span class="p">])</span>
+<span class="n">aruco_board</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">GridBoard_create</span><span class="p">(</span>
+    <span class="n">markersX</span><span class="o">=</span><span class="n">ARUCO_CFG</span><span class="p">[</span><span class="s2">&quot;MARKERS_X&quot;</span><span class="p">],</span>
+    <span class="n">markersY</span><span class="o">=</span><span class="n">ARUCO_CFG</span><span class="p">[</span><span class="s2">&quot;MARKERS_Y&quot;</span><span class="p">],</span>
+    <span class="n">markerLength</span><span class="o">=</span><span class="n">ARUCO_CFG</span><span class="p">[</span><span class="s2">&quot;MARKER_LENGTH&quot;</span><span class="p">],</span>
+    <span class="n">markerSeparation</span><span class="o">=</span><span class="n">ARUCO_CFG</span><span class="p">[</span><span class="s2">&quot;MARKER_SEPARATION&quot;</span><span class="p">],</span>
+    <span class="n">dictionary</span><span class="o">=</span><span class="n">ARUCO_DICT</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1">#################################################</span>
+<span class="c1"># GraspPlannerClient Class ######################</span>
+<span class="c1">#################################################</span>
+<div class="viewcode-block" id="PandaAutograspServer"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer">[docs]</a><span class="k">class</span> <span class="nc">PandaAutograspServer</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class used to create and call all the panda_autograsp components.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    -------</span>
+<span class="sd">    rvec : :py:obj:`list`</span>
+<span class="sd">        The rotation vector of the camera/world calibration.</span>
+<span class="sd">    tvec : :py:obj:`list`</span>
+<span class="sd">        The translation vector of the camera/world calibration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PandaAutograspServer.__init__"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pose_calib_method</span><span class="o">=</span><span class="n">POSE_CALIB_METHOD</span><span class="p">,</span> <span class="n">gazebo</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pose_calib_method : :py:obj:`str`, optional</span>
+<span class="sd">            Calibration pattern type., by default read from main_config.yaml.</span>
+<span class="sd">        gazebo : :py:obj:`bool`, optional</span>
+<span class="sd">            Specifies whether we are in a gazebo simulation, by default false.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get pose calib method from input</span>
+        <span class="k">if</span> <span class="n">pose_calib_method</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pose_calib_method</span> <span class="o">=</span> <span class="n">POSE_CALIB_METHOD</span>
+        <span class="k">if</span> <span class="n">pose_calib_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CABLIB_METHODS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pose_calib_method</span> <span class="o">=</span> <span class="n">POSE_CALIB_METHOD</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pose_calib_method</span> <span class="o">=</span> <span class="n">pose_calib_method</span>
+
+        <span class="c1"># Get gazebo bool</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gazebo</span><span class="o">=</span><span class="n">gazebo</span>
+
+        <span class="c1"># Setup cv_bridge</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cv_bridge</span> <span class="o">=</span> <span class="n">CvBridge</span><span class="p">()</span>
+
+        <span class="c1"># Setup member variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rvec</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tvec</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Setup opencv termination criteria</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_criteria</span> <span class="o">=</span> <span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">TERM_CRITERIA_EPS</span> <span class="o">+</span> <span class="n">cv2</span><span class="o">.</span><span class="n">TERM_CRITERIA_MAX_ITER</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+
+        <span class="c1">###############################################</span>
+        <span class="c1"># Initialize grasp computation services #######</span>
+        <span class="c1">###############################################</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Connecting to &#39;gqcnn_grasp_planner&#39; service...&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;gqcnn_grasp_planner&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gqcnn_grasp_planning_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;gqcnn_grasp_planner&quot;</span><span class="p">,</span> <span class="n">GQCNNGraspPlanner</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Connected to `gqcnn_grasp_planner service.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Panda_autograsp &#39;gqcnn_grasp_planner&#39; service initialization &quot;</span>
+                <span class="s2">&quot;failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gqcnn_grasp_planning_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1">###############################################</span>
+        <span class="c1"># Initialize moveit_planner server services ###</span>
+        <span class="c1">###############################################</span>
+
+        <span class="c1"># Initialize Plan to point service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Connecting to moveit_planner services.&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Connecting to &#39;moveit_planner_server/plan_to_point&#39; service...&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;moveit_planner_server/plan_to_point&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_plan_to_pose_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;moveit_planner_server/plan_to_point&quot;</span><span class="p">,</span> <span class="n">PlanToPoint</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+                <span class="s2">&quot;Connected to &#39;moveit_planner_server/plan_to_point&#39; &quot;</span> <span class="s2">&quot;service.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Panda_autograsp &#39;moveit_planner_server/plan_to_point&#39; service &quot;</span>
+                <span class="s2">&quot;initialization failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plan_to_pose_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Initialize random cartesian path service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Connecting to &#39;moveit_planner_server/plan_to_path&#39; service...&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;moveit_planner_server/plan_to_path&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_plan_to_path_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;moveit_planner_server/plan_to_path&quot;</span><span class="p">,</span> <span class="n">PlanToPath</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Connected to &#39;moveit_planner_server/plan_to_path&#39; service.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;moveit_planner_server &#39;plan_to_path&#39; service initialization failed: </span><span class="si">%s</span><span class="s2">&quot;</span>
+                <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plan_to_path_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Initialize plan visualization service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+            <span class="s2">&quot;Connecting to &#39;moveit_planner_server/visualize_plan&#39; &quot;</span> <span class="s2">&quot;service...&quot;</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;moveit_planner_server/visualize_plan&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_visualize_plan_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;moveit_planner_server/visualize_plan&quot;</span><span class="p">,</span> <span class="n">VisualizePlan</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+                <span class="s2">&quot;Connected to &#39;moveit_planner_server/visualize_plan&#39; &quot;</span> <span class="s2">&quot;service.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Panda_autograsp &#39;moveit_planner_server/visualize_plan&#39; service &quot;</span>
+                <span class="s2">&quot;initialization failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visualize_plan_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Initialize execute plan service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Connecting to &#39;moveit_planner_server/execute_plan&#39; service...&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;moveit_planner_server/execute_plan&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_execute_plan_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;moveit_planner_server/execute_plan&quot;</span><span class="p">,</span> <span class="n">ExecutePlan</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Connected to &#39;moveit_planner_server/execute_plan&#39; service.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Panda_autograsp &#39;moveit_planner_server/execute_plan&#39; service &quot;</span>
+                <span class="s2">&quot;initialization failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute_plan_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Initialize send sensor pose service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Connecting to &#39;tf2_broadcaster/send_sensor_pose&#39; service...&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;tf2_broadcaster/set_sensor_pose&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_sensor_pose_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;tf2_broadcaster/set_sensor_pose&quot;</span><span class="p">,</span> <span class="n">SetSensorPose</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Connected to &#39;tf2_broadcaster/set_sensor_pose&#39; service.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Panda_autograsp &#39;tf2_broadcaster/set_sensor_pose&#39; service &quot;</span>
+                <span class="s2">&quot;initialization failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_sensor_pose_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Initialize set gripper_width service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+            <span class="s2">&quot;Connecting to &#39;moveit_planner_server/set_gripper_width&#39; &quot;</span> <span class="s2">&quot;service...&quot;</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;moveit_planner_server/set_gripper_width&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_gripper_width_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;moveit_planner_server/set_gripper_width&quot;</span><span class="p">,</span> <span class="n">SetGripperWidth</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+                <span class="s2">&quot;Connected to &#39;moveit_planner_server/set_gripper_width&#39; &quot;</span> <span class="s2">&quot;service.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Panda_autograsp &#39;moveit_planner_server/set_gripper_width&#39; service &quot;</span>
+                <span class="s2">&quot;initialization failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_gripper_width_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Initialize set gripper_width service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+            <span class="s2">&quot;Connecting to &#39;moveit_planner_server/set_gripper_open&#39; &quot;</span> <span class="s2">&quot;service...&quot;</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;moveit_planner_server/set_gripper_open&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_gripper_open_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;moveit_planner_server/set_gripper_open&quot;</span><span class="p">,</span> <span class="n">SetGripperOpen</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+                <span class="s2">&quot;Connected to &#39;moveit_planner_server/set_gripper_open&#39; &quot;</span> <span class="s2">&quot;service.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Panda_autograsp &#39;moveit_planner_server/set_gripper_open&#39; service &quot;</span>
+                <span class="s2">&quot;initialization failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_gripper_open_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Initialize set gripper_width service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+            <span class="s2">&quot;Connecting to &#39;moveit_planner_server/set_gripper_closed&#39; &quot;</span> <span class="s2">&quot;service...&quot;</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;moveit_planner_server/set_gripper_closed&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_gripper_closed_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;moveit_planner_server/set_gripper_closed&quot;</span><span class="p">,</span> <span class="n">SetGripperClosed</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+                <span class="s2">&quot;Connected to &#39;moveit_planner_server/set_gripper_width&#39; &quot;</span> <span class="s2">&quot;service.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Panda_autograsp &#39;moveit_planner_server/set_gripper_closed&#39; &quot;</span>
+                <span class="s2">&quot;service initialization failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_gripper_closed_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Initialize reset octomap service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+            <span class="s2">&quot;Connecting to &#39;/clear_octomap/&#39; service...&quot;</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;/clear_octomap&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clear_octomap_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;/clear_octomap&quot;</span><span class="p">,</span> <span class="n">Empty</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+                <span class="s2">&quot;Connected to &#39;/clear_octomap&#39; service.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Panda_autograsp &#39;/clear_octomap&#39; &quot;</span>
+                <span class="s2">&quot;service initialization failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clear_octomap_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Print moveit_planner_server services connection success message</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Successfully connected to all moveit_planner_server services.&quot;</span><span class="p">)</span>
+
+        <span class="c1">###############################################</span>
+        <span class="c1"># Create panda_autograsp_server services ######</span>
+        <span class="c1">###############################################</span>
+
+        <span class="c1"># Calibrate sensor</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Initializing </span><span class="si">%s</span><span class="s2"> services.&quot;</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Initializing &#39;calibrate_sensor&#39; service...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_calibrate_sensor_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;calibrate_sensor&quot;</span><span class="p">,</span> <span class="n">CalibrateSensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibrate_sensor_service</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Compute grasp service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Initializing &#39;compute_grasp&#39; service...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_grasp_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;compute_grasp&quot;</span><span class="p">,</span> <span class="n">ComputeGrasp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_grasp_service</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Plan grasp service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Initializing &#39;plan_grasp&#39; service...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plan_grasp_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;plan_grasp&quot;</span><span class="p">,</span> <span class="n">PlanGrasp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plan_grasp_service</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Visualize grasp service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Initializing &#39;visualize_grasp&#39; service...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visualize_grasp_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;visualize_grasp&quot;</span><span class="p">,</span> <span class="n">VisualizeGrasp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">visualize_grasp_service</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Execute grasp service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Initializing &#39;execute_grasp&#39; service...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_execute_grasp_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;execute_grasp&quot;</span><span class="p">,</span> <span class="n">ExecuteGrasp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_grasp_service</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Object place planning service</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Initializing &#39;plan_place&#39; service...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plan_place_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;plan_place&quot;</span><span class="p">,</span> <span class="n">PlanPlace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plan_place_service</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Service initiation success message</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; services initialized successfully. Waiting for requests.&quot;</span><span class="p">,</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+        <span class="c1">###############################################</span>
+        <span class="c1"># Create subscribers and publishers ###########</span>
+        <span class="c1">###############################################</span>
+
+        <span class="c1"># Create msg filter subscribers</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Creating camera sensor message_filter...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_color_image_sub</span> <span class="o">=</span> <span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;image_color&quot;</span><span class="p">,</span> <span class="n">sensor_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_color_image_rect_sub</span> <span class="o">=</span> <span class="n">Subscriber</span><span class="p">(</span>
+            <span class="s2">&quot;image_color_rect&quot;</span><span class="p">,</span> <span class="n">sensor_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">Image</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_depth_image_rect_sub</span> <span class="o">=</span> <span class="n">Subscriber</span><span class="p">(</span>
+            <span class="s2">&quot;image_depth_rect_32FC1&quot;</span><span class="p">,</span> <span class="n">sensor_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">Image</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_camera_info_hd_sub</span> <span class="o">=</span> <span class="n">Subscriber</span><span class="p">(</span>
+            <span class="s2">&quot;hd/camera_info&quot;</span><span class="p">,</span> <span class="n">sensor_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">CameraInfo</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_camera_info_qhd_sub</span> <span class="o">=</span> <span class="n">Subscriber</span><span class="p">(</span>
+            <span class="s2">&quot;qhd/camera_info&quot;</span><span class="p">,</span> <span class="n">sensor_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">CameraInfo</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_camera_info_sd_sub</span> <span class="o">=</span> <span class="n">Subscriber</span><span class="p">(</span>
+            <span class="s2">&quot;sd/camera_info&quot;</span><span class="p">,</span> <span class="n">sensor_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">CameraInfo</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Wait till camera is online</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Waiting for first camera message...&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_message</span><span class="p">(</span><span class="s2">&quot;image_color&quot;</span><span class="p">,</span> <span class="n">sensor_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Camera is online and publishing messages.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Create msg filter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ats</span> <span class="o">=</span> <span class="n">ApproximateTimeSynchronizer</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_color_image_sub</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_color_image_rect_sub</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_depth_image_rect_sub</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_camera_info_hd_sub</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_camera_info_qhd_sub</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_camera_info_sd_sub</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">slop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ats</span><span class="o">.</span><span class="n">registerCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg_filter_callback</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Camera sensor message_filter created.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Create state listener</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tf2_buffer</span> <span class="o">=</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">Buffer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tf2_listener</span> <span class="o">=</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">TransformListener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tf2_buffer</span><span class="p">)</span>
+
+        <span class="c1"># Create publisher to publish the place pose</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Creating place pose publisher...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_place_pose_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="s2">&quot;moveit/place_pose&quot;</span><span class="p">,</span> <span class="n">PoseStamped</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Place pose publisher created.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Create pose subscriber</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Creating grasp pose subscriber...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pose_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="s2">&quot;gqcnn_grasp/pose&quot;</span><span class="p">,</span> <span class="n">PoseStamped</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pose_callback</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Grasp pose subscriber created.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PandaAutograspServer.get_pose_callback"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.get_pose_callback">[docs]</a>    <span class="k">def</span> <span class="nf">get_pose_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pose_msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback function of the &#39;gqcnn_graps/pose&#39; subscriber. This function updates the</span>
+<span class="sd">        self.pose_msg member variable.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pose_msg : :py:obj:`!geometry_msgs.PosedStamed`</span>
+<span class="sd">            Grasp pose msgs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Update pose_msg</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Received grasp pose.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pose_msg</span> <span class="o">=</span> <span class="n">pose_msg</span></div>
+
+<div class="viewcode-block" id="PandaAutograspServer.msg_filter_callback"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.msg_filter_callback">[docs]</a>    <span class="k">def</span> <span class="nf">msg_filter_callback</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">color_image</span><span class="p">,</span>
+        <span class="n">color_image_rect</span><span class="p">,</span>
+        <span class="n">depth_image_rect</span><span class="p">,</span>
+        <span class="n">camera_info_hd</span><span class="p">,</span>
+        <span class="n">camera_info_qhd</span><span class="p">,</span>
+        <span class="n">camera_info_sd</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback function of the message filter. This message filter subscribed</span>
+<span class="sd">        to a number of camera topics which are required by the panda_autograsp</span>
+<span class="sd">        solution.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        color_image : :py:obj:`!sensor_msgs.msg.Image`</span>
+<span class="sd">            The color image.</span>
+<span class="sd">        color_image_rect : :py:obj:`!sensor_msgs.msg.Image`</span>
+<span class="sd">            The rectified color image.</span>
+<span class="sd">        depth_image_rect : :py:obj:`!sensor_msgs.msg.Image`</span>
+<span class="sd">            The depth image.</span>
+<span class="sd">        camera_info_hd :  :py:obj:`!sensor_msgs.msg.CameraInfo`</span>
+<span class="sd">            The HD camera info topic.</span>
+<span class="sd">        camera_info_qhd :  :py:obj:`!sensor_msgs.msg.CameraInfo`</span>
+<span class="sd">            The QHD camera topic.</span>
+<span class="sd">        camera_info_sd :  :py:obj:`!sensor_msgs.msg.CameraInfo`</span>
+<span class="sd">            The SD camera topic.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Call the grasp_planner_service</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_image</span> <span class="o">=</span> <span class="n">color_image</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_image_rect</span> <span class="o">=</span> <span class="n">color_image_rect</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_image_rect</span> <span class="o">=</span> <span class="n">depth_image_rect</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera_info_hd</span> <span class="o">=</span> <span class="n">camera_info_hd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera_info_qhd</span> <span class="o">=</span> <span class="n">camera_info_qhd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera_info_sd</span> <span class="o">=</span> <span class="n">camera_info_sd</span></div>
+
+<div class="viewcode-block" id="PandaAutograspServer.compute_grasp_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.compute_grasp_service">[docs]</a>    <span class="k">def</span> <span class="nf">compute_grasp_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This service is used for computing a vallid grasp out of the</span>
+<span class="sd">        sensor data. This is done by calling the main grasp computation service</span>
+<span class="sd">        of the :py:obj:`grasp_planner_server.py` module with the sensor data as</span>
+<span class="sd">        its input.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.ComputeGrasp`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Call grasp computation service</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grasp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gqcnn_grasp_planning_srv</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color_image_rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth_image_rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_info_sd</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Print grasp</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span>
+        <span class="n">orientation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span>
+        <span class="n">pose_array</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">.</span><span class="n">z</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">.</span><span class="n">z</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">.</span><span class="n">w</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+            <span class="s2">&quot;Grasp pose result in kinect2_rgb_camera_frame: x=</span><span class="si">{0}</span><span class="s2">, y=</span><span class="si">{1}</span><span class="s2">, z=</span><span class="si">{2}</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;q1=</span><span class="si">{3}</span><span class="s2">, q2=</span><span class="si">{4}</span><span class="s2">, q3=</span><span class="si">{5}</span><span class="s2"> and q4=</span><span class="si">{6}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">pose_array</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Test if successful</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grasp</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="PandaAutograspServer.plan_grasp_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.plan_grasp_service">[docs]</a>    <span class="k">def</span> <span class="nf">plan_grasp_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This service can be used to plan for the by the</span>
+<span class="sd">        :py:meth:`compute_grasp_service` computed grasp pose.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.PlanGrasp`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get pose expressed in the panda_link0 frame</span>
+        <span class="c1"># Needed since the panda_link0 is the reference frame</span>
+        <span class="c1"># of the move group.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">grasp_pose_msg</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pose_msg</span><span class="p">)</span>  <span class="c1"># Create copy</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="p">)</span>  <span class="c1"># As we use the default tf buffer we will set the time to be now</span>
+            <span class="n">pose_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tf2_buffer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+                <span class="n">grasp_pose_msg</span><span class="p">,</span> <span class="s2">&quot;panda_link0&quot;</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span>
+            <span class="n">tf2_ros</span><span class="o">.</span><span class="n">LookupException</span><span class="p">,</span>
+            <span class="n">tf2_ros</span><span class="o">.</span><span class="n">ConnectivityException</span><span class="p">,</span>
+            <span class="n">tf2_ros</span><span class="o">.</span><span class="n">ExtrapolationException</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Display pose in panda_link0 frame</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span>
+        <span class="n">orientation</span> <span class="o">=</span> <span class="n">pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span>
+        <span class="n">pose_array</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">.</span><span class="n">z</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">.</span><span class="n">z</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">.</span><span class="n">w</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+            <span class="s2">&quot;Grasp pose result in panda_link0: x=</span><span class="si">{0}</span><span class="s2">, y=</span><span class="si">{1}</span><span class="s2">, z=</span><span class="si">{2}</span><span class="s2">, q1=</span><span class="si">{3}</span><span class="s2">, q2=</span><span class="si">{4}</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;q3=</span><span class="si">{5}</span><span class="s2"> and q4=</span><span class="si">{6}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">pose_array</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Call grasp plan to pose service</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plan_to_pose_srv</span><span class="p">(</span><span class="n">pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="p">)</span>
+
+        <span class="c1"># Test if successful</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="PandaAutograspServer.plan_place_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.plan_place_service">[docs]</a>    <span class="k">def</span> <span class="nf">plan_place_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This service computes the movement plan for placing the</span>
+<span class="sd">        object at the desired goal position. The place goal position</span>
+<span class="sd">        can be changed by modifying the ``cfg/main_config.yaml``</span>
+<span class="sd">        document.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.PlanPlace`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Retrieve the starting grasp pose (as expressed in the panda_link0 frame</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">grasp_pose_msg</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pose_msg</span><span class="p">)</span>  <span class="c1"># Create copy</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="p">)</span>  <span class="c1"># As we use the default tf buffer we will set the time to be now</span>
+            <span class="n">grasp_pose_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tf2_buffer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pose_msg</span><span class="p">,</span> <span class="s2">&quot;panda_link0&quot;</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span>
+            <span class="n">tf2_ros</span><span class="o">.</span><span class="n">LookupException</span><span class="p">,</span>
+            <span class="n">tf2_ros</span><span class="o">.</span><span class="n">ConnectivityException</span><span class="p">,</span>
+            <span class="n">tf2_ros</span><span class="o">.</span><span class="n">ExtrapolationException</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Generate place pose relative to the panda_link0 frame</span>
+        <span class="c1"># The location of this frame can be set in the `main_config.yaml` file</span>
+        <span class="c1"># in the cfg folder.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span> <span class="o">=</span> <span class="n">PoseStamped</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;place&quot;</span><span class="p">][</span><span class="s2">&quot;pose&quot;</span><span class="p">][</span><span class="s2">&quot;x_pos&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;place&quot;</span><span class="p">][</span><span class="s2">&quot;pose&quot;</span><span class="p">][</span><span class="s2">&quot;y_pos&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span>
+        <span class="p">)</span>  <span class="c1"># Set equal to start grasp height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span>
+        <span class="p">)</span>  <span class="c1"># Set equal to grasp pose orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span>
+        <span class="p">)</span>  <span class="c1"># Set equal to grasp pose orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span>
+        <span class="p">)</span>  <span class="c1"># Set equal to grasp pose orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span>
+        <span class="p">)</span>  <span class="c1"># Set equal to grasp pose orientation</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">Header</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;panda_link0&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span>
+
+        <span class="c1"># Publish place pose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_place_pose_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span><span class="p">)</span>
+
+        <span class="c1"># Create a intermediate pose</span>
+        <span class="c1"># Done to pick up the object instead of sliding it.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pickup_pose_msg</span> <span class="o">=</span> <span class="n">PoseStamped</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pickup_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pickup_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pickup_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;pickup&quot;</span><span class="p">][</span><span class="s2">&quot;height&quot;</span><span class="p">]</span>
+        <span class="p">)</span>  <span class="c1"># Add pickup height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pickup_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span>
+        <span class="p">)</span>  <span class="c1"># Set equal to grasp pose orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pickup_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span>
+        <span class="p">)</span>  <span class="c1"># Set equal to grasp pose orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pickup_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span>
+        <span class="p">)</span>  <span class="c1"># Set equal to grasp pose orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pickup_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">grasp_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span>
+        <span class="p">)</span>  <span class="c1"># Set equal to grasp pose orientation</span>
+
+        <span class="n">header</span> <span class="o">=</span> <span class="n">Header</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;panda_link0&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pickup_pose_msg</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span>
+
+        <span class="c1"># Call grasp plan to pose service</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plan_to_path_srv</span><span class="p">(</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pickup_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">place_pose_msg</span><span class="o">.</span><span class="n">pose</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Test if successful</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="PandaAutograspServer.visualize_grasp_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.visualize_grasp_service">[docs]</a>    <span class="k">def</span> <span class="nf">visualize_grasp_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This service can be used to visualize the planned grasp.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.VizualizeGrasp`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Call grasp computation service</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visualize_plan_srv</span><span class="p">()</span>
+
+        <span class="c1"># Test if successful</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="PandaAutograspServer.execute_grasp_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.execute_grasp_service">[docs]</a>    <span class="k">def</span> <span class="nf">execute_grasp_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This service is used to execute the computed grasp.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.ExecuteGrasp`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Call grasp computation service</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute_plan_srv</span><span class="p">()</span>
+
+        <span class="c1"># Test if successful</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="PandaAutograspServer.calibrate_sensor_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.calibrate_sensor_service">[docs]</a>    <span class="k">def</span> <span class="nf">calibrate_sensor_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This service can be used to perform the sensor/world</span>
+<span class="sd">        calibration. To do this you need to place a chessboard/aruco</span>
+<span class="sd">        board in the bottom left corner of the robot table. You have</span>
+<span class="sd">        to define which calibration pattern you use in the ``cfg/main_config.yaml</span>
+<span class="sd">        file``. After a successful camera/world transformation matrix is computed</span>
+<span class="sd">        this matrix is send to the :py:mod:`tf2_broadcaster` module and the</span>
+<span class="sd">        sensor frame position is updated.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.ExecuteGrasp`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Retrieve camera pose</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gazebo</span><span class="p">:</span>
+
+            <span class="c1"># Return True as we don&#39;t need a calibration in simulation</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c1"># Perform calibration</span>
+            <span class="n">retval</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rvec</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_camera_world_calibration</span><span class="p">(</span>
+                <span class="n">calib_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pose_calib_method</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Test if successful</span>
+            <span class="k">if</span> <span class="n">retval</span><span class="p">:</span>
+
+                <span class="c1"># Publish the camera frame</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">broadcast_camera_frame</span><span class="p">(</span><span class="n">calib_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pose_calib_method</span><span class="p">)</span>
+
+                <span class="c1"># return result</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+    <span class="k">def</span> <span class="nf">_camera_world_calibration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calib_type</span><span class="o">=</span><span class="n">POSE_CALIB_METHOD</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform camera world calibration (External camera matrix) using</span>
+<span class="sd">        a chessboard or several aruco markers.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        calib_type : :py:obj:`str`</span>
+<span class="sd">            Calibration pattern type.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        retval : :py:obj:`bool`</span>
+<span class="sd">            Calibration succes bool.</span>
+<span class="sd">        :py:obj:</span>
+<span class="sd">        rvec : :py:obj:`list`</span>
+<span class="sd">            Rotation vector.</span>
+<span class="sd">        tvec : :py:obj:`list`</span>
+<span class="sd">            Translation vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Switch between different calibrations</span>
+        <span class="k">if</span> <span class="n">calib_type</span> <span class="o">==</span> <span class="s2">&quot;chessboard&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">chessboard_pose_estimation</span><span class="p">()</span>
+            <span class="p">)</span>  <span class="c1"># Perform calibration using an chessboard</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">aruco_board_pose_estimation</span><span class="p">()</span>
+            <span class="p">)</span>  <span class="c1"># Perform calibration using an arucoboard</span>
+
+<div class="viewcode-block" id="PandaAutograspServer.aruco_board_pose_estimation"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.aruco_board_pose_estimation">[docs]</a>    <span class="k">def</span> <span class="nf">aruco_board_pose_estimation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Function that performs the camera/world calibration by using</span>
+<span class="sd">        a Aruco board as a reference.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        retval : :py:obj:`bool`</span>
+<span class="sd">            Calibration success bool.</span>
+<span class="sd">        rvec : :py:obj:`list`</span>
+<span class="sd">            Rotation vector.</span>
+<span class="sd">        tvec : :py:obj:`list`</span>
+<span class="sd">            Translation vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get current time</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+
+        <span class="c1"># Try till chessboard is found or till try time is over</span>
+        <span class="k">while</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">start_time</span> <span class="o">+</span> <span class="n">CALIB_TRY_DURATION</span><span class="p">:</span>
+
+            <span class="c1"># Retrieve color image and convert to opencv format</span>
+            <span class="n">color_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_image</span>
+            <span class="n">camera_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_info_hd</span>
+            <span class="n">color_image_cv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cv_bridge</span><span class="o">.</span><span class="n">imgmsg_to_cv2</span><span class="p">(</span>
+                <span class="n">color_image</span><span class="p">,</span> <span class="n">desired_encoding</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Get camera information</span>
+            <span class="n">camera_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">camera_info</span><span class="o">.</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">dist_coeffs</span> <span class="o">=</span> <span class="n">camera_info</span><span class="o">.</span><span class="n">D</span>  <span class="c1"># Default distortion parameters are 0</span>
+
+            <span class="c1"># Get gray image</span>
+            <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">color_image_cv</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+            <span class="c1"># Create screen display image</span>
+            <span class="c1"># Needed since opencv uses BGR instead of RGB</span>
+            <span class="n">screen_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">color_image_cv</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2BGR</span><span class="p">)</span>
+
+            <span class="c1"># Detect aruco markers</span>
+            <span class="n">corners</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">rejectedImgPoints</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">detectMarkers</span><span class="p">(</span>
+                <span class="n">image</span><span class="o">=</span><span class="n">gray</span><span class="p">,</span>
+                <span class="n">dictionary</span><span class="o">=</span><span class="n">ARUCO_DICT</span><span class="p">,</span>
+                <span class="n">parameters</span><span class="o">=</span><span class="n">aruco</span><span class="o">.</span><span class="n">DetectorParameters_create</span><span class="p">(),</span>
+                <span class="c1"># cameraMatrix=camera_matrix,</span>
+                <span class="c1"># distCoeffs=dist_coeffs,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Refine detected markers</span>
+            <span class="c1"># Eliminates markers not part of our board and adds missing markers</span>
+            <span class="n">corners</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">rejectedImgPoints</span><span class="p">,</span> <span class="n">recoveredIds</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">refineDetectedMarkers</span><span class="p">(</span>
+                <span class="n">image</span><span class="o">=</span><span class="n">gray</span><span class="p">,</span>
+                <span class="n">board</span><span class="o">=</span><span class="n">aruco_board</span><span class="p">,</span>
+                <span class="n">detectedCorners</span><span class="o">=</span><span class="n">corners</span><span class="p">,</span>
+                <span class="n">detectedIds</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span>
+                <span class="n">rejectedCorners</span><span class="o">=</span><span class="n">rejectedImgPoints</span><span class="p">,</span>
+                <span class="n">cameraMatrix</span><span class="o">=</span><span class="n">camera_matrix</span><span class="p">,</span>
+                <span class="n">distCoeffs</span><span class="o">=</span><span class="n">dist_coeffs</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># If at least one marker was found try to estimate the pose</span>
+            <span class="k">if</span> <span class="n">ids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ids</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+                <span class="c1"># Outline all of the markers detected in our image</span>
+                <span class="n">screen_img</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">drawDetectedMarkers</span><span class="p">(</span>
+                    <span class="n">screen_img</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">borderColor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Estimate pose</span>
+                <span class="n">retval</span><span class="p">,</span> <span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">estimatePoseBoard</span><span class="p">(</span>
+                    <span class="n">corners</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">aruco_board</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">,</span> <span class="n">dist_coeffs</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+                <span class="p">)</span>
+
+                <span class="c1"># If pose estimation was successful draw pose</span>
+                <span class="k">if</span> <span class="n">retval</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">aruco</span><span class="o">.</span><span class="n">drawAxis</span><span class="p">(</span>
+                        <span class="n">screen_img</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">,</span> <span class="n">dist_coeffs</span><span class="p">,</span> <span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span><span class="p">,</span> <span class="mf">0.2</span>
+                    <span class="p">)</span>
+
+                    <span class="c1"># Show projection to user</span>
+                    <span class="k">if</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;vis&quot;</span><span class="p">][</span><span class="s2">&quot;calib&quot;</span><span class="p">][</span><span class="s2">&quot;figs&quot;</span><span class="p">][</span><span class="s2">&quot;calib_frame&quot;</span><span class="p">]:</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Reference frame&quot;</span><span class="p">)</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">screen_img</span><span class="p">)</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+                    <span class="k">return</span> <span class="n">retval</span><span class="p">,</span> <span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                        <span class="s2">&quot;Pose of arcuboard could not be found please try again.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Arcuboard could not be detected make sure the arcuboard is &quot;</span>
+                    <span class="s2">&quot;present.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Display timeout message and return</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+            <span class="s2">&quot;Arcuboard detector times out after </span><span class="si">%s</span><span class="s2">. seconds. Please reposition the &quot;</span>
+            <span class="s2">&quot;arcuboard and try again.&quot;</span><span class="p">,</span>
+            <span class="n">CALIB_TRY_DURATION</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="PandaAutograspServer.chessboard_pose_estimation"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.chessboard_pose_estimation">[docs]</a>    <span class="k">def</span> <span class="nf">chessboard_pose_estimation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Function that performs the camera/world calibration by using</span>
+<span class="sd">        a chessboard as a reference.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        retval : :py:obj:`bool`</span>
+<span class="sd">            Calibration success bool.</span>
+<span class="sd">        rvec : :py:obj:`list`</span>
+<span class="sd">            Rotation vector.</span>
+<span class="sd">        tvec : :py:obj:`list`</span>
+<span class="sd">            Translation vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get current time</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+
+        <span class="c1"># Try till chessboard is found or till try time is over</span>
+        <span class="k">while</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">start_time</span> <span class="o">+</span> <span class="n">CALIB_TRY_DURATION</span><span class="p">:</span>
+
+            <span class="c1"># Retrieve color image and convert to opencv format</span>
+            <span class="n">color_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_image</span>
+            <span class="n">camera_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_info_hd</span>
+            <span class="n">color_image_cv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cv_bridge</span><span class="o">.</span><span class="n">imgmsg_to_cv2</span><span class="p">(</span>
+                <span class="n">color_image</span><span class="p">,</span> <span class="n">desired_encoding</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)</span>
+            <span class="n">objp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N_COLMNS</span> <span class="o">*</span> <span class="n">N_ROWS</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="n">objp</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N_ROWS</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">N_COLMNS</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">SQUARE_SIZE</span>
+            <span class="p">)</span>  <span class="c1"># Multiply by chessboard scale factor to get results in mm</span>
+            <span class="n">axis</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">]])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="o">*</span> <span class="n">SQUARE_SIZE</span>
+            <span class="p">)</span>  <span class="c1"># Coordinate axis</span>
+
+            <span class="c1"># Get camera information</span>
+            <span class="n">camera_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">camera_info</span><span class="o">.</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">dist_coeffs</span> <span class="o">=</span> <span class="n">camera_info</span><span class="o">.</span><span class="n">D</span>  <span class="c1"># Default distortion parameters are 0</span>
+
+            <span class="c1"># Get gray image</span>
+            <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">color_image_cv</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+            <span class="c1"># Create screen display image</span>
+            <span class="n">screen_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">color_image_cv</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2BGR</span><span class="p">)</span>
+
+            <span class="c1"># Find the chess board corners</span>
+            <span class="n">retval</span><span class="p">,</span> <span class="n">corners</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findChessboardCorners</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="p">(</span><span class="n">N_ROWS</span><span class="p">,</span> <span class="n">N_COLMNS</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="c1"># Find external matrix</span>
+            <span class="k">if</span> <span class="n">retval</span><span class="p">:</span>
+
+                <span class="c1"># Find corners</span>
+                <span class="n">corners2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cornerSubPix</span><span class="p">(</span>
+                    <span class="n">gray</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_criteria</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Find the rotation and translation vectors.</span>
+                <span class="n">retval</span><span class="p">,</span> <span class="n">rvecs</span><span class="p">,</span> <span class="n">tvecs</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">solvePnPRansac</span><span class="p">(</span>
+                    <span class="n">objp</span><span class="p">,</span> <span class="n">corners2</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">,</span> <span class="n">dist_coeffs</span>
+                <span class="p">)</span>
+
+                <span class="c1"># project 3D points to image plane</span>
+                <span class="n">imgpts</span><span class="p">,</span> <span class="n">jac</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">projectPoints</span><span class="p">(</span>
+                    <span class="n">axis</span><span class="p">,</span> <span class="n">rvecs</span><span class="p">,</span> <span class="n">tvecs</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">,</span> <span class="n">dist_coeffs</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Show projection to user</span>
+                <span class="n">screen_img</span> <span class="o">=</span> <span class="n">draw_axis</span><span class="p">(</span><span class="n">screen_img</span><span class="p">,</span> <span class="n">corners2</span><span class="p">,</span> <span class="n">imgpts</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Reference frame&quot;</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">screen_img</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">retval</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">retval</span><span class="p">,</span> <span class="n">rvecs</span><span class="p">,</span> <span class="n">tvecs</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                        <span class="s2">&quot;Pose of chessboard could not be found please try again.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Chessboard could not be detected make sure the chessboard is&quot;</span>
+                    <span class="s2">&quot; present.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Display timeout message and return</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+            <span class="s2">&quot;Chessboard detector times out after </span><span class="si">%s</span><span class="s2">. seconds. Please reposition the &quot;</span>
+            <span class="s2">&quot;chessboard and try again.&quot;</span><span class="p">,</span>
+            <span class="n">CALIB_TRY_DURATION</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="PandaAutograspServer.broadcast_camera_frame"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.broadcast_camera_frame">[docs]</a>    <span class="k">def</span> <span class="nf">broadcast_camera_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calib_type</span><span class="o">=</span><span class="s2">&quot;aruco_board&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send the sensor pose we acquired from the calibration to the tf2_broadcaster so that</span>
+<span class="sd">        it can broadcast the sensor camera frame.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        calib_type : :py:obj:`str`, optional</span>
+<span class="sd">            The calibration pattern you want to use, by default &quot;aruco_board&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check calibration method</span>
+        <span class="k">if</span> <span class="n">calib_type</span> <span class="o">==</span> <span class="s2">&quot;chessboard&quot;</span><span class="p">:</span>
+
+            <span class="c1"># Get rotation matrix</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">Rodrigues</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rvec</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">J</span><span class="p">)</span>
+
+            <span class="c1"># Compute inverse rotation and translation matrix</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">tvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="o">-</span><span class="n">R</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvec</span><span class="p">)</span>
+
+            <span class="c1"># Create homogeneous matrix and the flip x and y axis</span>
+            <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+            <span class="n">H</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span>
+            <span class="n">H</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">tvec</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">H</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]),</span> <span class="n">H</span>
+            <span class="p">)</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">quat</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="p">(</span><span class="n">matrix</span><span class="o">=</span><span class="n">R</span><span class="p">)</span>
+
+            <span class="c1"># Print Calibration information</span>
+            <span class="n">cal_pose</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">),</span>
+                <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">),</span>
+                <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">),</span>
+                <span class="s2">&quot;q1&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s2">&quot;q2&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+                <span class="s2">&quot;q3&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+                <span class="s2">&quot;q4&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="p">}</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+                <span class="s2">&quot;Calibration result: x=</span><span class="si">{x}</span><span class="s2">, y=</span><span class="si">{y}</span><span class="s2">, z=</span><span class="si">{z}</span><span class="s2">, q1=</span><span class="si">{q1}</span><span class="s2">, q2=</span><span class="si">{q2}</span><span class="s2">,&quot;</span>
+                <span class="s2">&quot; q3=</span><span class="si">{q3}</span><span class="s2"> and q4=</span><span class="si">{q4}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">cal_pose</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Create geometry_msg</span>
+            <span class="n">sensor_frame_tf_msg</span> <span class="o">=</span> <span class="n">TransformStamped</span><span class="p">()</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;calib_frame&quot;</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">child_frame_id</span> <span class="o">=</span> <span class="s2">&quot;kinect2_rgb_optical_frame&quot;</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="c1"># Communicate sensor_frame_pose to the tf2_broadcaster node</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_sensor_pose_srv</span><span class="p">(</span><span class="n">sensor_frame_tf_msg</span><span class="p">)</span>
+
+            <span class="c1"># Reset the octomap if pose was succesfully set</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+                <span class="c1"># Wait some time to give tf2_broadcaster the time to broadcast</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;calibration&quot;</span><span class="p">][</span><span class="s2">&quot;octomap_reset_wait_Time&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_clear_octomap_srv</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c1"># Get rotation matrix</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">Rodrigues</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rvec</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">J</span><span class="p">)</span>
+
+            <span class="c1"># Compute inverse rotation and translation matrix</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">tvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="o">-</span><span class="n">R</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tvec</span><span class="p">)</span>
+
+            <span class="c1"># Create homogenious matrix and the flip x and y axis</span>
+            <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+            <span class="n">H</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span>
+            <span class="n">H</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">tvec</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">H</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">quat</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="p">(</span><span class="n">matrix</span><span class="o">=</span><span class="n">R</span><span class="p">)</span>
+
+            <span class="c1"># Print Calibration information</span>
+            <span class="n">cal_pose</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span>
+                <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span>
+                <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span>
+                <span class="s2">&quot;q1&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s2">&quot;q2&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+                <span class="s2">&quot;q3&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+                <span class="s2">&quot;q4&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="p">}</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+                <span class="s2">&quot;Calibration result: x=</span><span class="si">{x}</span><span class="s2">, y=</span><span class="si">{y}</span><span class="s2">, z=</span><span class="si">{z}</span><span class="s2">, q1=</span><span class="si">{q1}</span><span class="s2">, q2=</span><span class="si">{q2}</span><span class="s2">,&quot;</span>
+                <span class="s2">&quot; q3=</span><span class="si">{q3}</span><span class="s2"> and q4=</span><span class="si">{q4}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">cal_pose</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Create geometry_msg</span>
+            <span class="n">sensor_frame_tf_msg</span> <span class="o">=</span> <span class="n">TransformStamped</span><span class="p">()</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;calib_frame&quot;</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">child_frame_id</span> <span class="o">=</span> <span class="s2">&quot;kinect2_rgb_optical_frame&quot;</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">sensor_frame_tf_msg</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="c1"># Communicate sensor_frame_pose to the tf2_broadcaster node</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_sensor_pose_srv</span><span class="p">(</span><span class="n">sensor_frame_tf_msg</span><span class="p">)</span>
+
+            <span class="c1"># Reset the octomap if pose was succesfully set</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+
+                <span class="c1"># Wait some time to give tf2_broadcaster the time to broadcast</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;calibration&quot;</span><span class="p">][</span><span class="s2">&quot;octomap_reset_wait_Time&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_clear_octomap_srv</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Rick Staa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>panda_autograsp.functions.moveit &mdash; panda_autograsp 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> panda_autograsp
+          
+
+          
+            
+            <img src="../../../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/install.html#package-build-from-source-instructions">Package build from source instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/install.html#singularity-container-installation-instructions">Singularity Container installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/install.html#docker-container-installation-instructions">Docker container installation instructions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/usage.html">Sensor calibration instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/usage.html#package-use-instructions">Package use instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/usage.html#singularity-container-instructions">Singularity container instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage/usage.html#troubleshooting-information">Troubleshooting information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/api.html">Python Code API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../license/license.html">License</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Zone</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/release_dev.html">Release package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/doc_dev.html">Release documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">panda_autograsp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>panda_autograsp.functions.moveit</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for panda_autograsp.functions.moveit</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Additional moveit helper functions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Make script both python2 and python3 compatible</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">raw_input</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># ROS python packages</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">pyassimp.errors</span> <span class="k">import</span> <span class="n">AssimpError</span>
+
+<span class="c1"># ROS messages and services</span>
+<span class="kn">from</span> <span class="nn">moveit_msgs.msg</span> <span class="k">import</span> <span class="n">DisplayTrajectory</span>
+
+<span class="c1"># Panda_autograsp modules, msgs and srvs</span>
+<span class="kn">from</span> <span class="nn">panda_autograsp.moveit_collision_objects</span> <span class="k">import</span> <span class="n">Box</span><span class="p">,</span> <span class="n">Plane</span><span class="p">,</span> <span class="n">Cylinder</span><span class="p">,</span> <span class="n">Sphere</span><span class="p">,</span> <span class="n">Mesh</span>
+
+<span class="c1"># Valid collision objects types</span>
+<span class="n">COLLISION_OBJ_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="s2">&quot;plane&quot;</span><span class="p">,</span> <span class="s2">&quot;cylinder&quot;</span><span class="p">,</span> <span class="s2">&quot;sphere&quot;</span><span class="p">,</span> <span class="s2">&quot;mesh&quot;</span><span class="p">]</span>
+
+
+<span class="c1">#################################################</span>
+<span class="c1"># Functions #####################################</span>
+<span class="c1">#################################################</span>
+<div class="viewcode-block" id="get_trajectory_duration"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.functions.moveit.get_trajectory_duration.html#panda_autograsp.functions.moveit.get_trajectory_duration">[docs]</a><span class="k">def</span> <span class="nf">get_trajectory_duration</span><span class="p">(</span><span class="n">trajectory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function returns the duration of a given moveit trajectory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    trajectory : :py:obj:`!moveit_msgs.msg.DisplayTrajectory`</span>
+<span class="sd">        The computed display trajectory.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :py:obj:`float`</span>
+<span class="sd">        Trajectory duration in seconds.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Test if trajectory is given as input</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">DisplayTrajectory</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s2">&quot;Argument save must be of type bool, not </span><span class="si">{type}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">trajectory</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="c1"># initiate duration parameters</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Loop through trajectory segments</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">trajectory</span><span class="p">:</span>
+
+        <span class="c1"># Retrieve the duration of each trajectory segment</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">joint_trajectory</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">duration</span> <span class="o">+=</span> <span class="n">test</span><span class="o">.</span><span class="n">joint_trajectory</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">time_from_start</span><span class="o">.</span><span class="n">to_sec</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">multi_dof_joint_trajectory</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">duration</span> <span class="o">+=</span> <span class="n">test</span><span class="o">.</span><span class="n">multi_dof_joint_trajectory</span><span class="o">.</span><span class="n">points</span><span class="p">[</span>
+                <span class="o">-</span><span class="mi">1</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">time_from_start</span><span class="o">.</span><span class="n">to_sec</span><span class="p">()</span>
+
+    <span class="c1"># Return duration in seconds</span>
+    <span class="k">return</span> <span class="n">duration</span></div>
+
+
+<div class="viewcode-block" id="plan_exists"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.functions.moveit.plan_exists.html#panda_autograsp.functions.moveit.plan_exists">[docs]</a><span class="k">def</span> <span class="nf">plan_exists</span><span class="p">(</span><span class="n">plan</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function can be used to check if a plan trajectory was computed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    plan : :py:obj:`!moveit_msgs.msg.RobotTrajectory`</span>
+<span class="sd">        The computed robot trajectory.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :py:obj:`bool`</span>
+<span class="sd">        Bool specifying if a trajectory is present</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Check if a trajectory is present on the plan object</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="ow">not</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">plan</span><span class="o">.</span><span class="n">joint_trajectory</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+            <span class="p">),</span>  <span class="c1"># True when no trajectory was found</span>
+            <span class="ow">not</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">plan</span><span class="o">.</span><span class="n">multi_dof_joint_trajectory</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+            <span class="p">),</span>  <span class="c1"># True when no trajectory was found</span>
+        <span class="p">]</span>
+    <span class="p">):</span>
+        <span class="c1"># A trajectory was found</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="c1"># No trajectory was found</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="at_joint_target"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.functions.moveit.at_joint_target.html#panda_autograsp.functions.moveit.at_joint_target">[docs]</a><span class="k">def</span> <span class="nf">at_joint_target</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">goal_tolerance</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function can be used to check if the move_group is already at the desired</span>
+<span class="sd">    joint target.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    current : :py:obj:`list`</span>
+<span class="sd">        The current joint configuration.</span>
+<span class="sd">    desired : :py:obj:`list`</span>
+<span class="sd">        The desired joint target.</span>
+<span class="sd">    goal_tolerance : :py:obj:`float`</span>
+<span class="sd">        The planner target goal tolerance.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :py:obj:`bool`</span>
+<span class="sd">        Bool specifying if move_group is already at the goal target.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Round to the goal tolerance</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">goal_tolerance</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">current</span><span class="p">]</span>
+    <span class="n">desired</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">desired</span><span class="p">]</span>
+
+    <span class="c1"># Check if move_group is at joint target</span>
+    <span class="k">if</span> <span class="n">current</span> <span class="o">==</span> <span class="n">desired</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># Already at goal</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Not already at goal</span></div>
+
+
+<div class="viewcode-block" id="add_collision_objects"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.functions.moveit.add_collision_objects.html#panda_autograsp.functions.moveit.add_collision_objects">[docs]</a><span class="k">def</span> <span class="nf">add_collision_objects</span><span class="p">(</span><span class="n">scene_commander</span><span class="p">,</span> <span class="n">collision_cfg</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add the collision objects that are specified in the</span>
+<span class="sd">    collision_cfg :py:obj:`collections.OrderedDict` to the</span>
+<span class="sd">    moveit planner scene. Supported constraint types are:</span>
+
+<span class="sd">        * Box</span>
+<span class="sd">        * Cube</span>
+<span class="sd">        * Cylinder</span>
+<span class="sd">        * Mesh</span>
+
+<span class="sd">    For more information see http://bit.ly/32GuuMN.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    scene_commander : :py:obj:`!moveit_commander.PlanningSceneInterface`</span>
+<span class="sd">        The moveit scene commander object.</span>
+<span class="sd">    collision_cfg : :py:obj:`collections.OrderedDict`</span>
+<span class="sd">        The dictionary specifying all the moveit scene</span>
+<span class="sd">        constraints.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Initialize collision lists</span>
+    <span class="n">collision_objects</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Create collision_objects list from config</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">collision_cfg</span><span class="p">[</span><span class="s2">&quot;constraints&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+        <span class="c1"># Check if collision object contains key field</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">collision_type</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Collision object </span><span class="si">%s</span><span class="s2"> has no </span><span class="si">%s</span><span class="s2"> field. &quot;</span>
+                <span class="s2">&quot;As a result this collision object is not created.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="p">)</span>
+            <span class="k">continue</span>  <span class="c1"># Go to next value</span>
+
+        <span class="c1"># Check if collision object has valid type</span>
+        <span class="k">if</span> <span class="n">collision_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">COLLISION_OBJ_TYPES</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Collision object </span><span class="si">%s</span><span class="s2"> has no </span><span class="si">%s</span><span class="s2"> field. &quot;</span>
+                <span class="s2">&quot;As a result this collision object is not created.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="p">)</span>
+            <span class="k">continue</span>  <span class="c1"># Go to next value</span>
+
+        <span class="c1"># Create box collision object</span>
+        <span class="k">if</span> <span class="n">collision_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;box&quot;</span><span class="p">:</span>
+
+            <span class="c1"># Initiate box collision object</span>
+            <span class="n">box</span> <span class="o">=</span> <span class="n">Box</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+
+            <span class="c1"># Retrieve optional attributes</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">box</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">value</span><span class="p">[</span><span class="s2">&quot;dimensions&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">],</span>
+                    <span class="n">value</span><span class="p">[</span><span class="s2">&quot;dimensions&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">],</span>
+                    <span class="n">value</span><span class="p">[</span><span class="s2">&quot;dimensions&quot;</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">box</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">box</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">box</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">box</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">box</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">box</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">box</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;w&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">box</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;reference_frame&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="c1"># Append collision object to</span>
+            <span class="n">collision_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+
+        <span class="c1"># Generate plane  collision object</span>
+        <span class="k">elif</span> <span class="n">collision_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;plane&quot;</span><span class="p">:</span>
+
+            <span class="c1"># Initiate plane collision object</span>
+            <span class="n">plane</span> <span class="o">=</span> <span class="n">Plane</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+
+            <span class="c1"># Retrieve optional attributes</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">plane</span><span class="o">.</span><span class="n">normal</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">value</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">],</span>
+                    <span class="n">value</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">],</span>
+                    <span class="n">value</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">plane</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">plane</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;reference_frame&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>  <span class="c1"># Use class default reference frame</span>
+
+            <span class="c1"># Append collision object to</span>
+            <span class="n">collision_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plane</span><span class="p">)</span>
+
+        <span class="c1"># Generate Cylinder collision object</span>
+        <span class="k">elif</span> <span class="n">collision_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;cylinder&quot;</span><span class="p">:</span>
+
+            <span class="c1"># Initiate sphere collision object</span>
+            <span class="n">cylinder</span> <span class="o">=</span> <span class="n">Cylinder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+
+            <span class="c1"># Retrieve optional attributes</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cylinder</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cylinder</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cylinder</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cylinder</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cylinder</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cylinder</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cylinder</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cylinder</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cylinder</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;w&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cylinder</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;reference_frame&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="c1"># Append collision object to</span>
+            <span class="n">collision_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cylinder</span><span class="p">)</span>
+
+        <span class="c1"># Generate sphere collision object</span>
+        <span class="k">elif</span> <span class="n">collision_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;sphere&quot;</span><span class="p">:</span>
+
+            <span class="c1"># Initiate sphere collision object</span>
+            <span class="n">sphere</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+
+            <span class="c1"># Retrieve optional attributes</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sphere</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sphere</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sphere</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sphere</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sphere</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sphere</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sphere</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sphere</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;w&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sphere</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;reference_frame&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="c1"># Append collision object to</span>
+            <span class="n">collision_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sphere</span><span class="p">)</span>
+
+        <span class="c1"># Generate mesh collions object</span>
+        <span class="k">elif</span> <span class="n">collision_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;mesh&quot;</span><span class="p">:</span>
+
+            <span class="c1"># Initiate sphere collision object</span>
+            <span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="n">value</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">])</span>
+
+            <span class="c1"># Retrieve optional attributes</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mesh</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mesh</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mesh</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mesh</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mesh</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mesh</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mesh</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">][</span><span class="s2">&quot;w&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mesh</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;reference_frame&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="c1"># Append collision object to</span>
+            <span class="n">collision_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Collision object type </span><span class="si">%s</span><span class="s2"> is not vallid. Please &quot;</span>
+                <span class="s2">&quot;check your configuration dictionary and try again.&quot;</span> <span class="o">%</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+
+    <span class="c1"># Add collision objects to scene</span>
+    <span class="k">for</span> <span class="n">collision_obj</span> <span class="ow">in</span> <span class="n">collision_objects</span><span class="p">:</span>
+
+        <span class="c1"># Add boxes</span>
+        <span class="k">if</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;box&quot;</span><span class="p">:</span>
+            <span class="n">scene_commander</span><span class="o">.</span><span class="n">add_box</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">pose</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">pose</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">wait_for_state_update</span><span class="p">(</span><span class="n">scene_commander</span><span class="p">,</span> <span class="n">collision_obj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Adding collision object </span><span class="si">%s</span><span class="s2"> of type </span><span class="si">%s</span><span class="s2"> failed.&quot;</span>
+                    <span class="o">%</span> <span class="p">(</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Add planes</span>
+        <span class="k">elif</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;plane&quot;</span><span class="p">:</span>
+            <span class="n">scene_commander</span><span class="o">.</span><span class="n">add_plane</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">pose</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">pose</span><span class="p">,</span>
+                <span class="n">normal</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span>
+                <span class="n">offset</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">offset</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">wait_for_state_update</span><span class="p">(</span><span class="n">scene_commander</span><span class="p">,</span> <span class="n">collision_obj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Adding collision object </span><span class="si">%s</span><span class="s2"> of type </span><span class="si">%s</span><span class="s2"> failed.&quot;</span>
+                    <span class="o">%</span> <span class="p">(</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Add cylinders</span>
+        <span class="k">elif</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;cylinder&quot;</span><span class="p">:</span>
+            <span class="n">scene_commander</span><span class="o">.</span><span class="n">add_cylinder</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">pose</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">pose</span><span class="p">,</span>
+                <span class="n">height</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">height</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">wait_for_state_update</span><span class="p">(</span><span class="n">scene_commander</span><span class="p">,</span> <span class="n">collision_obj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Adding collision object </span><span class="si">%s</span><span class="s2"> of type </span><span class="si">%s</span><span class="s2"> failed.&quot;</span>
+                    <span class="o">%</span> <span class="p">(</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Add sphere</span>
+        <span class="k">elif</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;sphere&quot;</span><span class="p">:</span>
+            <span class="n">scene_commander</span><span class="o">.</span><span class="n">add_sphere</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">pose</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">pose</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">wait_for_state_update</span><span class="p">(</span><span class="n">scene_commander</span><span class="p">,</span> <span class="n">collision_obj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Adding collision object </span><span class="si">%s</span><span class="s2"> of type </span><span class="si">%s</span><span class="s2"> failed.&quot;</span>
+                    <span class="o">%</span> <span class="p">(</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Add mesh</span>
+        <span class="c1"># FIXME: When a mesh is given it crashes the node</span>
+        <span class="k">elif</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;mesh&quot;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">scene_commander</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">pose</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">pose</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="n">AssimpError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Adding collision object </span><span class="si">%s</span><span class="s2"> of type </span><span class="si">%s</span><span class="s2"> failed &quot;</span>
+                    <span class="s2">&quot;because </span><span class="si">%s</span><span class="s2"> mesh could not be loaded. Please &quot;</span>
+                    <span class="s2">&quot;check the moveit_scene_constraints.yaml file &quot;</span>
+                    <span class="s2">&quot;and try again&quot;</span>
+                    <span class="o">%</span> <span class="p">(</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">wait_for_state_update</span><span class="p">(</span><span class="n">scene_commander</span><span class="p">,</span> <span class="n">collision_obj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Adding collision object </span><span class="si">%s</span><span class="s2"> of type </span><span class="si">%s</span><span class="s2"> failed.&quot;</span>
+                    <span class="o">%</span> <span class="p">(</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Collision object type </span><span class="si">%s</span><span class="s2"> is not vallid. As a result the </span><span class="si">%s</span><span class="s2"> &quot;</span>
+                <span class="s2">&quot;collision object will be scripted&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">continue</span>  <span class="c1"># Go to next value</span></div>
+
+
+<div class="viewcode-block" id="wait_for_state_update"><a class="viewcode-back" href="../../../api/_autosummary/_autosummary/panda_autograsp.functions.moveit.wait_for_state_update.html#panda_autograsp.functions.moveit.wait_for_state_update">[docs]</a><span class="k">def</span> <span class="nf">wait_for_state_update</span><span class="p">(</span>
+    <span class="n">scene_commander</span><span class="p">,</span> <span class="n">collision_obj</span><span class="p">,</span> <span class="n">is_known</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_attached</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate if collision object state change was successful.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    scene_commander : :py:obj:`!moveit_commander.PlanningSceneInterface`</span>
+<span class="sd">        The moveit scene commander object.</span>
+<span class="sd">    collision_obj : :py:obj:`moveit_collision_objects`</span>
+<span class="sd">        The moveit collision object.</span>
+<span class="sd">    is_known : bool, optional</span>
+<span class="sd">        Bool specifying whether an object is known, by default False</span>
+<span class="sd">    is_attached : bool, optional</span>
+<span class="sd">        Bool specifying whether an object is attached to something, by default False</span>
+<span class="sd">    timeout : int, optional</span>
+<span class="sd">        The validation timeout time, by default 4</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        Boolean specifying whether the scene update was successful.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        Note that attaching the box will remove it from known_objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Ensuring Collision Updates Are Received</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+    <span class="n">seconds</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">seconds</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">timeout</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+
+        <span class="c1"># Test if the box is in attached objects</span>
+        <span class="n">attached_objects</span> <span class="o">=</span> <span class="n">scene_commander</span><span class="o">.</span><span class="n">get_attached_objects</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">is_attached</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">attached_objects</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+        <span class="c1"># Test if the box is in the scene.</span>
+        <span class="n">is_known</span> <span class="o">=</span> <span class="n">collision_obj</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">scene_commander</span><span class="o">.</span><span class="n">get_known_object_names</span><span class="p">()</span>
+
+        <span class="c1"># Test if we are in the expected state</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">is_attached</span> <span class="o">==</span> <span class="n">is_attached</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">is_known</span> <span class="o">==</span> <span class="n">is_known</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># Sleep so that we give other threads time on the processor</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">seconds</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+
+    <span class="c1"># If we exited the while loop without returning then we timed out</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Rick Staa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -198,8 +198,332 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="panda-autograsp-tf2-broadcaster-ros">
-<h1>panda_autograsp.tf2_broadcaster_ros<a class="headerlink" href="#panda-autograsp-tf2-broadcaster-ros" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-panda_autograsp.tf2_broadcaster_ros">
+<span id="panda-autograsp-tf2-broadcaster-ros"></span><h1>panda_autograsp.tf2_broadcaster_ros<a class="headerlink" href="#module-panda_autograsp.tf2_broadcaster_ros" title="Permalink to this headline">¶</a></h1>
+<p>Module that can be used to broadcasts a number of tf2 frames and
+ensures these frames can be updated using a dynamic reconfigure
+server.</p>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster" title="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tf2Broadcaster</span></code></a>()</td>
+<td>Tf2 broadcaster class.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster">
+<em class="property">class </em><code class="descclassname">panda_autograsp.tf2_broadcaster_ros.</code><code class="descname">Tf2Broadcaster</code><a class="reference internal" href="../../_modules/panda_autograsp/tf2_broadcaster_ros.html#Tf2Broadcaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tf2 broadcaster class.</p>
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_x_pos">
+<code class="descname">calib_frame_x_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_x_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame x position [m] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_y_pos">
+<code class="descname">calib_frame_y_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_y_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame y position [m] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_z_pos">
+<code class="descname">calib_frame_z_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_z_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame z position [m] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_yaw">
+<code class="descname">calib_frame_yaw</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_yaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame yaw orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_pitch">
+<code class="descname">calib_frame_pitch</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame pitch orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_roll">
+<code class="descname">calib_frame_roll</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_roll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame roll orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_x_pos">
+<code class="descname">sensor_frame_x_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_x_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame x position [m] (Relative to the ‘calib_frame` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_y_pos">
+<code class="descname">sensor_frame_y_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_y_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame y position [m] (Relative to the ‘calib_frame` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_z_pos">
+<code class="descname">sensor_frame_z_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_z_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame z position [m] (Relative to the ‘calib_frame` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q1">
+<code class="descname">sensor_frame_q1</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q1" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Sensor frame x quaternion orientation [rad] (Relative to the ‘calib_frame`</dt>
+<dd>frame).</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q2">
+<code class="descname">sensor_frame_q2</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Sensor frame y quaternion orientation [rad] (Relative to the ‘calib_frame`</dt>
+<dd>frame).</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q3">
+<code class="descname">sensor_frame_q3</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q3" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Sensor frame z quaternion orientation [rad] (Relative to the ‘calib_frame`</dt>
+<dd>frame).</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q4">
+<code class="descname">sensor_frame_q4</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q4" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Sensor frame w quaternion orientation [rad] (Relative to the ‘calib_frame`</dt>
+<dd>frame).</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_yaw">
+<code class="descname">sensor_frame_yaw</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_yaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame yaw orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_pitch">
+<code class="descname">sensor_frame_pitch</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame pitch orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_roll">
+<code class="descname">sensor_frame_roll</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_roll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame roll orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.conf">
+<code class="descname">conf</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dynamic reconfigure server configuration dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.set_sensor_pose_service">
+<code class="descname">set_sensor_pose_service</code><span class="sig-paren">(</span><em>sensor_pose</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/panda_autograsp/tf2_broadcaster_ros.html#Tf2Broadcaster.set_sensor_pose_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.set_sensor_pose_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give sensor pose of the calibration to the tf2 broadcaster.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sensor_pose</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – Dictionary containing the pose of the sensor {x, y, z,q1, q2,
+q3, q4, yaw, pitch, roll}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.dync_reconf_callback">
+<code class="descname">dync_reconf_callback</code><span class="sig-paren">(</span><em>config</em>, <em>level</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/panda_autograsp/tf2_broadcaster_ros.html#Tf2Broadcaster.dync_reconf_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.dync_reconf_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dynamic reconfigure callback function. This callback function
+updates the values of the dynamic reconfigure server.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>config</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a>) – Dictionary containing the dynamically reconfigured parameters.</li>
+<li><strong>level</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – A bitmask which will later be passed to the dynamic reconfigure callback.
+When the callback is called all of the level values for parameters that have
+been changed are added together and the resulting value is passed to the
+callback.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.tf2_broadcaster_callback">
+<code class="descname">tf2_broadcaster_callback</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/panda_autograsp/tf2_broadcaster_ros.html#Tf2Broadcaster.tf2_broadcaster_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.tf2_broadcaster_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>TF2 broadcaster callback function. This callback function broadcasts
+the tf2 frames.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">rospy.timer.TimerEvent</span></code>, optional) – Structure passed in provides you timing information that can be useful when
+debugging or profiling, by default None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

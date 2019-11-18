@@ -35,7 +35,9 @@
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="panda_autograsp.functions.conversions.transform_stamped_2_matrix" href="panda_autograsp.functions.conversions.transform_stamped_2_matrix.html" />
+    <link rel="prev" title="panda_autograsp.functions.moveit.add_collision_objects" href="panda_autograsp.functions.moveit.add_collision_objects.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -105,8 +107,35 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/usage.html#troubleshooting-information">Troubleshooting information</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Documentation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html">Python Code API</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">Python Code API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#panda-autograsp-modules">Panda autograsp modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../panda_autograsp.loggers.html">panda_autograsp.loggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../panda_autograsp.grasp_planners.html">panda_autograsp.grasp_planners</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../panda_autograsp.functions.html">panda_autograsp.functions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="panda_autograsp.functions.functions.download_model.html">panda_autograsp.functions.functions.download_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="panda_autograsp.functions.functions.list_files.html">panda_autograsp.functions.functions.list_files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="panda_autograsp.functions.functions.yes_or_no.html">panda_autograsp.functions.functions.yes_or_no</a></li>
+<li class="toctree-l4"><a class="reference internal" href="panda_autograsp.functions.functions.draw_axis.html">panda_autograsp.functions.functions.draw_axis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="panda_autograsp.functions.moveit.get_trajectory_duration.html">panda_autograsp.functions.moveit.get_trajectory_duration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="panda_autograsp.functions.moveit.plan_exists.html">panda_autograsp.functions.moveit.plan_exists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="panda_autograsp.functions.moveit.at_joint_target.html">panda_autograsp.functions.moveit.at_joint_target</a></li>
+<li class="toctree-l4"><a class="reference internal" href="panda_autograsp.functions.moveit.add_collision_objects.html">panda_autograsp.functions.moveit.add_collision_objects</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">panda_autograsp.functions.moveit.wait_for_state_update</a></li>
+<li class="toctree-l4"><a class="reference internal" href="panda_autograsp.functions.conversions.transform_stamped_2_matrix.html">panda_autograsp.functions.conversions.transform_stamped_2_matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="panda_autograsp.functions.conversions.pose_msg_stamped_2_matrix.html">panda_autograsp.functions.conversions.pose_msg_stamped_2_matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../panda_autograsp.moveit_collision_objects.html">panda_autograsp.moveit_collision_objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../panda_autograsp.moveit_planner_server_ros.html">panda_autograsp.moveit_planner_server_ros</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../panda_autograsp.panda_autograsp_server_ros.html">panda_autograsp.panda_autograsp_server_ros</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../panda_autograsp.tf2_broadcaster_ros.html">panda_autograsp.tf2_broadcaster_ros</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#panda-autograsp-scripts">Panda autograsp scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#panda-autograsp-ros-nodes">Panda_autograsp ROS nodes</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">License</span></p>
 <ul>
@@ -161,6 +190,10 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="../../api.html">Python Code API</a> &raquo;</li>
+        
+          <li><a href="../panda_autograsp.functions.html">panda_autograsp.functions</a> &raquo;</li>
+        
       <li>panda_autograsp.functions.moveit.wait_for_state_update</li>
     
     
@@ -182,6 +215,34 @@
             
   <div class="section" id="panda-autograsp-functions-moveit-wait-for-state-update">
 <h1>panda_autograsp.functions.moveit.wait_for_state_update<a class="headerlink" href="#panda-autograsp-functions-moveit-wait-for-state-update" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="panda_autograsp.functions.moveit.wait_for_state_update">
+<code class="descclassname">panda_autograsp.functions.moveit.</code><code class="descname">wait_for_state_update</code><span class="sig-paren">(</span><em>scene_commander</em>, <em>collision_obj</em>, <em>is_known=False</em>, <em>is_attached=False</em>, <em>timeout=4</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/panda_autograsp/functions/moveit.html#wait_for_state_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.moveit.wait_for_state_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate if collision object state change was successful.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>scene_commander</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_commander.PlanningSceneInterface</span></code>) – The moveit scene commander object.</li>
+<li><strong>collision_obj</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_collision_objects</span></code>) – The moveit collision object.</li>
+<li><strong>is_known</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Bool specifying whether an object is known, by default False</li>
+<li><strong>is_attached</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Bool specifying whether an object is attached to something, by default False</li>
+<li><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a><em>, </em><em>optional</em>) – The validation timeout time, by default 4</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>bool</em> – Boolean specifying whether the scene update was successful.</li>
+<li><em>.. note::</em> – Note that attaching the box will remove it from known_objects.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 
@@ -189,6 +250,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="panda_autograsp.functions.conversions.transform_stamped_2_matrix.html" class="btn btn-neutral float-right" title="panda_autograsp.functions.conversions.transform_stamped_2_matrix" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="panda_autograsp.functions.moveit.add_collision_objects.html" class="btn btn-neutral float-left" title="panda_autograsp.functions.moveit.add_collision_objects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
