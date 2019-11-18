@@ -39,7 +39,6 @@ gh-pages:
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
-	@doxygen
 	@sphinx-apidoc -f -o "${BUILDDIR}/_modules" "../panda_autograsp/src"
 	@sphinx-apidoc -f -o "${BUILDDIR}/_scripts" "../panda_autograsp/scripts"
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

@@ -124,7 +124,7 @@
         <remap from="qhd/camera_info" to="$(arg qhd_camera_info_topic)"/>
         <remap from="sd/camera_info" to="$(arg sd_camera_info_topic)"/>
     </node>
-    <node name="grasp_planner" launch-prefix="$(arg launch_prefix)" pkg="panda_autograsp" type="grasp_planner_server.py" required="true" output="$(arg output)">
+    <node name="grasp_planner_server" launch-prefix="$(arg launch_prefix)" pkg="panda_autograsp" type="grasp_planner_server.py" required="true" output="$(arg output)">
         <!-- Overload grasp solution -->
         <param name="model_name" value="$(arg grasp_solution)"/>
         <!-- Remap so that it contains the right depth topic -->

@@ -42,7 +42,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
-    "breathe",
+    # "breathe",
 ]
 autoclass_content = "class"
 autodoc_member_order = "bysource"

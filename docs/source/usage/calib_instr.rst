@@ -8,6 +8,11 @@ The Kinect camera can be calibrated using the `kinect2_calibration module of the
 The instructions for performing this calibration can be
 `found here <_calib_instructions>`_.
 
+.. warning::
+
+    Be sure to have the camera on for at least 15 min before performing the calibration in order
+    for the camera parameters to fully stabilize.
+
 Robot eye-hand calibration
 ---------------------------------
 

@@ -25,7 +25,7 @@ and start the `panda_autograsp`_ solution using the following command:
 
 .. code-block:: bash
 
-    $ roslaunch panda_autograsp panda_autograsp.launch
+    roslaunch panda_autograsp panda_autograsp.launch
 
 Additionally, this launch file can also be supplied with a number of
 launch file arguments. These arguments can be used to temporarily
@@ -37,12 +37,19 @@ second terminal window:
 
 .. code-block:: bash
 
-    $ rosrun panda_autograsp panda_autograsp_cli.physical
+    rosrun panda_autograsp panda_autograsp_cli.physical
 
 .. note::
 
- Before executing the commands mentioned above make sure you the `panda_autograsp`_ package is build
- and sourced.
+    Before executing the commands mentioned above make sure you the `panda_autograsp`_ package is build
+    and sourced. Further you have to make sure that the pretrained GQCNN networks are not present in the
+    ``./panda_autgrasp/models`` folder. The ``panda_autograsp.launch`` will ask wheter you want to install
+    these models if they are not found. You can also install them by running the following commands from
+    within the catkin workspace src folder:
+
+        .. code-block:: bash
+
+            ./gqcnn/scripts/downloads/models/download_models.sh
 
 Launch file arguments
 ---------------------------------------

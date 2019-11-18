@@ -3,32 +3,42 @@
 .. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
 
 Prerequisites
-==============================
+=========================
+
+Hardware
+---------------
+
+- 1x Microsoft kinect v2.
+- 1x Panda Emika Franka Robot.
+- A laptop or PC with at least 12gb RAM and a decent Graphics card.
+
+Software
+-------------
 
 ROS
------------
+^^^^^^^^^^^^^^^^^^^
 The `panda_autograsp`_ package has only been tested with ``ROS Melodic``.
-The ROS melodic installation instructions can be found `here <https://wiki.ros.org/melodic>`_.
+The ROS melodic installation instructions can be found `here <https://wiki.ros.org/melodic>`__.
 You further also need the following ROS packages:
 
 .. code-block:: bash
 
-    $ sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev
+    sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev
 
 Python
------------
+^^^^^^^^^^^^^^^^^^^
 
 As ROS melodic does not yet fully support python 3, the `panda_autograsp`_
 package has only been tested with ``Python 2.7``.
 
 
 Ubuntu
------------------
+^^^^^^^^^^^^^^^^^^^
 
 The `panda_autograsp`_ package has only been tested with ubuntu ``18.04``.
 
 Libfreenect2 library
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To use the package together with the Kinect camera, we need to install the
 `libfreenect2 <https://github.com/OpenKinect/libfreenect2.git>`_ library. The documentation
@@ -36,7 +46,7 @@ for installing the `libfreenect2 <https://github.com/OpenKinect/libfreenect2.git
 found in the `readme of the repository <https://github.com/OpenKinect/libfreenect2>`_.
 
 Libfranka library
-------------------------
+^^^^^^^^^^^^^^^^^^^^^
 
 In order to use this package with the panda emika franka robots
 you need to build the Libfranka library from source. The steps
@@ -49,7 +59,7 @@ for doing this can be found in the
     also have to install the real-time kernel.
 
 Virtualenv
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 Although the package can be installed on the system python you are advised
 to use a python environment management system like `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_
@@ -65,13 +75,12 @@ or `conda <https://conda.io/en/latest/>`_.
     instead.
 
 CUDA & CUDNN (NVIDIA GPUs only)
------------------------------------
-
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Since Tensorflow needs GPU computing capabilities of your NVIDIA
 graphics card, the CUDA v10.0 and CDNN v7.6.5 toolkits
 need to be installed. For installation instructions, you are referred to the
 `CUDA <https://docs.nvidia.com/cuda/archive/10.0/>`_,
- `CUDNN <https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html>`_
+`CUDNN <https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html>`_
 or `tensorflow <https://www.tensorflow.org/install/gpu>`_ documentation.
 Additionally, these toolkits are included in the Conda version
 of the python opencv package. You can install this package by running the
@@ -79,10 +88,10 @@ of the python opencv package. You can install this package by running the
 command in your Conda environment.
 
 AMD build of tensorflow (AMD GPUs only)
--------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A guide explaining how to use GPU computing with a AMD graphics card be
-found `here <https://blog.codeinside.eu/2018/12/04/howto-use-tensorflow-with-amd-gpus/>`_.
+found `here <https://blog.codeinside.eu/2018/12/04/howto-use-tensorflow-with-amd-gpus/>`__.
 
 Package build from source instructions
 ========================================
@@ -94,7 +103,7 @@ Clone or download the `panda_autograsp`_ catkin package from Github:
 
 .. code-block:: bash
 
-    $ bash -c "mkdir -p ~/panda_autograsp_ws \
+    bash -c "mkdir -p ~/panda_autograsp_ws \
     && cd ~/panda_autograsp_ws \
     && source /opt/ros/melodic/setup.sh \
     && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
@@ -124,12 +133,11 @@ Build the package
 
 The catkin package can be build by executing one of the following commands:
 
-```
-catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
-```
+.. code-block:: bash
 
-    $ cd ~/panda_autograsp
-    $ pip install .
+    catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
+    cd ~/panda_autograsp
+    pip install .
 
 Singularity Container installation instructions
 ==================================================
@@ -167,7 +175,7 @@ registry as follows:
 
 .. code-block:: bash
 
-    $ build <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-bionic
+    build <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-bionic
 
 Go to the ``panda_autograsp/containers/singularity`` folder and
 built the container using the recipe file. This is done by running the
@@ -175,7 +183,7 @@ following command:
 
 .. code-block:: bash
 
-    $ sudo singularity <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-bionic
+    sudo singularity <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-bionic
 
 You can also add the ``--sandbox`` argument to build the container as
 a writeable folder.
@@ -198,7 +206,7 @@ container is build. This is done by running the following commands:
 
 .. code-block:: bash
 
-    $ bash -c "mkdir -p ~/panda_autograsp_ws \
+    bash -c "mkdir -p ~/panda_autograsp_ws \
     && cd ~/panda_autograsp_ws \
     && source /opt/ros/melodic/setup.sh \
     && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
@@ -229,13 +237,13 @@ container by:
 
 .. code-block:: bash
 
-    $ sudo chgrp -R <YOUR_USER_NAME> ./<YOUR_CONTAINER_NAME>
+    sudo chgrp -R <YOUR_USER_NAME> ./<YOUR_CONTAINER_NAME>
 
 #. Giving your user group read and write access to the ``<YOUR_CONTAINER_NAME`` folder.
 
 .. code-block:: bash
 
-    $ sudo chmod -R g+rwx ./<YOUR_CONTAINER_NAME>
+    sudo chmod -R g+rwx ./<YOUR_CONTAINER_NAME>
 
 AMD compatible container
 ----------------------------

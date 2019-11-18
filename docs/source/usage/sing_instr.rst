@@ -40,8 +40,8 @@ a ``.singularity_bashrc`` file that is present in each of the containers.
 This file can be used as a ``.bashrc`` file. You can run the singularity
 container using one of the following ``run`` commands:
 
-- **With Nvidia GPU:** ``$ singularity run --nv <YOUR_CONTAINER_NAME>``
-- **Without Nvidia GPU:** ``$ singularity run <YOUR_CONTAINER_NAME>``
+- **With Nvidia GPU:** ``singularity run --nv <YOUR_CONTAINER_NAME>``
+- **Without Nvidia GPU:** ``singularity run <YOUR_CONTAINER_NAME>``
 
 .. note:: Additionally, you can also add the ``--writable`` parameter to the ``run command`` to receive write permissions.
 
@@ -63,13 +63,13 @@ singularity container by:
 
 .. code-block:: bash
 
-    $ sudo chgrp -R <YOUR_USER_NAME> ./<YOUR_CONTAINER_NAME>
+    sudo chgrp -R <YOUR_USER_NAME> ./<YOUR_CONTAINER_NAME>
 
 #. Giving your user group _read and write\_ access to the ``<YOUR_CONTAINER_NAME`` folder.
 
 .. code-block:: bash
 
-    $ sudo chmod -R g+rwx ./<YOUR_CONTAINER_NAME>
+    sudo chmod -R g+rwx ./<YOUR_CONTAINER_NAME>
 
 Add a visual code IDE to the singularity container
 ------------------------------------------------------------
@@ -82,12 +82,12 @@ easy code debugging. This is done as follows:
 
 .. code-block:: bash
 
-    $ curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-    $ sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-    $ sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-    $ sudo apt-get install apt-transport-https
-    $ sudo apt-get update
-    $ sudo apt-get install code # or code-insiders
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+    sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+    sudo apt-get install apt-transport-https
+    sudo apt-get update
+    sudo apt-get install code # or code-insiders
 
 .. note::
 

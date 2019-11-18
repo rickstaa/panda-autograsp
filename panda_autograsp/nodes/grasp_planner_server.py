@@ -57,6 +57,9 @@ from panda_autograsp.grasp_planners import GraspPlannerROS
 #################################################
 if __name__ == "__main__":
 
+    # Initialize the ROS node
+    rospy.init_node("grasp_planner_server")
+
     # Read panda_autograsp configuration file
     MAIN_CFG = YamlConfig(
         os.path.abspath(
@@ -83,9 +86,6 @@ if __name__ == "__main__":
             "gqcnn/scripts/downloads/models/download_models.sh",
         )
     )
-
-    # Initialize the ROS node
-    rospy.init_node("grasp_planner_server")
 
     # Initialize `CvBridge`
     cv_bridge = CvBridge()

@@ -8,6 +8,7 @@ two ways:
     - METHOD1: You can use the `add_submods_requirements` function
     to add the requirements of each submodule to the setup.py requirements
     list.
+    NOTE: Advised for ROS packages as the submodules themselves don't get installed.
     - METHOD2: You can use the `install_submods` to run the setup.py of each
     submodule as a subprocess. To do this set install_dependencies to true.
 
@@ -15,7 +16,6 @@ Author
 ------
 Rick Staa
 """
-
 # Future Imports
 from __future__ import absolute_import
 from __future__ import division
@@ -31,12 +31,17 @@ import subprocess
 import sys
 import re
 import shutil
+from collections import OrderedDict
+
+# Set setup.py submodule install method
+SUB_MOD_REQ_INSTALL_METHOD = 1
+IS_ROS_PACKAGE = True  # If true the submodules themself will not be installed
 
 # General setup.py parameters
 TF_MAX_VERSION = "1.13.1"
 
-# Pre-install requirements
-install_requirements = ["scipy, numpy, cython"]
+# Pre-install requirements (Installed before the install class is run)
+install_requirements = ["scipy", "numpy", "cython"]
 
 # Package requirements
 if sys.version_info > (3, 0):  # Py 2 requirements
@@ -50,18 +55,24 @@ if sys.version_info > (3, 0):  # Py 2 requirements
         "pyassimp",
         "scikit-image",
         "opencv-contrib-python",
-        "pyglet"
+        "pyglet==1.4.7",
+        "scikit-image==0.14.2",
+        "matplotlib==2.2.0",
     ]
 else:  # Py 3 requirements
-    requirements = ["rospkg",
-                    "defusedxml",
-                    "empy",
-                    "catkin-pkg",
-                    "PySide2",
-                    "pyassimp",
-                    "scikit-image",
-                    "opencv-contrib-python",
-                    "pyglet"]
+    requirements = [
+        "rospkg",
+        "defusedxml",
+        "empy",
+        "catkin-pkg",
+        "PySide2",
+        "pyassimp",
+        "scikit-image",
+        "opencv-contrib-python",
+        "pyglet==1.4.7",
+        "scikit-image==0.14.2",
+        "matplotlib==2.2.0",
+    ]
 
 # Set up logger.
 logger = logging.getLogger(__name__)
@@ -74,17 +85,13 @@ logger.addHandler(handler)
 #################################################
 # Setup functions################################
 #################################################
-def add_submods_requirements(requirements):
-    """Adds the submodule requirements to the requirements list.
+def get_git_submods():
+    """Returns a list containing the git submodules.
 
     Returns
-    -------
-    :obj:`list` of :obj:`string`
-        List containing all the requirements.
-    :obj:`list` of :obj:`string`
-        List containing the names of the submodules.
-    :obj:`list` of :obj:`string`
-        List containing the python egg (package) names of the submodules.
+    --------
+    :py:obj:`list` of :py:obj:`string`
+        List containing the names of the submodules
     """
 
     # Find git submodules
@@ -95,57 +102,82 @@ def add_submods_requirements(requirements):
     )
     bash_output = subprocess.check_output(["bash", "-c", sub_mod_bash_command])
     sub_mods = [x for x in bash_output.decode("utf-8").split("\n") if x != ""]
-    sub_mods_egg_names = []  # Initialize list to put egg (package) names in
+
+    # Return a list with submodule
+    return sub_mods
+
+
+def add_submods_requirements(requirements):
+    """Adds the submodule requirements to the requirements list.
+
+    Returns
+    -------
+    :py:obj:`list` of :py:obj:`string`
+        List containing all the requirements.
+    :py:obj:`list` of :py:obj:`string`
+        List containing the names of the submodules.
+    :py:obj:`list` of :py:obj:`string`
+        List containing the python egg (package) names of the submodules.
+    """
+
+    # Get git submodule names
+    sub_mods = get_git_submods()
+
+    # Initialize list to put egg (package) names in
+    sub_mods_egg_names = []
 
     # Append submodule requirements to the requirements list
     for sub_mod in sub_mods:
-        submod_setup_path = os.getcwd() + "/" + sub_mod + "/setup.py"
+        submod_path = os.getcwd() + "/" + sub_mod
+        submod_setup_path = submod_path + "/setup.py"
         if os.path.exists(submod_setup_path):
 
             # Generate requires.txt file for the submodule using the setuptools.egg
             # info module
             try:
-                # Run the egg_info command #
-                proc = subprocess.Popen(
+
+                # Run the egg_info command
+                out, _ = subprocess.Popen(
                     [sys.executable, submod_setup_path, "egg_info"],
                     stderr=subprocess.PIPE,
                     stdout=subprocess.PIPE,
-                )
+                    cwd=submod_path,
+                ).communicate()
 
-                # Retrieve egg-name #
-                out, _ = proc.communicate()
+                # Retrieve egg-name and fodler path
                 egg_name = re.search(
                     r"\nwriting.(.*?).egg-info", str(out, "utf-8")
                 ).group(1)
                 sub_mods_egg_names.append(egg_name)  # Append egg (package) name
-
+                egg_folder_path = (
+                    os.getcwd() + "/" + sub_mod + "/" + egg_name + ".egg-info"
+                )
                 # Open egg_info generated requires.txt file
-                with open(
-                    os.getcwd() + "/" + egg_name + ".egg-info/requires.txt"
-                ) as file:
+                with open(egg_folder_path + "/requires.txt") as file:
 
-                    # Read requires file up till empty line #
+                    # Read requires file up till empty line
                     for line in file:
                         if line.strip() == "":
 
                             # Try to remove tree; if failed show an error using try
                             # ...except on screen
                             try:
-                                shutil.rmtree(
-                                    os.getcwd() + "/" + egg_name + ".egg-info"
-                                )
+                                # Remove egg file
+                                shutil.rmtree(egg_folder_path)
                             except OSError as e:
                                 print("Error: %s - %s." % (e.filename, e.strerror))
                             break
-                        # Append submodule requirement to package requirements #
-                        requirements.append(line.strip())
+                        else:
+
+                            # Append submodule requirement to package requirements
+                            requirements.append(line.strip())
             except Exception as e:
                 logger.warning(
                     "Submodule dependencies could not be imported. " + str(e)
                 )
 
     # Remove duplicate items
-    requirements = list(set(requirements))
+    requirements = list(OrderedDict.fromkeys(requirements))
 
     # Return submodule requirements and submodules
     return requirements, sub_mods, sub_mods_egg_names
@@ -166,20 +198,22 @@ def install_submods(sub_mods, mode="install", install_dependencies=True):
     # Install submodules in non development mode
     if mode.lower() == "install":
         for sub_mod in sub_mods:
-            submod_setup_path = os.getcwd() + "/" + sub_mod + "/setup.py"
+            submod_path = os.getcwd() + "/" + sub_mod
+            submod_setup_path = submod_path + "/setup.py"
             if os.path.exists(submod_setup_path):
                 if install_dependencies:  # Install submodule dependencies
-                    subprocess.call(
+                    subprocess.Popen(
                         [
                             sys.executable,
                             "-m",
                             "pip",
                             "install",
                             os.getcwd() + "/" + sub_mod + "/",
-                        ]
-                    )
+                        ],
+                        cwd=submod_path,
+                    ).communicate()
                 else:  # Do not install submodule dependencies
-                    subprocess.call(
+                    subprocess.Popen(
                         [
                             sys.executable,
                             "-m",
@@ -187,33 +221,30 @@ def install_submods(sub_mods, mode="install", install_dependencies=True):
                             "install",
                             "--no-dependencies",
                             os.getcwd() + "/" + sub_mod + "/",
-                        ]
-                    )
+                        ],
+                        cwd=submod_path,
+                    ).communicate()
 
     # Development mode installation
     # Install submodules in development mode
     if mode.lower() == "develop":
         for sub_mod in sub_mods:
-            submod_setup_path = os.getcwd() + "/" + sub_mod + "/setup.py"
+            submod_path = os.getcwd() + "/" + sub_mod
+            submod_setup_path = submod_path + "/setup.py"
             if os.path.exists(submod_setup_path):
                 if install_dependencies:  # Install submodule dependencies
-                    # subprocess.call(
-                    #     [sys.executable, "-m", "pip", "install", "-e", os.getcwd()+"/"
-                    #      + sub_mod+"/"])
-                    subprocess.call(
+                    subprocess.Popen(
                         [
                             sys.executable,
                             "-m",
                             "pip",
                             "install",
                             os.getcwd() + "/" + sub_mod + "/",
-                        ]
-                    )
+                        ],
+                        cwd=submod_path,
+                    ).communicate()
                 else:  # Do not install submodule dependencies
-                    # subprocess.call([sys.executable, "-m", "pip", "install",
-                    #                  "--no-dependencies", "-e", os.getcwd()+"/"
-                    #                  + sub_mod+"/"])
-                    subprocess.call(
+                    subprocess.Popen(
                         [
                             sys.executable,
                             "-m",
@@ -221,8 +252,9 @@ def install_submods(sub_mods, mode="install", install_dependencies=True):
                             "install",
                             "--no-dependencies",
                             os.getcwd() + "/" + sub_mod + "/",
-                        ]
-                    )
+                        ],
+                        cwd=submod_path,
+                    ).communicate()
 
 
 #################################################
@@ -249,24 +281,26 @@ class DevelopCmd(develop):
     def run(self):
         """Overload the :py:meth:`setuptools.command.develop.develop.run` method."""
 
-        # Install panda_autograsp module
-        subprocess.call(
-            [sys.executable, "-m", "pip", "install", os.getcwd() + "/panda_autograsp/"]
-        )
-
         # Install submodules
-        # NOTE: Set install_dependencies=True for method 2
         global sub_mods
-        install_submods(sub_mods, "develop", install_dependencies=True)
+        if SUB_MOD_REQ_INSTALL_METHOD == 2:
+            install_submods(sub_mods, "develop", install_dependencies=True)
 
         # Run parent run method
         develop.run(self)  # Disabled because no top level python packages are present
 
         # Print success message
-        logger.info(
-            "All the python packages in this catkin_ws and their requirements have"
-            "been installed successfully."
-        )
+        if SUB_MOD_REQ_INSTALL_METHOD == 2:
+            print(
+                "All the python submodules in this catkin_ws and their requirements "
+                "have been installed successfully."
+            )
+        else:
+            print(
+                "All the requirements of the python submodules in this catkin_ws have "
+                "been installed successfully. The python submodules themselves are "
+                "assumed to be added to the PYTHONPATH by catkin."
+            )
 
 
 class InstallCmd(install, object):
@@ -290,24 +324,26 @@ class InstallCmd(install, object):
     def run(self):
         """Overload the :py:meth:`setuptools.command.install.install.run` method."""
 
-        # Install panda_autograsp module
-        subprocess.call(
-            [sys.executable, "-m", "pip", "install", os.getcwd() + "/panda_autograsp/"]
-        )
-
         # Install submodules
-        # NOTE: Set install_dependencies=True for method 2
         global sub_mods
-        install_submods(sub_mods, "install", install_dependencies=True)
+        if SUB_MOD_REQ_INSTALL_METHOD == 2:
+            install_submods(sub_mods, "install", install_dependencies=True)
 
         # Run parent run method
         install.run(self)  # Disabled because no top level python packages are present
 
         # Print success message
-        logger.info(
-            "All the python packages in this catkin_ws and their requirements have"
-            "been installed successfully."
-        )
+        if SUB_MOD_REQ_INSTALL_METHOD == 2:
+            print(
+                "All the python submodules in this catkin_ws and their requirements "
+                "have been installed successfully."
+            )
+        else:
+            print(
+                "All the requirements of the python submodules in this catkin_ws have "
+                "been installed successfully. The python submodules themselves are "
+                "assumed to be added to the PYTHONPATH by catkin."
+            )
 
 
 #################################################
@@ -325,21 +361,48 @@ __version__ = re.sub(
     ).read(),
 )
 
-# Install pre-install requirements
-for req in install_requirements:
-    subprocess.call(
-        [sys.executable, "-m", "pip", "install", req]
+# Install start messages
+if SUB_MOD_REQ_INSTALL_METHOD == 2:
+    print(
+        "Install catkin workspace python submodules using method 2."
+        "This method installs all python submodules present in the catkin workspace "
+        "together with their python requirements. This method is not advised when "
+        "you are working with ROS packages as catkin already adds theses submodules"
+        "to the PYTHONPATH. Installing both the python packages themselves and their "
+        "requirements can lead to conflicts. Please select install method 1 when "
+        "working with ROS packages."
+    )
+else:
+    print(
+        "Install catkin workspace python submodules using method 1. "
+        "This method only installs the python requirements of the submodules "
+        "while the submodules themselves are not installed. This is the advices "
+        "method when you are working with ROS packages as catkin already adds these "
+        "submodules to the PYTHONPATH."
     )
 
-# Add submodule requirements to the requirements list
-# NOTE: Comment to use method 1
-_, sub_mods, sub_mods_egg_names = add_submods_requirements(requirements)
-# NOTE: Uncomment for method 1
-# requirements, sub_mods, sub_mods_egg_names = add_submods_requirements(requirements) # Add submodule dependencies to requirements
-# requirements = [
-#     j for j in requirements if not any([i.replace("_", "-") in j for i in sub_mods])
-# ]  # Remove submodule packages from requirements
-# print(requirements)
+# Install pre-install requirements
+for req in install_requirements:
+    subprocess.Popen([sys.executable, "-m", "pip", "install", req]).communicate()
+
+# Check install method
+if SUB_MOD_REQ_INSTALL_METHOD == 2:
+
+    # Get git submodule names
+    sub_mods = get_git_submods()
+else:
+    # Add submodule requirements to the requirements list
+    print("Retrieving submodule requirements...")
+    requirements, sub_mods, _ = add_submods_requirements(requirements)
+
+    # Remove submodule packages from requirements
+    requirements = [
+        j for j in requirements if not any([i.replace("_", "-") in j for i in sub_mods])
+    ]
+    print("Submodule requirements retrieval successful.")
+
+# Add panda_autograsp as a submodule
+sub_mods.extend("panda_autograsp")
 
 # Run python setup
 setup(
@@ -370,17 +433,9 @@ setup(
             "sphinx-autobuild",
             "docutils",
             "doc8",
-            "breathe==4.13.1",
+            # "breathe==4.13.1",
         ],
         "dev": ["pytest", "bumpversion", "pylint"],
     },
     cmdclass={"install": InstallCmd, "develop": DevelopCmd},
 )
-
-# # Remove pip opencv and install conda opencv
-# subprocess.call(
-#     [sys.executable, "-m", "pip", "uninstall", "opencv"]
-# )
-# subprocess.call(
-#     ["conda", "install", "-y", "opencv"]
-# )
