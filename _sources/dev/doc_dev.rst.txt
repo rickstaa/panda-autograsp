@@ -25,6 +25,10 @@ To build the documentation go into the ``docs`` directory and run the
 ``make html`` command. This command will generate the html documentation
 inside the ``docs/build`` directory.
 
+.. note::
+
+    Make sure the catkin ws has been build and sourced.
+
 Deploying
 ---------------------------
 To deploy documentation to the Github Pages site for the repository,

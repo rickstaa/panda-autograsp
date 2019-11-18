@@ -106,8 +106,10 @@ Panda simulations
 A gazebo simulation of the panda robot can be used by setting the
 ``real`` and ``gazebo`` launch file arguments.
 
-.. image:: http://my.url.com/my-picture1.png
-    :alt: gaebo_simulation
+.. figure:: https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png
+    :alt: gazebo_simulation
+
+    Overview of the gazebo simulation environment.
 
 .. warning::
 
