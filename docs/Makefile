@@ -19,9 +19,15 @@ clean:
 
 .PHONY: gh-pages
 gh-pages:
+<<<<<<< HEAD
 	git submodule update --init --recursive \
 	git checkout gh-pages && \
 	cd .. && \
+=======
+	cd .. && \
+	git submodule update --init --recursive \
+	git checkout gh-pages && \
+>>>>>>> master
 	git rm -rf . && git clean -ffxd && \
 	git checkout master $(GH_PAGES_SOURCES) && \
 	git reset HEAD && \
