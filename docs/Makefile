@@ -19,6 +19,7 @@ clean:
 
 .PHONY: gh-pages
 gh-pages:
+	git submodule update --init --recursive \
 	git checkout gh-pages && \
 	cd .. && \
 	git rm -rf . && git clean -ffxd && \
@@ -34,7 +35,8 @@ gh-pages:
 	git add -A && \
 	git commit -m ":pencil: Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`" && \
 	git push origin gh-pages && \
-	git checkout master
+	git checkout master \
+	git submodule update --init --recursive
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
