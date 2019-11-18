@@ -1,0 +1,536 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sensor calibration instructions &mdash; panda_autograsp 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Python Code API" href="../api/api.html" />
+    <link rel="prev" title="Prerequisites" href="../install/install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> panda_autograsp
+          
+
+          
+            
+            <img src="../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#package-build-from-source-instructions">Package build from source instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#singularity-container-installation-instructions">Singularity Container installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#docker-container-installation-instructions">Docker container installation instructions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sensor calibration instructions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#camera-calibration">Camera calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#robot-eye-hand-calibration">Robot eye-hand calibration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#generate-chessboard-pattern">Generate chessboard pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generate-aruco-board">Generate Aruco Board</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#package-use-instructions">Package use instructions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-instructions">Configuration instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-planning-constraints">Add planning constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-instructions">Run instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launch-file-arguments">Launch file arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grasping-solutions">Grasping solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#moveit-perception">Moveit perception</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#change-settings">Change settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#clear-the-octomap">Clear the octomap</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#panda-simulations">Panda simulations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#singularity-container-instructions">Singularity container instructions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#container-aliases">Container aliases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#container-bashrc">Container .bashrc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#container-run-instructions">Container run instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#container-permissions">Container permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-a-visual-code-ide-to-the-singularity-container">Add a visual code IDE to the singularity container</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#troubleshooting-information">Troubleshooting information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#known-issues">Known issues</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">Python Code API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license/license.html">License</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Zone</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/release_dev.html">Release package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/doc_dev.html">Release documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">panda_autograsp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Sensor calibration instructions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/usage/usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sensor-calibration-instructions">
+<span id="calibration-instr"></span><span id="usage"></span><h1>Sensor calibration instructions<a class="headerlink" href="#sensor-calibration-instructions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="camera-calibration">
+<h2>Camera calibration<a class="headerlink" href="#camera-calibration" title="Permalink to this headline">¶</a></h2>
+<p>The Kinect camera can be calibrated using the <a class="reference external" href="iai_kinect2">kinect2_calibration module of the IAI_kinect2 package</a>.
+The instructions for performing this calibration can be
+<a class="reference external" href="_calib_instructions">found here</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Be sure to have the camera on for at least 15 min before performing the calibration in order
+for the camera parameters to fully stabilize.</p>
+</div>
+</div>
+<div class="section" id="robot-eye-hand-calibration">
+<h2>Robot eye-hand calibration<a class="headerlink" href="#robot-eye-hand-calibration" title="Permalink to this headline">¶</a></h2>
+<p>To be able to control the real robot, we also need to know the
+location of the robot relative to the camera. A robot eye-hand calibration is
+therefore performed at the start of the <cite>panda_autograsp</cite> solution.
+During this eye-hand calibration, you are asked asked to place a calibration
+pattern on the upper left corner of the table. The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> algorithm
+supports two types of calibration patterns, an Aruco Board and a
+chessboard. Due to its higher calibration accuracy, by default, the algorithm
+assumes you are using an Aruco Board. If you want to use the chessboard
+instead, you have to change the <code class="docutils literal notranslate"><span class="pre">pose_estimation_calib_board</span></code> parameter
+in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>
+file.</p>
+<div class="section" id="generate-chessboard-pattern">
+<h3>Generate chessboard pattern<a class="headerlink" href="#generate-chessboard-pattern" title="Permalink to this headline">¶</a></h3>
+<p>Different chessboard patterns can be found in the
+<a class="reference external" href="iai_kinect2">IAI_kinect2/kinect2_calibration</a> repository.
+If you specified, you are using a chessboard the algorithm
+currently assumed you are using 5x7x0.03 chessboard.
+You can change it by changing the <code class="docutils literal notranslate"><span class="pre">chessboard_settings</span></code>
+of the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>
+file.</p>
+</div>
+<div class="section" id="generate-aruco-board">
+<h3>Generate Aruco Board<a class="headerlink" href="#generate-aruco-board" title="Permalink to this headline">¶</a></h3>
+<p>To generate the Aruco Board please run the <code class="xref py py-mod docutils literal notranslate"><span class="pre">generate_arucoboard.py</span></code>
+python script. This script is found in the <code class="docutils literal notranslate"><span class="pre">./scripts</span></code> folder.</p>
+</div>
+</div>
+</div>
+<div class="section" id="package-use-instructions">
+<span id="package-instr"></span><h1>Package use instructions<a class="headerlink" href="#package-use-instructions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="configuration-instructions">
+<h2>Configuration instructions<a class="headerlink" href="#configuration-instructions" title="Permalink to this headline">¶</a></h2>
+<p>All of the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> settings can be found in the
+<a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>
+file. As described below you can temporarily override some of These
+settings by supplying launch arguments.</p>
+</div>
+<div class="section" id="add-planning-constraints">
+<h2>Add planning constraints<a class="headerlink" href="#add-planning-constraints" title="Permalink to this headline">¶</a></h2>
+<p>To add extra planning constraints to the scene you can add additional
+<code class="docutils literal notranslate"><span class="pre">json</span></code> files to the <code class="docutils literal notranslate"><span class="pre">/home/&lt;USER&gt;/.panda_simulation</span></code> folder. This
+folder is created the first time the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution is launched.
+A guide on how this can be done can be found <a class="reference external" href="https://erdalpekel.de/?p=123">here</a>.</p>
+</div>
+<div class="section" id="run-instructions">
+<h2>Run instructions<a class="headerlink" href="#run-instructions" title="Permalink to this headline">¶</a></h2>
+<p>To start the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution, please open a terminal
+and start the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch panda_autograsp panda_autograsp.launch
+</pre></div>
+</div>
+<p>Additionally, this launch file can also be supplied with a number of
+launch file arguments. These arguments can be used to temporarily
+override the settings you configured in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>
+file. The available launch file arguments can be found below. After the
+<a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution has launched, you can launch the command-line
+interface  (CLI), in a second terminal, using the following command in a
+second terminal window:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun panda_autograsp panda_autograsp_cli.physical
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Before executing the commands mentioned above make sure you the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package is build
+and sourced. Further you have to make sure that the pretrained GQCNN networks are not present in the
+<code class="docutils literal notranslate"><span class="pre">./panda_autgrasp/models</span></code> folder. The <code class="docutils literal notranslate"><span class="pre">panda_autograsp.launch</span></code> will ask wheter you want to install
+these models if they are not found. You can also install them by running the following commands from
+within the catkin workspace src folder:</p>
+<blockquote class="last">
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./gqcnn/scripts/downloads/models/download_models.sh
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="launch-file-arguments">
+<h2>Launch file arguments<a class="headerlink" href="#launch-file-arguments" title="Permalink to this headline">¶</a></h2>
+<p>The panda_autograsp launch file accepts the following launch file arguments:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>real</strong>: Specifies whether you want to use the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution on the real robot, by default False.</li>
+<li><strong>gazebo</strong>: Specifies wheter the gazebo gui should be loaded.</li>
+<li><strong>rviz_bui</strong>: Specifies wheter the rviz gui should be loaded.</li>
+<li><strong>calib_type</strong>: The robot hand-eye calibration board type (chessboard vs arucoboard), overwrites the default that is set in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a> file.</li>
+<li><strong>debug</strong>: If true the verbosity of the ROS log messages will be increased, and the process name will be displayed with each log messages, by default set to false.</li>
+<li><strong>moveit_perception</strong>: This enables the Moveit perception module which integrates sensor data into the path planning, by default set to false.</li>
+<li><strong>octomap_type</strong>: The data type used by the Moveit perception module (pointcloud or depthmap), defaults to depthmap.</li>
+<li><strong>octomap_resolution</strong>: The resolution of the octomap.</li>
+<li><strong>moveit_add_scene_collision_objects</strong>: This specifies if the robot table should be added as a collision object to the moveit planning space, By default set to true.</li>
+<li><strong>grasp_solution</strong>: Specify which grasping solution you want to use, this overwrites the solution that is set in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a> file.</li>
+</ul>
+</div></blockquote>
+<div class="section" id="grasping-solutions">
+<h3>Grasping solutions<a class="headerlink" href="#grasping-solutions" title="Permalink to this headline">¶</a></h3>
+<p>Currently, the following grasping solutions are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>GQCNN-2.0</strong>: Deep Learning to Plan Robust Grasps with Synthetic Point Clouds and Analytic Grasp Metrics. Trained on <a class="reference external" href="https://berkeleyautomation.github.io/dex-net/#dexnet_2">Dex-Net 2.0</a>.</li>
+<li><strong>GQCNN-2.1</strong>: Extension off GQ-CNN 2.0. The network that was trained on <a class="reference external" href="https://berkeleyautomation.github.io/dex-net/#dexnet_2">Dex-Net 2.0</a> is improved using RL in simulations.</li>
+<li><strong>GQCNN-4.0-PJ</strong>: Improvement of the GQCNN-2.0 which computes more accurate grasps. This network module does additionally state whether it is better to grasp an object using a suction or a parallel jaw gripper.</li>
+<li><strong>FC-GQCNN-4.0-PJ</strong>: Modification of GQCNN-4.0-PJ in which a fully connected grasp quality CNN (<a class="reference external" href="https://berkeleyautomation.github.io/fcgqcnn">FC-GQ-CNN</a>) is used. This model has a faster grasp computation time and a more accurate grasp.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="moveit-perception">
+<h3>Moveit perception<a class="headerlink" href="#moveit-perception" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="change-settings">
+<h4>Change settings<a class="headerlink" href="#change-settings" title="Permalink to this headline">¶</a></h4>
+<p>Appart from the launch file setings additional moveit perception
+settings can be found in the
+<code class="docutils literal notranslate"><span class="pre">./panda_moveit_config/config/sensor_kinect_deptmap.yaml</span></code>
+and <code class="docutils literal notranslate"><span class="pre">sensor_kinect_pointcloud.yaml</span></code> files.</p>
+</div>
+<div class="section" id="clear-the-octomap">
+<h4>Clear the octomap<a class="headerlink" href="#clear-the-octomap" title="Permalink to this headline">¶</a></h4>
+<p>The octomap can be reset during execution by calling the <code class="docutils literal notranslate"><span class="pre">reset_octomap</span></code>
+service. This is done using the <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">call</span> <span class="pre">/reset_octomap</span></code>
+command.</p>
+</div>
+</div>
+<div class="section" id="panda-simulations">
+<h3>Panda simulations<a class="headerlink" href="#panda-simulations" title="Permalink to this headline">¶</a></h3>
+<p>A gazebo simulation of the panda robot can be used by setting the
+<code class="docutils literal notranslate"><span class="pre">real</span></code> and <code class="docutils literal notranslate"><span class="pre">gazebo</span></code> launch file arguments.</p>
+<div class="figure" id="id12">
+<img alt="gazebo_simulation" src="https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png" />
+<p class="caption"><span class="caption-text">Overview of the gazebo simulation environment.</span></p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">As the simulated kinect outputs the <a class="reference external" href="https://wiki.ros.org/openni_launch">openni_launch</a>
+to simulate the kinect while I am using the
+<a class="reference external" href="https://github.com/code-iai/iai_kinect2">iai_kinect2 package</a> the
+simulation is not fully ready. To get it to work one has to or replace
+the iai_kinect2 package in the real setup with the openni_launch or
+write an modified version of the <code class="docutils literal notranslate"><span class="pre">iai_kienct2/kinect2_bridge</span></code> that
+works with the simulated camera instead of looking for a real one.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="singularity-container-instructions">
+<span id="sing-instr"></span><h1>Singularity container instructions<a class="headerlink" href="#singularity-container-instructions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="container-aliases">
+<h2>Container aliases<a class="headerlink" href="#container-aliases" title="Permalink to this headline">¶</a></h2>
+<p>To increase convenience a number of bash aliases were added to the containers:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>agrasp</strong>: activates the autograsp conda environment</li>
+<li><strong>dgrasp</strong>: deactivates the autograsp conda environment</li>
+<li><strong>dconda</strong>: deactivates the conda enviroment</li>
+<li><strong>rsource</strong>: sources the ROS setup.bash file</li>
+<li><strong>rossu</strong> sources the setup.bash file at <code class="docutils literal notranslate"><span class="pre">./devel/setup.bash</span></code></li>
+<li><strong>pbuild</strong>: <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package build command. Make sure your inside the panda_autograsp catkin workspace.</li>
+</ul>
+</div></blockquote>
+<p>You can unset these aliases or add additional aliases by
+creating a <code class="docutils literal notranslate"><span class="pre">~/.singularity_bash_aliases</span></code> file in your user home directory.
+If such a <code class="docutils literal notranslate"><span class="pre">~/.singularity_bash_aliases</span></code>
+file is present in your home folder, it will be sourced after the container its
+<code class="docutils literal notranslate"><span class="pre">~/.singularity_bash_aliases</span></code> file.</p>
+</div>
+<div class="section" id="container-bashrc">
+<h2>Container .bashrc<a class="headerlink" href="#container-bashrc" title="Permalink to this headline">¶</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">.singularity_bashrc</span></code> file is present inside the containers. This file is
+sourced when you run the container. You can overload all of the commands,
+aliases and settings contained in this <code class="docutils literal notranslate"><span class="pre">.singularity_bashrc</span></code> file by creating
+your own <code class="docutils literal notranslate"><span class="pre">~/.singularity_bashrc</span></code> file in your home folder. If
+such a <code class="docutils literal notranslate"><span class="pre">~/.singularity_bashrc</span></code> file is present in your home folder,
+it will be sourced after the container its
+<code class="docutils literal notranslate"><span class="pre">~/.singularity_bashrc</span></code> file.</p>
+</div>
+<div class="section" id="container-run-instructions">
+<h2>Container run instructions<a class="headerlink" href="#container-run-instructions" title="Permalink to this headline">¶</a></h2>
+<p>You can use the singularity <code class="docutils literal notranslate"><span class="pre">shell</span></code>,
+<code class="docutils literal notranslate"><span class="pre">start</span></code> and <code class="docutils literal notranslate"><span class="pre">run</span></code> commands to interact with the container.
+You are advised to use the <code class="docutils literal notranslate"><span class="pre">run</span></code> command since this also sources
+a <code class="docutils literal notranslate"><span class="pre">.singularity_bashrc</span></code> file that is present in each of the containers.
+This file can be used as a <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file. You can run the singularity
+container using one of the following <code class="docutils literal notranslate"><span class="pre">run</span></code> commands:</p>
+<ul class="simple">
+<li><strong>With Nvidia GPU:</strong> <code class="docutils literal notranslate"><span class="pre">singularity</span> <span class="pre">run</span> <span class="pre">--nv</span> <span class="pre">&lt;YOUR_CONTAINER_NAME&gt;</span></code></li>
+<li><strong>Without Nvidia GPU:</strong> <code class="docutils literal notranslate"><span class="pre">singularity</span> <span class="pre">run</span> <span class="pre">&lt;YOUR_CONTAINER_NAME&gt;</span></code></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Additionally, you can also add the <code class="docutils literal notranslate"><span class="pre">--writable</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">command</span></code> to receive write permissions.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Please not that singularity currently only links to the NVIDIA drivers when you are using the container in read mode.
+As a result when you start the container using the <code class="docutils literal notranslate"><span class="pre">--writable</span></code> tag you can not leverage the GPU computation capabilities
+of your NVIDIA graphics card.</p>
+</div>
+</div>
+<div class="section" id="container-permissions">
+<h2>Container permissions<a class="headerlink" href="#container-permissions" title="Permalink to this headline">¶</a></h2>
+<p>By default, your user can not write to the container folder from outside
+of the container. If you did build the singularity container as a writeable
+folder, you could give your user write and read access from outside the
+singularity container by:</p>
+<ol class="arabic simple">
+<li>Changing the group owner to your user group.</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo chgrp -R &lt;YOUR_USER_NAME&gt; ./&lt;YOUR_CONTAINER_NAME&gt;
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li>Giving your user group _read and write_ access to the <code class="docutils literal notranslate"><span class="pre">&lt;YOUR_CONTAINER_NAME</span></code> folder.</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo chmod -R g+rwx ./&lt;YOUR_CONTAINER_NAME&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-a-visual-code-ide-to-the-singularity-container">
+<h2>Add a visual code IDE to the singularity container<a class="headerlink" href="#add-a-visual-code-ide-to-the-singularity-container" title="Permalink to this headline">¶</a></h2>
+<p>Visual studio code can be added to the singularity container in order to enable
+easy code debugging. This is done as follows:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Run your container using the <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">singularity</span> <span class="pre">run</span> <span class="pre">--writable</span> <span class="pre">&lt;YOUR_CONTAINER_NAME&gt;</span></code></li>
+<li>Install visual code or visual code-insiders using the following bash commands:</li>
+</ol>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl https://packages.microsoft.com/keys/microsoft.asc <span class="p">|</span> gpg --dearmor &gt; microsoft.gpg
+sudo install -o root -g root -m <span class="m">644</span> microsoft.gpg /etc/apt/trusted.gpg.d/
+sudo sh -c <span class="s1">&#39;echo &quot;deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main&quot; &gt; /etc/apt/sources.list.d/vscode.list&#39;</span>
+sudo apt-get install apt-transport-https
+sudo apt-get update
+sudo apt-get install code <span class="c1"># or code-insiders</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Since visual code requires the /run folder you need to add the <code class="docutils literal notranslate"><span class="pre">-B</span> <span class="pre">/run</span></code> argument when running a singularity container.
+For more information, see <a class="reference external" href="https://github.com/sylabs/singularity/issues/3609">this issue</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="troubleshooting-information">
+<span id="troubleshooting"></span><h1>Troubleshooting information<a class="headerlink" href="#troubleshooting-information" title="Permalink to this headline">¶</a></h1>
+<p>When you run into problems please check the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues">issues tab</a>
+for a solution. Some commonly encountered issues are displayed below.</p>
+<div class="section" id="known-issues">
+<h2>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>I get an <code class="docutils literal notranslate"><span class="pre">[Err]</span> <span class="pre">[REST.cc:205]</span> <span class="pre">Error</span> <span class="pre">in</span> <span class="pre">REST</span> <span class="pre">request</span></code> when the gazebo simulation is opened -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/139">#139</a></li>
+<li>The planner does not find a path when <code class="docutils literal notranslate"><span class="pre">moveit_perception</span></code> is enabled -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/141">#141</a></li>
+<li>I get an <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">matrix</span> <span class="pre">&#64;</span> <span class="pre">rmat</span></code> -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/142">#142</a></li>
+<li>I get an <code class="docutils literal notranslate"><span class="pre">connot</span> <span class="pre">import</span> <span class="pre">name</span> <span class="pre">&lt;MODULE&gt;</span></code> error -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/144">#144</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api/api.html" class="btn btn-neutral float-right" title="Python Code API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../install/install.html" class="btn btn-neutral float-left" title="Prerequisites" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Rick Staa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
