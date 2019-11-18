@@ -6,7 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
-GH_PAGES_SOURCES = docs panda_autograsp cfg
+GH_PAGES_SOURCES = docs panda_autograsp
 
 # Put it first so that "make" without argument is like "make help".
 .PHONY: help Makefile
