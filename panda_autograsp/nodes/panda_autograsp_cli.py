@@ -656,7 +656,7 @@ class PandaAutograspCLI:
             rospy.service.ServiceException,
         ) as e:
             # Mostly means used pressed ctrl + c
-            if type(e) == rospy.exceptions.ROSInterruptException:
+            if isinstance(e, rospy.exceptions.ROSInterruptException):
                 rospy.loginfo("Shutting down panda_autograsp client.")
                 sys.exit(0)
             else:  # Could be ctrl + c inside a service thread or something else

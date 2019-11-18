@@ -20,14 +20,29 @@ To be able to control the real robot, we also need to know the
 location of the robot relative to the camera. A robot eye-hand calibration is
 therefore performed at the start of the `panda_autograsp` solution.
 During this eye-hand calibration, you are asked asked to place a calibration
-pattern on the upper left corner of the table. The `panda_autograsp`_ algorithm
-supports two types of calibration patterns, an Aruco Board and a
-chessboard. Due to its higher calibration accuracy, by default, the algorithm
-assumes you are using an Aruco Board. If you want to use the chessboard
-instead, you have to change the ``pose_estimation_calib_board`` parameter
-in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_ 
-file.
+pattern on the upper left corner of the table. The position of this pattern
+and the robot has to be measured and specified in the
+`./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_.
+You can also manually adjust the position of both the sensor and calibration
+frames, using the ``dynamic reconfigure`` window that is opened when the
+`panda_autograsp`_ solution is started.
 
+.. note::
+
+    The `panda_autograsp`_ algorithm
+    supports two types of calibration patterns, an Aruco Board and a
+    chessboard. Due to its higher calibration accuracy, by default, the algorithm
+    assumes you are using an Aruco Board. If you want to use the chessboard
+    instead, you have to change the ``pose_estimation_calib_board`` parameter
+    in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_
+    file.
+
+
+.. figure:: https://user-images.githubusercontent.com/17570430/69071747-b6343380-0a2a-11ea-9192-a7ff86501bad.png
+    :alt: dynamic reconfigure window
+    :target: https://user-images.githubusercontent.com/17570430/69071747-b6343380-0a2a-11ea-9192-a7ff86501bad.png
+
+    Dynamic reconfigure window that can be used to change the sensor and calibration frames.
 
 Generate chessboard pattern
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -44,7 +59,6 @@ Generate Aruco Board
 
 To generate the Aruco Board please run the :py:mod:`generate_arucoboard.py`
 python script. This script is found in the ``./scripts`` folder.
-
 
 .. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
 .. _iai_kinect2: https://github.com/code-iai/iai_kinect2

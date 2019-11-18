@@ -21,6 +21,32 @@ from panda_autograsp.srv import SetSensorPose
 #################################################
 # tf2_broadcaster class #########################
 #################################################
+def get_dynamic_param(parameter_name):
+    """This function retrieves a parameter from the parameter server
+    just like the :py:meth:`!rospy.get_param` function. Additionally
+    to the :py:meth:`!rospy.get_param` function, if a parameter is not
+    found on the parameter server it also tries to retrieve a value
+    for the parameter using the CalibFramesConfig.defaults dict.
+
+    Returns
+    -------
+    :py:obj:`str`, :py:obj:`int`, :py:obj:`float`
+    and :py:obj:`bool`.
+        The parameter value.
+    """
+
+    # Get parameters
+    try:
+        return rospy.get_param(parameter_name)
+    except KeyError:
+        param_value = CalibFramesConfig.defaults[parameter_name.replace("~", "")]
+        rospy.set_param(parameter_name, param_value)
+        return param_value
+
+
+#################################################
+# tf2_broadcaster class #########################
+#################################################
 class Tf2Broadcaster:
     """Tf2 broadcaster class.
 
@@ -72,22 +98,22 @@ class Tf2Broadcaster:
         self._just_calibrated = False  # Specifies whether a calibration was just done
 
         # Set calib frame member variables
-        self.calib_frame_x_pos = self._get_dynamic_param("~calib_frame_x_pos")
-        self.calib_frame_y_pos = self._get_dynamic_param("~calib_frame_y_pos")
-        self.calib_frame_z_pos = self._get_dynamic_param("~calib_frame_z_pos")
-        self.calib_frame_yaw = self._get_dynamic_param("~calib_frame_yaw")
-        self.calib_frame_pitch = self._get_dynamic_param("~calib_frame_pitch")
-        self.calib_frame_roll = self._get_dynamic_param("~calib_frame_roll")
+        self.calib_frame_x_pos = get_dynamic_param("~calib_frame_x_pos")
+        self.calib_frame_y_pos = get_dynamic_param("~calib_frame_y_pos")
+        self.calib_frame_z_pos = get_dynamic_param("~calib_frame_z_pos")
+        self.calib_frame_yaw = get_dynamic_param("~calib_frame_yaw")
+        self.calib_frame_pitch = get_dynamic_param("~calib_frame_pitch")
+        self.calib_frame_roll = get_dynamic_param("~calib_frame_roll")
 
         # Set sensor starting parameters
-        self.sensor_frame_x_pos = self._get_dynamic_param("~sensor_frame_x_pos")
-        self.sensor_frame_y_pos = self._get_dynamic_param("~sensor_frame_y_pos")
-        self.sensor_frame_z_pos = self._get_dynamic_param("~sensor_frame_z_pos")
+        self.sensor_frame_x_pos = get_dynamic_param("~sensor_frame_x_pos")
+        self.sensor_frame_y_pos = get_dynamic_param("~sensor_frame_y_pos")
+        self.sensor_frame_z_pos = get_dynamic_param("~sensor_frame_z_pos")
         try:
-            quat_x = self._get_dynamic_param("~sensor_frame_q1")
-            quat_y = self._get_dynamic_param("~sensor_frame_q2")
-            quat_w = self._get_dynamic_param("~sensor_frame_q4")
-            quat_z = self._get_dynamic_param("~sensor_frame_q3")
+            quat_x = get_dynamic_param("~sensor_frame_q1")
+            quat_y = get_dynamic_param("~sensor_frame_q2")
+            quat_w = get_dynamic_param("~sensor_frame_q4")
+            quat_z = get_dynamic_param("~sensor_frame_q3")
         except KeyError:  # If not found in parameter server
             quat_from_euler = tf_conversions.transformations.quaternion_from_euler(
                 CalibFramesConfig.defaults["sensor_frame_yaw"],
@@ -374,25 +400,3 @@ class Tf2Broadcaster:
         self._tf2_br.sendTransform(
             [calib_frame_tf_msg, sensor_frame_rgb_tf_msg, sensor_frame_ir_tf_msg]
         )
-
-    def _get_dynamic_param(self, parameter_name):
-        """This function retrieves a parameter from the parameter server
-        just like the :py:meth:`!rospy.get_param` function. Additionally
-        to the :py:meth:`!rospy.get_param` function, if a parameter is not
-        found on the parameter server it also tries to retrieve a value
-        for the parameter using the CalibFramesConfig.defaults dict.
-
-        Returns
-        -------
-        :py:obj:`str`, :py:obj:`int`, :py:obj:`float`
-        and :py:obj:`bool`.
-            The parameter value.
-        """
-
-        # Get parameters
-        try:
-            return rospy.get_param(parameter_name)
-        except KeyError:
-            param_value = CalibFramesConfig.defaults[parameter_name.replace("~", "")]
-            rospy.set_param(parameter_name, param_value)
-            return param_value

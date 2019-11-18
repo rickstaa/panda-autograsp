@@ -1032,8 +1032,6 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">False</span></div>
 
-
-
     <span class="k">def</span> <span class="nf">_camera_world_calibration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calib_type</span><span class="o">=</span><span class="n">POSE_CALIB_METHOD</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Perform camera world calibration (External camera matrix) using</span>
 <span class="sd">        a chessboard or several aruco markers.</span>
@@ -1113,7 +1111,7 @@
 
             <span class="c1"># Refine detected markers</span>
             <span class="c1"># Eliminates markers not part of our board and adds missing markers</span>
-            <span class="n">corners</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">rejectedImgPoints</span><span class="p">,</span> <span class="n">recoveredIds</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">refineDetectedMarkers</span><span class="p">(</span>
+            <span class="n">corners</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">refineDetectedMarkers</span><span class="p">(</span>
                 <span class="n">image</span><span class="o">=</span><span class="n">gray</span><span class="p">,</span>
                 <span class="n">board</span><span class="o">=</span><span class="n">aruco_board</span><span class="p">,</span>
                 <span class="n">detectedCorners</span><span class="o">=</span><span class="n">corners</span><span class="p">,</span>
@@ -1226,12 +1224,12 @@
                 <span class="p">)</span>
 
                 <span class="c1"># Find the rotation and translation vectors.</span>
-                <span class="n">retval</span><span class="p">,</span> <span class="n">rvecs</span><span class="p">,</span> <span class="n">tvecs</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">solvePnPRansac</span><span class="p">(</span>
+                <span class="n">retval</span><span class="p">,</span> <span class="n">rvecs</span><span class="p">,</span> <span class="n">tvecs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">solvePnPRansac</span><span class="p">(</span>
                     <span class="n">objp</span><span class="p">,</span> <span class="n">corners2</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">,</span> <span class="n">dist_coeffs</span>
                 <span class="p">)</span>
 
                 <span class="c1"># project 3D points to image plane</span>
-                <span class="n">imgpts</span><span class="p">,</span> <span class="n">jac</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">projectPoints</span><span class="p">(</span>
+                <span class="n">imgpts</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">projectPoints</span><span class="p">(</span>
                     <span class="n">axis</span><span class="p">,</span> <span class="n">rvecs</span><span class="p">,</span> <span class="n">tvecs</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">,</span> <span class="n">dist_coeffs</span>
                 <span class="p">)</span>
 

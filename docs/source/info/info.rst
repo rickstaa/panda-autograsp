@@ -22,6 +22,7 @@ Package overview
 
 .. figure:: https://user-images.githubusercontent.com/17570430/69045081-6cc9f100-09f6-11ea-90cd-7a0e7bf1434d.png
     :align: center
+    :target: https://user-images.githubusercontent.com/17570430/69045081-6cc9f100-09f6-11ea-90cd-7a0e7bf1434d.png
 
     Flow diagram of the `panda_autograsp`_ algorithm.
 
@@ -48,12 +49,14 @@ the object.
 .. figure:: https://berkeleyautomation.github.io/gqcnn/_images/gqcnn1.png
     :width: 100%
     :align: center
+    :target: https://berkeleyautomation.github.io/gqcnn/_images/gqcnn1.png
 
     Original GQ-CNN architecture from `Dex-Net 2.0`_.
 
 .. figure:: https://berkeleyautomation.github.io/gqcnn/_images/fcgqcnn_arch_diagram.png
     :width: 100%
     :align: center
+    :target: https://berkeleyautomation.github.io/gqcnn/_images/fcgqcnn_arch_diagram.png
 
     Alternate faster GQ-CNN architecture from `FC-GQ-CNN`_.
 

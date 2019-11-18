@@ -27,9 +27,9 @@
     <arg name="gripper_center_rpy" default="$(arg gripper_r) $(arg gripper_p) $(arg gripper_y)"/>
     <!-- Moveit planning scene options  -->
     <arg name="moveit_add_scene_collision_objects" default="true"/>
-    <arg name="moveit_perception" default="true"/>
+    <arg name="moveit_perception" default="false"/>
     <arg name="moveit_perception_frame" default="kinect2_ir_optical_frame"/>
-    <arg name="octomap_type" value="pointcloud"/>
+    <arg name="octomap_type" value="depthmap"/>
     <arg name="octomap_resolution" value="0.01"/>
     <!-- GAZEBO arguments -->
     <arg name="paused" default="false"/>

@@ -141,7 +141,7 @@ if __name__ == "__main__":
                 rospy.logwarn(shutdown_msg)
                 sys.exit(0)
             elif prompt_result == "":
-                download_model(model_name, MODELS_PATH, DOWNLOAD_SCRIPT_PATH)
+                val = download_model(model_name, MODELS_PATH, DOWNLOAD_SCRIPT_PATH)
                 if not val == 0:  # Check if download was successful
                     shutdown_msg = (
                         "Shutting down %s node because grasp model could not "

@@ -234,13 +234,26 @@ for the camera parameters to fully stabilize.</p>
 location of the robot relative to the camera. A robot eye-hand calibration is
 therefore performed at the start of the <cite>panda_autograsp</cite> solution.
 During this eye-hand calibration, you are asked asked to place a calibration
-pattern on the upper left corner of the table. The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> algorithm
+pattern on the upper left corner of the table. The position of this pattern
+and the robot has to be measured and specified in the
+<a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>.
+You can also manually adjust the position of both the sensor and calibration
+frames, using the <code class="docutils literal notranslate"><span class="pre">dynamic</span> <span class="pre">reconfigure</span></code> window that is opened when the
+<a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution is started.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> algorithm
 supports two types of calibration patterns, an Aruco Board and a
 chessboard. Due to its higher calibration accuracy, by default, the algorithm
 assumes you are using an Aruco Board. If you want to use the chessboard
 instead, you have to change the <code class="docutils literal notranslate"><span class="pre">pose_estimation_calib_board</span></code> parameter
 in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>
 file.</p>
+</div>
+<div class="figure" id="id13">
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/17570430/69071747-b6343380-0a2a-11ea-9192-a7ff86501bad.png"><img alt="dynamic reconfigure window" src="https://user-images.githubusercontent.com/17570430/69071747-b6343380-0a2a-11ea-9192-a7ff86501bad.png" /></a>
+<p class="caption"><span class="caption-text">Dynamic reconfigure window that can be used to change the sensor and calibration frames.</span></p>
+</div>
 <div class="section" id="generate-chessboard-pattern">
 <h3>Generate chessboard pattern<a class="headerlink" href="#generate-chessboard-pattern" title="Permalink to this headline">¶</a></h3>
 <p>Different chessboard patterns can be found in the
@@ -354,8 +367,8 @@ command.</p>
 <h3>Panda simulations<a class="headerlink" href="#panda-simulations" title="Permalink to this headline">¶</a></h3>
 <p>A gazebo simulation of the panda robot can be used by setting the
 <code class="docutils literal notranslate"><span class="pre">real</span></code> and <code class="docutils literal notranslate"><span class="pre">gazebo</span></code> launch file arguments.</p>
-<div class="figure" id="id12">
-<img alt="gazebo_simulation" src="https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png" />
+<div class="figure" id="id14">
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png"><img alt="gazebo_simulation" src="https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png" /></a>
 <p class="caption"><span class="caption-text">Overview of the gazebo simulation environment.</span></p>
 </div>
 <div class="admonition warning">
