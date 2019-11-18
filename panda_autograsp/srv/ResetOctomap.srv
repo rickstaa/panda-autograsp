@@ -1,4 +1,4 @@
-int64 a
-int64 b
+# Request the moveit octomap to be cleared
+
 ---
-int64 sum
+bool success

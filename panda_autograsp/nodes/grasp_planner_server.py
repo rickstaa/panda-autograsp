@@ -14,6 +14,16 @@ Services:
       supply a segmask.
 """
 
+# Make script both python2 and python3 compatible
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+try:
+    input = raw_input
+except NameError:
+    pass
+
 # Main python packages
 import json
 import sys
@@ -47,6 +57,9 @@ from panda_autograsp.grasp_planners import GraspPlannerROS
 #################################################
 if __name__ == "__main__":
 
+    # Initialize the ROS node
+    rospy.init_node("grasp_planner_server")
+
     # Read panda_autograsp configuration file
     MAIN_CFG = YamlConfig(
         os.path.abspath(
@@ -74,9 +87,6 @@ if __name__ == "__main__":
         )
     )
 
-    # Initialize the ROS node
-    rospy.init_node("grasp_planner_server")
-
     # Initialize `CvBridge`
     cv_bridge = CvBridge()
 
@@ -89,6 +99,10 @@ if __name__ == "__main__":
         model_dir = rospy.get_param("~model_dir")
     except KeyError:
         model_dir = os.path.abspath(os.path.join(MODELS_PATH, model_name))
+
+    # Check model_name
+    if model_name == "":
+        model_name = DEFAULT_MODEL
 
     # Check if fully connected GQCNN is requested
     fully_conv = (

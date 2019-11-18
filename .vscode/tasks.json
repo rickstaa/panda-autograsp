@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "catkin config --extend /opt/ros/melodic && catkin build -j4 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_CXX_STANDARD=14 -DFranka_DIR:PATH=\"$HOME/libfranka/build\" -Dfreenect2_DIR=\"$HOME/freenect2/lib/cmake/freenect2\"",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "catkin clean --yes"
+        },
+        {
+            "label": "test",
+            "type": "shell",
+            "command": "catkin config --no-install && catkin build --verbose --catkin-make-args run_tests"
+        },
+        {
+            "label": "release",
+            "type": "shell",
+            "command": "sudo checkinstall --install=no catkin build -j4 --cmake-args -DCMAKE_BUILD_TYPE=Release"
+        }
+    ]
+}

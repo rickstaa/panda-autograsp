@@ -1,0 +1,51 @@
+<!-- Gazebo simulation launchfile
+    This launch file launches the panda gazebo simulation
+-->
+<launch>
+
+    <!-- GAZEBO arguments -->
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+    <arg name="load_gripper" default="true"/>
+
+    <!--launch GAZEBO with own world configuration -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <!-- <arg name="world_name" value="$(find robotics_assisted_tomography)/worlds/tomography.world"/> -->
+        <arg name="debug" value="$(arg debug)"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="headless" value="$(arg headless)"/>
+    </include>
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find panda_simulation)/config/panda_control.yaml" command="load"/>
+
+    <!-- load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller panda_arm_controller" />
+    <node if="$(arg load_gripper)" name="controller_spawner_hand" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="panda_hand_controller" />
+
+    <!-- Load robot URDF -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model panda"/>
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find panda_simulation)/config/panda_control.yaml" command="load"/>
+
+    <!-- launch robot control node for moveit motion planning -->
+    <node pkg="panda_simulation" type="robot_control_node" name="robot_control_node" />
+
+    <!-- Launch kinect sensor -->
+    <param name="kinectv2_description" command="$(find xacro)/xacro '$(find panda_simulation)/models/kinect2.xacro'" />
+    <node name="spawn_kinect" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model kinect2 -param kinectv2_description"/>
+
+    <!-- spawn coffe cup -->
+    <param name="coffee_cup_description" textfile="$(find panda_autograsp)/models/coke_can/model.sdf"/>
+    <node name="spawn_coffee_cup" pkg="gazebo_ros" type="spawn_model" args="-sdf -model coffee_cup -param coffee_cup_description -x 1 -y -0.22 -z 0  -R 0 -P 0 -Y 0" respawn="false" output="screen" />
+
+    <!-- spawn coffe cup -->
+    <param name="plastic_cup_description" textfile="$(find panda_autograsp)/models/plastic_cup/model.sdf"/>
+    <node name="spawn_plastic_cup" pkg="gazebo_ros" type="spawn_model" args="-sdf -model plastic_cup -param plastic_cup_description -x 0.9 -y -0.25 -z 0  -R 0 -P 0 -Y 0" respawn="false" output="screen" />
+</launch>

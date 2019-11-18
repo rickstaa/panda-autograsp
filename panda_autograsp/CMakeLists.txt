@@ -16,9 +16,14 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   dynamic_reconfigure
   std_msgs
+  std_srvs
   sensor_msgs
   geometry_msgs
+  moveit_ros_planning_interface
 )
+
+## Needed for using moveit
+find_package(Eigen3 REQUIRED)
 
 ################################################
 ## Python CMAKE arguments ######################
@@ -142,18 +147,19 @@ generate_dynamic_reconfigure_options(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-   INCLUDE_DIRS include
+  #  INCLUDE_DIRS include
   #  LIBRARIES ${PROJECT_NAME}
-   CATKIN_DEPENDS
-   roscpp
-   rospy
-   sensor_msgs
-   std_msgs
-   geometry_msgs
-   tf2_geometry_msgs
-   trajectory_msgs
-   moveit_msgs
-   message_runtime
+  CATKIN_DEPENDS
+  roscpp
+  rospy
+  sensor_msgs
+  std_msgs
+  std_srvs
+  geometry_msgs
+  tf2_geometry_msgs
+  trajectory_msgs
+  moveit_msgs
+  message_runtime
 #  DEPENDS system_lib
 )
 
@@ -167,6 +173,7 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  SYSTEM ${EIGEN3_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -177,25 +184,24 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(octomap_server src/octomap_server.cpp)
-
+# add_executable(octomap_server_node src/octomap_server_node.cpp src/octomap_server.cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(
-  octomap_server
-  ${catkin_LIBRARIES}
-)
+# target_link_libraries(
+#   octomap_server_node
+#   ${catkin_LIBRARIES}
+#   ${Boost_LIBRARIES}
+# )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-add_dependencies(
-  octomap_server
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} # Msgs, srv, actions of your package
-  ${catkin_EXPORTED_TARGETS}  # Msg, svr, action srv from other packages
-)
-
-## Rename C++ executable without prefix
+# add_dependencies(
+#   octomap_server_node
+#   ${${PROJECT_NAME}_EXPORTED_TARGETS} # Msgs, srv, actions of your package
+#   ${catkin_EXPORTED_TARGETS}  # Msg, svr, action srv from other packages
+# )
+# ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
 ## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"

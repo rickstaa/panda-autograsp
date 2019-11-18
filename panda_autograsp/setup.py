@@ -33,9 +33,13 @@ TF_MAX_VERSION = "1.13.1"
 
 # Package requirements
 requirements = [
+    "cython",
     "pylibfreenect2",
     "tensorflow-estimator >= 1.13.0, <1.14.0rc0",
     "pyyaml",
+    "pyquaternion",
+    "ruamel.yaml",
+    "opencv-contrib-python",
 ]
 
 # Set up logger

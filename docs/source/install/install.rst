@@ -3,61 +3,122 @@
 .. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
 
 Prerequisites
-==============================
+=========================
+
+Hardware
+---------------
+
+- 1x Microsoft kinect v2.
+- 1x Panda Emika Franka Robot.
+- A laptop or PC with at least 12gb RAM and a decent Graphics card.
+
+Software
+-------------
 
 ROS
------------
+^^^^^^^^^^^^^^^^^^^
 The `panda_autograsp`_ package has only been tested with ``ROS Melodic``.
-The ROS melodic installation instructions can be found `here <https://wiki.ros.org/melodic>`_.
+The ROS melodic installation instructions can be found `here <https://wiki.ros.org/melodic>`__.
 You further also need the following ROS packages:
 
 .. code-block:: bash
 
-    $ sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev
+    sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev
 
 Python
------------
+^^^^^^^^^^^^^^^^^^^
 
 As ROS melodic does not yet fully support python 3, the `panda_autograsp`_
 package has only been tested with ``Python 2.7``.
 
 
 Ubuntu
------------------
+^^^^^^^^^^^^^^^^^^^
 
 The `panda_autograsp`_ package has only been tested with ubuntu ``18.04``.
 
 Libfreenect2 library
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To use the package together with the Kinect camera, we need to install the
 `libfreenect2 <https://github.com/OpenKinect/libfreenect2.git>`_ library. The documentation
 for installing the `libfreenect2 <https://github.com/OpenKinect/libfreenect2.git>`_ can be
 found in the `readme of the repository <https://github.com/OpenKinect/libfreenect2>`_.
 
+Libfranka library
+^^^^^^^^^^^^^^^^^^^^^
+
+In order to use this package with the panda emika franka robots
+you need to build the Libfranka library from source. The steps
+for doing this can be found in the
+`libfranka documentation <https://frankaemika.github.io/docs/installation_linux.html>`_.
+
+.. note::
+
+    If you want to use the `panda_autograsp`_ package with the real robots you
+    also have to install the real-time kernel.
+
 Virtualenv
--------------------
+^^^^^^^^^^^^^^^^^^^
 
-We highly recommend using a Python environment management system like `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_ or `conda <https://conda.io/en/latest/>`_ with the Pip and ROS installations.
+Although the package can be installed on the system python you are advised
+to use a python environment management system like `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_
+or `conda <https://conda.io/en/latest/>`_.
 
-Package build instructions
+.. warning::
+
+    As ROS doesn't play nicely with anaconda I wrote a small
+    `ROS Conda_wrapper <https://github.com/rickstaa/.ros_conda_wrapper>`_.
+    Unfortunately, I wasn't yet able to solve all the problems caused
+    case by this CONDA ROS incompatibility. You are therfore currently
+    advised to use a `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_
+    instead.
+
+CUDA & CUDNN (NVIDIA GPUs only)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Since Tensorflow needs GPU computing capabilities of your NVIDIA
+graphics card, the CUDA v10.0 and CDNN v7.6.5 toolkits
+need to be installed. For installation instructions, you are referred to the
+`CUDA <https://docs.nvidia.com/cuda/archive/10.0/>`_,
+`CUDNN <https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html>`_
+or `tensorflow <https://www.tensorflow.org/install/gpu>`_ documentation.
+Additionally, these toolkits are included in the Conda version
+of the python opencv package. You can install this package by running the
+``conda install -c conda-forge opencv``
+command in your Conda environment.
+
+AMD build of tensorflow (AMD GPUs only)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A guide explaining how to use GPU computing with a AMD graphics card be
+found `here <https://blog.codeinside.eu/2018/12/04/howto-use-tensorflow-with-amd-gpus/>`__.
+
+Package build from source instructions
 ========================================
 
 Clone the repository and build the package
 --------------------------------------------------------
 
-Clone or download the `panda_autograsp`_ package from Github
-and build the catkin_package
-using the following command.
+Clone or download the `panda_autograsp`_ catkin package from Github:
 
 .. code-block:: bash
 
-    $ bash -c "mkdir -p /panda_autograsp_ws \
-    && cd /panda_autograsp_ws \
+    bash -c "mkdir -p ~/panda_autograsp_ws \
+    && cd ~/panda_autograsp_ws \
     && source /opt/ros/melodic/setup.sh \
     && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
     && rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys libfranka \
     && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
+
+Install the ros system and python dependencies
+------------------------------------------------------
+
+Install the ros package dependencies using the following command:
+
+.. code-block:: bash
+
+    rosdep install --from-paths src --ignore-src --rosdistro melodic -y
+
 
 Install python package using pip
 ----------------------------------------
@@ -67,10 +128,16 @@ python packages, we need to install some additional packages using
 the `pip install command`. To ease this process a ``setup.py`` file
 was created. This file can be invoked using the following commands:
 
+Build the package
+-------------------------
+
+The catkin package can be build by executing one of the following commands:
+
 .. code-block:: bash
 
-    $ cd ~/panda_autograsp
-    $ pip install .
+    catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
+    cd ~/panda_autograsp
+    pip install .
 
 Singularity Container installation instructions
 ==================================================
@@ -83,6 +150,22 @@ recipe files found in the ``panda_autograsp/containers/singularity``
 folder or by pulling directly from the `singularity-hub.org <https://www.singularity-hub.org>`_
 container registry.
 
+.. note::
+
+    Due to the fact that I wasn't able to solve the ros_conda_wrapper problem explained above the
+    container, which uses anaconda is not fully ready. I will update the container with the stable
+    `ROS Conda_wrapper <https://github.com/rickstaa/.ros_conda_wrapper>`_ when it is stable.
+
+.. warning::
+
+    As the Franka real-time kernel does not yet support NVIDIA drivers
+    (`see the Libfranka docs <https://frankaemika.github.io/docs/installation_linux.html>`_)
+    the NVIDIA container can currently only be used with the simulated robot.
+    An AMD container will be created when singularity starts to support AMD graphics cards.
+    Currently, if you want to use this package on the real robot, you, therefore, have to install it and its dependencies manually. Taking a look at the bash code in the
+    ``./containers/singularity/Singularity.ros_melodic-cuda10-bionic``
+    might ease this process.
+
 1. Build the container
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -92,13 +175,15 @@ registry as follows:
 
 .. code-block:: bash
 
-    $ build <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-xenial
+    build <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-bionic
 
-It can also be built from the recipe file using the following command:
+Go to the ``panda_autograsp/containers/singularity`` folder and
+built the container using the recipe file. This is done by running the
+following command:
 
 .. code-block:: bash
 
-    $ sudo singularity <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-xenial
+    sudo singularity <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-bionic
 
 You can also add the ``--sandbox`` argument to build the container as
 a writeable folder.
@@ -114,15 +199,32 @@ After te container has been build run it using the
 3. Clone the repository and build the package
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-After you are inside the singularity container, you have to build
-the `panda_autograsp`_
-`as explained above <#Build-the-panda-autograsp-package>`_.
+As the panda_autograsp package is still private it can not be
+automatically build during the container generation. You therefore
+have to clone and build the package manually after the docker
+container is build. This is done by running the following commands:
+
+.. code-block:: bash
+
+    bash -c "mkdir -p ~/panda_autograsp_ws \
+    && cd ~/panda_autograsp_ws \
+    && source /opt/ros/melodic/setup.sh \
+    && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
+    && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
 
 .. warning::
- As explained in `issue <https://answers.ros.org/question/256886/conflict-anaconda-vs-ros-catking_pkg-not-found/>`_
- there exist some conflicts between anaconda3 and ROS melodic. As the singularity image provided above automatically starts the ``autograsp``
- conda environment you first need to disable this anaconda environment before you can build the catkin package. After the
- catkin package is built you can enable the anaconda environment again and install the ``autograsp`` package.
+
+    As all of the system dependencies for the `panda_autograsp`_ package
+    have already been installed during the container creation, contrary
+    to normal build instructions, for the singularity container, you
+    don't need to run ``rosdep install`` command. If you want to install
+    new system dependencies or run the ``rosdep install`` command you have
+    to make sure you start the container as the root user. This is necessary
+    since, in a singularity container, you are the same user inside and outside
+    the container. When developing inside the singularity container, you are
+    therefore advised to place the `panda_autograsp`_ workspace on a path
+    which can be both accessed by you and the root user (``/opt/`` or the
+    container main path ``/`` for example).
 
 4. Add additional permissions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -135,13 +237,13 @@ container by:
 
 .. code-block:: bash
 
-    $ sudo chgrp -R <YOUR_USER_NAME> ./<YOUR_CONTAINER_NAME>
+    sudo chgrp -R <YOUR_USER_NAME> ./<YOUR_CONTAINER_NAME>
 
 #. Giving your user group read and write access to the ``<YOUR_CONTAINER_NAME`` folder.
 
 .. code-block:: bash
 
-    $ sudo chmod -R g+rwx ./<YOUR_CONTAINER_NAME>
+    sudo chmod -R g+rwx ./<YOUR_CONTAINER_NAME>
 
 AMD compatible container
 ----------------------------

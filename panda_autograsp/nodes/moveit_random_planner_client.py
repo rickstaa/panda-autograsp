@@ -34,8 +34,8 @@ from panda_autograsp.srv import (
 if __name__ == "__main__":
 
     #  Initialize ros node
-    rospy.loginfo("Initializing moveit_planner_client node")
     rospy.init_node("moveit_planner_client", anonymous=True)
+    rospy.loginfo("Initializing moveit_planner_client node")
 
     ###############################################
     #  Initialize moveit_planner server services ##
@@ -138,8 +138,10 @@ if __name__ == "__main__":
     ###############################################
     #  Execute moveit plan services  ##############
     ###############################################
+    rospy.loginfo("Wait for the moveit interface...")
+    rospy.sleep(5)
     print(
-        "== Random planner client ==\n"
+        "\n== Random planner client ==\n"
         "This ros node can be used to test "
         "out the different random planner "
         "services present in the "

@@ -84,6 +84,7 @@ POSE_CALIB_METHOD = MAIN_CFG["calibration"]["pose_estimation_calib_board"]
 # Script settings ###############################
 #################################################
 CALIB_TRY_DURATION = MAIN_CFG["calibration"]["calib_try_duration"]  # [s]
+CABLIB_METHODS = ["chessboard", "aruco_board"]
 
 ###############################
 # Chessboard settings #########
@@ -136,7 +137,26 @@ class PandaAutograspServer:
         The translation vector of the camera/world calibration.
     """
 
-    def __init__(self):
+    def __init__(self, pose_calib_method=POSE_CALIB_METHOD, gazebo=False):
+        """
+        Parameters
+        ----------
+        pose_calib_method : :py:obj:`str`, optional
+            Calibration pattern type., by default read from main_config.yaml.
+        gazebo : :py:obj:`bool`, optional
+            Specifies whether we are in a gazebo simulation, by default false.
+        """
+
+        # Get pose calib method from input
+        if pose_calib_method == "":
+            self.pose_calib_method = POSE_CALIB_METHOD
+        if pose_calib_method.lower() not in CABLIB_METHODS:
+            self.pose_calib_method = POSE_CALIB_METHOD
+        else:
+            self.pose_calib_method = pose_calib_method
+
+        # Get gazebo bool
+        self.gazebo=gazebo
 
         # Setup cv_bridge
         self._cv_bridge = CvBridge()
@@ -350,6 +370,30 @@ class PandaAutograspServer:
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
                 % (rospy.get_name(), self._set_gripper_closed_srv.resolved_name)
+            )
+            rospy.logerr(shutdown_msg)
+            sys.exit(0)
+
+        # Initialize reset octomap service
+        rospy.logdebug(
+            "Connecting to '/clear_octomap/' service..."
+        )
+        rospy.wait_for_service("/clear_octomap")
+        try:
+            self._clear_octomap_srv = rospy.ServiceProxy(
+                "/clear_octomap", Empty
+            )
+            rospy.logdebug(
+                "Connected to '/clear_octomap' service."
+            )
+        except rospy.ServiceException as e:
+            rospy.logerr(
+                "Panda_autograsp '/clear_octomap' "
+                "service initialization failed: %s" % e
+            )
+            shutdown_msg = (
+                "Shutting down %s node because %s service connection failed."
+                % (rospy.get_name(), self._clear_octomap_srv.resolved_name)
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -785,20 +829,29 @@ class PandaAutograspServer:
         """
 
         # Retrieve camera pose
-        retval, self.rvec, self.tvec = self._camera_world_calibration(
-            calib_type=POSE_CALIB_METHOD
-        )
+        if self.gazebo:
 
-        # Test if successful
-        if retval:
-
-            # Publish the camera frame
-            self.broadcast_camera_frame(calib_type=POSE_CALIB_METHOD)
-
-            # return result
+            # Return True as we don't need a calibration in simulation
             return True
         else:
-            return False
+
+            # Perform calibration
+            retval, self.rvec, self.tvec = self._camera_world_calibration(
+                calib_type=self.pose_calib_method
+            )
+
+            # Test if successful
+            if retval:
+
+                # Publish the camera frame
+                self.broadcast_camera_frame(calib_type=self.pose_calib_method)
+
+                # return result
+                return True
+            else:
+                return False
+
+
 
     def _camera_world_calibration(self, calib_type=POSE_CALIB_METHOD):
         """Perform camera world calibration (External camera matrix) using
@@ -873,8 +926,8 @@ class PandaAutograspServer:
                 image=gray,
                 dictionary=ARUCO_DICT,
                 parameters=aruco.DetectorParameters_create(),
-                cameraMatrix=camera_matrix,
-                distCoeff=dist_coeffs,
+                # cameraMatrix=camera_matrix,
+                # distCoeffs=dist_coeffs,
             )
 
             # Refine detected markers
@@ -1089,7 +1142,13 @@ class PandaAutograspServer:
             sensor_frame_tf_msg.transform.rotation.w = float(quat[0])
 
             # Communicate sensor_frame_pose to the tf2_broadcaster node
-            self._set_sensor_pose_srv(sensor_frame_tf_msg)
+            result = self._set_sensor_pose_srv(sensor_frame_tf_msg)
+
+            # Reset the octomap if pose was succesfully set
+            if result.success:
+                # Wait some time to give tf2_broadcaster the time to broadcast
+                rospy.sleep(MAIN_CFG["calibration"]["octomap_reset_wait_Time"])
+                self._clear_octomap_srv()
         else:
 
             # Get rotation matrix
@@ -1138,4 +1197,11 @@ class PandaAutograspServer:
             sensor_frame_tf_msg.transform.rotation.w = float(quat[0])
 
             # Communicate sensor_frame_pose to the tf2_broadcaster node
-            self._set_sensor_pose_srv(sensor_frame_tf_msg)
+            result = self._set_sensor_pose_srv(sensor_frame_tf_msg)
+
+            # Reset the octomap if pose was succesfully set
+            if result.success:
+
+                # Wait some time to give tf2_broadcaster the time to broadcast
+                rospy.sleep(MAIN_CFG["calibration"]["octomap_reset_wait_Time"])
+                self._clear_octomap_srv()

@@ -42,6 +42,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
+    # "breathe",
 ]
 autoclass_content = "class"
 autodoc_member_order = "bysource"
@@ -49,6 +50,10 @@ autodoc_default_flags = ["members"]  # , "show-inheritance"]
 autosummary_generate = True
 napoleon_include_special_with_doc = True
 napoleon_include_init_with_doc = True
+
+# Breathe settings
+breathe_projects = {"panda_autograsp": "../build/doxyxml"}
+breathe_default_project = "panda_autograsp"
 
 # Add mappings
 intersphinx_mapping = {

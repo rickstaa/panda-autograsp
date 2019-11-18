@@ -20,12 +20,19 @@ currently contains the following grasping algorithm:
 Package overview
 ---------------------------
 
-.. figure:: ../_images/algorithm_overview.svg
-    :width: 100%
-    :scale: 90%
+.. figure:: https://user-images.githubusercontent.com/17570430/69045081-6cc9f100-09f6-11ea-90cd-7a0e7bf1434d.png
     :align: center
 
-    Flow diagram of the `panda_autograsp`_ system.
+    Flow diagram of the `panda_autograsp`_ algorithm.
+
+- **Image processing nodes (Iai_kinect2_bridge)**: The image processing is performed by the `iai_kinect2`_ package.
+- **panda_autograsp_server**: This node is responsible for connecting all of the individual components of the `panda_autograsp`_ solution together.
+- **panda_autograsp_cli**: This node is used to control the `panda_autograsp`_ solution.
+- **grasp_planner_server**: This node computes a valid grasp out of RGB-D images it receives from the ``panda_autograsp_server`` node.
+- **tf2_broadcaster**: This node sends the Robot eye-hand calibration results to the ``/tf`` node so that the scene gets updated.
+- **moveit_planner_server**: This node is used to control the robot using the moveit planning framework.
+
+.. _iai_kinect2: https://github.com/code-iai/iai_kinect2
 
 Grasping solutions
 ---------------------------

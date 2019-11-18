@@ -5,17 +5,18 @@
 <launch>
 
     <!-- Setup launchfile arguments -->
-    <arg name="ns" default="panda_autograsp"/>
-    <arg name="panda_launch" default="false"/>
+    <arg name="panda_autograsp_launch" default="false"/>
 
     <!-- Start panda_autograsp ROS nodes -->
-    <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" if="$(arg panda_launch)">
+    <include file="$(find panda_autograsp)/launch/panda_autograsp.launch" if="$(arg panda_autograsp_launch)">
         <arg name="output" value="log" />
     </include>
+    <group unless="$(arg panda_autograsp_launch)">
+        <include file="$(find panda_moveit_config)/launch/demo.launch" unless="$(arg panda_autograsp_launch)"/>
+        <node pkg="panda_autograsp" type="moveit_planner_server.py" name="moveit_planner_server" required="true" output="log"/>
+    </group>
 
     <!-- Start random movement planner client -->
-    <group ns="$(arg ns)">
-        <node pkg="panda_autograsp" type="moveit_random_planner_client.py" name="moveit_random_planner_client" output="screen"/>
-    </group>
+    <node pkg="panda_autograsp" type="moveit_random_planner_client.py" name="moveit_random_planner_client" output="screen"/>
 
 </launch>

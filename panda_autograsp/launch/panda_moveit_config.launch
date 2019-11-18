@@ -1,53 +1,49 @@
 <launch>
 
   <!-- Launch file arguments-->
-  <!-- By default, we do not start a database (it can be large) -->
-  <arg name="db" default="false" />
-  <!-- Allow user to specify database location -->
-  <arg name="db_path" default="$(find panda_moveit_config)/default_warehouse_mongo_db" />
-  <!-- Get moveit perception settings -->
-  <arg name="moveit_perception" default="false" />
-  <arg name="moveit_perception_frame" default="kinect2_ir_optical_frame"/>
-  <!-- By default, we are not in debug mode -->
-  <arg name="debug" default="false" />
-  <arg name="pipeline" default="ompl" />
-  <!-- Allow user to specify if they want an extra gripper center frame -->
+  <arg name="load_gripper" default="true"/>
+  <arg name="real" default="false"/>
+  <arg name="gazebo" default="false"/>
+  <arg name="rviz_gui" default="true"/>
+  <arg name="joint_state_gui" default="false"/>
   <arg name="gripper_center" default="false"/>
   <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/>
+  <arg name="gripper_center_rpy" default="0.0 0.0 0.0"/>
+  <arg name="moveit_perception" default="false" />
+  <arg name="moveit_perception_frame" default="kinect2_ir_optical_frame"/>
+  <arg name="octomap_type" default="depthmap"/>
+  <arg name="octomap_resolution" default="0.01"/>
+  <arg name="pipeline" default="ompl" />
+  <!-- Database settings -->
+  <arg name="db" default="false" />
+  <arg name="db_path" default="$(find panda_moveit_config)/default_warehouse_mongo_db" />
+  <!-- GDB Debug Option -->
+  <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg if="$(arg debug)" name="launch_prefix" value="gdb -x $(find panda_moveit_config)/launch/gdb_settings.gdb --ex run --args" />
 
-  <!--
-  By default, hide joint_state_publisher's GUI
+  <!-- If needed, broadcast static tf for robot root -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="virtual_joint_broadcaster_1" args="0 0 0 0 0 0 world panda_link0" respawn="true"/>
 
-  MoveIt!'s "demo" mode replaces the real robot driver with the joint_state_publisher.
-  The latter one maintains and publishes the current joint configuration of the simulated robot.
-  It also provides a GUI to move the simulated robot around "manually".
-  This corresponds to moving around the real robot without the use of MoveIt.
-  -->
-  <arg name="rviz_tutorial" default="false" />
-  <arg name="use_gui" default="false" />
+  <!-- We do not have a robot connected, so publish fake joint states -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" if="$(eval not arg('real') and not arg('gazebo'))">
+    <param name="/use_gui" value="$(arg joint_state_gui)"/>
+    <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
+  </node>
+  <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" respawn="true"/>
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
   <include file="$(find panda_moveit_config)/launch/planning_context.launch">
+    <arg name="load_gripper" value="$(arg load_gripper)"/>
     <arg name="load_robot_description" value="true"/>
     <arg name="gripper_center" value="$(arg gripper_center)"/>
     <arg name="gripper_center_xyz" value="$(arg gripper_center_xyz)"/>
+    <arg name="gripper_center_rpy" value="$(arg gripper_center_rpy)"/>
   </include>
-
-  <!-- If needed, broadcast static tf for robot root -->
-  <node pkg="tf2_ros" type="static_transform_publisher" name="virtual_joint_broadcaster_1" args="0 0 0 0 0 0 world panda_link0" />
-
-  <!-- We do not have a robot connected, so publish fake joint states -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <param name="/use_gui" value="$(arg use_gui)"/>
-    <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
-  </node>
-  <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" />
-
-  <!-- Given the published joint states, publish tf for the robot links -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
 
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
   <include file="$(find panda_moveit_config)/launch/move_group.launch">
+    <arg name="load_gripper" value="$(arg load_gripper)"/>
     <arg name="allow_trajectory_execution" value="true"/>
     <arg name="fake_execution" value="true"/>
     <arg name="info" value="true"/>
@@ -55,15 +51,22 @@
     <arg name="pipeline" value="$(arg pipeline)"/>
     <arg name="gripper_center" value="$(arg gripper_center)"/>
     <arg name="gripper_center_xyz" value="$(arg gripper_center_xyz)"/>
+    <arg name="gripper_center_rpy" value="$(arg gripper_center_rpy)"/>
     <arg name="moveit_perception" value="$(arg moveit_perception)" />
     <arg name="moveit_perception_frame" value="$(arg moveit_perception_frame)"/>
+    <arg name="octomap_type" value="$(arg octomap_type)"/>
+    <arg name="octomap_resolution" value="$(arg octomap_resolution)"/>
   </include>
 
   <!-- Run Rviz -->
-  <include file="$(find panda_autograsp)/launch/moveit_rviz.launch">
-    <arg name="rviz_tutorial" value="$(arg rviz_tutorial)"/>
-    <arg name="debug" value="$(arg debug)"/>
-  </include>
+  <group if="$(arg rviz_gui)">
+    <include file="$(find panda_autograsp)/launch/moveit_rviz.launch">
+      <arg name="debug" value="$(arg debug)"/>
+    </include>
+  </group>
+
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
 
   <!-- If database loading was enabled, start mongodb as well -->
   <include file="$(find panda_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">

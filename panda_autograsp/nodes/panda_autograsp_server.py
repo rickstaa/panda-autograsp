@@ -41,13 +41,19 @@ if __name__ == "__main__":
     rospy.init_node("panda_autograsp_server")
 
     # Get private parameters specified in the launch file
-    try:
-        POSE_CALIB_METHOD = rospy.get_param("~calib_type")
+    try:  # Check calib type
+        pose_Calib_method = rospy.get_param("~calib_type")
     except KeyError:
-        pass
+        pose_Calib_method = ""
+    try:  # Check if wer are in a gazebo simulation
+        gazebo = rospy.get_param("~gazebo")
+    except KeyError:
+        gazebo = False
 
     # Create GraspPlannerClient object
-    grasp_planner_client = PandaAutograspServer()
+    grasp_planner_client = PandaAutograspServer(
+        pose_calib_method=pose_Calib_method, gazebo=gazebo
+    )
 
     # Loop till the service is shutdown
     rospy.spin()

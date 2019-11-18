@@ -93,6 +93,7 @@ calibration:
 
   pose_estimation_calib_board: aruco_board # [aruco_board or chessboard]
   calib_try_duration: 30 # How long [s] we should search for the pattern before giving up
+  octomap_reset_wait_Time: 5 # How long [s] to wait after the calibration before resting the octomap (Dependent how fast the computer is)
 
   chessboard_settings:
     N_FRAMES: 10  # Number of frames of which to take the median

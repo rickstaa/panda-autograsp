@@ -58,6 +58,7 @@
   <build_depend>message_generation</build_depend>
 
   <build_depend>std_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>geometry_msgs</build_depend>
 
@@ -67,14 +68,46 @@
   <exec_depend>message_runtime</exec_depend>
 
   <exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>tf_conversions</exec_depend>
   <exec_depend>tf2_geometry_msgs</exec_depend>
   <exec_depend>trajectory_msgs</exec_depend>
   <exec_depend>moveit_msgs</exec_depend>
 
-  <!-- Python package dependencies -->
-  <exec_depend>ruemel.yaml</exec_depend>
+  <!-- Additional dependencies -->
+  <depend>controller_manager</depend>
+  <depend>effort_controllers</depend>
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_ros_control</depend>
+  <depend>joint_state_controller</depend>
+  <depend>joint_state_publisher</depend>
+  <depend>joint_trajectory_controller</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>xacro</depend>
+  <depend>moveit_simple_controller_manager</depend>
+  <depend>moveit_core</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_ros_perception</depend>
+  <depend>moveit_visual_tools</depend>
+
+  <!-- NOTE: The python dependencies can not be installed
+       using the rosdep package since specific versions
+       are required for tensorflow and tensorflow-estimator. -->
+  <!-- My system python package dependencies -->
+  <!-- <exec_depend>python-pyquaternion-pip</exec_depend>
+  <exec_depend>python-yaml</exec_depend>
+  <exec_depend>python-cython-pip</exec_depend>
+  <exec_depend>python-pylibfreenect2</exec_depend>
+  <exec_depend>python-matplotlib</exec_depend> -->
+
+  <!-- Missing system python dependencies of submodules -->
+  <!-- <exec_depend>python-ruamel.yaml</exec_depend>
+  <exec_depend>python-scipy</exec_depend>
+  <exec_depend>python-sklearn</exec_depend>
+  <exec_depend>python-multiprocess</exec_depend>
+  <exec_depend>python-setproctitle</exec_depend> -->
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

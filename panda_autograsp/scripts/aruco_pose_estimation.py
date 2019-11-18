@@ -143,8 +143,8 @@ if __name__ == "__main__":
             image=gray,
             dictionary=ARUCO_DICT,
             parameters=ARUCO_PARAMETERS,
-            cameraMatrix=camera_matrix,
-            distCoeff=dist_coeffs,
+            #camMatrix=camera_matrix,
+            #distCoeff=dist_coeffs,
         )
 
         # Refine detected markers
