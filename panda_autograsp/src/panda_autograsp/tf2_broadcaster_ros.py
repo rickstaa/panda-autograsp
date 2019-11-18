@@ -218,7 +218,7 @@ class Tf2Broadcaster:
         }
         if not diff_items == {}:
             log_msg = ""
-            for key, value in diff_items.items():
+            for key, _ in diff_items.items():
                 log_msg = log_msg + ", {}: {}".format(key, diff_items[key])
             rospy.loginfo("Reconfigure Request: " + log_msg[2:])
 

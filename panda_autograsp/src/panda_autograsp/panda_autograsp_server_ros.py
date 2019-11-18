@@ -851,8 +851,6 @@ class PandaAutograspServer:
             else:
                 return False
 
-
-
     def _camera_world_calibration(self, calib_type=POSE_CALIB_METHOD):
         """Perform camera world calibration (External camera matrix) using
         a chessboard or several aruco markers.
@@ -932,7 +930,7 @@ class PandaAutograspServer:
 
             # Refine detected markers
             # Eliminates markers not part of our board and adds missing markers
-            corners, ids, rejectedImgPoints, recoveredIds = aruco.refineDetectedMarkers(
+            corners, ids, _, _ = aruco.refineDetectedMarkers(
                 image=gray,
                 board=aruco_board,
                 detectedCorners=corners,
@@ -1045,12 +1043,12 @@ class PandaAutograspServer:
                 )
 
                 # Find the rotation and translation vectors.
-                retval, rvecs, tvecs, inliers = cv2.solvePnPRansac(
+                retval, rvecs, tvecs, _ = cv2.solvePnPRansac(
                     objp, corners2, camera_matrix, dist_coeffs
                 )
 
                 # project 3D points to image plane
-                imgpts, jac = cv2.projectPoints(
+                imgpts, _ = cv2.projectPoints(
                     axis, rvecs, tvecs, camera_matrix, dist_coeffs
                 )
 

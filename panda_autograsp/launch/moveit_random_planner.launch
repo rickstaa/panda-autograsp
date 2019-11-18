@@ -17,6 +17,6 @@
     </group>
 
     <!-- Start random movement planner client -->
-    <node pkg="panda_autograsp" type="moveit_random_planner_client.py" name="moveit_random_planner_client" output="screen"/>
+    <node pkg="panda_autograsp" type="moveit_random_planner_client.py" name="moveit_random_planner_client" required="true" output="screen"/>
 
 </launch>

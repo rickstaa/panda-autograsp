@@ -16,7 +16,6 @@ Source code
 """
 
 # Main python packages
-import numpy
 import sys
 import cv2
 import cv2.aruco as aruco
@@ -143,8 +142,8 @@ if __name__ == "__main__":
             image=gray,
             dictionary=ARUCO_DICT,
             parameters=ARUCO_PARAMETERS,
-            #camMatrix=camera_matrix,
-            #distCoeff=dist_coeffs,
+            # camMatrix=camera_matrix,
+            # distCoeff=dist_coeffs,
         )
 
         # Refine detected markers

@@ -450,10 +450,13 @@ class MoveitPlannerServer:
 
         # Plan to random pose
         def req():
-            None  # Create dumpy request function object
+            None  # Create dummy request function object
 
         req.target = rand_pose  # set random pose as a property
         result = self.plan_to_point_service(req)
+
+        # Remove req dummy function
+        del req
 
         # Check whether path planning was successful
         if result:
@@ -483,10 +486,13 @@ class MoveitPlannerServer:
 
         # Plan to random pose
         def req():
-            None  # Create dumpy request function object
+            None  # Create dummy request function object
 
         req.target = rand_joint  # set random joint goal as a property
         result = self.plan_to_joint_service(req)
+
+        # Remove req dummy function
+        del req
 
         # Check whether path planning was successful
         if result:
@@ -526,10 +532,13 @@ class MoveitPlannerServer:
 
         # Plan cartesian path
         def req():
-            None  # Create dumpy request function object
+            None  # Create dummy request function object
 
         req.waypoints = waypoints  # set random pose as a property
         result = self.plan_cartesian_path_service(req)
+
+        # Remove req dummy function
+        del req
 
         # Check whether path planning was successful
         if result:

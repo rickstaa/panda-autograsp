@@ -113,10 +113,10 @@ if __name__ == "__main__":
     # Download CNN model if not present
     model_dir = os.path.join(MODELS_PATH, model_name)
     if not os.path.exists(model_dir):
-        rospy.logwarn(
+        rospy.logerr(
             "The " + model_name + " model was not found in the models"
-            " folder. This model is required"
-            "to continue."
+            " folder. This model is required "
+            "to continue. Do you want to download this model now? [Y/n]>"
         )
         while True:
             prompt_result = input("Do you want to download this model now? [Y/n] ")
@@ -278,7 +278,11 @@ if __name__ == "__main__":
     cfg["policy"]["gripper_width"] = MAIN_CFG["robot"][
         "gripper_width"
     ]  # Update gripper width
-    cfg["policy"]["metric"]["crop_width"]
+
+    # Add policy metric crop width and height
+    if fully_conv:
+        cfg["policy"]["metric"]["crop_width"] = 96
+        cfg["policy"]["metric"]["crop_height"] = 96
 
     # Create publisher to publish pose of final grasp
     grasp_pose_publisher = rospy.Publisher(

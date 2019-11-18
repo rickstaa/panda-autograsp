@@ -81,7 +81,7 @@ def get_tf_dep():
     return tf_dep
 
 
-def list_files(path=".", exclude=[], recursive=True, prepent_parent=False):
+def list_files(path=".", exclude=[""], recursive=True, prepent_parent=False):
     """Returns a list of files that are present in a folder.
 
     Parameters
