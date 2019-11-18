@@ -27,8 +27,8 @@ copyright = "2019, Rick Staa"
 author = "Rick Staa"
 
 # The full version, including alpha/beta/rc tags
-version = "0.0"
-release = "0.0.6"
+version = "1.0.0"
+release = "1.0.0"
 
 # -- General configuration ---------------------------------------------------
 
