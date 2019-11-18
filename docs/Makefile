@@ -21,7 +21,7 @@ clean:
 gh-pages:
 	git checkout gh-pages && \
 	cd .. && \
-	git rm -rf . && git clean -fxd && \
+	git rm -rf . && git clean -ffxd && \
 	git checkout master $(GH_PAGES_SOURCES) && \
 	git reset HEAD && \
 	cd docs && \
