@@ -1,8 +1,0 @@
-{
-  "action_sampling_distributions": {
-    "dex-net": 0, 
-    "fc": 3, 
-    "image": 1, 
-    "random": 2
-  }
-}

@@ -4,23 +4,8 @@ build/*
 _build/*
 tmp/*
 dist/*
-models/FC-GQCNN-4.0-PJ/
-models/FC-GQCNN-4.0-SUCTION/
-models/GQCNN-2.0/
-models/GQCNN-2.1/
-models/GQCNN-3.0/
-models/GQCNN-4.0-PJ/
-models/GQCNN-4.0-SUCTION/
-models/example_training_dataset_pj/
 
 # files to ignore
-models/FC-GQCNN-4.0-PJ.zip
-models/FC-GQCNN-4.0-SUCTION.zip
-models/GQCNN-2.0.zip
-models/GQCNN-2.1.zip
-models/GQCNN-3.0.zip
-models/GQCNN-4.0-PJ.zip
-models/GQCNN-4.0-SUCTION.zip
 microsoft.gpg
 *.pyc
 *.log
