@@ -1,13 +1,13 @@
-## Ros melodic container for the panda_autograsp package
+## Ros kinetic container for the panda_autograsp package
 # NOTE: This container is for Nvidia graphics card. A amd version
 # Will be released as soon singularity support is added.
 
 Bootstrap: docker
-From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+From: nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
 
 %help
     A HPC Singularity container containing the following packages:
-        - ROS melodic
+        - ROS kinetic
         - moveit
         - tensorflow_gpu
         - opencv2
@@ -16,7 +16,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
         - CUDNN 7
 
     Container aliases:
-        - rsource:  Source the ROS melodic setup file
+        - rsource:  Source the ROS kinetic setup file
         - rossu:    Source a setup.bash file in ./devel/setup.bash
         - agrasp:   Activate the autograsp conda enviroment
         - dgrasp:   Deactivate autograsp conda enviroment
@@ -35,7 +35,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
     LANG=C.UTF-8 LC_ALL=C.UTF-8
 
     # Set ROS distro var
-    export ROS_DISTRO=melodic
+    export ROS_DISTRO=kinetic
 
     # Cuda samples env var
     export NVCUDASAMPLES_ROOT=/opt/NVIDIA_CUDA-10.0_Samples
@@ -48,8 +48,8 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 %post
 
     # Set TZDATA region
-    echo 'Etc/UTC' > /etc/timezone
-    ln -s /usr/share/zoneinfo/Etc/UTC /etc/localtime
+    # echo 'Etc/UTC' > /etc/timezone
+    # ln -s /usr/share/zoneinfo/Etc/UTC /etc/localtime
 
     # Install system package dependencies
     apt update --fix-missing
@@ -69,7 +69,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
         && git clone https://github.com/rickstaa/deep_robotics_singularity_recipes.git \
         && cp ./deep_robotics_singularity_recipes/resources/.singularity_bashrc /.singularity_bashrc \
         && cp ./deep_robotics_singularity_recipes/resources/.conda_init /.conda_init \
-        && cp ./deep_robotics_singularity_recipes/resources/welcome_msgs/panda_autograsp-ros_melodic-cuda10-bionic.txt /.welcome_msg \
+        && cp ./deep_robotics_singularity_recipes/resources/welcome_msgs/panda_autograsp-ros_kinetic-cuda10-xenial.txt /.welcome_msg \
         && cp ./deep_robotics_singularity_recipes/resources/bash_aliases/.singularity_bash_aliases /.singularity_bash_aliases \
         && cp ./deep_robotics_singularity_recipes/resources/bash_aliases/panda_autograsp_aliases.txt /container_aliases.txt \
         && sed -e \"s/#_CONTAINER_ALIASES/\$(</container_aliases.txt sed -e 's/[\&/]/\\\&/g' -e 's/$/\\\n/' | tr -d '\n')/g\" -i .singularity_bash_aliases \
@@ -83,9 +83,9 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
     echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
     apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-    # Install ROS melodic desktop full
+    # Install ROS kinetic desktop full
     apt update
-    apt install -q -y ros-melodic-desktop-full
+    apt install -q -y ros-kinetic-desktop-full
 
     # Initiate and update rosdep repository
     rosdep init
@@ -98,12 +98,12 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
         python-rosinstall \
         python-rosinstall-generator \
         python-wstool build-essential \
-        ros-melodic-catkin \
+        ros-kinetic-catkin \
         python-catkin-tools
 
     # Install moveit
     sudo apt-get install -y -q \
-        ros-melodic-moveit
+        ros-kinetic-moveit
 
     # Download cuda10.0 samples and set cmake variables
     bash -c "cd /opt \
@@ -122,7 +122,8 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
     apt update
     apt install -q -y \
         libusb-1.0-0-dev \
-        libturbojpeg0-dev \
+        libturbojpeg \
+        libjpeg-turbo8-dev \
         libglfw3-dev \
         libopenni2-dev \
         openni2-utils
@@ -154,10 +155,10 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 
     # Install additional panda_autograsp system dependencies
     apt install -q -y \
-       ros-melodic-controller-manager* \
-       ros-melodic-effort-controllers \
-       ros-melodic-joint-trajectory-controller \
-       ros-melodic-joint-state-controller*
+       ros-kinetic-controller-manager* \
+       ros-kinetic-effort-controllers \
+       ros-kinetic-joint-trajectory-controller \
+       ros-kinetic-joint-state-controller*
 
     # Install miniconda3
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh

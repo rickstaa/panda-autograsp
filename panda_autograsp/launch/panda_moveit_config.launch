@@ -5,6 +5,7 @@
   <arg name="real" default="false"/>
   <arg name="gazebo" default="false"/>
   <arg name="rviz_gui" default="true"/>
+  <arg name="external_franka_control" default="false"/>
   <arg name="joint_state_gui" default="false"/>
   <arg name="gripper_center" default="false"/>
   <arg name="gripper_center_xyz" default="0.0 0.0 0.10"/>
@@ -21,16 +22,23 @@
   <arg name="debug" default="false" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
   <arg if="$(arg debug)" name="launch_prefix" value="gdb -x $(find panda_moveit_config)/launch/gdb_settings.gdb --ex run --args" />
+  <!-- Change loggin formatg -->
+  <env name="ROSCONSOLE_FORMAT" value="[${severity}] [WallTime: ${time}]: [${node}] ${message}" if="$(arg debug)"/>
 
   <!-- If needed, broadcast static tf for robot root -->
   <node pkg="tf2_ros" type="static_transform_publisher" name="virtual_joint_broadcaster_1" args="0 0 0 0 0 0 world panda_link0" respawn="true"/>
 
   <!-- We do not have a robot connected, so publish fake joint states -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" if="$(eval not arg('real') and not arg('gazebo'))">
-    <param name="/use_gui" value="$(arg joint_state_gui)"/>
-    <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
-  </node>
-  <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" respawn="true"/>
+  <group if="$(eval not arg('real') and not arg('gazebo'))">
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+      <param name="/use_gui" value="$(arg joint_state_gui)"/>
+      <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
+    </node>
+  </group>
+  <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" respawn="true" if="$(eval not arg('real'))"/>
+
+  <!-- Spawn controller if working with real robot and controlled from this pc -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="position_joint_trajectory_controller" if="$(eval arg('real') and not arg('external_franka_control'))"/>
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
   <include file="$(find panda_moveit_config)/launch/planning_context.launch">
@@ -42,7 +50,7 @@
   </include>
 
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
-  <include file="$(find panda_moveit_config)/launch/move_group.launch">
+  <include file="$(find panda_moveit_config)/launch/move_group.launch" unless="$(eval arg('external_franka_control'))">
     <arg name="load_gripper" value="$(arg load_gripper)"/>
     <arg name="allow_trajectory_execution" value="true"/>
     <arg name="fake_execution" value="true"/>
@@ -66,7 +74,7 @@
   </group>
 
   <!-- Given the published joint states, publish tf for the robot links -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" if="$(eval not arg('real'))"/>
 
   <!-- If database loading was enabled, start mongodb as well -->
   <include file="$(find panda_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">
