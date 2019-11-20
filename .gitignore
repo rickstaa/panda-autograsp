@@ -4,6 +4,9 @@ build/*
 _build/*
 tmp/*
 dist/*
+/panda_autograsp/models/*
+!/panda_autograsp/models/coke_can
+!/panda_autograsp/models/plastic_cup
 
 # files to ignore
 microsoft.gpg
