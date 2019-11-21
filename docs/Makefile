@@ -20,7 +20,7 @@ clean:
 .PHONY: gh-pages
 gh-pages:
 	cd .. && \
-	git submodule update --init --recursive && \
+	git submodule update --recursive && \
 	git checkout gh-pages && \
 	git rm -rf . && git clean -fxd && \
 	git checkout melodic-devel $(GH_PAGES_SOURCES) && \
@@ -38,7 +38,7 @@ gh-pages:
 	git commit -m ":pencil: Generated gh-pages for `git log melodic-devel -1 --pretty=short --abbrev-commit`" && \
 	git push origin gh-pages && \
 	git checkout melodic-devel && \
-	git submodule melodic-devel --init --recursive
+	git submodule update --recursive
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
