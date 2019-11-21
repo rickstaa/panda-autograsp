@@ -1,9 +1,9 @@
 # Folders to ignore
 __pychache__/
-build/*
 _build/*
 tmp/*
 dist/*
+/docs/build/*
 /panda_autograsp/models/*
 !/panda_autograsp/models/coke_can
 !/panda_autograsp/models/plastic_cup
