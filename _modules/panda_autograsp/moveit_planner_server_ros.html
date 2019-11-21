@@ -1,0 +1,1123 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>panda_autograsp.moveit_planner_server_ros &mdash; panda_autograsp 1.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> panda_autograsp
+          
+
+          
+            
+            <img src="../../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html#package-build-from-source-instructions">Package build from source instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html#singularity-container-installation-instructions">Singularity Container installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html#docker-container-installation-instructions">Docker container installation instructions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/usage.html">Sensor calibration instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/usage.html#package-use-instructions">Package use instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/usage.html#singularity-container-instructions">Singularity container instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/usage.html#troubleshooting-information">Troubleshooting information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">Python Code API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../license/license.html">License</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Zone</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/release_dev.html">Release package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/doc_dev.html">Release documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">panda_autograsp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>panda_autograsp.moveit_planner_server_ros</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for panda_autograsp.moveit_planner_server_ros</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Module which sets up a number of services that can</span>
+<span class="sd">be used to control the Panda Emika Franka robot.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Make script both python2 and python3 compatible</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">raw_input</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># Main python packages</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">autolab_core</span> <span class="k">import</span> <span class="n">YamlConfig</span>
+
+<span class="c1"># ROS python packages</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">moveit_commander</span>
+<span class="kn">from</span> <span class="nn">moveit_commander</span> <span class="k">import</span> <span class="n">MoveItCommanderException</span>
+
+<span class="c1"># ROS messages and services</span>
+<span class="kn">from</span> <span class="nn">moveit_msgs.msg</span> <span class="k">import</span> <span class="n">DisplayTrajectory</span><span class="p">,</span> <span class="n">RobotTrajectory</span>
+<span class="kn">from</span> <span class="nn">moveit_msgs.srv</span> <span class="k">import</span> <span class="n">ApplyPlanningScene</span>
+
+<span class="c1"># Panda_autograsp modules, msgs and srvs</span>
+<span class="kn">from</span> <span class="nn">panda_autograsp.functions.moveit</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">get_trajectory_duration</span><span class="p">,</span>
+    <span class="n">plan_exists</span><span class="p">,</span>
+    <span class="n">at_joint_target</span><span class="p">,</span>
+    <span class="n">add_collision_objects</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">panda_autograsp.srv</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">ExecutePlan</span><span class="p">,</span>
+    <span class="n">PlanToJoint</span><span class="p">,</span>
+    <span class="n">PlanToPoint</span><span class="p">,</span>
+    <span class="n">PlanToPath</span><span class="p">,</span>
+    <span class="n">PlanToRandomPoint</span><span class="p">,</span>
+    <span class="n">PlanToRandomJoint</span><span class="p">,</span>
+    <span class="n">PlanToRandomPath</span><span class="p">,</span>
+    <span class="n">VisualizePlan</span><span class="p">,</span>
+    <span class="n">CloseGripper</span><span class="p">,</span>
+    <span class="n">OpenGripper</span><span class="p">,</span>
+    <span class="n">SetGripperWidth</span><span class="p">,</span>
+    <span class="n">SetGripperOpen</span><span class="p">,</span>
+    <span class="n">SetGripperClosed</span><span class="p">,</span>
+    <span class="n">PlanGripper</span><span class="p">,</span>
+    <span class="n">ExecuteGripperPlan</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1">#################################################</span>
+<span class="c1"># Script parameters #############################</span>
+<span class="c1">#################################################</span>
+
+<span class="c1"># Get file path</span>
+<span class="n">FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
+
+<span class="c1"># Read panda_autograsp configuration file</span>
+<span class="n">MAIN_CFG</span> <span class="o">=</span> <span class="n">YamlConfig</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FILE_PATH</span><span class="p">,</span> <span class="s2">&quot;../../cfg/main_config.yaml&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="n">POINT_N_STEP</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;planning&quot;</span><span class="p">][</span><span class="s2">&quot;point&quot;</span><span class="p">][</span><span class="s2">&quot;point_n_step&quot;</span><span class="p">]</span>
+<span class="n">EEF_STEP</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;planning&quot;</span><span class="p">][</span><span class="s2">&quot;cartesian&quot;</span><span class="p">][</span><span class="s2">&quot;eef_step&quot;</span><span class="p">]</span>
+<span class="n">JUMP_THRESHOLD</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;planning&quot;</span><span class="p">][</span><span class="s2">&quot;cartesian&quot;</span><span class="p">][</span><span class="s2">&quot;jump_threshold&quot;</span><span class="p">]</span>
+
+<span class="c1"># Read collision object configuration file</span>
+<span class="n">COLLISION_OBJ_CFG</span> <span class="o">=</span> <span class="n">YamlConfig</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FILE_PATH</span><span class="p">,</span> <span class="s2">&quot;../../cfg/moveit_scene_constraints.yaml&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+
+
+<span class="c1">#################################################</span>
+<span class="c1"># MoveitPlannerServer class #####################</span>
+<span class="c1">#################################################</span>
+<div class="viewcode-block" id="MoveitPlannerServer"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer">[docs]</a><span class="k">class</span> <span class="nc">MoveitPlannerServer</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class used for controlling the Panda Emika Franka robot.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ------------</span>
+<span class="sd">        robot : :py:obj:`!moveit_commander.RobotCommander`</span>
+<span class="sd">            The moveit robot commander.</span>
+<span class="sd">        move_group : :py:obj:`!moveit_commander.MoveGroupCommander`</span>
+<span class="sd">            The main robot move group.</span>
+<span class="sd">        move_group_gripper : :py:obj:`!moveit_commander.MoveGroupCommander`</span>
+<span class="sd">            The gripper move group.</span>
+<span class="sd">        scene : :py:obj:`!moveit_commander.PlanningSceneInterface`</span>
+<span class="sd">            The moveit scene commander.</span>
+<span class="sd">        current_plan :</span>
+<span class="sd">            The last computed plan of the main move group.</span>
+<span class="sd">        current_plan_gripper :</span>
+<span class="sd">            The last computed plan of the gripper.</span>
+<span class="sd">        desired_pose : :py:obj:`list`</span>
+<span class="sd">            The main move group goal pose.</span>
+<span class="sd">        desired_joint_values: :py:obj:`list`</span>
+<span class="sd">            The main move group target joint values.</span>
+<span class="sd">        desired_gripper_joint_values : :py:obj:`list`</span>
+<span class="sd">            The gripper target joint values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MoveitPlannerServer.__init__"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">robot_description</span><span class="p">,</span>
+        <span class="n">args</span><span class="p">,</span>
+        <span class="n">move_group</span><span class="o">=</span><span class="s2">&quot;panda_arm&quot;</span><span class="p">,</span>
+        <span class="n">move_group_end_effector_link</span><span class="o">=</span><span class="s2">&quot;panda_gripper_center&quot;</span><span class="p">,</span>
+        <span class="n">move_group_gripper</span><span class="o">=</span><span class="s2">&quot;hand&quot;</span><span class="p">,</span>
+        <span class="n">pose_reference_frame</span><span class="o">=</span><span class="s2">&quot;panda_link0&quot;</span><span class="p">,</span>
+        <span class="n">planner</span><span class="o">=</span><span class="s2">&quot;TRRTkConfigDefault&quot;</span><span class="p">,</span>
+        <span class="n">add_scene_collision_objects</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;PandaPathPlannerService class initialization.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        robot_description : :py:obj:`str`</span>
+<span class="sd">            Where to find the URDF.</span>
+<span class="sd">        args : objects</span>
+<span class="sd">            Roscpp args, passed on.</span>
+<span class="sd">        move_group : :py:obj:`str`</span>
+<span class="sd">            Name of the pose planning reference frame, by default &quot;panda_link0&quot;.</span>
+<span class="sd">        move_group_end_effector_link : :py:obj:`str`</span>
+<span class="sd">            Name of the end effector link.</span>
+<span class="sd">        move_group_gripper : :py:obj:`str`</span>
+<span class="sd">            Name of the move group, by default &quot;panda_arm_hand&quot;.</span>
+<span class="sd">        pose_reference_frame : :py:obj:`str`</span>
+<span class="sd">            Name of the planner reference frame.</span>
+<span class="sd">        planner : :py:obj:`str`, optional</span>
+<span class="sd">            The Path planning algorithm, by default &#39;TRRTkConfigDefault&#39;.</span>
+<span class="sd">        add_scene_collision_objects : :py:obj:`bool`</span>
+<span class="sd">            If true the collision objects specified in the</span>
+<span class="sd">            ``moveit_scene_constraints.yaml`` file will be added to the scene.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Initialize class attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span> <span class="o">=</span> <span class="n">RobotTrajectory</span><span class="p">()</span>  <span class="c1"># Empty plan</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_plan_gripper</span> <span class="o">=</span> <span class="n">RobotTrajectory</span><span class="p">()</span>  <span class="c1"># Empty plan</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desired_pose</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desired_joint_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desired_gripper_joint_values</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># initialize moveit_commander and robot commander</span>
+        <span class="n">moveit_commander</span><span class="o">.</span><span class="n">roscpp_initialize</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+        <span class="c1"># Connect to moveit services</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;Connecting moveit default moveit &#39;apply_planning_scene&#39; service.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;apply_planning_scene&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_moveit_apply_planning_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;apply_planning_scene&quot;</span><span class="p">,</span> <span class="n">ApplyPlanningScene</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Moveit &#39;apply_planning_scene&#39; service found!&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Moveit &#39;apply_planning_scene&#39; service initialization failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_moveit_apply_planning_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Create robot commander</span>
+        <span class="c1"># Used to get information about the robot and control it.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">RobotCommander</span><span class="p">(</span>
+            <span class="n">robot_description</span><span class="o">=</span><span class="n">robot_description</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="s2">&quot;/&quot;</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Robot Groups: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">get_group_names</span><span class="p">())</span>
+
+        <span class="c1"># Initiate main move_group</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Get main move group</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">move_group</span><span class="p">)</span>
+
+            <span class="c1"># Set move group settings</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">set_pose_reference_frame</span><span class="p">(</span><span class="n">pose_reference_frame</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">set_planning_time</span><span class="p">(</span>
+                <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;planning&quot;</span><span class="p">][</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;planning_time&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">set_planner_id</span><span class="p">(</span><span class="n">planner</span><span class="p">)</span>
+
+            <span class="c1"># Set end effector</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">move_group_end_effector_link</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">get_link_names</span><span class="p">()</span>
+            <span class="p">):</span>  <span class="c1"># Try to set end to user specified link (Keep default if fails).k</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">set_end_effector_link</span><span class="p">(</span><span class="n">move_group_end_effector_link</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MoveItCommanderException</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because main move_group could not be created.&quot;</span>
+                <span class="s2">&quot;Please check if move group </span><span class="si">%s</span><span class="s2"> exists.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="n">move_group</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Create gripper move_group</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">move_group_gripper</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">set_planning_time</span><span class="p">(</span>
+                <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;planning&quot;</span><span class="p">][</span><span class="s2">&quot;general&quot;</span><span class="p">][</span><span class="s2">&quot;planning_time&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="c1"># self.move_group_gripper.set_planner_id(planner)</span>
+        <span class="k">except</span> <span class="n">MoveItCommanderException</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Gripper move_group creation failed. Check if move group </span><span class="si">%s</span><span class="s2"> exists. &quot;</span>
+                <span class="o">%</span> <span class="n">move_group</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Create scene commanders</span>
+        <span class="c1"># Used to get information about the world and update the robot</span>
+        <span class="c1"># its understanding of the world.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">PlanningSceneInterface</span><span class="p">(</span><span class="n">ns</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Create a `DisplayTrajectory`_ ROS publisher to display the plan in RVIZ</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_trajectory_publisher</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="s2">&quot;/move_group/display_planned_path&quot;</span><span class="p">,</span> <span class="n">DisplayTrajectory</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">20</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Print some information about the planner configuration</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Using planner: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">planner</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Reference frame: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">get_planning_frame</span><span class="p">())</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;End effector: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">get_end_effector_link</span><span class="p">())</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Current robot state: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">get_current_state</span><span class="p">())</span>
+
+        <span class="c1"># Add our custom services</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Initializing </span><span class="si">%s</span><span class="s2"> services.&quot;</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/plan_to_point&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">PlanToPoint</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plan_to_point_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/plan_to_joint&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">PlanToJoint</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plan_to_joint_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/plan_to_path&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">PlanToPath</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plan_cartesian_path_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/plan_random_pose&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">PlanToRandomPoint</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plan_random_pose_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/plan_random_joint&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">PlanToRandomJoint</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plan_random_joint_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/plan_random_path&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">PlanToRandomPath</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plan_random_cartesian_path_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/visualize_plan&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">VisualizePlan</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">visualize_plan_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/execute_plan&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">ExecutePlan</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">execute_plan_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/plan_gripper&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">PlanGripper</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plan_gripper_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/open_gripper&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">OpenGripper</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">open_gripper_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/close_gripper&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">CloseGripper</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">close_gripper_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/set_gripper_width&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">SetGripperWidth</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_gripper_width_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/set_gripper_open&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">SetGripperOpen</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_gripper_open_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/set_gripper_closed&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">SetGripperClosed</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_gripper_closed_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/execute_gripper_plan&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()[</span><span class="mi">1</span><span class="p">:],</span>
+            <span class="n">ExecuteGripperPlan</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">execute_gripper_plan_service</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Display service initiation success message</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; services initialized successfully. Waiting for requests.&quot;</span><span class="p">,</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Wait some time to give moveit the time to initialize and rviz to load</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Add collision objects to scene</span>
+        <span class="k">if</span> <span class="n">add_scene_collision_objects</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_collision_obj_cfg</span> <span class="o">=</span> <span class="n">COLLISION_OBJ_CFG</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Adding collision objects to the planning scene...&quot;</span><span class="p">)</span>
+            <span class="n">add_collision_objects</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collision_obj_cfg</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Collision objects added to the planning scene.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.plan_to_joint_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_to_joint_service">[docs]</a>    <span class="k">def</span> <span class="nf">plan_to_joint_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plan to a given joint position.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.PlanToJoint`</span>
+<span class="sd">            The service request message containing the joint targets you</span>
+<span class="sd">            want to plan to.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Bool</span>
+<span class="sd">            Boolean specifying whether the planning was successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Set joint targets and plan trajectory</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Planning to: </span><span class="se">\n</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">joints</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">target</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desired_joint_values</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">target</span>
+
+        <span class="c1"># Validate whether planning was successful</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+            <span class="s2">&quot;Plan points: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span><span class="o">.</span><span class="n">joint_trajectory</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">plan_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span><span class="p">):</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Plan to joint path planning successful.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Plan to joint path planning failed.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.plan_to_point_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_to_point_service">[docs]</a>    <span class="k">def</span> <span class="nf">plan_to_point_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plan to a given pose.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.PlanToPoint`</span>
+<span class="sd">            The service request message containing the pose you want to plan to.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Boolean specifying whether the planning was successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Initialize local variables</span>
+        <span class="n">plans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Set the target position</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Planning to: </span><span class="se">\n</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">set_pose_target</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desired_pose</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">target</span>
+
+        <span class="c1"># Perform planning</span>
+        <span class="c1"># Perform multiple time to get the best path.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">POINT_N_STEP</span><span class="p">):</span>
+            <span class="n">plans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">plan</span><span class="p">())</span>
+            <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plans</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">joint_trajectory</span><span class="o">.</span><span class="n">points</span><span class="p">))</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Found plan </span><span class="si">%d</span><span class="s2"> with </span><span class="si">%d</span><span class="s2"> points&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+        <span class="c1"># Find shortest path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span> <span class="o">=</span> <span class="n">plans</span><span class="p">[</span><span class="n">points</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">points</span><span class="p">))]</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+            <span class="s2">&quot;Points of chosen plan: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span><span class="o">.</span><span class="n">joint_trajectory</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Validate whether planning was successful</span>
+        <span class="k">if</span> <span class="n">plan_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span><span class="p">):</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Plan to point planning successful.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">clear_pose_targets</span><span class="p">()</span>  <span class="c1"># Clear pose targets</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Plan to point planning failed.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">clear_pose_targets</span><span class="p">()</span>  <span class="c1"># Clear pose targets</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.plan_cartesian_path_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_cartesian_path_service">[docs]</a>    <span class="k">def</span> <span class="nf">plan_cartesian_path_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plan to a given cartesian path.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.PlanToPath`</span>
+<span class="sd">            The service request message containing the path you want to plan to.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Boolean specifying whether the planning was successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Plan cartesian path</span>
+        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span><span class="p">,</span> <span class="n">fraction</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">compute_cartesian_path</span><span class="p">(</span>
+            <span class="n">req</span><span class="o">.</span><span class="n">waypoints</span><span class="p">,</span> <span class="n">EEF_STEP</span><span class="p">,</span> <span class="n">JUMP_THRESHOLD</span>  <span class="c1"># waypoints to follow  # eef_step</span>
+        <span class="p">)</span>  <span class="c1"># jump_threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desired_pose</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">waypoints</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Validate whether planning was successful</span>
+        <span class="k">if</span> <span class="n">plan_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span><span class="p">):</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Cartesian path planning successful.&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%%</span><span class="s2"> of the path can be executed.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">fraction</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Cartesian path planning failed.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.plan_random_pose_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_random_pose_service">[docs]</a>    <span class="k">def</span> <span class="nf">plan_random_pose_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plan to a random pose goal.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.PlanToRandomPoint`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Create random pose</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Creating random pose.&quot;</span><span class="p">)</span>
+        <span class="n">rand_pose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">get_random_pose</span><span class="p">()</span>
+
+        <span class="c1"># Plan to random pose</span>
+        <span class="k">def</span> <span class="nf">req</span><span class="p">():</span>
+            <span class="kc">None</span>  <span class="c1"># Create dummy request function object</span>
+
+        <span class="n">req</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">rand_pose</span>  <span class="c1"># set random pose as a property</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plan_to_point_service</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+        <span class="c1"># Remove req dummy function</span>
+        <span class="k">del</span> <span class="n">req</span>
+
+        <span class="c1"># Check whether path planning was successful</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Random pose path planning successful.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Random pose path planning failed.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.plan_random_joint_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_random_joint_service">[docs]</a>    <span class="k">def</span> <span class="nf">plan_random_joint_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plan to a random joint goal.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.PlanToRandomJoint`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Create random pose</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Creating random joint goal.&quot;</span><span class="p">)</span>
+        <span class="n">rand_joint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">get_random_joint_values</span><span class="p">()</span>
+
+        <span class="c1"># Plan to random pose</span>
+        <span class="k">def</span> <span class="nf">req</span><span class="p">():</span>
+            <span class="kc">None</span>  <span class="c1"># Create dummy request function object</span>
+
+        <span class="n">req</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">rand_joint</span>  <span class="c1"># set random joint goal as a property</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plan_to_joint_service</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+        <span class="c1"># Remove req dummy function</span>
+        <span class="k">del</span> <span class="n">req</span>
+
+        <span class="c1"># Check whether path planning was successful</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Random cartesian path planning successful.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Random cartesian path planning failed.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.plan_random_cartesian_path_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_random_cartesian_path_service">[docs]</a>    <span class="k">def</span> <span class="nf">plan_random_cartesian_path_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plan to a random cartesian path.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.PlanToRandomPath`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Create local variables</span>
+        <span class="n">waypoints</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">w_pose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">get_current_pose</span><span class="p">()</span><span class="o">.</span><span class="n">pose</span>
+
+        <span class="c1"># Create a cartesian path</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">n_waypoints</span><span class="p">):</span>
+
+            <span class="c1"># Generate random pose</span>
+            <span class="n">rand_pose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">get_random_pose</span><span class="p">()</span>
+            <span class="n">w_pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">rand_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span>
+            <span class="n">w_pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">rand_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span>
+            <span class="n">w_pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">rand_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span>
+            <span class="n">waypoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">w_pose</span><span class="p">))</span>
+
+        <span class="c1"># Plan cartesian path</span>
+        <span class="k">def</span> <span class="nf">req</span><span class="p">():</span>
+            <span class="kc">None</span>  <span class="c1"># Create dummy request function object</span>
+
+        <span class="n">req</span><span class="o">.</span><span class="n">waypoints</span> <span class="o">=</span> <span class="n">waypoints</span>  <span class="c1"># set random pose as a property</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plan_cartesian_path_service</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+        <span class="c1"># Remove req dummy function</span>
+        <span class="k">del</span> <span class="n">req</span>
+
+        <span class="c1"># Check whether path planning was successful</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Random cartesian path planning successful.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Random cartesian path planning failed.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.visualize_plan_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.visualize_plan_service">[docs]</a>    <span class="k">def</span> <span class="nf">visualize_plan_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Visualize the plan that has been computed by the other plan services.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.VisualizePlan`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Generate moveit_msgs</span>
+        <span class="k">if</span> <span class="n">plan_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan_gripper</span><span class="p">)</span> <span class="ow">or</span> <span class="n">plan_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span><span class="p">):</span>
+
+            <span class="c1"># Display trajectory</span>
+            <span class="n">display_trajectory</span> <span class="o">=</span> <span class="n">DisplayTrajectory</span><span class="p">()</span>
+            <span class="n">display_trajectory</span><span class="o">.</span><span class="n">trajectory_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">get_current_state</span><span class="p">()</span>
+            <span class="n">display_trajectory</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan_gripper</span><span class="p">)</span>
+            <span class="n">display_trajectory</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span><span class="p">)</span>
+
+            <span class="c1"># Get visualization duration</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">get_trajectory_duration</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">)</span>
+
+            <span class="c1"># Publish plan</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_display_trajectory_publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">)</span>
+
+            <span class="c1"># Sleep till trajectory is visualized</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+
+            <span class="c1"># Return success bool</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Movement plan visualization successful.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;No movement plan available for the visualization.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.execute_plan_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.execute_plan_service">[docs]</a>    <span class="k">def</span> <span class="nf">execute_plan_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Execute the plan that has been computed for the main move group by the other</span>
+<span class="sd">        plan services.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.ExecutePlan`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if gripper plan is set</span>
+        <span class="k">if</span> <span class="n">plan_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span><span class="p">):</span>
+
+            <span class="c1"># Execute plan</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">plan_msg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_plan</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">RobotTrajectory</span><span class="p">()</span>
+            <span class="p">)</span>  <span class="c1"># Empty plan (Needed for visualization).</span>
+
+            <span class="c1"># Check if execution was successful</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Plan execution was successful.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Plan execution was unsuccessful.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Return success bool</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c1"># Check if the robot state is already at the desired state</span>
+            <span class="c1"># joint_now = self.move_group.get_current_joint_values()</span>
+            <span class="c1"># pose_now = self.move_group.get_current_pose()</span>
+            <span class="c1"># # if (joint_now =)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;No movement plan available for the execution.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.plan_gripper_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_gripper_service">[docs]</a>    <span class="k">def</span> <span class="nf">plan_gripper_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute plan for the currently set gripper target joint values.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.PlanGripper.`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if gripper controller exists</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Gripper move group appears to be missing. As a result the gripper can &quot;</span>
+                <span class="s2">&quot;not be controlled.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Plan for gripper command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_plan_gripper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span>
+            <span class="n">joints</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">desired_gripper_joint_values</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Validate whether planning was successful</span>
+        <span class="k">if</span> <span class="n">plan_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_plan_gripper</span><span class="p">):</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Gripper plan found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># Return success bool</span>
+        <span class="k">elif</span> <span class="n">at_joint_target</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">get_current_joint_values</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">desired_gripper_joint_values</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">get_goal_joint_tolerance</span><span class="p">(),</span>
+        <span class="p">):</span>  <span class="c1"># Plan empty because already at goal</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Gripper already at desired location.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># Plan empty</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;No gripper plan found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.execute_gripper_plan_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.execute_gripper_plan_service">[docs]</a>    <span class="k">def</span> <span class="nf">execute_gripper_plan_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Execute previously planned gripper plan.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.ExecuteGripperPlan.`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if gripper controller exists</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Gripper move group appears to be missing. As a result the gripper &quot;</span>
+                <span class="s2">&quot;can not be controlled.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Check if gripper is already at desired location</span>
+        <span class="k">if</span> <span class="n">at_joint_target</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">get_current_joint_values</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">desired_gripper_joint_values</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">get_goal_joint_tolerance</span><span class="p">(),</span>
+        <span class="p">):</span>  <span class="c1"># Plan empty because already at goal</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Gripper already at desired location.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_plan_gripper</span> <span class="o">=</span> <span class="n">RobotTrajectory</span><span class="p">()</span>  <span class="c1"># Reset plan</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c1"># Execute gripper plan</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_plan_gripper</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Gripper plan could not be executed.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_plan_gripper</span> <span class="o">=</span> <span class="n">RobotTrajectory</span><span class="p">()</span>  <span class="c1"># Reset plan</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_plan_gripper</span> <span class="o">=</span> <span class="n">RobotTrajectory</span><span class="p">()</span>  <span class="c1"># Reset plan</span>
+                <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.open_gripper_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.open_gripper_service">[docs]</a>    <span class="k">def</span> <span class="nf">open_gripper_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Open the gripper.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req :  :py:obj:`panda_autograsp.msg.OpenGripper.`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if gripper controller exists</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Gripper move group appears to be missing. As a result the gripper &quot;</span>
+                <span class="s2">&quot;can not be controlled.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># Set named target</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">desired_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">get_named_target_values</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MoveItCommanderException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Plan and execute</span>
+        <span class="c1"># Note: I used execute instead of go since it failed in some cases.</span>
+        <span class="n">plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">joints</span><span class="o">=</span><span class="n">desired_values</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">plan</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># Return success bool</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.close_gripper_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.close_gripper_service">[docs]</a>    <span class="k">def</span> <span class="nf">close_gripper_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close the gripper.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req :  :py:obj:`panda_autograsp.msg.CloseGripper.`</span>
+<span class="sd">            Empty service request.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if gripper controller exists</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Gripper move group appears to be missing. As a result the gripper &quot;</span>
+                <span class="s2">&quot;can not be controlled.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Get named target</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">desired_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">get_named_target_values</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MoveItCommanderException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Plan and execute</span>
+        <span class="c1"># Note: I used execute instead of go since it failed in some cases.</span>
+        <span class="n">plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">joints</span><span class="o">=</span><span class="n">desired_values</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">plan</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># Return success bool</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.set_gripper_open_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.set_gripper_open_service">[docs]</a>    <span class="k">def</span> <span class="nf">set_gripper_open_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set gripper joint targets values to open.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req :  :py:obj:`panda_autograsp.msg.SetGripperOpen.`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">                Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if gripper controller exists</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Gripper move group appears to be missing. As a result the gripper &quot;</span>
+                <span class="s2">&quot;can not be controlled.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Get named target</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">desired_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">get_named_target_values</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MoveItCommanderException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Set gripper target value to open</span>
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="c1"># Save desired joint targets</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">desired_gripper_joint_values</span> <span class="o">=</span> <span class="n">desired_values</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">MoveItCommanderException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.set_gripper_closed_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.set_gripper_closed_service">[docs]</a>    <span class="k">def</span> <span class="nf">set_gripper_closed_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set gripper joint target values to closed.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : :py:obj:`panda_autograsp.msg.SetGripperClosed.`</span>
+<span class="sd">            Empty service request.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if gripper controller exists</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Gripper move group appears to be missing. As a result the gripper &quot;</span>
+                <span class="s2">&quot;can not be controlled.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Get named target</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">desired_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">get_named_target_values</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MoveItCommanderException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Get gripper target value to closed</span>
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="c1"># Save desired joint targets</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">desired_gripper_joint_values</span> <span class="o">=</span> <span class="n">desired_values</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">MoveItCommanderException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MoveitPlannerServer.set_gripper_width_service"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.moveit_planner_server_ros.html#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.set_gripper_width_service">[docs]</a>    <span class="k">def</span> <span class="nf">set_gripper_width_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set gripper joint target values to a given value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req :  :py:obj:`panda_autograsp.msg.SetGripperWidth.`</span>
+<span class="sd">            This message specifies the gripper width.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">                Returns a bool to specify whether the plan was executed successfully.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if gripper controller exists</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;Gripper move group appears to be missing. As a result the gripper &quot;</span>
+                <span class="s2">&quot;can not be controlled.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Try to set the joint values</span>
+        <span class="n">dict_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_group_gripper</span><span class="o">.</span><span class="n">get_named_target_values</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">dict_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">req</span><span class="o">.</span><span class="n">gripper_width</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Save desired joint targets</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">desired_gripper_joint_values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">dict_keys</span><span class="p">,</span> <span class="n">dict_values</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">MoveItCommanderException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Rick Staa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
