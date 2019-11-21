@@ -52,6 +52,7 @@
         <arg name="real" value="$(arg real)"/>
         <arg name="gazebo" value="$(arg gazebo)"/>
         <arg name="load_gripper" value="$(arg load_gripper)"/>
+        <arg name="load_robot_description" default="true" />
         <arg name="gripper_center" value="$(arg gripper_center)" />
         <arg name="gripper_center_xyz" value="$(arg gripper_center_xyz)" />
         <arg name="gripper_center_rpy" value="$(arg gripper_center_rpy)" />
@@ -142,6 +143,7 @@
     <include file="$(find franka_control)/launch/franka_control.launch" if="$(eval arg('real') and not arg('external_franka_control'))">
         <arg name="robot_ip" value="$(arg robot_ip)"/>
         <arg name="load_gripper" value="$(arg load_gripper)"/>
+        <arg name="load_robot_description" default="false" />
     </include>
 
 </launch>
