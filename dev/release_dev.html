@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Release package &mdash; panda_autograsp 1.0.1 documentation</title>
+  <title>Release package &mdash; panda_autograsp 1.0.2 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.0.1
+                1.0.2
               </div>
             
           
@@ -187,10 +187,12 @@
 <p>Before releasing the package, make sure the following steps are performed:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Squash and merge your branch with the <code class="docutils literal notranslate"><span class="pre">melodic_devel</span></code> branch.</li>
+<li>Squash and merge your branch with the desired branch.</li>
 <li><a class="reference internal" href="doc_dev.html"><span class="doc">Release documentation</span></a> if needed.</li>
+<li>Bump the version using the <a class="reference external" href="https://github.com/peritus/bumpversion">bumpversion tool</a>.</li>
 <li>Update the changelog using the <a class="reference external" href="https://github.com/CookPete/auto-changelog">auto-changelog</a> tool.</li>
-<li>Bump the version using the <a class="reference external" href="https://github.com/peritus/bumpversion">bumpversion tool</a></li>
+<li>Commit and push the changes to the remote.</li>
+<li>Create the right version tag and release using the github draft release tool.</li>
 </ol>
 </div></blockquote>
 </div>

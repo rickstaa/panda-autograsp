@@ -32,7 +32,7 @@ inside the ``docs/build`` directory.
 Deploying
 ---------------------------
 To deploy documentation to the Github Pages site for the repository,
-push the documentation to the ``master`` branch and run the
+push the documentation to the ``melodic-devel`` branch and run the
 ``make gh-pages`` command inside the ``panda_autograsp/docsrc``
 directory.
 
