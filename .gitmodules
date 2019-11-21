@@ -1,15 +1,19 @@
 [submodule "autolab_core"]
 	path = autolab_core
 	url = git@github.com:rickstaa/autolab_core.git
+	branch = master-panda_autograsp
 [submodule "gqcnn"]
 	path = gqcnn
 	url = git@github.com:rickstaa/gqcnn
+	branch = master-panda_autograsp
 [submodule "moveit_tutorials"]
 	path = moveit_tutorials
 	url = git@github.com:ros-planning/moveit_tutorials.git
+	branch = melodic-devel
 [submodule "common-sensors"]
 	path = common-sensors
 	url = git@github.com:JenniferBuehler/common-sensors.git
+	branch = master-panda_autograsp
 [submodule "franka_ros"]
 	path = franka_ros
 	url = git@github.com:rickstaa/franka_ros.git
@@ -21,9 +25,11 @@
 [submodule "iai_kinect2"]
 	path = iai_kinect2
 	url = git@github.com:rickstaa/iai_kinect2.git
+	branch = master
 [submodule "perception"]
 	path = perception
 	url = git@github.com:rickstaa/perception.git
+	branch = master-panda_autograsp
 [submodule "panda_simulation"]
 	path = panda_simulation
 	url = git@github.com:rickstaa/panda_simulation.git
