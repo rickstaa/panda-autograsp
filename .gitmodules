@@ -10,10 +10,6 @@
 	path = moveit_tutorials
 	url = git@github.com:ros-planning/moveit_tutorials.git
 	branch = melodic-devel
-[submodule "common-sensors"]
-	path = common-sensors
-	url = git@github.com:JenniferBuehler/common-sensors.git
-	branch = master-panda_autograsp
 [submodule "franka_ros"]
 	path = franka_ros
 	url = git@github.com:rickstaa/franka_ros.git
@@ -33,4 +29,8 @@
 [submodule "panda_simulation"]
 	path = panda_simulation
 	url = git@github.com:rickstaa/panda_simulation.git
+	branch = master-panda_autograsp
+[submodule "common-sensors"]
+	path = common-sensors
+	url = git@github.com:rickstaa/common-sensors.git
 	branch = master-panda_autograsp
