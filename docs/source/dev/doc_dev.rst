@@ -37,3 +37,8 @@ push the documentation to the ``melodic-devel`` branch and run the
 directory.
 
 .. _sphinx: http://www.sphinx-doc.org/en/master
+
+.. warning::
+
+    Please make sure you are on the ``melodic-devel`` branch while building the documentation. Otherwise
+    you will be greeted by errors.
