@@ -38,7 +38,7 @@
     <node pkg="panda_simulation" type="robot_control_node" name="robot_control_node" />
 
     <!-- Launch kinect sensor -->
-    <param name="kinectv2_description" command="$(find xacro)/xacro '$(find panda_simulation)/models/kinect2.xacro'" />
+    <param name="kinectv2_description" command="$(find xacro)/xacro --inorder '$(find panda_simulation)/models/kinect2.xacro'" />
     <node name="spawn_kinect" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model kinect2 -param kinectv2_description"/>
 
     <!-- spawn coffe cup -->
