@@ -250,7 +250,7 @@ instead, you have to change the <code class="docutils literal notranslate"><span
 in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>
 file.</p>
 </div>
-<div class="figure" id="id13">
+<div class="figure" id="id15">
 <a class="reference external image-reference" href="https://user-images.githubusercontent.com/17570430/69071747-b6343380-0a2a-11ea-9192-a7ff86501bad.png"><img alt="dynamic reconfigure window" src="https://user-images.githubusercontent.com/17570430/69071747-b6343380-0a2a-11ea-9192-a7ff86501bad.png" /></a>
 <p class="caption"><span class="caption-text">Dynamic reconfigure window that can be used to change the sensor and calibration frames.</span></p>
 </div>
@@ -369,7 +369,7 @@ command.</p>
 <h3>Panda simulations<a class="headerlink" href="#panda-simulations" title="Permalink to this headline">¶</a></h3>
 <p>A gazebo simulation of the panda robot can be used by setting the
 <code class="docutils literal notranslate"><span class="pre">real</span></code> and <code class="docutils literal notranslate"><span class="pre">gazebo</span></code> launch file arguments.</p>
-<div class="figure" id="id14">
+<div class="figure" id="id16">
 <a class="reference external image-reference" href="https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png"><img alt="gazebo_simulation" src="https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png" /></a>
 <p class="caption"><span class="caption-text">Overview of the gazebo simulation environment.</span></p>
 </div>
@@ -491,10 +491,12 @@ for a solution. Some commonly encountered issues are displayed below.</p>
 <div class="section" id="known-issues">
 <h2>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>I get an <code class="docutils literal notranslate"><span class="pre">[Err]</span> <span class="pre">[REST.cc:205]</span> <span class="pre">Error</span> <span class="pre">in</span> <span class="pre">REST</span> <span class="pre">request</span></code> when the gazebo simulation is opened -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/139">#139</a></li>
+<li>I get a <code class="docutils literal notranslate"><span class="pre">[Err]</span> <span class="pre">[REST.cc:205]</span> <span class="pre">Error</span> <span class="pre">in</span> <span class="pre">REST</span> <span class="pre">request</span></code> error when the gazebo simulation is opened -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/139">#139</a></li>
 <li>The planner does not find a path when <code class="docutils literal notranslate"><span class="pre">moveit_perception</span></code> is enabled -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/141">#141</a></li>
-<li>I get an <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">matrix</span> <span class="pre">&#64;</span> <span class="pre">rmat</span></code> -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/142">#142</a></li>
-<li>I get an <code class="docutils literal notranslate"><span class="pre">connot</span> <span class="pre">import</span> <span class="pre">name</span> <span class="pre">&lt;MODULE&gt;</span></code> error -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/144">#144</a></li>
+<li>I get a <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">matrix</span> <span class="pre">&#64;</span> <span class="pre">rmat</span></code> error -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/142">#142</a></li>
+<li>I get a <code class="docutils literal notranslate"><span class="pre">cannot</span> <span class="pre">import</span> <span class="pre">name</span> <span class="pre">&lt;MODULE&gt;</span></code> error -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/144">#144</a></li>
+<li>I get a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> while trying to use <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">build</span></code> inside the container -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/149">#149</a></li>
+<li>I get a <code class="docutils literal notranslate"><span class="pre">CUDA</span> <span class="pre">driver</span> <span class="pre">version</span> <span class="pre">is</span> <span class="pre">insufficient</span></code> error when inside the container -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/150">#150</a></li>
 </ul>
 </div>
 </div>

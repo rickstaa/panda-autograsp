@@ -226,11 +226,17 @@
 <h2>Software<a class="headerlink" href="#software" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="ros">
 <h3>ROS<a class="headerlink" href="#ros" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package has only been tested with <code class="docutils literal notranslate"><span class="pre">ROS</span> <span class="pre">Melodic</span></code>.
+<p>The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package has only been tested with ROS <code class="docutils literal notranslate"><span class="pre">Melodic</span></code> and Kinect.
 The ROS melodic installation instructions can be found <a class="reference external" href="https://wiki.ros.org/melodic">here</a>.
-You further also need the following ROS packages:</p>
+The ROS kinetic installation instructions can be found <a class="reference external" href="https://wiki.ros.org/kinetic">here</a>.</p>
+<p>You further also need the following ROS packages:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">As ROS melodic is the recommended version the instructions below are for ros Melodic.
+Change melodic to kinetic in each command if you want to use ROS kinetic.</p>
 </div>
 </div>
 <div class="section" id="python">
