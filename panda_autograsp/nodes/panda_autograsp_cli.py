@@ -334,41 +334,48 @@ class PandaAutograspCLI:
 
         # Keep alive as node is alive
         print("")
-        input(
-            "For the robot to know where it is relative to the camera we need "
-            "to perform a calibration. Press enter to start the calibration "
-            "procedure>> "
+        calib_response = yes_or_no(
+            "For the robot to know where it is relative to the camera a calibration "
+            "needs to be performed. Do you want to perform the calibration now? "
+            "procedure? (Y=New calibration and n=Use old calibration results)>>  ",
+            add_options=False,
         )
+
         try:  # Catch user and service exceptions
 
             #####################################
             # Calibrate Camera frame ############
             #####################################
-            while True:
-                print("")
-                response = yes_or_no(
-                    "Is the checkerboard/arucoboard positioned on the upper left "
-                    "corner of the table?"
-                )
-                print("Computing calibration frame transform...")
-                if not response:
-                    rospy.loginfo("Shutting down %s node." % rospy.get_name())
-                    sys.exit(0)
-                else:
-                    result = self._calibrate_sensor_srv()
-                    if not result.success:
-                        print("")
-                        response = yes_or_no(
-                            "Calibration failed. Do you want to try again?"
-                        )
-                        if not response:
-                            rospy.loginfo("Shutting down %s node." % rospy.get_name())
-                            sys.exit(0)
+            if calib_response:
+                while True:
+                    print("")
+                    response = yes_or_no(
+                        "Is the checkerboard/arucoboard positioned on the upper left "
+                        "corner of the table?"
+                    )
+                    print("Computing calibration frame transform...")
+                    if not response:
+                        rospy.loginfo("Shutting down %s node." % rospy.get_name())
+                        sys.exit(0)
                     else:
-                        print("")
-                        response = yes_or_no("Was the frame correct?")
-                        if response:
-                            break  # Continue to grasp planning
+                        result = self._calibrate_sensor_srv()
+                        if not result.success:
+                            print("")
+                            response = yes_or_no(
+                                "Calibration failed. Do you want to try again?"
+                            )
+                            if not response:
+                                rospy.loginfo(
+                                    "Shutting down %s node." % rospy.get_name()
+                                )
+                                sys.exit(0)
+                        else:
+                            print("")
+                            response = yes_or_no("Was the frame correct?")
+                            if response:
+                                break  # Continue to grasp planning
+            else:
+                print("Old calibration results used.")
 
             #####################################
             # Panda_autograsp_cli loop ##########
