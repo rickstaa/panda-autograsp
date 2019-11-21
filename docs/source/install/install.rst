@@ -17,13 +17,20 @@ Software
 
 ROS
 ^^^^^^^^^^^^^^^^^^^
-The `panda_autograsp`_ package has only been tested with ``ROS Melodic``.
+The `panda_autograsp`_ package has only been tested with ROS ``Melodic`` and Kinect.
 The ROS melodic installation instructions can be found `here <https://wiki.ros.org/melodic>`__.
+The ROS kinetic installation instructions can be found `here <https://wiki.ros.org/kinetic>`__.
+
 You further also need the following ROS packages:
 
 .. code-block:: bash
 
     sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev
+
+.. warning::
+
+    As ROS melodic is the recommended version the instructions below are for ros Melodic.
+    Change melodic to kinetic in each command if you want to use ROS kinetic.
 
 Python
 ^^^^^^^^^^^^^^^^^^^
