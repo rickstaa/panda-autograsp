@@ -23,7 +23,7 @@ gh-pages:
 	git submodule update --init --recursive && \
 	git checkout gh-pages && \
 	git rm -rf . && git clean -fxd && \
-	git checkout master $(GH_PAGES_SOURCES) && \
+	git checkout melodic-devel $(GH_PAGES_SOURCES) && \
 	git reset HEAD && \
 	cd docs && \
 	make clean && \
