@@ -58,7 +58,9 @@ The panda_autograsp launch file accepts the following launch file arguments:
 
     - **real**: Specifies whether you want to use the `panda_autograsp`_ solution on the real robot, by default False.
     - **gazebo**: Specifies wheter the gazebo gui should be loaded.
-    - **rviz_bui**: Specifies wheter the rviz gui should be loaded.
+    - **external_franka_control**: Set this to true if you want to load the ``franka_control`` node on another pc on the same network.
+    - **robot_ip**: Set this to the robot ip if your working with the real robot.
+    - **rviz_gui**: Specifies wheter the rviz gui should be loaded.
     - **calib_type**: The robot hand-eye calibration board type (chessboard vs arucoboard), overwrites the default that is set in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_ file.
     - **debug**: If true the verbosity of the ROS log messages will be increased, and the process name will be displayed with each log messages, by default set to false.
     - **moveit_perception**: This enables the Moveit perception module which integrates sensor data into the path planning, by default set to false.

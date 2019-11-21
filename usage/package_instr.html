@@ -234,7 +234,9 @@ within the catkin workspace src folder:</p>
 <div><ul class="simple">
 <li><strong>real</strong>: Specifies whether you want to use the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution on the real robot, by default False.</li>
 <li><strong>gazebo</strong>: Specifies wheter the gazebo gui should be loaded.</li>
-<li><strong>rviz_bui</strong>: Specifies wheter the rviz gui should be loaded.</li>
+<li><strong>external_franka_control</strong>: Set this to true if you want to load the <code class="docutils literal notranslate"><span class="pre">franka_control</span></code> node on another pc on the same network.</li>
+<li><strong>robot_ip</strong>: Set this to the robot ip if your working with the real robot.</li>
+<li><strong>rviz_gui</strong>: Specifies wheter the rviz gui should be loaded.</li>
 <li><strong>calib_type</strong>: The robot hand-eye calibration board type (chessboard vs arucoboard), overwrites the default that is set in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a> file.</li>
 <li><strong>debug</strong>: If true the verbosity of the ROS log messages will be increased, and the process name will be displayed with each log messages, by default set to false.</li>
 <li><strong>moveit_perception</strong>: This enables the Moveit perception module which integrates sensor data into the path planning, by default set to false.</li>
