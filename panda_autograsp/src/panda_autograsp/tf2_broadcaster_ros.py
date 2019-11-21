@@ -10,12 +10,28 @@ from panda_autograsp.cfg import CalibFramesConfig
 import tf_conversions
 import tf2_ros
 from pyquaternion import Quaternion
+import ruamel.yaml
+import os
 
 # Messages and services
 import geometry_msgs.msg
 
 # Panda_autograsp modules, msgs and srvs
 from panda_autograsp.srv import SetSensorPose
+
+#################################################
+# Read main config ##############################
+#################################################
+
+# Open panda_autograsp configuration file
+CALIB_FRAMES_POSES_CFG_PATH = os.path.abspath(
+    os.path.join(
+        os.path.dirname(os.path.realpath(__file__)), "../../cfg/calib_frames_poses.yaml"
+    )
+)
+yaml = ruamel.yaml.YAML()
+with open(CALIB_FRAMES_POSES_CFG_PATH) as fp:
+    CALIB_FRAMES_POSES_CFG = yaml.load(fp)
 
 
 #################################################
@@ -93,6 +109,9 @@ class Tf2Broadcaster:
     """
 
     def __init__(self):
+
+        # Register shutdown hook
+        rospy.on_shutdown(self.shutdown_hook)
 
         # Generate member variables
         self._just_calibrated = False  # Specifies whether a calibration was just done
@@ -400,3 +419,35 @@ class Tf2Broadcaster:
         self._tf2_br.sendTransform(
             [calib_frame_tf_msg, sensor_frame_rgb_tf_msg, sensor_frame_ir_tf_msg]
         )
+
+    def shutdown_hook(self):
+        """This functions gets called when the node is shutdown. This function makes
+        sure the previous calibration results are save to the calibration file before
+        the node is shutdown.
+        """
+
+        # Retrieve calibration frame position and orientation
+        rospy.loginfo("Saving last calibration results...")
+        CALIB_FRAMES_POSES_CFG["calib_frame_x_pos"] = self.calib_frame_x_pos
+        CALIB_FRAMES_POSES_CFG["calib_frame_y_pos"] = self.calib_frame_y_pos
+        CALIB_FRAMES_POSES_CFG["calib_frame_z_pos"] = self.calib_frame_z_pos
+        CALIB_FRAMES_POSES_CFG["calib_frame_yaw"] = self.calib_frame_yaw
+        CALIB_FRAMES_POSES_CFG["calib_frame_pitch"] = self.calib_frame_pitch
+        CALIB_FRAMES_POSES_CFG["calib_frame_roll"] = self.calib_frame_roll
+
+        # Retrieve sensor frame position and orientation
+        CALIB_FRAMES_POSES_CFG["sensor_frame_x_pos"] = self.sensor_frame_x_pos
+        CALIB_FRAMES_POSES_CFG["sensor_frame_y_pos"] = self.sensor_frame_y_pos
+        CALIB_FRAMES_POSES_CFG["sensor_frame_z_pos"] = self.sensor_frame_z_pos
+        CALIB_FRAMES_POSES_CFG["sensor_frame_q1"] = self.sensor_frame_q1
+        CALIB_FRAMES_POSES_CFG["sensor_frame_q2"] = self.sensor_frame_q2
+        CALIB_FRAMES_POSES_CFG["sensor_frame_q3"] = self.sensor_frame_q3
+        CALIB_FRAMES_POSES_CFG["sensor_frame_q4"] = self.sensor_frame_q4
+        CALIB_FRAMES_POSES_CFG["sensor_frame_yaw"] = self.sensor_frame_yaw
+        CALIB_FRAMES_POSES_CFG["sensor_frame_pitch"] = self.sensor_frame_pitch
+        CALIB_FRAMES_POSES_CFG["sensor_frame_roll"] = self.sensor_frame_roll
+
+        # Save calibration results to calib config file
+        with open(CALIB_FRAMES_POSES_CFG_PATH, "w") as fp:
+            yaml.dump(CALIB_FRAMES_POSES_CFG, fp)
+        rospy.loginfo("Last calibration results saved successfully.")
