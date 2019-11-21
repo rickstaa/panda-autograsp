@@ -35,10 +35,10 @@ gh-pages:
 	touch .nojekyll && \
 	rm -rf $(GH_PAGES_SOURCES) && \
 	git add -A && \
-	git commit -m ":pencil: Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`" && \
+	git commit -m ":pencil: Generated gh-pages for `git log melodic-devel -1 --pretty=short --abbrev-commit`" && \
 	git push origin gh-pages && \
-	git checkout master && \
-	git submodule update --init --recursive
+	git checkout melodic-devel && \
+	git submodule melodic-devel --init --recursive
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
