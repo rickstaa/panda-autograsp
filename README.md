@@ -1,6 +1,6 @@
 # Panda_autograsp
 
-![GitHub release](https://img.shields.io/github/release/rickstaa/panda_autograsp.svg)
+[![GitHub release](https://img.shields.io/github/v/release/rickstaa/panda_autograsp)](https://github.com/rickstaa/panda_autograsp/releases/tag/v1.0.3-melodic)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c5ff3ff88a304e28807118cbd85dc09a)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=rickstaa/panda_autograsp&utm_campaign=Badge_Grade)
 [![Python 3](https://img.shields.io/badge/python%203-3.7%20%7C%203.6%20%7C%203.5-yellow.svg)](https://www.python.org/)
 [![Python 2](https://img.shields.io/badge/python%202-2.7%20%7C%202.6%20%7C%202.5-brightgreen.svg)](https://www.python.org/)
