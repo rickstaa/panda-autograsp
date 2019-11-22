@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Sensor calibration instructions &mdash; panda_autograsp 1.0.2 documentation</title>
+  <title>Sensor calibration instructions &mdash; panda_autograsp 1.0.3 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.0.2
+                1.0.3
               </div>
             
           
@@ -104,6 +104,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Sensor calibration instructions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#camera-calibration">Camera calibration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#robot-eye-hand-calibration">Robot eye-hand calibration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dynamic-reconfigure-window">Dynamic reconfigure window</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#generate-chessboard-pattern">Generate chessboard pattern</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#generate-aruco-board">Generate Aruco Board</a></li>
 </ul>
@@ -233,13 +234,16 @@ for the camera parameters to fully stabilize.</p>
 <p>To be able to control the real robot, we also need to know the
 location of the robot relative to the camera. A robot eye-hand calibration is
 therefore performed at the start of the <cite>panda_autograsp</cite> solution.
-During this eye-hand calibration, you are asked asked to place a calibration
+During this eye-hand calibration, you are asked to place a calibration
 pattern on the upper left corner of the table. The position of this pattern
 and the robot has to be measured and specified in the
-<a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>.
-You can also manually adjust the position of both the sensor and calibration
-frames, using the <code class="docutils literal notranslate"><span class="pre">dynamic</span> <span class="pre">reconfigure</span></code> window that is opened when the
-<a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution is started.</p>
+<a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/calib_frames_poses.yaml</a>.
+You can also adjust the position and orientation of both the sensor
+and calibration frames by using the <code class="docutils literal notranslate"><span class="pre">dynamic</span> <span class="pre">reconfigure</span></code> window
+that is opened when the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution is started.
+The changes made in the dynamic reconfigure window are saved to the
+<a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/calib_frames_poses.yaml">./cfg/calib_frames_poses.yaml</a>.
+file when you close the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> algorithm
@@ -250,9 +254,15 @@ instead, you have to change the <code class="docutils literal notranslate"><span
 in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>
 file.</p>
 </div>
-<div class="figure" id="id15">
+<div class="section" id="dynamic-reconfigure-window">
+<h3>Dynamic reconfigure window<a class="headerlink" href="#dynamic-reconfigure-window" title="Permalink to this headline">¶</a></h3>
+<p>As specified above you can use the dynamic reconfigure gui (shown below)
+to position and orientation of both the calibration and sensor frame. This
+is done by going to the <code class="docutils literal notranslate"><span class="pre">tf_broadcaster</span></code> tab and adjusting the sliders.</p>
+<div class="figure" id="id14">
 <a class="reference external image-reference" href="https://user-images.githubusercontent.com/17570430/69071747-b6343380-0a2a-11ea-9192-a7ff86501bad.png"><img alt="dynamic reconfigure window" src="https://user-images.githubusercontent.com/17570430/69071747-b6343380-0a2a-11ea-9192-a7ff86501bad.png" /></a>
 <p class="caption"><span class="caption-text">Dynamic reconfigure window that can be used to change the sensor and calibration frames.</span></p>
+</div>
 </div>
 <div class="section" id="generate-chessboard-pattern">
 <h3>Generate chessboard pattern<a class="headerlink" href="#generate-chessboard-pattern" title="Permalink to this headline">¶</a></h3>
@@ -277,12 +287,12 @@ python script. This script is found in the <code class="docutils literal notrans
 <h2>Configuration instructions<a class="headerlink" href="#configuration-instructions" title="Permalink to this headline">¶</a></h2>
 <p>All of the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> settings can be found in the
 <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>
-file. As described below you can temporarily override some of These
+file. As described below, you can temporarily override some of These
 settings by supplying launch arguments.</p>
 </div>
 <div class="section" id="add-planning-constraints">
 <h2>Add planning constraints<a class="headerlink" href="#add-planning-constraints" title="Permalink to this headline">¶</a></h2>
-<p>To add extra planning constraints to the scene you can add additional
+<p>To add extra planning constraints to the scene, you can add additional
 <code class="docutils literal notranslate"><span class="pre">json</span></code> files to the <code class="docutils literal notranslate"><span class="pre">/home/&lt;USER&gt;/.panda_simulation</span></code> folder. This
 folder is created the first time the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution is launched.
 A guide on how this can be done can be found <a class="reference external" href="https://erdalpekel.de/?p=123">here</a>.</p>
@@ -299,23 +309,21 @@ launch file arguments. These arguments can be used to temporarily
 override the settings you configured in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>
 file. The available launch file arguments can be found below. After the
 <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution has launched, you can launch the command-line
-interface  (CLI), in a second terminal, using the following command in a
+interface (CLI), in a second terminal, using the following command in a
 second terminal window:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun panda_autograsp panda_autograsp_cli.physical
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>Before executing the commands mentioned above make sure you the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package is build
-and sourced. Further you have to make sure that the pretrained GQCNN networks are not present in the
-<code class="docutils literal notranslate"><span class="pre">./panda_autgrasp/models</span></code> folder. The <code class="docutils literal notranslate"><span class="pre">panda_autograsp.launch</span></code> will ask wheter you want to install
+<p>Before executing the commands mentioned above, make sure you the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package is build
+and sourced. Further, you have to make sure that the pretrained GQCNN networks are not present in the
+<code class="docutils literal notranslate"><span class="pre">./panda_autgrasp/models</span></code> folder. The <code class="docutils literal notranslate"><span class="pre">panda_autograsp.launch</span></code> will ask whether you want to install
 these models if they are not found. You can also install them by running the following commands from
 within the catkin workspace src folder:</p>
-<blockquote class="last">
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./gqcnn/scripts/downloads/models/download_models.sh
+<div class="last highlight-bash notranslate"><div class="highlight"><pre><span></span>./gqcnn/scripts/downloads/models/download_models.sh
 </pre></div>
 </div>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="launch-file-arguments">
@@ -323,18 +331,19 @@ within the catkin workspace src folder:</p>
 <p>The panda_autograsp launch file accepts the following launch file arguments:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>real</strong>: Specifies whether you want to use the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution on the real robot, by default False.</li>
-<li><strong>gazebo</strong>: Specifies wheter the gazebo gui should be loaded.</li>
-<li><strong>external_franka_control</strong>: Set this to true if you want to load the <code class="docutils literal notranslate"><span class="pre">franka_control</span></code> node on another pc on the same network.</li>
-<li><strong>robot_ip</strong>: Set this to the robot ip if your working with the real robot.</li>
-<li><strong>rviz_gui</strong>: Specifies wheter the rviz gui should be loaded.</li>
-<li><strong>calib_type</strong>: The robot hand-eye calibration board type (chessboard vs arucoboard), overwrites the default that is set in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a> file.</li>
-<li><strong>debug</strong>: If true the verbosity of the ROS log messages will be increased, and the process name will be displayed with each log messages, by default set to false.</li>
-<li><strong>moveit_perception</strong>: This enables the Moveit perception module which integrates sensor data into the path planning, by default set to false.</li>
-<li><strong>octomap_type</strong>: The data type used by the Moveit perception module (pointcloud or depthmap), defaults to depthmap.</li>
-<li><strong>octomap_resolution</strong>: The resolution of the octomap.</li>
-<li><strong>moveit_add_scene_collision_objects</strong>: This specifies if the robot table should be added as a collision object to the moveit planning space, By default set to true.</li>
-<li><strong>grasp_solution</strong>: Specify which grasping solution you want to use, this overwrites the solution that is set in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a> file.</li>
+<li><code class="docutils literal notranslate"><span class="pre">real</span></code>: Specifies whether you want to use the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution on the real robot, by default False.</li>
+<li><code class="docutils literal notranslate"><span class="pre">gazebo</span></code>: Specifies wheter the gazebo gui should be loaded.</li>
+<li><code class="docutils literal notranslate"><span class="pre">external_franka_control</span></code>: Set this to true if you want to load the <code class="docutils literal notranslate"><span class="pre">franka_control</span></code> node on another pc on the same network.</li>
+<li><code class="docutils literal notranslate"><span class="pre">robot_ip</span></code>: Set this to the robot ip if your working with the real robot.</li>
+<li><code class="docutils literal notranslate"><span class="pre">rviz_gui</span></code>: Specifies wheter the rviz gui should be loaded.</li>
+<li><code class="docutils literal notranslate"><span class="pre">calib_type</span></code>: The robot hand-eye calibration board type (chessboard vs arucoboard), overwrites the default that is set in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a> file.</li>
+<li><code class="docutils literal notranslate"><span class="pre">debug</span></code>: If true the verbosity of the ROS log messages will be increased, and the process name will be displayed with each log messages, by default set to false.</li>
+<li><code class="docutils literal notranslate"><span class="pre">moveit_perception</span></code>: This enables the Moveit perception module which integrates sensor data into the path planning, by default set to false.</li>
+<li><code class="docutils literal notranslate"><span class="pre">octomap_type</span></code>: The data type used by the Moveit perception module (pointcloud or depthmap), defaults to depthmap.</li>
+<li><code class="docutils literal notranslate"><span class="pre">octomap_resolution</span></code>: The resolution of the octomap.</li>
+<li><code class="docutils literal notranslate"><span class="pre">moveit_add_scene_collision_objects</span></code>: This specifies if the robot table should be added as a collision object to the moveit planning space, By default set to true.</li>
+<li><code class="docutils literal notranslate"><span class="pre">grasp_solution</span></code>: Specify which grasping solution you want to use, this overwrites the solution that is set in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a> file.</li>
+<li><code class="docutils literal notranslate"><span class="pre">use_bounding_box</span></code>: If set to true the bounding box that is specified in the <code class="docutils literal notranslate"><span class="pre">main_config.yaml</span></code> file will be used when planning the grasp.</li>
 </ul>
 </div></blockquote>
 <div class="section" id="grasping-solutions">
@@ -342,10 +351,10 @@ within the catkin workspace src folder:</p>
 <p>Currently, the following grasping solutions are supported:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>GQCNN-2.0</strong>: Deep Learning to Plan Robust Grasps with Synthetic Point Clouds and Analytic Grasp Metrics. Trained on <a class="reference external" href="https://berkeleyautomation.github.io/dex-net/#dexnet_2">Dex-Net 2.0</a>.</li>
-<li><strong>GQCNN-2.1</strong>: Extension off GQ-CNN 2.0. The network that was trained on <a class="reference external" href="https://berkeleyautomation.github.io/dex-net/#dexnet_2">Dex-Net 2.0</a> is improved using RL in simulations.</li>
-<li><strong>GQCNN-4.0-PJ</strong>: Improvement of the GQCNN-2.0 which computes more accurate grasps. This network module does additionally state whether it is better to grasp an object using a suction or a parallel jaw gripper.</li>
-<li><strong>FC-GQCNN-4.0-PJ</strong>: Modification of GQCNN-4.0-PJ in which a fully connected grasp quality CNN (<a class="reference external" href="https://berkeleyautomation.github.io/fcgqcnn">FC-GQ-CNN</a>) is used. This model has a faster grasp computation time and a more accurate grasp.</li>
+<li><code class="docutils literal notranslate"><span class="pre">GQCNN-2.0</span></code>: Deep Learning to Plan Robust Grasps with Synthetic Point Clouds and Analytic Grasp Metrics. Trained on <a class="reference external" href="https://berkeleyautomation.github.io/dex-net/#dexnet_2">Dex-Net 2.0</a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">GQCNN-2.1</span></code>: Extension off GQ-CNN 2.0. The network that was trained on <a class="reference external" href="https://berkeleyautomation.github.io/dex-net/#dexnet_2">Dex-Net 2.0</a> is improved using RL in simulations.</li>
+<li><code class="docutils literal notranslate"><span class="pre">GQCNN-4.0-PJ</span></code>: Improvement of the GQCNN-2.0 which computes more accurate grasps. This network module does additionally state whether it is better to grasp an object using a suction or a parallel jaw gripper.</li>
+<li><code class="docutils literal notranslate"><span class="pre">FC-GQCNN-4.0-PJ</span></code>: Modification of GQCNN-4.0-PJ in which a fully connected grasp quality CNN (<a class="reference external" href="https://berkeleyautomation.github.io/fcgqcnn">FC-GQ-CNN</a>) is used. This model has a faster grasp computation time and a more accurate grasp.</li>
 </ul>
 </div></blockquote>
 </div>
@@ -369,7 +378,7 @@ command.</p>
 <h3>Panda simulations<a class="headerlink" href="#panda-simulations" title="Permalink to this headline">¶</a></h3>
 <p>A gazebo simulation of the panda robot can be used by setting the
 <code class="docutils literal notranslate"><span class="pre">real</span></code> and <code class="docutils literal notranslate"><span class="pre">gazebo</span></code> launch file arguments.</p>
-<div class="figure" id="id16">
+<div class="figure" id="id15">
 <a class="reference external image-reference" href="https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png"><img alt="gazebo_simulation" src="https://user-images.githubusercontent.com/17570430/68993544-9f9aaa80-0879-11ea-832e-a61147fdc80a.png" /></a>
 <p class="caption"><span class="caption-text">Overview of the gazebo simulation environment.</span></p>
 </div>
@@ -380,7 +389,7 @@ to simulate the kinect while I am using the
 <a class="reference external" href="https://github.com/code-iai/iai_kinect2">iai_kinect2 package</a> the
 simulation is not fully ready. To get it to work one has to or replace
 the iai_kinect2 package in the real setup with the openni_launch or
-write an modified version of the <code class="docutils literal notranslate"><span class="pre">iai_kienct2/kinect2_bridge</span></code> that
+write a modified version of the <code class="docutils literal notranslate"><span class="pre">iai_kienct2/kinect2_bridge</span></code> that
 works with the simulated camera instead of looking for a real one.</p>
 </div>
 </div>
@@ -435,7 +444,7 @@ container using one of the following <code class="docutils literal notranslate">
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Please not that singularity currently only links to the NVIDIA drivers when you are using the container in read mode.
+<p class="last">Please, note that singularity currently only links to the NVIDIA drivers when you are using the container in read mode.
 As a result when you start the container using the <code class="docutils literal notranslate"><span class="pre">--writable</span></code> tag you can not leverage the GPU computation capabilities
 of your NVIDIA graphics card.</p>
 </div>
@@ -486,11 +495,12 @@ For more information, see <a class="reference external" href="https://github.com
 </div>
 <div class="section" id="troubleshooting-information">
 <span id="troubleshooting"></span><h1>Troubleshooting information<a class="headerlink" href="#troubleshooting-information" title="Permalink to this headline">¶</a></h1>
-<p>When you run into problems please check the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues">issues tab</a>
+<p>When you run into problems, please check the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues">issues tab</a>
 for a solution. Some commonly encountered issues are displayed below.</p>
 <div class="section" id="known-issues">
 <h2>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li>I get a <code class="docutils literal notranslate"><span class="pre">[Err]</span> <span class="pre">[REST.cc:205]</span> <span class="pre">Error</span> <span class="pre">in</span> <span class="pre">REST</span> <span class="pre">request</span></code> error when the gazebo simulation is opened -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/139">#139</a></li>
 <li>The planner does not find a path when <code class="docutils literal notranslate"><span class="pre">moveit_perception</span></code> is enabled -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/141">#141</a></li>
 <li>I get a <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">matrix</span> <span class="pre">&#64;</span> <span class="pre">rmat</span></code> error -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/142">#142</a></li>
@@ -498,6 +508,7 @@ for a solution. Some commonly encountered issues are displayed below.</p>
 <li>I get a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> while trying to use <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">build</span></code> inside the container -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/149">#149</a></li>
 <li>I get a <code class="docutils literal notranslate"><span class="pre">CUDA</span> <span class="pre">driver</span> <span class="pre">version</span> <span class="pre">is</span> <span class="pre">insufficient</span></code> error when inside the container -&gt; <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/issues/150">#150</a></li>
 </ul>
+</div></blockquote>
 </div>
 </div>
 

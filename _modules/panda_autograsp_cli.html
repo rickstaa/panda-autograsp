@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>panda_autograsp_cli &mdash; panda_autograsp 1.0.2 documentation</title>
+  <title>panda_autograsp_cli &mdash; panda_autograsp 1.0.3 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                1.0.2
+                1.0.3
               </div>
             
           
@@ -515,41 +515,48 @@
 
         <span class="c1"># Keep alive as node is alive</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="nb">input</span><span class="p">(</span>
-            <span class="s2">&quot;For the robot to know where it is relative to the camera we need &quot;</span>
-            <span class="s2">&quot;to perform a calibration. Press enter to start the calibration &quot;</span>
-            <span class="s2">&quot;procedure&gt;&gt; &quot;</span>
+        <span class="n">calib_response</span> <span class="o">=</span> <span class="n">yes_or_no</span><span class="p">(</span>
+            <span class="s2">&quot;For the robot to know where it is relative to the camera a calibration &quot;</span>
+            <span class="s2">&quot;needs to be performed. Do you want to perform the calibration now? &quot;</span>
+            <span class="s2">&quot;(Y=New calibration and n=Use old calibration results)&gt;&gt;  &quot;</span><span class="p">,</span>
+            <span class="n">add_options</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
+
         <span class="k">try</span><span class="p">:</span>  <span class="c1"># Catch user and service exceptions</span>
 
             <span class="c1">#####################################</span>
             <span class="c1"># Calibrate Camera frame ############</span>
             <span class="c1">#####################################</span>
-            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="n">yes_or_no</span><span class="p">(</span>
-                    <span class="s2">&quot;Is the checkerboard/arucoboard positioned on the upper left &quot;</span>
-                    <span class="s2">&quot;corner of the table?&quot;</span>
-                <span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing calibration frame transform...&quot;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="p">:</span>
-                    <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node.&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
-                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calibrate_sensor_srv</span><span class="p">()</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-                        <span class="n">response</span> <span class="o">=</span> <span class="n">yes_or_no</span><span class="p">(</span>
-                            <span class="s2">&quot;Calibration failed. Do you want to try again?&quot;</span>
-                        <span class="p">)</span>
-                        <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="p">:</span>
-                            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node.&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
-                            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">calib_response</span><span class="p">:</span>
+                <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="n">response</span> <span class="o">=</span> <span class="n">yes_or_no</span><span class="p">(</span>
+                        <span class="s2">&quot;Is the checkerboard/arucoboard positioned on the upper left &quot;</span>
+                        <span class="s2">&quot;corner of the table?&quot;</span>
+                    <span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing calibration frame transform...&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="p">:</span>
+                        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node.&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+                        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-                        <span class="n">response</span> <span class="o">=</span> <span class="n">yes_or_no</span><span class="p">(</span><span class="s2">&quot;Was the frame correct?&quot;</span><span class="p">)</span>
-                        <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
-                            <span class="k">break</span>  <span class="c1"># Continue to grasp planning</span>
+                        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calibrate_sensor_srv</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                            <span class="n">response</span> <span class="o">=</span> <span class="n">yes_or_no</span><span class="p">(</span>
+                                <span class="s2">&quot;Calibration failed. Do you want to try again?&quot;</span>
+                            <span class="p">)</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="p">:</span>
+                                <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+                                    <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node.&quot;</span> <span class="o">%</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+                                <span class="p">)</span>
+                                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                            <span class="n">response</span> <span class="o">=</span> <span class="n">yes_or_no</span><span class="p">(</span><span class="s2">&quot;Was the frame correct?&quot;</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
+                                <span class="k">break</span>  <span class="c1"># Continue to grasp planning</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Old calibration results used.&quot;</span><span class="p">)</span>
 
             <span class="c1">#####################################</span>
             <span class="c1"># Panda_autograsp_cli loop ##########</span>

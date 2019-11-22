@@ -40,5 +40,5 @@ directory.
 
 .. warning::
 
-    Please make sure you are on the ``melodic-devel`` branch while building the documentation. Otherwise
+    Please make sure you are on the ``melodic-devel`` branch while building the documentation. Otherwise,
     you will be greeted by errors.

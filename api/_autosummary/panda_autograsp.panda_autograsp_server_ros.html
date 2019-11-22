@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>panda_autograsp.panda_autograsp_server_ros &mdash; panda_autograsp 1.0.2 documentation</title>
+  <title>panda_autograsp.panda_autograsp_server_ros &mdash; panda_autograsp 1.0.3 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.0.2
+                1.0.3
               </div>
             
           
@@ -210,14 +210,14 @@ communicate with the components of the <cite>panda_autograps</cite> solution.</p
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer" title="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PandaAutograspServer</span></code></a>([pose_calib_method,&nbsp;gazebo])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer" title="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PandaAutograspServer</span></code></a>([pose_calib_method,&nbsp;…])</td>
 <td>Class used to create and call all the panda_autograsp components.</td>
 </tr>
 </tbody>
 </table>
 <dl class="class">
 <dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer">
-<em class="property">class </em><code class="descclassname">panda_autograsp.panda_autograsp_server_ros.</code><code class="descname">PandaAutograspServer</code><span class="sig-paren">(</span><em>pose_calib_method='aruco_board'</em>, <em>gazebo=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">panda_autograsp.panda_autograsp_server_ros.</code><code class="descname">PandaAutograspServer</code><span class="sig-paren">(</span><em>pose_calib_method='aruco_board'</em>, <em>gazebo=False</em>, <em>bounding_box_enabled=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class used to create and call all the panda_autograsp components.</p>
 <dl class="attribute">
 <dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.rvec">
@@ -249,14 +249,15 @@ communicate with the components of the <cite>panda_autograps</cite> solution.</p
 
 <dl class="method">
 <dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>pose_calib_method='aruco_board'</em>, <em>gazebo=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>pose_calib_method='aruco_board'</em>, <em>gazebo=False</em>, <em>bounding_box_enabled=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>pose_calib_method</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – Calibration pattern type., by default read from main_config.yaml.</li>
-<li><strong>gazebo</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>, optional) – Specifies whether we are in a gazebo simulation, by default false.</li>
+<li><strong>gazebo</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>, optional) – Specifies whether you want to use a gazebo simulation, by default false.</li>
+<li><strong>bounding_box_enabled</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>, optional) – Specifies whether you want to use a bounding box for the grasp detection.</li>
 </ul>
 </td>
 </tr>

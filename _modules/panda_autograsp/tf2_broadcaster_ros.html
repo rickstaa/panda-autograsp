@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>panda_autograsp.tf2_broadcaster_ros &mdash; panda_autograsp 1.0.2 documentation</title>
+  <title>panda_autograsp.tf2_broadcaster_ros &mdash; panda_autograsp 1.0.3 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                1.0.2
+                1.0.3
               </div>
             
           
@@ -191,12 +191,28 @@
 <span class="kn">import</span> <span class="nn">tf_conversions</span>
 <span class="kn">import</span> <span class="nn">tf2_ros</span>
 <span class="kn">from</span> <span class="nn">pyquaternion</span> <span class="k">import</span> <span class="n">Quaternion</span>
+<span class="kn">import</span> <span class="nn">ruamel.yaml</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="c1"># Messages and services</span>
 <span class="kn">import</span> <span class="nn">geometry_msgs.msg</span>
 
 <span class="c1"># Panda_autograsp modules, msgs and srvs</span>
 <span class="kn">from</span> <span class="nn">panda_autograsp.srv</span> <span class="k">import</span> <span class="n">SetSensorPose</span>
+
+<span class="c1">#################################################</span>
+<span class="c1"># Read main config ##############################</span>
+<span class="c1">#################################################</span>
+
+<span class="c1"># Open panda_autograsp configuration file</span>
+<span class="n">CALIB_FRAMES_POSES_CFG_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;../../cfg/calib_frames_poses.yaml&quot;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">yaml</span> <span class="o">=</span> <span class="n">ruamel</span><span class="o">.</span><span class="n">yaml</span><span class="o">.</span><span class="n">YAML</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">CALIB_FRAMES_POSES_CFG_PATH</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">CALIB_FRAMES_POSES_CFG</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
 
 
 <span class="c1">#################################################</span>
@@ -274,6 +290,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># Register shutdown hook</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">on_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shutdown_hook</span><span class="p">)</span>
 
         <span class="c1"># Generate member variables</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_just_calibrated</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Specifies whether a calibration was just done</span>
@@ -580,7 +599,39 @@
         <span class="c1"># Send tf message</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tf2_br</span><span class="o">.</span><span class="n">sendTransform</span><span class="p">(</span>
             <span class="p">[</span><span class="n">calib_frame_tf_msg</span><span class="p">,</span> <span class="n">sensor_frame_rgb_tf_msg</span><span class="p">,</span> <span class="n">sensor_frame_ir_tf_msg</span><span class="p">]</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Tf2Broadcaster.shutdown_hook"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.tf2_broadcaster_ros.html#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.shutdown_hook">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This functions gets called when the node is shutdown. This function makes</span>
+<span class="sd">        sure the previous calibration results are save to the calibration file before</span>
+<span class="sd">        the node is shutdown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Retrieve calibration frame position and orientation</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Saving last calibration results...&quot;</span><span class="p">)</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;calib_frame_x_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_x_pos</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;calib_frame_y_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_y_pos</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;calib_frame_z_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_z_pos</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;calib_frame_yaw&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_yaw</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;calib_frame_pitch&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_pitch</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;calib_frame_roll&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calib_frame_roll</span>
+
+        <span class="c1"># Retrieve sensor frame position and orientation</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;sensor_frame_x_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_x_pos</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;sensor_frame_y_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_y_pos</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;sensor_frame_z_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_z_pos</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;sensor_frame_q1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_q1</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;sensor_frame_q2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_q2</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;sensor_frame_q3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_q3</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;sensor_frame_q4&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_q4</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;sensor_frame_yaw&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_yaw</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;sensor_frame_pitch&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_pitch</span>
+        <span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">[</span><span class="s2">&quot;sensor_frame_roll&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_frame_roll</span>
+
+        <span class="c1"># Save calibration results to calib config file</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">CALIB_FRAMES_POSES_CFG_PATH</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">CALIB_FRAMES_POSES_CFG</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Last calibration results saved successfully.&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

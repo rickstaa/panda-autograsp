@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>panda_autograsp.panda_autograsp_server_ros &mdash; panda_autograsp 1.0.2 documentation</title>
+  <title>panda_autograsp.panda_autograsp_server_ros &mdash; panda_autograsp 1.0.3 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                1.0.2
+                1.0.3
               </div>
             
           
@@ -219,6 +219,9 @@
 <span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="k">import</span> <span class="n">Header</span>
 <span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="k">import</span> <span class="n">Empty</span>
 
+<span class="kn">from</span> <span class="nn">gqcnn.msg</span> <span class="k">import</span> <span class="n">BoundingBox</span>
+<span class="kn">from</span> <span class="nn">gqcnn.srv</span> <span class="k">import</span> <span class="n">GQCNNGraspPlanner</span><span class="p">,</span> <span class="n">GQCNNGraspPlannerBoundingBox</span>
+
 <span class="c1"># Panda_autograsp modules, msgs and srvs</span>
 <span class="kn">from</span> <span class="nn">panda_autograsp.srv</span> <span class="k">import</span> <span class="p">(</span>
     <span class="n">ComputeGrasp</span><span class="p">,</span>
@@ -235,7 +238,6 @@
     <span class="n">SetGripperClosed</span><span class="p">,</span>
     <span class="n">PlanPlace</span><span class="p">,</span>
     <span class="n">PlanToPath</span><span class="p">,</span>
-    <span class="n">GQCNNGraspPlanner</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="c1"># Panda_autograsp modules, msgs and srvs</span>
@@ -318,14 +320,21 @@
 <span class="sd">        The translation vector of the camera/world calibration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="PandaAutograspServer.__init__"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pose_calib_method</span><span class="o">=</span><span class="n">POSE_CALIB_METHOD</span><span class="p">,</span> <span class="n">gazebo</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="PandaAutograspServer.__init__"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">pose_calib_method</span><span class="o">=</span><span class="n">POSE_CALIB_METHOD</span><span class="p">,</span>
+        <span class="n">gazebo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">bounding_box_enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        pose_calib_method : :py:obj:`str`, optional</span>
 <span class="sd">            Calibration pattern type., by default read from main_config.yaml.</span>
 <span class="sd">        gazebo : :py:obj:`bool`, optional</span>
-<span class="sd">            Specifies whether we are in a gazebo simulation, by default false.</span>
+<span class="sd">            Specifies whether you want to use a gazebo simulation, by default false.</span>
+<span class="sd">        bounding_box_enabled : :py:obj:`bool`, optional</span>
+<span class="sd">            Specifies whether you want to use a bounding box for the grasp detection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Get pose calib method from input</span>
@@ -336,8 +345,16 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pose_calib_method</span> <span class="o">=</span> <span class="n">pose_calib_method</span>
 
-        <span class="c1"># Get gazebo bool</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gazebo</span><span class="o">=</span><span class="n">gazebo</span>
+        <span class="c1"># Get input variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gazebo</span> <span class="o">=</span> <span class="n">gazebo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box_enabled</span> <span class="o">=</span> <span class="n">bounding_box_enabled</span>
+
+        <span class="c1"># Get  bounding box values out of config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box</span> <span class="o">=</span> <span class="n">BoundingBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box</span><span class="o">.</span><span class="n">minX</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection&quot;</span><span class="p">][</span><span class="s2">&quot;bounding_box&quot;</span><span class="p">][</span><span class="s2">&quot;minX&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box</span><span class="o">.</span><span class="n">minY</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection&quot;</span><span class="p">][</span><span class="s2">&quot;bounding_box&quot;</span><span class="p">][</span><span class="s2">&quot;minY&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box</span><span class="o">.</span><span class="n">maxX</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection&quot;</span><span class="p">][</span><span class="s2">&quot;bounding_box&quot;</span><span class="p">][</span><span class="s2">&quot;maxX&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box</span><span class="o">.</span><span class="n">maxY</span> <span class="o">=</span> <span class="n">MAIN_CFG</span><span class="p">[</span><span class="s2">&quot;grasp_detection&quot;</span><span class="p">][</span><span class="s2">&quot;bounding_box&quot;</span><span class="p">][</span><span class="s2">&quot;maxY&quot;</span><span class="p">]</span>
 
         <span class="c1"># Setup cv_bridge</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cv_bridge</span> <span class="o">=</span> <span class="n">CvBridge</span><span class="p">()</span>
@@ -353,6 +370,7 @@
         <span class="c1"># Initialize grasp computation services #######</span>
         <span class="c1">###############################################</span>
 
+        <span class="c1"># Default grasp planner service</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Connecting to &#39;gqcnn_grasp_planner&#39; service...&quot;</span><span class="p">)</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;gqcnn_grasp_planner&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
@@ -368,6 +386,30 @@
             <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
                 <span class="o">%</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gqcnn_grasp_planning_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Connecting to &#39;gqcnn_grasp_planner_bounding_box&#39; service...&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;gqcnn_grasp_planner_bounding_box&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Bounding box grasp planner service</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gqcnn_grasp_planning_bounding_box_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+                <span class="s2">&quot;gqcnn_grasp_planner_bounding_box&quot;</span><span class="p">,</span> <span class="n">GQCNNGraspPlannerBoundingBox</span>
+            <span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Connected to `gqcnn_grasp_planner service.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                <span class="s2">&quot;Panda_autograsp &#39;gqcnn_grasp_planner_bounding_box&#39; &quot;</span>
+                <span class="s2">&quot;service initialization &quot;</span>
+                <span class="s2">&quot;failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="n">shutdown_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Shutting down </span><span class="si">%s</span><span class="s2"> node because </span><span class="si">%s</span><span class="s2"> service connection failed.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_gqcnn_grasp_planning_bounding_box_srv</span><span class="o">.</span><span class="n">resolved_name</span><span class="p">,</span>
+                <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">shutdown_msg</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -556,17 +598,11 @@
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="c1"># Initialize reset octomap service</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
-            <span class="s2">&quot;Connecting to &#39;/clear_octomap/&#39; service...&quot;</span>
-        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Connecting to &#39;/clear_octomap/&#39; service...&quot;</span><span class="p">)</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;/clear_octomap&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_clear_octomap_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
-                <span class="s2">&quot;/clear_octomap&quot;</span><span class="p">,</span> <span class="n">Empty</span>
-            <span class="p">)</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
-                <span class="s2">&quot;Connected to &#39;/clear_octomap&#39; service.&quot;</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clear_octomap_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/clear_octomap&quot;</span><span class="p">,</span> <span class="n">Empty</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;Connected to &#39;/clear_octomap&#39; service.&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
                 <span class="s2">&quot;Panda_autograsp &#39;/clear_octomap&#39; &quot;</span>
@@ -759,9 +795,17 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Call grasp computation service</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">grasp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gqcnn_grasp_planning_srv</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">color_image_rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth_image_rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_info_sd</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box_enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grasp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gqcnn_grasp_planning_srv</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">color_image_rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth_image_rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_info_sd</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grasp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gqcnn_grasp_planning_bounding_box_srv</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">color_image_rect</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">depth_image_rect</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">camera_info_sd</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box</span><span class="p">,</span>
+            <span class="p">)</span>
 
         <span class="c1"># Print grasp</span>
         <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">grasp</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span>

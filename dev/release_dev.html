@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Release package &mdash; panda_autograsp 1.0.2 documentation</title>
+  <title>Release package &mdash; panda_autograsp 1.0.3 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.0.2
+                1.0.3
               </div>
             
           
@@ -116,7 +116,10 @@
 </ul>
 <p class="caption"><span class="caption-text">Developer Zone</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Release package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Release package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#versioning-guidelines">Versioning guidelines</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="doc_dev.html">Release documentation</a></li>
 </ul>
 
@@ -188,13 +191,22 @@
 <blockquote>
 <div><ol class="arabic simple">
 <li>Squash and merge your branch with the desired branch.</li>
-<li><a class="reference internal" href="doc_dev.html"><span class="doc">Release documentation</span></a> if needed.</li>
+<li>Update the documentation according to <a class="reference internal" href="doc_dev.html"><span class="doc">Release documentation</span></a> if needed.</li>
 <li>Bump the version using the <a class="reference external" href="https://github.com/peritus/bumpversion">bumpversion tool</a>.</li>
+<li>Check the version of the current branch using the <code class="docutils literal notranslate"><span class="pre">bumpversion</span> <span class="pre">--list</span></code> command.</li>
+<li>Add a tag equal to the version specified in the last step (Check versioning guidelines below).</li>
 <li>Update the changelog using the <a class="reference external" href="https://github.com/CookPete/auto-changelog">auto-changelog</a> tool.</li>
 <li>Commit and push the changes to the remote.</li>
-<li>Create the right version tag and release using the github draft release tool.</li>
+<li>Create a release using the github draft release tool.</li>
 </ol>
 </div></blockquote>
+<div class="section" id="versioning-guidelines">
+<h2>Versioning guidelines<a class="headerlink" href="#versioning-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>Please use the ROS version of the branch you are working on in the version tag
+(Example: v1.0.1-kinetic for the kinetic branch and v1.0.1-melodic for the
+melodic branch). Additionally please use the
+<a class="reference external" href="https://semver.org/">versioning guidelines specified at semver.org</a>.</p>
+</div>
 </div>
 
 

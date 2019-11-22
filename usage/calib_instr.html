@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Sensor calibration instructions &mdash; panda_autograsp 1.0.2 documentation</title>
+  <title>Sensor calibration instructions &mdash; panda_autograsp 1.0.3 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                1.0.2
+                1.0.3
               </div>
             
           
@@ -198,13 +198,16 @@ for the camera parameters to fully stabilize.</p>
 <p>To be able to control the real robot, we also need to know the
 location of the robot relative to the camera. A robot eye-hand calibration is
 therefore performed at the start of the <cite>panda_autograsp</cite> solution.
-During this eye-hand calibration, you are asked asked to place a calibration
+During this eye-hand calibration, you are asked to place a calibration
 pattern on the upper left corner of the table. The position of this pattern
 and the robot has to be measured and specified in the
-<a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>.
-You can also manually adjust the position of both the sensor and calibration
-frames, using the <code class="docutils literal notranslate"><span class="pre">dynamic</span> <span class="pre">reconfigure</span></code> window that is opened when the
-<a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution is started.</p>
+<a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/calib_frames_poses.yaml</a>.
+You can also adjust the position and orientation of both the sensor
+and calibration frames by using the <code class="docutils literal notranslate"><span class="pre">dynamic</span> <span class="pre">reconfigure</span></code> window
+that is opened when the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution is started.
+The changes made in the dynamic reconfigure window are saved to the
+<a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/calib_frames_poses.yaml">./cfg/calib_frames_poses.yaml</a>.
+file when you close the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> algorithm
@@ -215,9 +218,15 @@ instead, you have to change the <code class="docutils literal notranslate"><span
 in the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml">./cfg/main_config.cfg</a>
 file.</p>
 </div>
-<div class="figure" id="id3">
+<div class="section" id="dynamic-reconfigure-window">
+<h3>Dynamic reconfigure window<a class="headerlink" href="#dynamic-reconfigure-window" title="Permalink to this headline">¶</a></h3>
+<p>As specified above you can use the dynamic reconfigure gui (shown below)
+to position and orientation of both the calibration and sensor frame. This
+is done by going to the <code class="docutils literal notranslate"><span class="pre">tf_broadcaster</span></code> tab and adjusting the sliders.</p>
+<div class="figure" id="id2">
 <a class="reference external image-reference" href="https://user-images.githubusercontent.com/17570430/69071747-b6343380-0a2a-11ea-9192-a7ff86501bad.png"><img alt="dynamic reconfigure window" src="https://user-images.githubusercontent.com/17570430/69071747-b6343380-0a2a-11ea-9192-a7ff86501bad.png" /></a>
 <p class="caption"><span class="caption-text">Dynamic reconfigure window that can be used to change the sensor and calibration frames.</span></p>
+</div>
 </div>
 <div class="section" id="generate-chessboard-pattern">
 <h3>Generate chessboard pattern<a class="headerlink" href="#generate-chessboard-pattern" title="Permalink to this headline">¶</a></h3>

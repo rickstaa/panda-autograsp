@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Prerequisites &mdash; panda_autograsp 1.0.2 documentation</title>
+  <title>Prerequisites &mdash; panda_autograsp 1.0.3 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.0.2
+                1.0.3
               </div>
             
           
@@ -111,7 +111,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#package-build-from-source-instructions">Package build from source instructions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#clone-the-repository-and-build-the-package">Clone the repository and build the package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-the-ros-system-and-python-dependencies">Install the ros system and python dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-the-ros-system-and-python-dependencies">Install the ROS system and python dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install-python-package-using-pip">Install python package using pip</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#build-the-package">Build the package</a></li>
 </ul>
@@ -226,16 +226,17 @@
 <h2>Software<a class="headerlink" href="#software" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="ros">
 <h3>ROS<a class="headerlink" href="#ros" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package has only been tested with ROS <code class="docutils literal notranslate"><span class="pre">Melodic</span></code> and Kinect.
-The ROS melodic installation instructions can be found <a class="reference external" href="https://wiki.ros.org/melodic">here</a>.
-The ROS kinetic installation instructions can be found <a class="reference external" href="https://wiki.ros.org/kinetic">here</a>.</p>
+<p>The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package has only been tested with ROS <code class="docutils literal notranslate"><span class="pre">Melodic</span></code>
+and Kinect. The ROS melodic installation instructions can be found
+<a class="reference external" href="https://wiki.ros.org/melodic">here</a>. The ROS kinetic installation
+instructions can be found <a class="reference external" href="https://wiki.ros.org/kinetic">here</a>.</p>
 <p>You further also need the following ROS packages:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">As ROS melodic is the recommended version the instructions below are for ros Melodic.
+<p class="last">As ROS melodic is the recommended version, the instructions below are for ROS Melodic.
 Change melodic to kinetic in each command if you want to use ROS kinetic.</p>
 </div>
 </div>
@@ -277,7 +278,7 @@ or <a class="reference external" href="https://conda.io/en/latest/">conda</a>.</
 <p class="last">As ROS doesn’t play nicely with anaconda I wrote a small
 <a class="reference external" href="https://github.com/rickstaa/.ros_conda_wrapper">ROS Conda_wrapper</a>.
 Unfortunately, I wasn’t yet able to solve all the problems caused
-case by this CONDA ROS incompatibility. You are therfore currently
+case by this CONDA ROS incompatibility. You are therefore currently
 advised to use a <a class="reference external" href="https://virtualenv.pypa.io/en/stable/">Virtualenv</a>
 instead.</p>
 </div>
@@ -317,8 +318,8 @@ found <a class="reference external" href="https://blog.codeinside.eu/2018/12/04/
 </div>
 </div>
 <div class="section" id="install-the-ros-system-and-python-dependencies">
-<h2>Install the ros system and python dependencies<a class="headerlink" href="#install-the-ros-system-and-python-dependencies" title="Permalink to this headline">¶</a></h2>
-<p>Install the ros package dependencies using the following command:</p>
+<h2>Install the ROS system and python dependencies<a class="headerlink" href="#install-the-ros-system-and-python-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Install the ROS package dependencies using the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosdep install --from-paths src --ignore-src --rosdistro melodic -y
 </pre></div>
 </div>
@@ -394,7 +395,7 @@ a writeable folder.</p>
 <div class="section" id="id5">
 <h3>3. Clone the repository and build the package<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>As the panda_autograsp package is still private it can not be
-automatically build during the container generation. You therefore
+automatically build during the container generation. You, therefore,
 have to clone and build the package manually after the docker
 container is build. This is done by running the following commands:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash -c <span class="s2">&quot;mkdir -p ~/panda_autograsp_ws \</span>
