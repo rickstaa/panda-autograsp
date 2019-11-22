@@ -2,22 +2,22 @@
 # This file specifies the poses of the frames used in the calibration.
 
 # Calibration frame position (Relative to panda_link0 frame)
-calib_frame_x_pos: 0.4 # Relative position on the x axis [m]
-calib_frame_y_pos: -0.2 # Relative position on the y axis [m]
-calib_frame_z_pos: 0.0 # Relative position on the z axis [m]
+calib_frame_x_pos: 0.78 # Relative position on the x axis [m]
+calib_frame_y_pos: -0.03 # Relative position on the y axis [m]
+calib_frame_z_pos: 0.015 # Relative position on the z axis [m]
 calib_frame_yaw: 0.0              # Rotation around the z axis [rad]
-calib_frame_pitch: 0.0 # Rotation around the y axis [rad]
-calib_frame_roll: 0.0 # Rotation around the x axis [rad]
+calib_frame_pitch: -0.065 # Rotation around the y axis [rad]
+calib_frame_roll: 0.07 # Rotation around the x axis [rad]
 
 # Sensor start frame position (Relative to calibration frame) #
-sensor_frame_x_pos: 0.3006541508704501  # Relative position on the x axis [m]
-sensor_frame_y_pos: 0.7718831601276306 # Relative position on the y axis [m]
-sensor_frame_z_pos: 1.0730552773630313 # Relative position on the z axis [m]
-sensor_frame_q1: -0.04375637131797215  # 1st orientation quaternion [rad]
-sensor_frame_q2: 0.9073420757343762   # 2th orientation quaternion [rad]
-sensor_frame_q3: -0.41789849210443364 # 3th orientation quaternion [rad]
-sensor_frame_q4: 0.013288636798324628    # 4th orientation quaternion [rad]
-sensor_frame_yaw: -2.27893224383571   # Rotation around the z axis [rad]
-sensor_frame_pitch: -0.012457086772174464  # Rotation around the y axis [rad]
-sensor_frame_roll: -3.0509509679232325     # Rotation around the x axis [rad]
+sensor_frame_x_pos: -0.5323546026851087 # Relative position on the x axis [m]
+sensor_frame_y_pos: 0.45690324763111595 # Relative position on the y axis [m]
+sensor_frame_z_pos: 0.8788124045607401 # Relative position on the z axis [m]
+sensor_frame_q1: 0.0026524368992860135 # 1st orientation quaternion [rad]
+sensor_frame_q2: 0.9756848636001649   # 2th orientation quaternion [rad]
+sensor_frame_q3: -0.2177865339364841    # 3th orientation quaternion [rad]
+sensor_frame_q4: 0.02451605914407982     # 4th orientation quaternion [rad]
+sensor_frame_yaw: -2.7010148366981306 # Rotation around the z axis [rad]
+sensor_frame_pitch: 0.048737099889973205   # Rotation around the y axis [rad]
+sensor_frame_roll: -3.1353205991941993     # Rotation around the x axis [rad]
 

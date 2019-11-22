@@ -20,8 +20,8 @@ main:
     # This is relative to the robot base link (panda_link0) the z axis is set equal
     # to the the z location at the moment when the grasp was started.
     pose:
-      x_pos: 0.2 # [m]
-      y_pos: 0.2 # [m]
+      x_pos: 0.3 # [m]
+      y_pos: 0.3 # [m]
 
 #################################################
 # Panda_autograsp visualization settings ########
@@ -67,10 +67,10 @@ grasp_detection:
 
   # Bounding box (Allows you to only use a region of the image in the grasp detection)
   bounding_box:
-    minX: 0
-    minY: 0
-    maxX: 400
-    maxY: 400
+    minX: 50
+    minY: 100
+    maxX: 370
+    maxY: 440
 
   # GQCNN grasping solution settings
   gqcnn:
