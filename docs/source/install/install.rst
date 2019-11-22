@@ -17,9 +17,11 @@ Software
 
 ROS
 ^^^^^^^^^^^^^^^^^^^
-The `panda_autograsp`_ package has only been tested with ROS ``Melodic`` and Kinect.
-The ROS melodic installation instructions can be found `here <https://wiki.ros.org/melodic>`__.
-The ROS kinetic installation instructions can be found `here <https://wiki.ros.org/kinetic>`__.
+
+The `panda_autograsp`_ package has only been tested with ROS ``Melodic``
+and Kinect. The ROS melodic installation instructions can be found
+`here <https://wiki.ros.org/melodic>`__. The ROS kinetic installation
+instructions can be found `here <https://wiki.ros.org/kinetic>`__.
 
 You further also need the following ROS packages:
 
@@ -29,7 +31,7 @@ You further also need the following ROS packages:
 
 .. warning::
 
-    As ROS melodic is the recommended version the instructions below are for ros Melodic.
+    As ROS melodic is the recommended version, the instructions below are for ROS Melodic.
     Change melodic to kinetic in each command if you want to use ROS kinetic.
 
 Python
@@ -77,7 +79,7 @@ or `conda <https://conda.io/en/latest/>`_.
     As ROS doesn't play nicely with anaconda I wrote a small
     `ROS Conda_wrapper <https://github.com/rickstaa/.ros_conda_wrapper>`_.
     Unfortunately, I wasn't yet able to solve all the problems caused
-    case by this CONDA ROS incompatibility. You are therfore currently
+    case by this CONDA ROS incompatibility. You are therefore currently
     advised to use a `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_
     instead.
 
@@ -117,10 +119,10 @@ Clone or download the `panda_autograsp`_ catkin package from Github:
     && rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys libfranka \
     && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
 
-Install the ros system and python dependencies
+Install the ROS system and python dependencies
 ------------------------------------------------------
 
-Install the ros package dependencies using the following command:
+Install the ROS package dependencies using the following command:
 
 .. code-block:: bash
 
@@ -207,7 +209,7 @@ After te container has been build run it using the
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As the panda_autograsp package is still private it can not be
-automatically build during the container generation. You therefore
+automatically build during the container generation. You, therefore,
 have to clone and build the package manually after the docker
 container is build. This is done by running the following commands:
 

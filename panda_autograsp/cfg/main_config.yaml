@@ -65,6 +65,13 @@ planning:
 #################################################
 grasp_detection:
 
+  # Bounding box (Allows you to only use a region of the image in the grasp detection)
+  bounding_box:
+    minX: 0
+    minY: 0
+    maxX: 400
+    maxY: 400
+
   # GQCNN grasping solution settings
   gqcnn:
 

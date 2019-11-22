@@ -94,7 +94,6 @@ add_service_files(
   SetGripperWidth.srv
   SetGripperOpen.srv
   SetGripperClosed.srv
-  GQCNNGraspPlanner.srv
   PlanGripper.srv
   ExecuteGripperPlan.srv
   PlanPlace.srv

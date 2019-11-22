@@ -24,6 +24,7 @@ from perception import CameraIntrinsics, ColorImage, DepthImage, BinaryImage, Rg
 from visualization import Visualizer2D as vis
 from gqcnn.utils import NoValidGraspsException
 from gqcnn.grasping import Grasp2D, SuctionPoint2D, RgbdImageState
+from autolab_core import Box
 
 # ROS python packages
 from cv_bridge import CvBridgeError
@@ -76,6 +77,7 @@ class GraspPlannerROS(object):
         self._cv_bridge = cv_bridge
         self.grasping_policy = grasping_policy
         self._grasp_pose_publisher = grasp_pose_publisher
+        self._bounding_box = None
 
         # Set minimum input dimensions.
         pad = max(
@@ -259,13 +261,14 @@ class GraspPlannerROS(object):
         rgbd_im = RgbdImage.from_color_and_depth(color_im, depth_im)
 
         # Mask bounding box.
+        self._bounding_box = bounding_box  # Save boundingbox for visualization
         if bounding_box is not None:
 
             # Calc bb parameters.
-            min_x = bounding_box.minX
-            min_y = bounding_box.minY
-            max_x = bounding_box.maxX
-            max_y = bounding_box.maxY
+            min_x = int(bounding_box.minX)
+            min_y = int(bounding_box.minY)
+            max_x = int(bounding_box.maxX)
+            max_y = int(bounding_box.maxY)
 
             # Contain box to image->don't let it exceed image height/width
             # bounds.
@@ -386,6 +389,15 @@ class GraspPlannerROS(object):
             vmax=self.cfg["policy"]["vis"]["vmax"],
         )
         vis.grasp(grasp.grasp, scale=2.5, show_center=False, show_axis=True)
+        if self._bounding_box is not None:  # Add bounding box if present
+
+            # Get bounding box bottom left coordinates, width and height
+            bounding_box = Box(
+                min_pt=np.array([self._bounding_box.minX, self._bounding_box.minY]),
+                max_pt=np.array([self._bounding_box.maxX, self._bounding_box.maxY]),
+                frame=rgbd_image_state.rgbd_im.frame,
+            )
+            vis.box(bounding_box, color="b")
         vis.title(
             "Planned grasp at depth {0:.3f}m with Q={1:.3f}".format(
                 grasp.grasp.depth, grasp.q_value
