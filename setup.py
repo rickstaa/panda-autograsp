@@ -69,9 +69,9 @@ else:  # Py 3 requirements
         "pyassimp",
         "scikit-image",
         "opencv-contrib-python",
-        "pyglet==1.4.7",
-        "scikit-image==0.14.2",
-        "matplotlib==2.2.0",
+        "pyglet<=1.4.7",
+        "scikit-image<=0.14.2",
+        "matplotlib<=2.2.0",
     ]
 
 # Set up logger.
