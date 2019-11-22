@@ -47,7 +47,7 @@ container using one of the following ``run`` commands:
 
 .. warning::
 
-    Please not that singularity currently only links to the NVIDIA drivers when you are using the container in read mode.
+    Please, note that singularity currently only links to the NVIDIA drivers when you are using the container in read mode.
     As a result when you start the container using the ``--writable`` tag you can not leverage the GPU computation capabilities
     of your NVIDIA graphics card.
 

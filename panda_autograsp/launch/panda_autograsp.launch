@@ -17,6 +17,7 @@
     <arg name="robot_ip" default="172.16.0.2"/>
     <!-- Panda_autograsp algorithm arguments -->
     <arg name="grasp_solution" default=""/>
+    <arg name="use_bounding_box" default="false"/>
     <arg name="calib_type" default="aruco_board"/>
     <arg name="grasp_detect_color_quality" default="sd"/>
     <arg name="grasp_detect_depth_quality" default="sd"/>
@@ -120,6 +121,7 @@
     <node name="panda_autograsp_server" launch-prefix="$(arg launch_prefix)" pkg="panda_autograsp" required="true" type="panda_autograsp_server.py" output="screen">
         <param name="calib_type" type="str" value="$(arg calib_type)"/>
         <param name="gazebo" type="bool" value="$(arg gazebo)"/>
+        <param name="use_bounding_box" value="$(arg use_bounding_box)"/>
         <remap from="image_color" to="$(arg image_color_topic)"/>
         <!-- Grasp detection color input quality -->
         <remap from="image_color_rect" to="$(arg image_color_rect_topic)"/>

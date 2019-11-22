@@ -49,10 +49,16 @@ if __name__ == "__main__":
         gazebo = rospy.get_param("~gazebo")
     except KeyError:
         gazebo = False
+    try:
+        bounding_box_enabled = rospy.get_param("~use_bounding_box")
+    except KeyError:
+        bounding_box_enabled = False
 
     # Create GraspPlannerClient object
     grasp_planner_client = PandaAutograspServer(
-        pose_calib_method=pose_Calib_method, gazebo=gazebo
+        pose_calib_method=pose_Calib_method,
+        gazebo=gazebo,
+        bounding_box_enabled=bounding_box_enabled,
     )
 
     # Loop till the service is shutdown

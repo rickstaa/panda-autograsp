@@ -38,6 +38,9 @@ from geometry_msgs.msg import TransformStamped
 from std_msgs.msg import Header
 from std_srvs.srv import Empty
 
+from gqcnn.msg import BoundingBox
+from gqcnn.srv import GQCNNGraspPlanner, GQCNNGraspPlannerBoundingBox
+
 # Panda_autograsp modules, msgs and srvs
 from panda_autograsp.srv import (
     ComputeGrasp,
@@ -54,7 +57,6 @@ from panda_autograsp.srv import (
     SetGripperClosed,
     PlanPlace,
     PlanToPath,
-    GQCNNGraspPlanner,
 )
 
 # Panda_autograsp modules, msgs and srvs
@@ -137,14 +139,21 @@ class PandaAutograspServer:
         The translation vector of the camera/world calibration.
     """
 
-    def __init__(self, pose_calib_method=POSE_CALIB_METHOD, gazebo=False):
+    def __init__(
+        self,
+        pose_calib_method=POSE_CALIB_METHOD,
+        gazebo=False,
+        bounding_box_enabled=False,
+    ):
         """
         Parameters
         ----------
         pose_calib_method : :py:obj:`str`, optional
             Calibration pattern type., by default read from main_config.yaml.
         gazebo : :py:obj:`bool`, optional
-            Specifies whether we are in a gazebo simulation, by default false.
+            Specifies whether you want to use a gazebo simulation, by default false.
+        bounding_box_enabled : :py:obj:`bool`, optional
+            Specifies whether you want to use a bounding box for the grasp detection.
         """
 
         # Get pose calib method from input
@@ -155,8 +164,16 @@ class PandaAutograspServer:
         else:
             self.pose_calib_method = pose_calib_method
 
-        # Get gazebo bool
-        self.gazebo=gazebo
+        # Get input variables
+        self.gazebo = gazebo
+        self.bounding_box_enabled = bounding_box_enabled
+
+        # Get  bounding box values out of config
+        self.bounding_box = BoundingBox()
+        self.bounding_box.minX = MAIN_CFG["grasp_detection"]["bounding_box"]["minX"]
+        self.bounding_box.minY = MAIN_CFG["grasp_detection"]["bounding_box"]["minY"]
+        self.bounding_box.maxX = MAIN_CFG["grasp_detection"]["bounding_box"]["maxX"]
+        self.bounding_box.maxY = MAIN_CFG["grasp_detection"]["bounding_box"]["maxY"]
 
         # Setup cv_bridge
         self._cv_bridge = CvBridge()
@@ -172,6 +189,7 @@ class PandaAutograspServer:
         # Initialize grasp computation services #######
         ###############################################
 
+        # Default grasp planner service
         rospy.loginfo("Connecting to 'gqcnn_grasp_planner' service...")
         rospy.wait_for_service("gqcnn_grasp_planner")
         try:
@@ -187,6 +205,30 @@ class PandaAutograspServer:
             shutdown_msg = (
                 "Shutting down %s node because %s service connection failed."
                 % (rospy.get_name(), self._gqcnn_grasp_planning_srv.resolved_name)
+            )
+            rospy.logerr(shutdown_msg)
+            sys.exit(0)
+            rospy.loginfo("Connecting to 'gqcnn_grasp_planner_bounding_box' service...")
+            rospy.wait_for_service("gqcnn_grasp_planner_bounding_box")
+
+        # Bounding box grasp planner service
+        try:
+            self._gqcnn_grasp_planning_bounding_box_srv = rospy.ServiceProxy(
+                "gqcnn_grasp_planner_bounding_box", GQCNNGraspPlannerBoundingBox
+            )
+            rospy.loginfo("Connected to `gqcnn_grasp_planner service.")
+        except rospy.ServiceException as e:
+            rospy.logerr(
+                "Panda_autograsp 'gqcnn_grasp_planner_bounding_box' "
+                "service initialization "
+                "failed: %s" % e
+            )
+            shutdown_msg = (
+                "Shutting down %s node because %s service connection failed."
+                % (
+                    rospy.get_name(),
+                    self._gqcnn_grasp_planning_bounding_box_srv.resolved_name,
+                )
             )
             rospy.logerr(shutdown_msg)
             sys.exit(0)
@@ -375,17 +417,11 @@ class PandaAutograspServer:
             sys.exit(0)
 
         # Initialize reset octomap service
-        rospy.logdebug(
-            "Connecting to '/clear_octomap/' service..."
-        )
+        rospy.logdebug("Connecting to '/clear_octomap/' service...")
         rospy.wait_for_service("/clear_octomap")
         try:
-            self._clear_octomap_srv = rospy.ServiceProxy(
-                "/clear_octomap", Empty
-            )
-            rospy.logdebug(
-                "Connected to '/clear_octomap' service."
-            )
+            self._clear_octomap_srv = rospy.ServiceProxy("/clear_octomap", Empty)
+            rospy.logdebug("Connected to '/clear_octomap' service.")
         except rospy.ServiceException as e:
             rospy.logerr(
                 "Panda_autograsp '/clear_octomap' "
@@ -578,9 +614,17 @@ class PandaAutograspServer:
         """
 
         # Call grasp computation service
-        self.grasp = self._gqcnn_grasp_planning_srv(
-            self.color_image_rect, self.depth_image_rect, self.camera_info_sd
-        )
+        if not self.bounding_box_enabled:
+            self.grasp = self._gqcnn_grasp_planning_srv(
+                self.color_image_rect, self.depth_image_rect, self.camera_info_sd
+            )
+        else:
+            self.grasp = self._gqcnn_grasp_planning_bounding_box_srv(
+                self.color_image_rect,
+                self.depth_image_rect,
+                self.camera_info_sd,
+                self.bounding_box,
+            )
 
         # Print grasp
         position = self.grasp.grasp.pose.position

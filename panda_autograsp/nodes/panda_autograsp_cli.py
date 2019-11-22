@@ -337,7 +337,7 @@ class PandaAutograspCLI:
         calib_response = yes_or_no(
             "For the robot to know where it is relative to the camera a calibration "
             "needs to be performed. Do you want to perform the calibration now? "
-            "procedure? (Y=New calibration and n=Use old calibration results)>>  ",
+            "(Y=New calibration and n=Use old calibration results)>>  ",
             add_options=False,
         )
 

@@ -41,7 +41,11 @@ from autolab_core import YamlConfig
 import rospy
 from rospy.exceptions import ROSException
 from cv_bridge import CvBridge
-from gqcnn.srv import GQCNNGraspPlannerBoundingBox, GQCNNGraspPlannerSegmask
+from gqcnn.srv import (
+    GQCNNGraspPlanner,
+    GQCNNGraspPlannerBoundingBox,
+    GQCNNGraspPlannerSegmask,
+)
 
 # ROS messages and services
 from sensor_msgs.msg import Image
@@ -49,7 +53,6 @@ from tf2_geometry_msgs import PoseStamped  # Needed because we use tf2
 
 # Panda_autograsp modules, msgs and srvs
 from panda_autograsp.functions import download_model
-from panda_autograsp.srv import GQCNNGraspPlanner
 from panda_autograsp.grasp_planners import GraspPlannerROS
 
 #################################################

@@ -39,6 +39,11 @@
             "request": "attach"
         },
         {
+            "name": "ROS: Attach 2",
+            "type": "ros",
+            "request": "attach"
+        }
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
