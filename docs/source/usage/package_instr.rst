@@ -20,6 +20,12 @@ A guide on how this can be done can be found `here <https://erdalpekel.de/?p=123
 Run instructions
 ----------------------------------
 
+.. figure:: https://user-images.githubusercontent.com/17570430/69431644-70cc7a80-0d38-11ea-853c-f0e899f86af0.png
+    :alt: panda_autograsp algorithm in action
+    :target: https://user-images.githubusercontent.com/17570430/69431644-70cc7a80-0d38-11ea-853c-f0e899f86af0.png
+
+    Overview of the panda_autograsp algorithm (moveit_perception module disabled).
+
 To start the `panda_autograsp`_ solution, please open a terminal
 and start the `panda_autograsp`_ solution using the following command:
 

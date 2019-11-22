@@ -1,6 +1,7 @@
 # Folders to ignore
 __pychache__/
 _build/*
+build/*
 tmp/*
 dist/*
 /docs/build/*

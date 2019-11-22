@@ -8,6 +8,12 @@ Prerequisites
 Hardware
 ---------------
 
+.. figure:: https://user-images.githubusercontent.com/17570430/69431164-7aa1ae00-0d37-11ea-9fd1-28851089a7ca.jpg
+    :alt: setup
+    :target: https://user-images.githubusercontent.com/17570430/69431164-7aa1ae00-0d37-11ea-9fd1-28851089a7ca.jpg
+
+    Overview of an example setup.
+
 - 1x Microsoft kinect v2.
 - 1x Panda Emika Franka Robot.
 - A laptop or PC with at least 12gb RAM and a decent Graphics card.
