@@ -17,6 +17,10 @@ currently contains the following grasping algorithm:
     These solutions work both on a physical as well as a simulated version of the panda robot.
     A simulated version of the panda robot is shipped with this package.
 
+.. youtube:: https://www.youtube.com/watch?v=aN0zk-3kGVs
+
+An video showing the panda_autograsp algorithm in action.
+
 Package overview
 ---------------------------
 

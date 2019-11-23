@@ -431,6 +431,7 @@ setup(
             "sphinx_rtd_theme",
             "sphinx-navtree",
             "sphinx-autobuild",
+            "sphinxcontrib.yt",
             "docutils",
             "doc8",
             # "breathe==4.13.1",
