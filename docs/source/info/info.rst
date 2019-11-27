@@ -24,9 +24,9 @@ An video showing the panda_autograsp algorithm in action.
 Package overview
 ---------------------------
 
-.. figure:: https://user-images.githubusercontent.com/17570430/69045081-6cc9f100-09f6-11ea-90cd-7a0e7bf1434d.png
+.. figure:: https://user-images.githubusercontent.com/17570430/69705860-a84f7400-10f6-11ea-9018-d1be5df6e61d.png
     :align: center
-    :target: https://user-images.githubusercontent.com/17570430/69045081-6cc9f100-09f6-11ea-90cd-7a0e7bf1434d.png
+    :target: https://user-images.githubusercontent.com/17570430/69705860-a84f7400-10f6-11ea-9018-d1be5df6e61d.png
 
     Flow diagram of the `panda_autograsp`_ algorithm.
 
