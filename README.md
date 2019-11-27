@@ -16,6 +16,10 @@ Panda_autograsp is an autonomous ROS based grasping solution that works with the
 
 Please see the [docs](https://rickstaa.github.io/panda_autograsp/) for installation and usage instructions.
 
+## LICENSE
+
+The main code if this repository is licensed under a **MIT lisense**. If a LICENCE file is present in a submodule this licence has to be respected but ONLY for the files contained in this submodule.
+
 ## References
 
 -   GQ-CNN and FC-GQ-CNN created by [@berkeleyautomation](https://berkeleyautomation.github.io/gqcnn)
