@@ -128,11 +128,11 @@ Clone or download the `panda_autograsp`_ catkin package from Github:
 Install the ROS system and python dependencies
 ------------------------------------------------------
 
-Install the ROS package dependencies using the following command:
+If not already done in the previous step, install the ROS package dependencies using the following command:
 
 .. code-block:: bash
 
-    rosdep install --from-paths src --ignore-src --rosdistro melodic -y
+    rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys libfranka
 
 
 Install python package using pip
