@@ -121,14 +121,12 @@ Clone or download the `panda_autograsp`_ catkin package from Github:
     bash -c "mkdir -p ~/panda_autograsp_ws \
     && cd ~/panda_autograsp_ws \
     && source /opt/ros/melodic/setup.sh \
-    && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
-    && rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys libfranka \
-    && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
+    && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src
 
 Install the ROS system and python dependencies
 ------------------------------------------------------
 
-If not already done in the previous step, install the ROS package dependencies using the following command:
+Install the ROS package dependencies using the following command:
 
 .. code-block:: bash
 
@@ -150,7 +148,7 @@ The catkin package can be build by executing one of the following commands:
 
 .. code-block:: bash
 
-    catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
+    catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=<PATH_TO_LIBFRANKA>/libfranka/build -Dfreenect2_DIR=<PATH_TO_FREENECT2>/freenect2/lib/cmake/freenect2"
     cd ~/panda_autograsp
     pip install .
 
