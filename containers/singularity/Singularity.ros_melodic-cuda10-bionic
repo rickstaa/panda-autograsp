@@ -76,7 +76,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
         && rm /container_aliases.txt \
         && rm -rf /deep_robotics_singularity_recipes \
         && git clone https://github.com/rickstaa/.ros_conda_wrapper.git \
-        && cp ./.ros_conda_wrapper/.ros_conda_wrapper_rc \.ros_conda_wrapper_rc \
+        && cp ./.ros_conda_wrapper/ros_conda_wrapper_rc \.ros_conda_wrapper_rc \
         && rm -rf /.ros_conda_wrapper"
 
     # setup ROS keys and sources.list
@@ -88,6 +88,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
     apt install -q -y ros-melodic-desktop-full
 
     # Initiate and update rosdep repository
+    apt install python-rosdep
     rosdep init
     rosdep update
 
