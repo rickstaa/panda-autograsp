@@ -1,0 +1,3 @@
+pip3 install --upgrade pip
+pip install --upgrade --user sympy==0.7.1
+sudo apt install libspatialindex4v5 libspatialindex-dev python-rtree python3-sip

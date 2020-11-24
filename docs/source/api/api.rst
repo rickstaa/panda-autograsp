@@ -1,12 +1,12 @@
 
 .. _api:
 
-.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
+.. _panda-autograsp: https://github.com/rickstaa/panda-autograsp
 
 Python Code API
 ======================
 
-All python modules, classes, script and functions of the `panda_autograsp`_
+All python modules, classes, script and functions of the `panda-autograsp`_
 package will be documented here.
 
 Panda autograsp modules
@@ -14,7 +14,7 @@ Panda autograsp modules
 .. autosummary::
    :toctree: _autosummary
 
-    panda_autograsp.loggers
+    panda-autograsp.loggers
     panda_autograsp.grasp_planners
     panda_autograsp.functions
     panda_autograsp.moveit_collision_objects
@@ -33,7 +33,7 @@ Panda autograsp scripts
     kinect_processing
     plan_grasp
 
-Panda_autograsp ROS nodes
+panda-autograsp ROS nodes
 ------------------------------------
 .. autosummary::
    :toctree: _autosummary

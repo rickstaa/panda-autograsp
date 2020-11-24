@@ -1,4 +1,4 @@
-## Panda_autograsp CMAKELIST.txt
+## panda-autograsp CMAKELIST.txt
 # For more info go to https://wiki.ros.org/catkin/CMakeLists.txt
 cmake_minimum_required(VERSION 2.8.3)
 project(panda_autograsp)

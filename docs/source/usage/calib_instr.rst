@@ -18,26 +18,26 @@ Robot eye-hand calibration
 
 To be able to control the real robot, we also need to know the
 location of the robot relative to the camera. A robot eye-hand calibration is
-therefore performed at the start of the `panda_autograsp` solution.
+therefore performed at the start of the `panda-autograsp` solution.
 During this eye-hand calibration, you are asked to place a calibration
 pattern on the upper left corner of the table. The position of this pattern
 and the robot has to be measured and specified in the
-`./cfg/calib_frames_poses.yaml <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`__.
+`./cfg/calib_frames_poses.yaml <https://github.com/rickstaa/panda-autograsp/blob/melodic-devel/panda-autograsp/cfg/main_config.yaml>`__.
 You can also adjust the position and orientation of both the sensor
 and calibration frames by using the ``dynamic reconfigure`` window
-that is opened when the `panda_autograsp`_ solution is started.
+that is opened when the `panda-autograsp`_ solution is started.
 The changes made in the dynamic reconfigure window are saved to the
-`./cfg/calib_frames_poses.yaml <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/calib_frames_poses.yaml>`__.
-file when you close the `panda_autograsp`_ solution.
+`./cfg/calib_frames_poses.yaml <https://github.com/rickstaa/panda-autograsp/blob/melodic-devel/panda-autograsp/cfg/calib_frames_poses.yaml>`__.
+file when you close the `panda-autograsp`_ solution.
 
 .. note::
 
-    The `panda_autograsp`_ algorithm
+    The `panda-autograsp`_ algorithm
     supports two types of calibration patterns, an Aruco Board and a
     chessboard. Due to its higher calibration accuracy, by default, the algorithm
     assumes you are using an Aruco Board. If you want to use the chessboard
     instead, you have to change the ``pose_estimation_calib_board`` parameter
-    in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_
+    in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda-autograsp/blob/melodic-devel/panda-autograsp/cfg/main_config.yaml>`_
     file.
 
 Dynamic reconfigure window
@@ -60,7 +60,7 @@ Different chessboard patterns can be found in the
 If you specified, you are using a chessboard the algorithm
 currently assumed you are using 5x7x0.03 chessboard.
 You can change it by changing the ``chessboard_settings``
-of the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_
+of the `./cfg/main_config.cfg <https://github.com/rickstaa/panda-autograsp/blob/melodic-devel/panda-autograsp/cfg/main_config.yaml>`_
 file.
 
 Generate Aruco Board
@@ -69,6 +69,6 @@ Generate Aruco Board
 To generate the Aruco Board please run the :py:mod:`generate_arucoboard.py`
 python script. This script is found in the ``./scripts`` folder.
 
-.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
+.. _panda-autograsp: https://github.com/rickstaa/panda-autograsp
 .. _iai_kinect2: https://github.com/code-iai/iai_kinect2
 .. _calib_instructions: https://github.com/code-iai/iai_kinect2/tree/master/kinect2_calibration>`_images
