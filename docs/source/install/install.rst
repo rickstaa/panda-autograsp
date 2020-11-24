@@ -89,6 +89,17 @@ or `conda <https://conda.io/en/latest/>`_.
     advised to use a `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_
     instead.
 
+Virtualenv instructions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+While creating the virtual python2 environment make sure you use the `--system-site-packages` flag.
+This makes sure our package can also access the required system python packages.
+
+.. code-block:: bash
+
+    virtualenv --system-site-packages panda_autograsp
+
+
 CUDA & CUDNN (NVIDIA GPUs only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Since Tensorflow needs GPU computing capabilities of your NVIDIA
