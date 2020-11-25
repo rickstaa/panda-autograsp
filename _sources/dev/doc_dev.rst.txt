@@ -1,22 +1,24 @@
 .. _doc_dev:
 
-.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
+.. _panda-autograsp: https://github.com/rickstaa/panda-autograsp
 
 Release documentation
 ===================================
 
 Install requirements
 --------------------------
-Building `panda_autograsp`_'s documentation requires `sphinx`_,
-the panda_autograsp package and several plugins.
-After `sphinx`_  is installed the other required dependencies can be installed
-by going into the ``panda_autograsp`` directory and running the
-following commands:
+
+Building `panda-autograsp`_'s documentation requires `sphinx`_,
+the panda-autograsp package and several plugins. To prevent conflicts with system
+installed python packages please install them inside a virtual environment. You can
+create such an environment containing the required dependencies with the following
+command:
 
 .. code-block:: bash
 
-    pip install .
-    pip install .[docs]
+    virtualenv --system-site-packages ~/venvs/panda_autograsp_docs
+    source ~/venvs/panda_autograsp_docs/bin/activate
+    pip install -r ./requirements/requirements_docs.txt
 
 
 Build the documentation
@@ -33,7 +35,7 @@ Deploying
 ---------------------------
 To deploy documentation to the Github Pages site for the repository,
 push the documentation to the ``melodic-devel`` branch and run the
-``make gh-pages`` command inside the ``panda_autograsp/docsrc``
+``make gh-pages`` command inside the ``panda-autograsp/docs``
 directory.
 
 .. _sphinx: http://www.sphinx-doc.org/en/master

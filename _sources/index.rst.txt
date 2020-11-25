@@ -1,12 +1,12 @@
-Welcome to panda_autograsp documentation!
+Welcome to panda-autograsp documentation!
 ===========================================
 
-`Panda_autograsp`_ is an autonomous ROS based grasping solution that works with the
+`panda-autograsp`_ is an autonomous ROS based grasping solution that works with the
 `Panda Emika Franka robot <https://www.franka.de/panda>`_.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Panda_autograsp package
+   :caption: panda-autograsp package
 
    info/info.rst
 
@@ -49,4 +49,4 @@ Indices and tables
     - :ref:`modindex`
     - :ref:`search`
 
-.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
+.. _panda-autograsp: https://github.com/rickstaa/panda-autograsp

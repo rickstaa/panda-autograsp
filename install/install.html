@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Prerequisites &mdash; panda_autograsp 1.0.4 documentation</title>
+  <title>Prerequisites &mdash; panda_autograsp 1.0.6 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
 
   
   
@@ -17,7 +21,9 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,11 +35,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Sensor calibration instructions" href="../usage/usage.html" />
@@ -51,7 +52,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> panda_autograsp
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> panda_autograsp
           
 
           
@@ -64,7 +65,7 @@
             
             
               <div class="version">
-                1.0.4
+                1.0.6
               </div>
             
           
@@ -81,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -88,7 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+              <p class="caption"><span class="caption-text">panda-autograsp package</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../info/info.html">Package information</a></li>
 </ul>
@@ -153,6 +155,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -191,7 +194,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Prerequisites</li>
     
@@ -230,12 +233,12 @@
 <h2>Software<a class="headerlink" href="#software" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="ros">
 <h3>ROS<a class="headerlink" href="#ros" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package has only been tested with ROS <code class="docutils literal notranslate"><span class="pre">Melodic</span></code>
+<p>The <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> package has only been tested with ROS <code class="docutils literal notranslate"><span class="pre">Melodic</span></code>
 and Kinect. The ROS melodic installation instructions can be found
 <a class="reference external" href="https://wiki.ros.org/melodic">here</a>. The ROS kinetic installation
 instructions can be found <a class="reference external" href="https://wiki.ros.org/kinetic">here</a>.</p>
 <p>You further also need the following ROS packages:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev python-catkin-tools libspatialindex4v5 libspatialindex-dev python-rtree
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -246,12 +249,12 @@ Change melodic to kinetic in each command if you want to use ROS kinetic.</p>
 </div>
 <div class="section" id="python">
 <h3>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h3>
-<p>As ROS melodic does not yet fully support python 3, the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a>
+<p>As ROS melodic does not yet fully support python 3, the <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a>
 package has only been tested with <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">2.7</span></code>.</p>
 </div>
 <div class="section" id="ubuntu">
 <h3>Ubuntu<a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package has only been tested with ubuntu <code class="docutils literal notranslate"><span class="pre">18.04</span></code>.</p>
+<p>The <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> package has only been tested with ubuntu <code class="docutils literal notranslate"><span class="pre">18.04</span></code>.</p>
 </div>
 <div class="section" id="libfreenect2-library">
 <h3>Libfreenect2 library<a class="headerlink" href="#libfreenect2-library" title="Permalink to this headline">¶</a></h3>
@@ -268,7 +271,7 @@ for doing this can be found in the
 <a class="reference external" href="https://frankaemika.github.io/docs/installation_linux.html">libfranka documentation</a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you want to use the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package with the real robots you
+<p class="last">If you want to use the <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> package with the real robots you
 also have to install the real-time kernel.</p>
 </div>
 </div>
@@ -311,20 +314,24 @@ found <a class="reference external" href="https://blog.codeinside.eu/2018/12/04/
 <h1>Package build from source instructions<a class="headerlink" href="#package-build-from-source-instructions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="clone-the-repository-and-build-the-package">
 <h2>Clone the repository and build the package<a class="headerlink" href="#clone-the-repository-and-build-the-package" title="Permalink to this headline">¶</a></h2>
-<p>Clone or download the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> catkin package from Github:</p>
+<p>Clone or download the <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> catkin package from Github:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash -c <span class="s2">&quot;mkdir -p ~/panda_autograsp_ws \</span>
 <span class="s2">&amp;&amp; cd ~/panda_autograsp_ws \</span>
 <span class="s2">&amp;&amp; source /opt/ros/melodic/setup.sh \</span>
-<span class="s2">&amp;&amp; git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \</span>
-<span class="s2">&amp;&amp; rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys libfranka \</span>
-<span class="s2">&amp;&amp; catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2&quot;</span>
+<span class="s2">&amp;&amp; git clone --recursive https://github.com/rickstaa/panda-autograsp.git src</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="install-the-ros-system-and-python-dependencies">
 <h2>Install the ROS system and python dependencies<a class="headerlink" href="#install-the-ros-system-and-python-dependencies" title="Permalink to this headline">¶</a></h2>
 <p>Install the ROS package dependencies using the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosdep install --from-paths src --ignore-src --rosdistro melodic -y
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys libfranka
+</pre></div>
+</div>
+<p>Since ROS melodic uses the system python we have to make sure we use the <cite>–system-site-packages</cite> flag while creating the
+virtual environment. This makes sure our package can also access the required system python packages. This results in the
+following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>virtualenv --system-site-packages ~/venvs/panda_autograsp
 </pre></div>
 </div>
 </div>
@@ -334,13 +341,28 @@ found <a class="reference external" href="https://blog.codeinside.eu/2018/12/04/
 python packages, we need to install some additional packages using
 the <cite>pip install command</cite>. To ease this process a <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> file
 was created. This file can be invoked using the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ~/venvs/panda_autograsp/bin/activate
+pip install -e .
+pip uninstall opencv-python
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The opencv-python package, that is installed by one of the python dependencies, has to be removed since
+it conflicts with required <cite>opencv-contrib-python</cite> package.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">After 1-01-2020 a lot of packages have dropped python2 support. As a result the above installation method might
+not work anymore. If this is the case you are advised to install the python requirements using the <cite>./requirements/requirements.txt</cite>
+file.</p>
+</div>
 </div>
 <div class="section" id="build-the-package">
 <h2>Build the package<a class="headerlink" href="#build-the-package" title="Permalink to this headline">¶</a></h2>
 <p>The catkin package can be build by executing one of the following commands:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>catkin build -j4 -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DFranka_DIR:PATH<span class="o">=</span>/libfranka/build -Dfreenect2_DIR<span class="o">=</span>/opt/freenect2/lib/cmake/freenect2<span class="s2">&quot;</span>
-<span class="s2">cd ~/panda_autograsp</span>
-<span class="s2">pip install .</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>catkin build -j4 -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DFranka_DIR:PATH<span class="o">=</span>&lt;PATH_TO_LIBFRANKA&gt;/libfranka/build -Dfreenect2_DIR<span class="o">=</span>&lt;PATH_TO_FREENECT2&gt;/freenect2/lib/cmake/freenect2<span class="s2">&quot;</span>
+<span class="s2">cd ~/panda-autograsp</span>
 </pre></div>
 </div>
 </div>
@@ -375,13 +397,13 @@ might ease this process.</p>
 <p>The containers in this repository can be pulled directly from
 the <a class="reference external" href="https://www.singularity-hub.org">singularity-hub</a> container
 registry as follows:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>build &lt;CONTAINER_NAME&gt;.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-bionic
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>build &lt;CONTAINER_NAME&gt;.simg shub://rickstaa/panda-autograsp:ros-melodic-cuda10-bionic
 </pre></div>
 </div>
 <p>Go to the <code class="docutils literal notranslate"><span class="pre">panda_autograsp/containers/singularity</span></code> folder and
 built the container using the recipe file. This is done by running the
 following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo singularity &lt;CONTAINER_NAME&gt;.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-bionic
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo singularity &lt;CONTAINER_NAME&gt;.simg shub://rickstaa/panda-autograsp:ros-melodic-cuda10-bionic
 </pre></div>
 </div>
 <p>You can also add the <code class="docutils literal notranslate"><span class="pre">--sandbox</span></code> argument to build the container as
@@ -398,20 +420,20 @@ a writeable folder.</p>
 </div>
 <div class="section" id="id5">
 <h3>3. Clone the repository and build the package<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>As the panda_autograsp package is still private it can not be
+<p>As the panda-autograsp package is still private it can not be
 automatically build during the container generation. You, therefore,
 have to clone and build the package manually after the docker
 container is build. This is done by running the following commands:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash -c <span class="s2">&quot;mkdir -p ~/panda_autograsp_ws \</span>
 <span class="s2">&amp;&amp; cd ~/panda_autograsp_ws \</span>
 <span class="s2">&amp;&amp; source /opt/ros/melodic/setup.sh \</span>
-<span class="s2">&amp;&amp; git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \</span>
+<span class="s2">&amp;&amp; git clone --recursive https://github.com/rickstaa/panda-autograsp.git src \</span>
 <span class="s2">&amp;&amp; catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2&quot;</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">As all of the system dependencies for the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package
+<p class="last">As all of the system dependencies for the <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> package
 have already been installed during the container creation, contrary
 to normal build instructions, for the singularity container, you
 don’t need to run <code class="docutils literal notranslate"><span class="pre">rosdep</span> <span class="pre">install</span></code> command. If you want to install
@@ -419,7 +441,7 @@ new system dependencies or run the <code class="docutils literal notranslate"><s
 to make sure you start the container as the root user. This is necessary
 since, in a singularity container, you are the same user inside and outside
 the container. When developing inside the singularity container, you are
-therefore advised to place the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> workspace on a path
+therefore advised to place the <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> workspace on a path
 which can be both accessed by you and the root user (<code class="docutils literal notranslate"><span class="pre">/opt/</span></code> or the
 container main path <code class="docutils literal notranslate"><span class="pre">/</span></code> for example).</p>
 </div>
@@ -474,11 +496,19 @@ release <a class="reference external" href="https://sylabs.io/2019/06/towards-ge
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, Rick Staa
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -489,7 +519,6 @@ release <a class="reference external" href="https://sylabs.io/2019/06/towards-ge
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

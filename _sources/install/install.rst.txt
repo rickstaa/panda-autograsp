@@ -1,6 +1,6 @@
 .. _install:
 
-.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
+.. _panda-autograsp: https://github.com/rickstaa/panda-autograsp
 
 Prerequisites
 =========================
@@ -24,7 +24,7 @@ Software
 ROS
 ^^^^^^^^^^^^^^^^^^^
 
-The `panda_autograsp`_ package has only been tested with ROS ``Melodic``
+The `panda-autograsp`_ package has only been tested with ROS ``Melodic``
 and Kinect. The ROS melodic installation instructions can be found
 `here <https://wiki.ros.org/melodic>`__. The ROS kinetic installation
 instructions can be found `here <https://wiki.ros.org/kinetic>`__.
@@ -33,7 +33,7 @@ You further also need the following ROS packages:
 
 .. code-block:: bash
 
-    sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev
+    sudo apt-get install ros-melodic-moveit-ros-move-group ros-melodic-controller-manager* ros-melodic-moveit* ros-melodic-effort-controllers ros-melodic-joint-trajectory-controller ros-melodic-gazebo-ros* ros-melodic-rviz* libboost-filesystem-dev libjsoncpp-dev python-catkin-tools libspatialindex4v5 libspatialindex-dev python-rtree
 
 .. warning::
 
@@ -43,14 +43,14 @@ You further also need the following ROS packages:
 Python
 ^^^^^^^^^^^^^^^^^^^
 
-As ROS melodic does not yet fully support python 3, the `panda_autograsp`_
+As ROS melodic does not yet fully support python 3, the `panda-autograsp`_
 package has only been tested with ``Python 2.7``.
 
 
 Ubuntu
 ^^^^^^^^^^^^^^^^^^^
 
-The `panda_autograsp`_ package has only been tested with ubuntu ``18.04``.
+The `panda-autograsp`_ package has only been tested with ubuntu ``18.04``.
 
 Libfreenect2 library
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -70,7 +70,7 @@ for doing this can be found in the
 
 .. note::
 
-    If you want to use the `panda_autograsp`_ package with the real robots you
+    If you want to use the `panda-autograsp`_ package with the real robots you
     also have to install the real-time kernel.
 
 Virtualenv
@@ -114,16 +114,14 @@ Package build from source instructions
 Clone the repository and build the package
 --------------------------------------------------------
 
-Clone or download the `panda_autograsp`_ catkin package from Github:
+Clone or download the `panda-autograsp`_ catkin package from Github:
 
 .. code-block:: bash
 
     bash -c "mkdir -p ~/panda_autograsp_ws \
     && cd ~/panda_autograsp_ws \
     && source /opt/ros/melodic/setup.sh \
-    && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
-    && rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys libfranka \
-    && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
+    && git clone --recursive https://github.com/rickstaa/panda-autograsp.git src
 
 Install the ROS system and python dependencies
 ------------------------------------------------------
@@ -132,8 +130,19 @@ Install the ROS package dependencies using the following command:
 
 .. code-block:: bash
 
-    rosdep install --from-paths src --ignore-src --rosdistro melodic -y
+    rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys libfranka
 
+
+Create the virtual environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Since ROS melodic uses the system python we have to make sure we use the `--system-site-packages` flag while creating the
+virtual environment. This makes sure our package can also access the required system python packages. This results in the
+following command:
+
+.. code-block:: bash
+
+    virtualenv --system-site-packages ~/venvs/panda_autograsp
 
 Install python package using pip
 ----------------------------------------
@@ -143,6 +152,24 @@ python packages, we need to install some additional packages using
 the `pip install command`. To ease this process a ``setup.py`` file
 was created. This file can be invoked using the following commands:
 
+.. code-block:: bash
+
+    source ~/venvs/panda_autograsp/bin/activate
+    pip install -e .
+    pip uninstall opencv-python
+
+.. note::
+
+    The opencv-python package, that is installed by one of the python dependencies, has to be removed since
+    it conflicts with required `opencv-contrib-python` package.
+
+.. warning::
+
+    After 1-01-2020 a lot of packages have dropped python2 support. As a result the above installation method might
+    not work anymore. If this is the case you are advised to install the python requirements using the `./requirements/requirements.txt`
+    file.
+
+
 Build the package
 -------------------------
 
@@ -150,9 +177,9 @@ The catkin package can be build by executing one of the following commands:
 
 .. code-block:: bash
 
-    catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
-    cd ~/panda_autograsp
-    pip install .
+    catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=<PATH_TO_LIBFRANKA>/libfranka/build -Dfreenect2_DIR=<PATH_TO_FREENECT2>/freenect2/lib/cmake/freenect2"
+    cd ~/panda-autograsp
+
 
 Singularity Container installation instructions
 ==================================================
@@ -190,7 +217,7 @@ registry as follows:
 
 .. code-block:: bash
 
-    build <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-bionic
+    build <CONTAINER_NAME>.simg shub://rickstaa/panda-autograsp:ros-melodic-cuda10-bionic
 
 Go to the ``panda_autograsp/containers/singularity`` folder and
 built the container using the recipe file. This is done by running the
@@ -198,7 +225,7 @@ following command:
 
 .. code-block:: bash
 
-    sudo singularity <CONTAINER_NAME>.simg shub://rickstaa/panda_autograsp:ros-melodic-cuda10-bionic
+    sudo singularity <CONTAINER_NAME>.simg shub://rickstaa/panda-autograsp:ros-melodic-cuda10-bionic
 
 You can also add the ``--sandbox`` argument to build the container as
 a writeable folder.
@@ -214,7 +241,7 @@ After te container has been build run it using the
 3. Clone the repository and build the package
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As the panda_autograsp package is still private it can not be
+As the panda-autograsp package is still private it can not be
 automatically build during the container generation. You, therefore,
 have to clone and build the package manually after the docker
 container is build. This is done by running the following commands:
@@ -224,12 +251,12 @@ container is build. This is done by running the following commands:
     bash -c "mkdir -p ~/panda_autograsp_ws \
     && cd ~/panda_autograsp_ws \
     && source /opt/ros/melodic/setup.sh \
-    && git clone --recursive https://github.com/rickstaa/panda_autograsp_ws.git src \
+    && git clone --recursive https://github.com/rickstaa/panda-autograsp.git src \
     && catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -Dfreenect2_DIR=/opt/freenect2/lib/cmake/freenect2"
 
 .. warning::
 
-    As all of the system dependencies for the `panda_autograsp`_ package
+    As all of the system dependencies for the `panda-autograsp`_ package
     have already been installed during the container creation, contrary
     to normal build instructions, for the singularity container, you
     don't need to run ``rosdep install`` command. If you want to install
@@ -237,7 +264,7 @@ container is build. This is done by running the following commands:
     to make sure you start the container as the root user. This is necessary
     since, in a singularity container, you are the same user inside and outside
     the container. When developing inside the singularity container, you are
-    therefore advised to place the `panda_autograsp`_ workspace on a path
+    therefore advised to place the `panda-autograsp`_ workspace on a path
     which can be both accessed by you and the root user (``/opt/`` or the
     container main path ``/`` for example).
 

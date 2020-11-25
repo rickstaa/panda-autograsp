@@ -4,8 +4,8 @@ Package use instructions
 Configuration instructions
 -----------------------------------
 
-All of the `panda_autograsp`_ settings can be found in the
-`./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_
+All of the `panda-autograsp`_ settings can be found in the
+`./cfg/main_config.cfg <https://github.com/rickstaa/panda-autograsp/blob/melodic-devel/panda-autograsp/cfg/main_config.yaml>`_
 file. As described below, you can temporarily override some of These
 settings by supplying launch arguments.
 
@@ -14,20 +14,20 @@ Add planning constraints
 
 To add extra planning constraints to the scene, you can add additional
 ``json`` files to the ``/home/<USER>/.panda_simulation`` folder. This
-folder is created the first time the `panda_autograsp`_ solution is launched.
+folder is created the first time the `panda-autograsp`_ solution is launched.
 A guide on how this can be done can be found `here <https://erdalpekel.de/?p=123>`_.
 
 Run instructions
 ----------------------------------
 
 .. figure:: https://user-images.githubusercontent.com/17570430/69431644-70cc7a80-0d38-11ea-853c-f0e899f86af0.png
-    :alt: panda_autograsp algorithm in action
+    :alt: panda-autograsp algorithm in action
     :target: https://user-images.githubusercontent.com/17570430/69431644-70cc7a80-0d38-11ea-853c-f0e899f86af0.png
 
-    Overview of the panda_autograsp algorithm (moveit_perception module disabled).
+    Overview of the panda-autograsp algorithm (moveit_perception module disabled).
 
-To start the `panda_autograsp`_ solution, please open a terminal
-and start the `panda_autograsp`_ solution using the following command:
+To start the `panda-autograsp`_ solution, please open a terminal
+and start the `panda-autograsp`_ solution using the following command:
 
 .. code-block:: bash
 
@@ -35,9 +35,9 @@ and start the `panda_autograsp`_ solution using the following command:
 
 Additionally, this launch file can also be supplied with a number of
 launch file arguments. These arguments can be used to temporarily
-override the settings you configured in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_
+override the settings you configured in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda-autograsp/blob/melodic-devel/panda-autograsp/cfg/main_config.yaml>`_
 file. The available launch file arguments can be found below. After the
-`panda_autograsp`_ solution has launched, you can launch the command-line
+`panda-autograsp`_ solution has launched, you can launch the command-line
 interface (CLI), in a second terminal, using the following command in a
 second terminal window:
 
@@ -47,9 +47,9 @@ second terminal window:
 
 .. note::
 
- Before executing the commands mentioned above, make sure you the `panda_autograsp`_ package is build
+ Before executing the commands mentioned above, make sure you the `panda-autograsp`_ package is build
  and sourced. Further, you have to make sure that the pretrained GQCNN networks are not present in the
- ``./panda_autgrasp/models`` folder. The ``panda_autograsp.launch`` will ask whether you want to install
+ ``./panda_autograsp/models`` folder. The ``panda_autograsp.launch`` will ask whether you want to install
  these models if they are not found. You can also install them by running the following commands from
  within the catkin workspace src folder:
 
@@ -62,18 +62,18 @@ Launch file arguments
 
 The panda_autograsp launch file accepts the following launch file arguments:
 
-    - ``real``: Specifies whether you want to use the `panda_autograsp`_ solution on the real robot, by default False.
+    - ``real``: Specifies whether you want to use the `panda-autograsp`_ solution on the real robot, by default False.
     - ``gazebo``: Specifies wheter the gazebo gui should be loaded.
     - ``external_franka_control``: Set this to true if you want to load the ``franka_control`` node on another pc on the same network.
     - ``robot_ip``: Set this to the robot ip if your working with the real robot.
     - ``rviz_gui``: Specifies wheter the rviz gui should be loaded.
-    - ``calib_type``: The robot hand-eye calibration board type (chessboard vs arucoboard), overwrites the default that is set in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_ file.
+    - ``calib_type``: The robot hand-eye calibration board type (chessboard vs arucoboard), overwrites the default that is set in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda-autograsp/blob/melodic-devel/panda-autograsp/cfg/main_config.yaml>`_ file.
     - ``debug``: If true the verbosity of the ROS log messages will be increased, and the process name will be displayed with each log messages, by default set to false.
     - ``moveit_perception``: This enables the Moveit perception module which integrates sensor data into the path planning, by default set to false.
     - ``octomap_type``: The data type used by the Moveit perception module (pointcloud or depthmap), defaults to depthmap.
     - ``octomap_resolution``: The resolution of the octomap.
     - ``moveit_add_scene_collision_objects``: This specifies if the robot table should be added as a collision object to the moveit planning space, By default set to true.
-    - ``grasp_solution``: Specify which grasping solution you want to use, this overwrites the solution that is set in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda_autograsp/blob/melodic-devel/panda_autograsp/cfg/main_config.yaml>`_ file.
+    - ``grasp_solution``: Specify which grasping solution you want to use, this overwrites the solution that is set in the `./cfg/main_config.cfg <https://github.com/rickstaa/panda-autograsp/blob/melodic-devel/panda-autograsp/cfg/main_config.yaml>`_ file.
     - ``use_bounding_box``: If set to true the bounding box that is specified in the ``main_config.yaml`` file will be used when planning the grasp.
 
 Grasping solutions
@@ -89,7 +89,7 @@ Currently, the following grasping solutions are supported:
 .. _Dex-net 2.0: https://berkeleyautomation.github.io/dex-net/#dexnet_2
 .. _Dex-Net 4.0: https://berkeleyautomation.github.io/dex-net/#dexnet_4
 .. _FC-GQ-CNN: https://berkeleyautomation.github.io/fcgqcnn
-.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
+.. _panda-autograsp: https://github.com/rickstaa/panda-autograsp
 
 Moveit perception
 ^^^^^^^^^^^^^^^^^^^^^^^^

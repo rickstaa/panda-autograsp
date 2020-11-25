@@ -1,0 +1,588 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>panda_autograsp.functions package &mdash; panda_autograsp 1.0.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> panda_autograsp
+          
+
+          
+            
+            <img src="../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">panda-autograsp package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#package-build-from-source-instructions">Package build from source instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#singularity-container-installation-instructions">Singularity Container installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#docker-container-installation-instructions">Docker container installation instructions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html">Sensor calibration instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html#package-use-instructions">Package use instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html#singularity-container-instructions">Singularity container instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html#troubleshooting-information">Troubleshooting information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">Python Code API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license/license.html">License</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Zone</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/release_dev.html">Release package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/doc_dev.html">Release documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">panda_autograsp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>panda_autograsp.functions package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_modules/panda_autograsp.functions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="panda-autograsp-functions-package">
+<h1>panda_autograsp.functions package<a class="headerlink" href="#panda-autograsp-functions-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-panda_autograsp.functions.conversions">
+<span id="panda-autograsp-functions-conversions-module"></span><h2>panda_autograsp.functions.conversions module<a class="headerlink" href="#module-panda_autograsp.functions.conversions" title="Permalink to this headline">¶</a></h2>
+<p>A number of usefull ros data_type conversion functions.</p>
+<dl class="function">
+<dt id="panda_autograsp.functions.conversions.transform_stamped_2_matrix">
+<code class="descclassname">panda_autograsp.functions.conversions.</code><code class="descname">transform_stamped_2_matrix</code><span class="sig-paren">(</span><em>transform_stamped</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/conversions.html#transform_stamped_2_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.conversions.transform_stamped_2_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate 4x4 homogeneous transformation matrix from a transform_stamped msg.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>transform_stamped</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry_msgs.msgs.TransformStamped</span></code>) – Stamped transform.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Homogeneous 4x4 transformation matrix.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.array</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="panda_autograsp.functions.conversions.pose_msg_stamped_2_matrix">
+<code class="descclassname">panda_autograsp.functions.conversions.</code><code class="descname">pose_msg_stamped_2_matrix</code><span class="sig-paren">(</span><em>pose_msg</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/conversions.html#pose_msg_stamped_2_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.conversions.pose_msg_stamped_2_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate 4x4 homogeneous transformation matrix from a pose_stamped msg.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pose_msg</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry_msgs.msgs.PoseStamped</span></code>) – Stamped pose message.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Homogeneous 4x4 transformation matrix.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.array</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-panda_autograsp.functions.functions">
+<span id="panda-autograsp-functions-functions-module"></span><h2>panda_autograsp.functions.functions module<a class="headerlink" href="#module-panda_autograsp.functions.functions" title="Permalink to this headline">¶</a></h2>
+<p>This modules contains some additional functions which are not part
+of a specific module.</p>
+<dl class="function">
+<dt id="panda_autograsp.functions.functions.download_model">
+<code class="descclassname">panda_autograsp.functions.functions.</code><code class="descname">download_model</code><span class="sig-paren">(</span><em>model</em>, <em>model_output='/home/ricks/Development/panda_autograsp_ws/src/panda_autograsp/src/models'</em>, <em>download_script_path='/home/ricks/Development/panda_autograsp_ws/src/panda_autograsp/gqcnn/scripts/downloads/models/download_models.sh'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/functions.html#download_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.functions.download_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function downloads the Pretrained CNN models that are used in the
+<code class="docutils literal notranslate"><span class="pre">panda_autograsp</span></code> package, when they are not yet present on the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the model you want to download.</li>
+<li><strong>model_output</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – Path to the folder in which you want to place the downloaded models, by
+default DEFAULT_MODELS_PATH</li>
+<li><strong>download_script_path</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – Path to the download description script, by default GQCNN_DOWNLOAD_SCRIPT_PATH</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Error code</td>
+<td>Description</td>
+</tr>
+<tr class="row-even"><td>0</td>
+<td>Model download successfull.</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>Model name invalid.</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>Model download error.</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>Model unzip error.</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>Something else went wrong.</td>
+</tr>
+</tbody>
+</table>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="panda_autograsp.functions.functions.list_files">
+<code class="descclassname">panda_autograsp.functions.functions.</code><code class="descname">list_files</code><span class="sig-paren">(</span><em>path='.'</em>, <em>exclude=[]</em>, <em>recursive=True</em>, <em>prepent_parent=False</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/functions.html#list_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.functions.list_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of files that are present in a folder.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – Parent folder of which you want to list the files, by default <code class="docutils literal notranslate"><span class="pre">.</span></code></li>
+<li><strong>exclude</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – A list of files you want to exclude, by default <cite>[]</cite></li>
+<li><strong>recursive</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>, optional) – Option specifying whether you also want to list files of subfolders,
+by default True</li>
+<li><strong>level</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>, optional) – If recursive is enabled this specifies up till how many levels deep you want
+to list the files, by default 0 (Defined as all levels).</li>
+<li><strong>perpent_parent</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>, optional) – Options specifying whether you want to prepent the parent dir to the output
+paths.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list containing the relative paths of all the files in the parent folder.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-obj docutils literal notranslate"><span class="pre">List</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="panda_autograsp.functions.functions.yes_or_no">
+<code class="descclassname">panda_autograsp.functions.functions.</code><code class="descname">yes_or_no</code><span class="sig-paren">(</span><em>question</em>, <em>add_options=True</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/functions.html#yes_or_no"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.functions.yes_or_no" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple yes or no prompt.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>question</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Question of the yes or no prompt.</li>
+<li><strong>add_options</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>) – Include option statement (Y/n) after the question.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Boolean specifying if the user gave the right response.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="panda_autograsp.functions.functions.draw_axis">
+<code class="descclassname">panda_autograsp.functions.functions.</code><code class="descname">draw_axis</code><span class="sig-paren">(</span><em>img</em>, <em>corners</em>, <em>imgpts</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/functions.html#draw_axis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.functions.draw_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the corners in the chessboard (obtained using cv2.findChessboardCorners())
+and axis points to draw a 3D axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Image</li>
+<li><strong>corners</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pyton2.tuple</span></code>) – Chess board corner points.</li>
+<li><strong>imgpts</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">nmpy.ndarray</span></code>) – Axis points.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Image on which the chessboard corners have been drawn.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-panda_autograsp.functions.moveit">
+<span id="panda-autograsp-functions-moveit-module"></span><h2>panda_autograsp.functions.moveit module<a class="headerlink" href="#module-panda_autograsp.functions.moveit" title="Permalink to this headline">¶</a></h2>
+<p>Additional moveit helper functions.</p>
+<dl class="function">
+<dt id="panda_autograsp.functions.moveit.get_trajectory_duration">
+<code class="descclassname">panda_autograsp.functions.moveit.</code><code class="descname">get_trajectory_duration</code><span class="sig-paren">(</span><em>trajectory</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/moveit.html#get_trajectory_duration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.moveit.get_trajectory_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns the duration of a given moveit trajectory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>trajectory</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_msgs.msg.DisplayTrajectory</span></code>) – The computed display trajectory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Trajectory duration in seconds.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="panda_autograsp.functions.moveit.plan_exists">
+<code class="descclassname">panda_autograsp.functions.moveit.</code><code class="descname">plan_exists</code><span class="sig-paren">(</span><em>plan</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/moveit.html#plan_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.moveit.plan_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can be used to check if a plan trajectory was computed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>plan</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_msgs.msg.RobotTrajectory</span></code>) – The computed robot trajectory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Bool specifying if a trajectory is present</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="panda_autograsp.functions.moveit.at_joint_target">
+<code class="descclassname">panda_autograsp.functions.moveit.</code><code class="descname">at_joint_target</code><span class="sig-paren">(</span><em>current</em>, <em>desired</em>, <em>goal_tolerance</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/moveit.html#at_joint_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.moveit.at_joint_target" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can be used to check if the move_group is already at the desired
+joint target.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>current</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>) – The current joint configuration.</li>
+<li><strong>desired</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>) – The desired joint target.</li>
+<li><strong>goal_tolerance</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – The planner target goal tolerance.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Bool specifying if move_group is already at the goal target.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="panda_autograsp.functions.moveit.add_collision_objects">
+<code class="descclassname">panda_autograsp.functions.moveit.</code><code class="descname">add_collision_objects</code><span class="sig-paren">(</span><em>scene_commander</em>, <em>collision_cfg</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/moveit.html#add_collision_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.moveit.add_collision_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the collision objects that are specified in the
+collision_cfg <a class="reference external" href="https://docs.python.org/2/library/collections.html#collections.OrderedDict" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a> to the
+moveit planner scene. Supported constraint types are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Box</li>
+<li>Cube</li>
+<li>Cylinder</li>
+<li>Mesh</li>
+</ul>
+</div></blockquote>
+<p>For more information see <a class="reference external" href="http://bit.ly/32GuuMN">http://bit.ly/32GuuMN</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>scene_commander</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_commander.PlanningSceneInterface</span></code>) – The moveit scene commander object.</li>
+<li><strong>collision_cfg</strong> (<a class="reference external" href="https://docs.python.org/2/library/collections.html#collections.OrderedDict" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a>) – The dictionary specifying all the moveit scene
+constraints.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="panda_autograsp.functions.moveit.wait_for_state_update">
+<code class="descclassname">panda_autograsp.functions.moveit.</code><code class="descname">wait_for_state_update</code><span class="sig-paren">(</span><em>scene_commander</em>, <em>collision_obj</em>, <em>is_known=False</em>, <em>is_attached=False</em>, <em>timeout=4</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/functions/moveit.html#wait_for_state_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.functions.moveit.wait_for_state_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate if collision object state change was successful.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>scene_commander</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_commander.PlanningSceneInterface</span></code>) – The moveit scene commander object.</li>
+<li><strong>collision_obj</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_collision_objects</span></code>) – The moveit collision object.</li>
+<li><strong>is_known</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Bool specifying whether an object is known, by default False</li>
+<li><strong>is_attached</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Bool specifying whether an object is attached to something, by default False</li>
+<li><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a><em>, </em><em>optional</em>) – The validation timeout time, by default 4</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>bool</em> – Boolean specifying whether the scene update was successful.</li>
+<li><em>.. note::</em> – Note that attaching the box will remove it from known_objects.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-panda_autograsp.functions">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-panda_autograsp.functions" title="Permalink to this headline">¶</a></h2>
+<p>Module containing a number of functions that are used by the
+<code class="docutils literal notranslate"><span class="pre">panda_autograsp</span></code> package.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.functions.download_model.html#panda_autograsp.functions.functions.download_model" title="panda_autograsp.functions.functions.download_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">functions.download_model</span></code></a>(model[,&nbsp;…])</td>
+<td>This function downloads the Pretrained CNN models that are used in the <code class="docutils literal notranslate"><span class="pre">panda_autograsp</span></code> package, when they are not yet present on the system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.functions.list_files.html#panda_autograsp.functions.functions.list_files" title="panda_autograsp.functions.functions.list_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">functions.list_files</span></code></a>([path,&nbsp;exclude,&nbsp;…])</td>
+<td>Returns a list of files that are present in a folder.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.functions.yes_or_no.html#panda_autograsp.functions.functions.yes_or_no" title="panda_autograsp.functions.functions.yes_or_no"><code class="xref py py-obj docutils literal notranslate"><span class="pre">functions.yes_or_no</span></code></a>(question[,&nbsp;add_options])</td>
+<td>Simple yes or no prompt.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.functions.draw_axis.html#panda_autograsp.functions.functions.draw_axis" title="panda_autograsp.functions.functions.draw_axis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">functions.draw_axis</span></code></a>(img,&nbsp;corners,&nbsp;imgpts)</td>
+<td>Takes the corners in the chessboard (obtained using cv2.findChessboardCorners()) and axis points to draw a 3D axis.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.moveit.get_trajectory_duration.html#panda_autograsp.functions.moveit.get_trajectory_duration" title="panda_autograsp.functions.moveit.get_trajectory_duration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit.get_trajectory_duration</span></code></a>(trajectory)</td>
+<td>This function returns the duration of a given moveit trajectory.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.moveit.plan_exists.html#panda_autograsp.functions.moveit.plan_exists" title="panda_autograsp.functions.moveit.plan_exists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit.plan_exists</span></code></a>(plan)</td>
+<td>This function can be used to check if a plan trajectory was computed.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.moveit.at_joint_target.html#panda_autograsp.functions.moveit.at_joint_target" title="panda_autograsp.functions.moveit.at_joint_target"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit.at_joint_target</span></code></a>(current,&nbsp;desired,&nbsp;…)</td>
+<td>This function can be used to check if the move_group is already at the desired joint target.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.moveit.add_collision_objects.html#panda_autograsp.functions.moveit.add_collision_objects" title="panda_autograsp.functions.moveit.add_collision_objects"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit.add_collision_objects</span></code></a>(…)</td>
+<td>Add the collision objects that are specified in the collision_cfg <a class="reference external" href="https://docs.python.org/2/library/collections.html#collections.OrderedDict" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a> to the moveit planner scene.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.moveit.wait_for_state_update.html#panda_autograsp.functions.moveit.wait_for_state_update" title="panda_autograsp.functions.moveit.wait_for_state_update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit.wait_for_state_update</span></code></a>(…[,&nbsp;…])</td>
+<td>Validate if collision object state change was successful.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.conversions.transform_stamped_2_matrix.html#panda_autograsp.functions.conversions.transform_stamped_2_matrix" title="panda_autograsp.functions.conversions.transform_stamped_2_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conversions.transform_stamped_2_matrix</span></code></a>(…)</td>
+<td>Generate 4x4 homogeneous transformation matrix from a transform_stamped msg.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/_autosummary/_autosummary/panda_autograsp.functions.conversions.pose_msg_stamped_2_matrix.html#panda_autograsp.functions.conversions.pose_msg_stamped_2_matrix" title="panda_autograsp.functions.conversions.pose_msg_stamped_2_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conversions.pose_msg_stamped_2_matrix</span></code></a>(pose_msg)</td>
+<td>Generate 4x4 homogeneous transformation matrix from a pose_stamped msg.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, Rick Staa
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

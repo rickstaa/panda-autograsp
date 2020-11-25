@@ -11,7 +11,7 @@ To increase convenience a number of bash aliases were added to the containers:
     - **dconda**: deactivates the conda enviroment
     - **rsource**: sources the ROS setup.bash file
     - **rossu** sources the setup.bash file at ``./devel/setup.bash``
-    - **pbuild**: `panda_autograsp`_ package build command. Make sure your inside the panda_autograsp catkin workspace.
+    - **pbuild**: `panda-autograsp`_ package build command. Make sure your inside the panda-autograsp catkin workspace.
 
 You can unset these aliases or add additional aliases by
 creating a ``~/.singularity_bash_aliases`` file in your user home directory.
@@ -94,4 +94,4 @@ easy code debugging. This is done as follows:
     Since visual code requires the /run folder you need to add the ``-B /run`` argument when running a singularity container.
     For more information, see `this issue <https://github.com/sylabs/singularity/issues/3609>`_.
 
-.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
+.. _panda-autograsp: https://github.com/rickstaa/panda-autograsp

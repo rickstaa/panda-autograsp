@@ -1,0 +1,2245 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>panda_autograsp package &mdash; panda_autograsp 1.0.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> panda_autograsp
+          
+
+          
+            
+            <img src="../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">panda-autograsp package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#package-build-from-source-instructions">Package build from source instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#singularity-container-installation-instructions">Singularity Container installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#docker-container-installation-instructions">Docker container installation instructions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html">Sensor calibration instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html#package-use-instructions">Package use instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html#singularity-container-instructions">Singularity container instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html#troubleshooting-information">Troubleshooting information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">Python Code API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license/license.html">License</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Zone</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/release_dev.html">Release package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/doc_dev.html">Release documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">panda_autograsp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>panda_autograsp package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_modules/panda_autograsp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="panda-autograsp-package">
+<h1>panda_autograsp package<a class="headerlink" href="#panda-autograsp-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="panda_autograsp.functions.html">panda_autograsp.functions package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="panda_autograsp.functions.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panda_autograsp.functions.html#module-panda_autograsp.functions.conversions">panda_autograsp.functions.conversions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panda_autograsp.functions.html#module-panda_autograsp.functions.functions">panda_autograsp.functions.functions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panda_autograsp.functions.html#module-panda_autograsp.functions.moveit">panda_autograsp.functions.moveit module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panda_autograsp.functions.html#module-panda_autograsp.functions">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.functions.download_model.html">panda_autograsp.functions.functions.download_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.functions.list_files.html">panda_autograsp.functions.functions.list_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.functions.yes_or_no.html">panda_autograsp.functions.functions.yes_or_no</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.functions.draw_axis.html">panda_autograsp.functions.functions.draw_axis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.moveit.get_trajectory_duration.html">panda_autograsp.functions.moveit.get_trajectory_duration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.moveit.plan_exists.html">panda_autograsp.functions.moveit.plan_exists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.moveit.at_joint_target.html">panda_autograsp.functions.moveit.at_joint_target</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.moveit.add_collision_objects.html">panda_autograsp.functions.moveit.add_collision_objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.moveit.wait_for_state_update.html">panda_autograsp.functions.moveit.wait_for_state_update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.conversions.transform_stamped_2_matrix.html">panda_autograsp.functions.conversions.transform_stamped_2_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.functions.conversions.pose_msg_stamped_2_matrix.html">panda_autograsp.functions.conversions.pose_msg_stamped_2_matrix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="panda_autograsp.grasp_planners.html">panda_autograsp.grasp_planners package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="panda_autograsp.grasp_planners.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panda_autograsp.grasp_planners.html#module-panda_autograsp.grasp_planners.gqcnn_grasp_planner">panda_autograsp.grasp_planners.gqcnn_grasp_planner module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panda_autograsp.grasp_planners.html#module-panda_autograsp.grasp_planners.gqcnn_grasp_planner_ros">panda_autograsp.grasp_planners.gqcnn_grasp_planner_ros module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panda_autograsp.grasp_planners.html#module-panda_autograsp.grasp_planners">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner.html">panda_autograsp.grasp_planners.gqcnn_grasp_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/panda_autograsp.grasp_planners.gqcnn_grasp_planner_ros.html">panda_autograsp.grasp_planners.gqcnn_grasp_planner_ros</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-panda_autograsp.loggers">
+<span id="panda-autograsp-loggers-module"></span><h2>panda_autograsp.loggers module<a class="headerlink" href="#module-panda_autograsp.loggers" title="Permalink to this headline">¶</a></h2>
+<p>Utility class for logging. This class is a wrapper around the original
+logging module <a class="reference external" href="https://docs.python.org/2/library/logging.html#module-logging" title="(in Python v2.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a> and can be used to apply the
+<a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a>
+formatters, filters and handlers to the logging object.</p>
+<dl class="function">
+<dt id="panda_autograsp.loggers.clear_root">
+<code class="descclassname">panda_autograsp.loggers.</code><code class="descname">clear_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/loggers.html#clear_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.loggers.clear_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to reset the root logger.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="panda_autograsp.loggers.configure_root">
+<code class="descclassname">panda_autograsp.loggers.</code><code class="descname">configure_root</code><span class="sig-paren">(</span><em>log_level=20</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/loggers.html#configure_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.loggers.configure_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to configure the root logger.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>log_level</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>, optional) – The log level, by default ROOT_LOG_LEVEL</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Root logger.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../api/_autosummary/panda_autograsp.loggers.html#panda_autograsp.loggers.Logger" title="panda_autograsp.loggers.Logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Logger</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="panda_autograsp.loggers.add_root_log_file">
+<code class="descclassname">panda_autograsp.loggers.</code><code class="descname">add_root_log_file</code><span class="sig-paren">(</span><em>log_file</em>, <em>mode='a'</em>, <em>encoding=None</em>, <em>delay=False</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/loggers.html#add_root_log_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.loggers.add_root_log_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a log file to the root logger.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>log_file</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The path to the log file.</li>
+<li><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Log file writing mode, by default ‘a’.</li>
+<li><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – File encoding used, by default None.</li>
+<li><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – If delay is true, then file opening is deferred until the first call
+to emit(), by default False.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="panda_autograsp.loggers.Logger">
+<em class="property">class </em><code class="descclassname">panda_autograsp.loggers.</code><code class="descname">Logger</code><a class="reference internal" href="panda_autograsp/loggers.html#Logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.loggers.Logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Panda autograsp Logger class.</p>
+<dl class="attribute">
+<dt id="panda_autograsp.loggers.Logger.ROOT_CONFIGURED">
+<code class="descname">ROOT_CONFIGURED</code><em class="property"> = False</em><a class="headerlink" href="#panda_autograsp.loggers.Logger.ROOT_CONFIGURED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="panda_autograsp.loggers.Logger.clear_root">
+<em class="property">static </em><code class="descname">clear_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/loggers.html#Logger.clear_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.loggers.Logger.clear_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset root logger.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="panda_autograsp.loggers.Logger.reconfigure_root">
+<em class="property">static </em><code class="descname">reconfigure_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/loggers.html#Logger.reconfigure_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.loggers.Logger.reconfigure_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reconfigure the root logger.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="panda_autograsp.loggers.Logger.get_logger">
+<em class="property">static </em><code class="descname">get_logger</code><span class="sig-paren">(</span><em>name=None</em>, <em>log_level=20</em>, <em>log_file=None</em>, <em>silence=False</em>, <em>mode='a'</em>, <em>encoding=None</em>, <em>delay=False</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/loggers.html#Logger.get_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.loggers.Logger.get_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a logger. All logs will be propagated up to the root logger if not
+silenced. If log_file is provided, logs will be written out to that file.
+If no logger name is given, log_file will be handed the root logger,
+otherwise it will only be used by this particular logger.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The name of the logger to be built, by default “” thus formatting the
+root logger.</li>
+<li><strong>log_level</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – The log level. See the python logging module documentation for possible
+enum values.</li>
+<li><strong>log_file</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The path to the log file to log to.</li>
+<li><strong>silence</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>) – Whether or not to silence this logger. If it is silenced, the only way
+to get output from this logger is through a non-global log file.</li>
+<li><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Log file writing mode, by default ‘a’.</li>
+<li><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – File encoding used, by default None.</li>
+<li><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – If delay is true, then file opening is deferred until the first call
+to emit(), by default False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A custom logger.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../api/_autosummary/panda_autograsp.loggers.html#panda_autograsp.loggers.Logger" title="panda_autograsp.loggers.Logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Logger</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="panda_autograsp.loggers.Logger.add_log_file">
+<em class="property">static </em><code class="descname">add_log_file</code><span class="sig-paren">(</span><em>log_file=None</em>, <em>logger=None</em>, <em>mode='a'</em>, <em>encoding=None</em>, <em>delay=False</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/loggers.html#Logger.add_log_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.loggers.Logger.add_log_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a log file to this logger. If no logger is given, log_file will be
+handed the root logger, otherwise it will only be used by this particular
+logger.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>log_file</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The path to the log file to log to.</li>
+<li><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/2/library/logging.html#logging.Logger" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logging.Logger</span></code></a>) – The logger.</li>
+<li><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Log file writing mode, by default ‘a’.</li>
+<li><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – File encoding used, by default None.</li>
+<li><strong>delay</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – If delay is true, then file opening is deferred until the first call
+to emit(), by default False.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-panda_autograsp.moveit_collision_objects">
+<span id="panda-autograsp-moveit-collision-objects-module"></span><h2>panda_autograsp.moveit_collision_objects module<a class="headerlink" href="#module-panda_autograsp.moveit_collision_objects" title="Permalink to this headline">¶</a></h2>
+<p>Module that contains a number of constraint object classes
+that can be used to add constraint to the moveit planning
+scene. It was created since the moveit_commander doesn’t yet
+contain a addCollisionObjects method. As a result using the
+standard collision_object_msgs and shape_msgs was not ideal.</p>
+<dl class="class">
+<dt id="panda_autograsp.moveit_collision_objects.Box">
+<em class="property">class </em><code class="descclassname">panda_autograsp.moveit_collision_objects.</code><code class="descname">Box</code><span class="sig-paren">(</span><em>name</em>, <em>size_x=1.0</em>, <em>size_y=1.0</em>, <em>size_z=1.0</em>, <em>x_pos=0.0</em>, <em>y_pos=0.0</em>, <em>z_pos=0.0</em>, <em>x_rot=0.0</em>, <em>y_rot=0.0</em>, <em>z_rot=0.0</em>, <em>w_rot=1.0</em>, <em>reference_frame='world'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_collision_objects.html#Box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Box" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Moveit Box collision object class.</p>
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Box.type">
+<code class="descname">type</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Box.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collision object type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Box.name">
+<code class="descname">name</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Box.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Box.size">
+<code class="descname">size</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Box.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the box specified as (x, y, z).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Box.pose">
+<code class="descname">pose</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Box.pose" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pose of the collision object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry_msgs.PoseStamed</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_collision_objects.Box.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>size_x=1.0</em>, <em>size_y=1.0</em>, <em>size_z=1.0</em>, <em>x_pos=0.0</em>, <em>y_pos=0.0</em>, <em>z_pos=0.0</em>, <em>x_rot=0.0</em>, <em>y_rot=0.0</em>, <em>z_rot=0.0</em>, <em>w_rot=1.0</em>, <em>reference_frame='world'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_collision_objects.html#Box.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Box.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The name of the object.</li>
+<li><strong>size_x</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x-dimensions size of the box, by default 1.0</li>
+<li><strong>size_y</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y-dimensions size of the box, by default 1.0</li>
+<li><strong>size_z</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z-dimensions size of the box, by default 1.0</li>
+<li><strong>x_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x position in link_name frame, by default 0.0.</li>
+<li><strong>y_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y position in link_name frame, by default 0.0.</li>
+<li><strong>z_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z position in link_name frame, by default 0.0.</li>
+<li><strong>x_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>y_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>z_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>w_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The w orientation relative to the link_name frame, by default 1.0.</li>
+<li><strong>reference_frame</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – The frame in which the pose is expressed, by default world.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">size</code></dt>
+<dd><p>Get the size of the collision object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="panda_autograsp.moveit_collision_objects.Plane">
+<em class="property">class </em><code class="descclassname">panda_autograsp.moveit_collision_objects.</code><code class="descname">Plane</code><span class="sig-paren">(</span><em>name</em>, <em>normal_x=0.0</em>, <em>normal_y=0.0</em>, <em>normal_z=1.0</em>, <em>offset=0.0</em>, <em>x_pos=0.0</em>, <em>y_pos=0.0</em>, <em>z_pos=0.0</em>, <em>x_rot=0.0</em>, <em>y_rot=0.0</em>, <em>z_rot=0.0</em>, <em>w_rot=1.0</em>, <em>reference_frame='world'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_collision_objects.html#Plane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Plane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Moveit Cube collision object class.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This class uses the plane equation Ax+Bx+Cz + D = 0
+to construct the plane. In this A,B,C represent the
+the coordinates of the plane normal (Orientation) and
+D the offset to the normal.</p>
+</div>
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Plane.type">
+<code class="descname">type</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Plane.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collision object type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Plane.name">
+<code class="descname">name</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Plane.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Plane.normal">
+<code class="descname">normal</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Plane.normal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plane normal specified as (x, y, z).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Plane.offset">
+<code class="descname">offset</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Plane.offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plane offset relative to the normal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Plane.pose">
+<code class="descname">pose</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Plane.pose" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pose of the collision object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry_msgs.PoseStamed</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_collision_objects.Plane.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>normal_x=0.0</em>, <em>normal_y=0.0</em>, <em>normal_z=1.0</em>, <em>offset=0.0</em>, <em>x_pos=0.0</em>, <em>y_pos=0.0</em>, <em>z_pos=0.0</em>, <em>x_rot=0.0</em>, <em>y_rot=0.0</em>, <em>z_rot=0.0</em>, <em>w_rot=1.0</em>, <em>reference_frame='world'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_collision_objects.html#Plane.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Plane.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The name of the object.</li>
+<li><strong>normal_x</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The normal vector x coordinate, by default 0.0.</li>
+<li><strong>normal_y</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The normal vector y coordinate, by default 0.0.</li>
+<li><strong>normal_z</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The normal vector z coordinate, by default 1.0.</li>
+<li><strong>offset</strong> (py:obj:<cite>float</cite>, optional) – Plane offset relative to the normal, by default 0.0</li>
+<li><strong>x_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x position in link_name frame, by default 0.0.</li>
+<li><strong>y_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y position in link_name frame, by default 0.0.</li>
+<li><strong>z_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z position in link_name frame, by default 0.0.</li>
+<li><strong>x_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>y_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>z_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>w_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The w orientation relative to the link_name frame, by default 1.0.</li>
+<li><strong>reference_frame</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – The frame in which the pose is expressed, by default world.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">normal</code></dt>
+<dd><p>The plane normal.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder">
+<em class="property">class </em><code class="descclassname">panda_autograsp.moveit_collision_objects.</code><code class="descname">Cylinder</code><span class="sig-paren">(</span><em>name</em>, <em>height=1.0</em>, <em>radius=1.0</em>, <em>x_pos=0.0</em>, <em>y_pos=0.0</em>, <em>z_pos=0.0</em>, <em>x_rot=0.0</em>, <em>y_rot=0.0</em>, <em>z_rot=0.0</em>, <em>w_rot=1.0</em>, <em>reference_frame='world'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_collision_objects.html#Cylinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Moveit cylinder collision object class.</p>
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.type">
+<code class="descname">type</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collision object type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.name">
+<code class="descname">name</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.height">
+<code class="descname">height</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>The height of the cylinder.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.radius">
+<code class="descname">radius</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>The radius of the cylinder.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.x_pos">
+<code class="descname">x_pos</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.x_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The x position in link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.y_pos">
+<code class="descname">y_pos</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.y_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The y position in link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.z_pos">
+<code class="descname">z_pos</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.z_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The z position in link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.x_rot">
+<code class="descname">x_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.x_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The x orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.y_rot">
+<code class="descname">y_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.y_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The y orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.z_rot">
+<code class="descname">z_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.z_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The z orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.w_rot">
+<code class="descname">w_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.w_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The w orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.pose">
+<code class="descname">pose</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.pose" title="Permalink to this definition">¶</a></dt>
+<dd><p>The object pose.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry_msgs.PoseStamped</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_collision_objects.Cylinder.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>height=1.0</em>, <em>radius=1.0</em>, <em>x_pos=0.0</em>, <em>y_pos=0.0</em>, <em>z_pos=0.0</em>, <em>x_rot=0.0</em>, <em>y_rot=0.0</em>, <em>z_rot=0.0</em>, <em>w_rot=1.0</em>, <em>reference_frame='world'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_collision_objects.html#Cylinder.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Cylinder.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The name of the object.</li>
+<li><strong>height</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The height of the cylinder, by default 1.0</li>
+<li><strong>radius</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The radius of the cylinder, by default 1.0.</li>
+<li><strong>x_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x position in link_name frame, by default 0.0.</li>
+<li><strong>y_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y position in link_name frame, by default 0.0.</li>
+<li><strong>z_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z position in link_name frame, by default 0.0.</li>
+<li><strong>x_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>y_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>z_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>w_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The w orientation relative to the link_name frame, by default 1.0.</li>
+<li><strong>reference_frame</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – The frame in which the pose is expressed, by default world.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere">
+<em class="property">class </em><code class="descclassname">panda_autograsp.moveit_collision_objects.</code><code class="descname">Sphere</code><span class="sig-paren">(</span><em>name</em>, <em>radius=1.0</em>, <em>x_pos=0.0</em>, <em>y_pos=0.0</em>, <em>z_pos=0.0</em>, <em>x_rot=0.0</em>, <em>y_rot=0.0</em>, <em>z_rot=0.0</em>, <em>w_rot=1.0</em>, <em>reference_frame='world'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_collision_objects.html#Sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Moveit sphere collision object class.</p>
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.type">
+<code class="descname">type</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collision object type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.name">
+<code class="descname">name</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.radius">
+<code class="descname">radius</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>The radius of the sphere.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.x_pos">
+<code class="descname">x_pos</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.x_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The x position in link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.y_pos">
+<code class="descname">y_pos</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.y_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The y position in link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.z_pos">
+<code class="descname">z_pos</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.z_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The z position in link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.x_rot">
+<code class="descname">x_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.x_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The x orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.y_rot">
+<code class="descname">y_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.y_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The y orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.z_rot">
+<code class="descname">z_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.z_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The z orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.w_rot">
+<code class="descname">w_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.w_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The w orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.pose">
+<code class="descname">pose</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.pose" title="Permalink to this definition">¶</a></dt>
+<dd><p>The object pose.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry_msgs.PoseStamped</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_collision_objects.Sphere.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>radius=1.0</em>, <em>x_pos=0.0</em>, <em>y_pos=0.0</em>, <em>z_pos=0.0</em>, <em>x_rot=0.0</em>, <em>y_rot=0.0</em>, <em>z_rot=0.0</em>, <em>w_rot=1.0</em>, <em>reference_frame='world'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_collision_objects.html#Sphere.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Sphere.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The name of the object.</li>
+<li><strong>radius</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The radius of the sphere, by default 1.0.</li>
+<li><strong>x_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x position in link_name frame, by default 0.0.</li>
+<li><strong>y_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y position in link_name frame, by default 0.0.</li>
+<li><strong>z_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z position in link_name frame, by default 0.0.</li>
+<li><strong>x_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>y_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>z_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>w_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The w orientation relative to the link_name frame, by default 1.0.</li>
+<li><strong>reference_frame</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – The frame in which the pose is expressed, by default world.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh">
+<em class="property">class </em><code class="descclassname">panda_autograsp.moveit_collision_objects.</code><code class="descname">Mesh</code><span class="sig-paren">(</span><em>name</em>, <em>file_name</em>, <em>x_pos=0.0</em>, <em>y_pos=0.0</em>, <em>z_pos=0.0</em>, <em>x_rot=0.0</em>, <em>y_rot=0.0</em>, <em>z_rot=0.0</em>, <em>w_rot=1.0</em>, <em>reference_frame='world'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_collision_objects.html#Mesh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Moveit mesh collision object class.</p>
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.type">
+<code class="descname">type</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collision object type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.name">
+<code class="descname">name</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.file_name">
+<code class="descname">file_name</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the mesh file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.x_pos">
+<code class="descname">x_pos</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.x_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The x position in link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.y_pos">
+<code class="descname">y_pos</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.y_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The y position in link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.z_pos">
+<code class="descname">z_pos</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.z_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The z position in link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.x_rot">
+<code class="descname">x_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.x_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The x orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.y_rot">
+<code class="descname">y_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.y_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The y orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.z_rot">
+<code class="descname">z_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.z_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The z orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.w_rot">
+<code class="descname">w_rot</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.w_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The w orientation relative to the link_name frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.pose">
+<code class="descname">pose</code><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.pose" title="Permalink to this definition">¶</a></dt>
+<dd><p>The object pose.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry_msgs.PoseStamped</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_collision_objects.Mesh.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>file_name</em>, <em>x_pos=0.0</em>, <em>y_pos=0.0</em>, <em>z_pos=0.0</em>, <em>x_rot=0.0</em>, <em>y_rot=0.0</em>, <em>z_rot=0.0</em>, <em>w_rot=1.0</em>, <em>reference_frame='world'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_collision_objects.html#Mesh.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_collision_objects.Mesh.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The name of the object</li>
+<li><strong>file_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – The location of the mesh file.</li>
+<li><strong>x_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x position in link_name frame, by default 0.0.</li>
+<li><strong>y_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y position in link_name frame, by default 0.0.</li>
+<li><strong>z_pos</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z position in link_name frame, by default 0.0.</li>
+<li><strong>x_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The x orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>y_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The y orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>z_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The z orientation relative to the link_name frame, by default 0.0.</li>
+<li><strong>w_rot</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – The w orientation relative to the link_name frame, by default 1.0.</li>
+<li><strong>reference_frame</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – The frame in which the pose is expressed, by default world.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-panda_autograsp.moveit_planner_server_ros">
+<span id="panda-autograsp-moveit-planner-server-ros-module"></span><h2>panda_autograsp.moveit_planner_server_ros module<a class="headerlink" href="#module-panda_autograsp.moveit_planner_server_ros" title="Permalink to this headline">¶</a></h2>
+<p>Module which sets up a number of services that can
+be used to control the Panda Emika Franka robot.</p>
+<dl class="class">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer">
+<em class="property">class </em><code class="descclassname">panda_autograsp.moveit_planner_server_ros.</code><code class="descname">MoveitPlannerServer</code><span class="sig-paren">(</span><em>robot_description</em>, <em>args</em>, <em>move_group='panda_arm'</em>, <em>move_group_end_effector_link='panda_gripper_center'</em>, <em>move_group_gripper='hand'</em>, <em>pose_reference_frame='panda_link0'</em>, <em>planner='TRRTkConfigDefault'</em>, <em>add_scene_collision_objects=True</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class used for controlling the Panda Emika Franka robot.</p>
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.robot">
+<code class="descname">robot</code><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.robot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The moveit robot commander.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_commander.RobotCommander</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.move_group">
+<code class="descname">move_group</code><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.move_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main robot move group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_commander.MoveGroupCommander</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.move_group_gripper">
+<code class="descname">move_group_gripper</code><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.move_group_gripper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The gripper move group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_commander.MoveGroupCommander</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.scene">
+<code class="descname">scene</code><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>The moveit scene commander.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveit_commander.PlanningSceneInterface</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.current_plan">
+<code class="descname">current_plan</code><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.current_plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>The last computed plan of the main move group.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.current_plan_gripper">
+<code class="descname">current_plan_gripper</code><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.current_plan_gripper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The last computed plan of the gripper.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.desired_pose">
+<code class="descname">desired_pose</code><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.desired_pose" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main move group goal pose.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.desired_joint_values">
+<code class="descname">desired_joint_values</code><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.desired_joint_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main move group target joint values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.desired_gripper_joint_values">
+<code class="descname">desired_gripper_joint_values</code><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.desired_gripper_joint_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>The gripper target joint values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>robot_description</em>, <em>args</em>, <em>move_group='panda_arm'</em>, <em>move_group_end_effector_link='panda_gripper_center'</em>, <em>move_group_gripper='hand'</em>, <em>pose_reference_frame='panda_link0'</em>, <em>planner='TRRTkConfigDefault'</em>, <em>add_scene_collision_objects=True</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>PandaPathPlannerService class initialization.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>robot_description</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Where to find the URDF.</li>
+<li><strong>args</strong> (<em>objects</em>) – Roscpp args, passed on.</li>
+<li><strong>move_group</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the pose planning reference frame, by default “panda_link0”.</li>
+<li><strong>move_group_end_effector_link</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the end effector link.</li>
+<li><strong>move_group_gripper</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the move group, by default “panda_arm_hand”.</li>
+<li><strong>pose_reference_frame</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the planner reference frame.</li>
+<li><strong>planner</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – The Path planning algorithm, by default ‘TRRTkConfigDefault’.</li>
+<li><strong>add_scene_collision_objects</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>) – If true the collision objects specified in the
+<code class="docutils literal notranslate"><span class="pre">moveit_scene_constraints.yaml</span></code> file will be added to the scene.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_to_joint_service">
+<code class="descname">plan_to_joint_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.plan_to_joint_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_to_joint_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plan to a given joint position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.PlanToJoint</span></code>) – The service request message containing the joint targets you
+want to plan to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean specifying whether the planning was successful.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_to_point_service">
+<code class="descname">plan_to_point_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.plan_to_point_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_to_point_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plan to a given pose.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.PlanToPoint</span></code>) – The service request message containing the pose you want to plan to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean specifying whether the planning was successful.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_cartesian_path_service">
+<code class="descname">plan_cartesian_path_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.plan_cartesian_path_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_cartesian_path_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plan to a given cartesian path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.PlanToPath</span></code>) – The service request message containing the path you want to plan to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean specifying whether the planning was successful.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_random_pose_service">
+<code class="descname">plan_random_pose_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.plan_random_pose_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_random_pose_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plan to a random pose goal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.PlanToRandomPoint</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_random_joint_service">
+<code class="descname">plan_random_joint_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.plan_random_joint_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_random_joint_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plan to a random joint goal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.PlanToRandomJoint</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_random_cartesian_path_service">
+<code class="descname">plan_random_cartesian_path_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.plan_random_cartesian_path_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_random_cartesian_path_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plan to a random cartesian path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.PlanToRandomPath</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.visualize_plan_service">
+<code class="descname">visualize_plan_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.visualize_plan_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.visualize_plan_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the plan that has been computed by the other plan services.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.VisualizePlan</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.execute_plan_service">
+<code class="descname">execute_plan_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.execute_plan_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.execute_plan_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the plan that has been computed for the main move group by the other
+plan services.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.ExecutePlan</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_gripper_service">
+<code class="descname">plan_gripper_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.plan_gripper_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.plan_gripper_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute plan for the currently set gripper target joint values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.PlanGripper.</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.execute_gripper_plan_service">
+<code class="descname">execute_gripper_plan_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.execute_gripper_plan_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.execute_gripper_plan_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute previously planned gripper plan.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.ExecuteGripperPlan.</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.open_gripper_service">
+<code class="descname">open_gripper_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.open_gripper_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.open_gripper_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the gripper.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.OpenGripper.</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.close_gripper_service">
+<code class="descname">close_gripper_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.close_gripper_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.close_gripper_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the gripper.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.CloseGripper.</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.set_gripper_open_service">
+<code class="descname">set_gripper_open_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.set_gripper_open_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.set_gripper_open_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set gripper joint targets values to open.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.SetGripperOpen.</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.set_gripper_closed_service">
+<code class="descname">set_gripper_closed_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.set_gripper_closed_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.set_gripper_closed_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set gripper joint target values to closed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.SetGripperClosed.</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.set_gripper_width_service">
+<code class="descname">set_gripper_width_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/moveit_planner_server_ros.html#MoveitPlannerServer.set_gripper_width_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.moveit_planner_server_ros.MoveitPlannerServer.set_gripper_width_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set gripper joint target values to a given value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.SetGripperWidth.</span></code>) – This message specifies the gripper width.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-panda_autograsp.panda_autograsp_server_ros">
+<span id="panda-autograsp-panda-autograsp-server-ros-module"></span><h2>panda_autograsp.panda_autograsp_server_ros module<a class="headerlink" href="#module-panda_autograsp.panda_autograsp_server_ros" title="Permalink to this headline">¶</a></h2>
+<p>Module that sets up a number of services that enable
+the <a class="reference internal" href="../api/_autosummary/panda_autograsp_cli.html#module-panda_autograsp_cli" title="panda_autograsp_cli"><code class="xref py py-mod docutils literal notranslate"><span class="pre">panda_autograsp_cli</span></code></a> command line interface (CLI) to
+communicate with the components of the <cite>panda_autograps</cite> solution.</p>
+<dl class="class">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer">
+<em class="property">class </em><code class="descclassname">panda_autograsp.panda_autograsp_server_ros.</code><code class="descname">PandaAutograspServer</code><span class="sig-paren">(</span><em>pose_calib_method='aruco_board'</em>, <em>gazebo=False</em>, <em>bounding_box_enabled=False</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class used to create and call all the panda_autograsp components.</p>
+<dl class="attribute">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.rvec">
+<code class="descname">rvec</code><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.rvec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The rotation vector of the camera/world calibration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.tvec">
+<code class="descname">tvec</code><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.tvec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The translation vector of the camera/world calibration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>pose_calib_method='aruco_board'</em>, <em>gazebo=False</em>, <em>bounding_box_enabled=False</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pose_calib_method</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – Calibration pattern type., by default read from main_config.yaml.</li>
+<li><strong>gazebo</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>, optional) – Specifies whether you want to use a gazebo simulation, by default false.</li>
+<li><strong>bounding_box_enabled</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>, optional) – Specifies whether you want to use a bounding box for the grasp detection.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.get_pose_callback">
+<code class="descname">get_pose_callback</code><span class="sig-paren">(</span><em>pose_msg</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.get_pose_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.get_pose_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback function of the ‘gqcnn_graps/pose’ subscriber. This function updates the
+self.pose_msg member variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pose_msg</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry_msgs.PosedStamed</span></code>) – Grasp pose msgs.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.msg_filter_callback">
+<code class="descname">msg_filter_callback</code><span class="sig-paren">(</span><em>color_image</em>, <em>color_image_rect</em>, <em>depth_image_rect</em>, <em>camera_info_hd</em>, <em>camera_info_qhd</em>, <em>camera_info_sd</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.msg_filter_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.msg_filter_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback function of the message filter. This message filter subscribed
+to a number of camera topics which are required by the panda_autograsp
+solution.
+:param color_image: The color image.
+:type color_image: <code class="xref py py-obj docutils literal notranslate"><span class="pre">sensor_msgs.msg.Image</span></code>
+:param color_image_rect: The rectified color image.
+:type color_image_rect: <code class="xref py py-obj docutils literal notranslate"><span class="pre">sensor_msgs.msg.Image</span></code>
+:param depth_image_rect: The depth image.
+:type depth_image_rect: <code class="xref py py-obj docutils literal notranslate"><span class="pre">sensor_msgs.msg.Image</span></code>
+:param camera_info_hd: The HD camera info topic.
+:type camera_info_hd: <code class="xref py py-obj docutils literal notranslate"><span class="pre">sensor_msgs.msg.CameraInfo</span></code>
+:param camera_info_qhd: The QHD camera topic.
+:type camera_info_qhd: <code class="xref py py-obj docutils literal notranslate"><span class="pre">sensor_msgs.msg.CameraInfo</span></code>
+:param camera_info_sd: The SD camera topic.
+:type camera_info_sd: <code class="xref py py-obj docutils literal notranslate"><span class="pre">sensor_msgs.msg.CameraInfo</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.compute_grasp_service">
+<code class="descname">compute_grasp_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.compute_grasp_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.compute_grasp_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>This service is used for computing a vallid grasp out of the
+sensor data. This is done by calling the main grasp computation service
+of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">grasp_planner_server.py</span></code> module with the sensor data as
+its input.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.ComputeGrasp</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.plan_grasp_service">
+<code class="descname">plan_grasp_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.plan_grasp_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.plan_grasp_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>This service can be used to plan for the by the
+<a class="reference internal" href="../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.compute_grasp_service" title="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.compute_grasp_service"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute_grasp_service()</span></code></a> computed grasp pose.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.PlanGrasp</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.plan_place_service">
+<code class="descname">plan_place_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.plan_place_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.plan_place_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>This service computes the movement plan for placing the
+object at the desired goal position. The place goal position
+can be changed by modifying the <code class="docutils literal notranslate"><span class="pre">cfg/main_config.yaml</span></code>
+document.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.PlanPlace</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.visualize_grasp_service">
+<code class="descname">visualize_grasp_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.visualize_grasp_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.visualize_grasp_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>This service can be used to visualize the planned grasp.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.VizualizeGrasp</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.execute_grasp_service">
+<code class="descname">execute_grasp_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.execute_grasp_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.execute_grasp_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>This service is used to execute the computed grasp.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.ExecuteGrasp</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.calibrate_sensor_service">
+<code class="descname">calibrate_sensor_service</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.calibrate_sensor_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.calibrate_sensor_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>This service can be used to perform the sensor/world
+calibration. To do this you need to place a chessboard/aruco
+board in the bottom left corner of the robot table. You have
+to define which calibration pattern you use in the <code class="docutils literal notranslate"><span class="pre">cfg/main_config.yaml</span>
+<span class="pre">file</span></code>. After a successful camera/world transformation matrix is computed
+this matrix is send to the <a class="reference internal" href="../api/_autosummary/tf2_broadcaster.html#module-tf2_broadcaster" title="tf2_broadcaster"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tf2_broadcaster</span></code></a> module and the
+sensor frame position is updated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">panda_autograsp.msg.ExecuteGrasp</span></code>) – Empty service request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a bool to specify whether the plan was executed successfully.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.aruco_board_pose_estimation">
+<code class="descname">aruco_board_pose_estimation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.aruco_board_pose_estimation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.aruco_board_pose_estimation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that performs the camera/world calibration by using
+a Aruco board as a reference.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>retval</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>) – Calibration success bool.</li>
+<li><strong>rvec</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>) – Rotation vector.</li>
+<li><strong>tvec</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>) – Translation vector.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.chessboard_pose_estimation">
+<code class="descname">chessboard_pose_estimation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.chessboard_pose_estimation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.chessboard_pose_estimation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that performs the camera/world calibration by using
+a chessboard as a reference.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>retval</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>) – Calibration success bool.</li>
+<li><strong>rvec</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>) – Rotation vector.</li>
+<li><strong>tvec</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>) – Translation vector.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.broadcast_camera_frame">
+<code class="descname">broadcast_camera_frame</code><span class="sig-paren">(</span><em>calib_type='aruco_board'</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/panda_autograsp_server_ros.html#PandaAutograspServer.broadcast_camera_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.broadcast_camera_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send the sensor pose we acquired from the calibration to the tf2_broadcaster so that
+it can broadcast the sensor camera frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>calib_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – The calibration pattern you want to use, by default “aruco_board”</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-panda_autograsp.tf2_broadcaster_ros">
+<span id="panda-autograsp-tf2-broadcaster-ros-module"></span><h2>panda_autograsp.tf2_broadcaster_ros module<a class="headerlink" href="#module-panda_autograsp.tf2_broadcaster_ros" title="Permalink to this headline">¶</a></h2>
+<p>Module that can be used to broadcasts a number of tf2 frames and
+ensures these frames can be updated using a dynamic reconfigure
+server.</p>
+<dl class="function">
+<dt id="panda_autograsp.tf2_broadcaster_ros.get_dynamic_param">
+<code class="descclassname">panda_autograsp.tf2_broadcaster_ros.</code><code class="descname">get_dynamic_param</code><span class="sig-paren">(</span><em>parameter_name</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/tf2_broadcaster_ros.html#get_dynamic_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.get_dynamic_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves a parameter from the parameter server
+just like the <code class="xref py py-meth docutils literal notranslate"><span class="pre">rospy.get_param()</span></code> function. Additionally
+to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">rospy.get_param()</span></code> function, if a parameter is not
+found on the parameter server it also tries to retrieve a value
+for the parameter using the CalibFramesConfig.defaults dict.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></li>
+<li>and <a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>. – The parameter value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster">
+<em class="property">class </em><code class="descclassname">panda_autograsp.tf2_broadcaster_ros.</code><code class="descname">Tf2Broadcaster</code><a class="reference internal" href="panda_autograsp/tf2_broadcaster_ros.html#Tf2Broadcaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tf2 broadcaster class.</p>
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_x_pos">
+<code class="descname">calib_frame_x_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_x_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame x position [m] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_y_pos">
+<code class="descname">calib_frame_y_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_y_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame y position [m] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_z_pos">
+<code class="descname">calib_frame_z_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_z_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame z position [m] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_yaw">
+<code class="descname">calib_frame_yaw</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_yaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame yaw orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_pitch">
+<code class="descname">calib_frame_pitch</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame pitch orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_roll">
+<code class="descname">calib_frame_roll</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.calib_frame_roll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calibration frame roll orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_x_pos">
+<code class="descname">sensor_frame_x_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_x_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame x position [m] (Relative to the ‘calib_frame` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_y_pos">
+<code class="descname">sensor_frame_y_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_y_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame y position [m] (Relative to the ‘calib_frame` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_z_pos">
+<code class="descname">sensor_frame_z_pos</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_z_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame z position [m] (Relative to the ‘calib_frame` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q1">
+<code class="descname">sensor_frame_q1</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q1" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Sensor frame x quaternion orientation [rad] (Relative to the ‘calib_frame`</dt>
+<dd>frame).</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q2">
+<code class="descname">sensor_frame_q2</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Sensor frame y quaternion orientation [rad] (Relative to the ‘calib_frame`</dt>
+<dd>frame).</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q3">
+<code class="descname">sensor_frame_q3</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q3" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Sensor frame z quaternion orientation [rad] (Relative to the ‘calib_frame`</dt>
+<dd>frame).</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q4">
+<code class="descname">sensor_frame_q4</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_q4" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Sensor frame w quaternion orientation [rad] (Relative to the ‘calib_frame`</dt>
+<dd>frame).</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_yaw">
+<code class="descname">sensor_frame_yaw</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_yaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame yaw orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_pitch">
+<code class="descname">sensor_frame_pitch</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame pitch orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_roll">
+<code class="descname">sensor_frame_roll</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.sensor_frame_roll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor frame roll orientation [rad] (Relative to the ‘panda_link0` frame).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.conf">
+<code class="descname">conf</code><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dynamic reconfigure server configuration dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.set_sensor_pose_service">
+<code class="descname">set_sensor_pose_service</code><span class="sig-paren">(</span><em>sensor_pose</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/tf2_broadcaster_ros.html#Tf2Broadcaster.set_sensor_pose_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.set_sensor_pose_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give sensor pose of the calibration to the tf2 broadcaster.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sensor_pose</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – Dictionary containing the pose of the sensor {x, y, z,q1, q2,
+q3, q4, yaw, pitch, roll}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.dync_reconf_callback">
+<code class="descname">dync_reconf_callback</code><span class="sig-paren">(</span><em>config</em>, <em>level</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/tf2_broadcaster_ros.html#Tf2Broadcaster.dync_reconf_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.dync_reconf_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dynamic reconfigure callback function. This callback function
+updates the values of the dynamic reconfigure server.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>config</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a>) – Dictionary containing the dynamically reconfigured parameters.</li>
+<li><strong>level</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – A bitmask which will later be passed to the dynamic reconfigure callback.
+When the callback is called all of the level values for parameters that have
+been changed are added together and the resulting value is passed to the
+callback.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.tf2_broadcaster_callback">
+<code class="descname">tf2_broadcaster_callback</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/tf2_broadcaster_ros.html#Tf2Broadcaster.tf2_broadcaster_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.tf2_broadcaster_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>TF2 broadcaster callback function. This callback function broadcasts
+the tf2 frames.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">rospy.timer.TimerEvent</span></code>, optional) – Structure passed in provides you timing information that can be useful when
+debugging or profiling, by default None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.shutdown_hook">
+<code class="descname">shutdown_hook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="panda_autograsp/tf2_broadcaster_ros.html#Tf2Broadcaster.shutdown_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#panda_autograsp.tf2_broadcaster_ros.Tf2Broadcaster.shutdown_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions gets called when the node is shutdown. This function makes
+sure the previous calibration results are save to the calibration file before
+the node is shutdown.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-panda_autograsp">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-panda_autograsp" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, Rick Staa
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

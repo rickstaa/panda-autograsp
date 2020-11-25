@@ -1,6 +1,6 @@
 .. _release_dev:
 
-.. _panda_autograsp: https://github.com/rickstaa/panda_autograsp
+.. _panda-autograsp: https://github.com/rickstaa/panda-autograsp
 
 Release package
 ===================================

@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>panda_autograsp.panda_autograsp_server_ros &mdash; panda_autograsp 1.0.4 documentation</title>
+  <title>panda_autograsp.panda_autograsp_server_ros &mdash; panda_autograsp 1.0.6 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
 
   
   
@@ -17,7 +21,9 @@
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -29,11 +35,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -49,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> panda_autograsp
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> panda_autograsp
           
 
           
@@ -62,7 +63,7 @@
             
             
               <div class="version">
-                1.0.4
+                1.0.6
               </div>
             
           
@@ -79,6 +80,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -86,7 +88,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+              <p class="caption"><span class="caption-text">panda-autograsp package</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../info/info.html">Package information</a></li>
 </ul>
@@ -121,6 +123,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -159,7 +162,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
@@ -185,9 +188,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c1"># Make script both python2 and python3 compatible</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="nb">input</span> <span class="o">=</span> <span class="n">raw_input</span>
@@ -202,28 +205,28 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">from</span> <span class="nn">pyquaternion</span> <span class="k">import</span> <span class="n">Quaternion</span>
+<span class="kn">from</span> <span class="nn">pyquaternion</span> <span class="kn">import</span> <span class="n">Quaternion</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">from</span> <span class="nn">autolab_core</span> <span class="k">import</span> <span class="n">YamlConfig</span>
+<span class="kn">from</span> <span class="nn">autolab_core</span> <span class="kn">import</span> <span class="n">YamlConfig</span>
 
 <span class="c1"># ROS python packages</span>
 <span class="kn">import</span> <span class="nn">rospy</span>
-<span class="kn">from</span> <span class="nn">message_filters</span> <span class="k">import</span> <span class="n">ApproximateTimeSynchronizer</span><span class="p">,</span> <span class="n">Subscriber</span>
-<span class="kn">from</span> <span class="nn">cv_bridge</span> <span class="k">import</span> <span class="n">CvBridge</span>
+<span class="kn">from</span> <span class="nn">message_filters</span> <span class="kn">import</span> <span class="n">ApproximateTimeSynchronizer</span><span class="p">,</span> <span class="n">Subscriber</span>
+<span class="kn">from</span> <span class="nn">cv_bridge</span> <span class="kn">import</span> <span class="n">CvBridge</span>
 <span class="kn">import</span> <span class="nn">tf2_ros</span>
 
 <span class="c1"># ROS messages and services</span>
 <span class="kn">import</span> <span class="nn">sensor_msgs</span>
-<span class="kn">from</span> <span class="nn">tf2_geometry_msgs</span> <span class="k">import</span> <span class="n">PoseStamped</span>  <span class="c1"># Needed because we use tf2</span>
-<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="k">import</span> <span class="n">TransformStamped</span>
-<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="k">import</span> <span class="n">Header</span>
-<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="k">import</span> <span class="n">Empty</span>
+<span class="kn">from</span> <span class="nn">tf2_geometry_msgs</span> <span class="kn">import</span> <span class="n">PoseStamped</span>  <span class="c1"># Needed because we use tf2</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">TransformStamped</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Header</span>
+<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">Empty</span>
 
-<span class="kn">from</span> <span class="nn">gqcnn.msg</span> <span class="k">import</span> <span class="n">BoundingBox</span>
-<span class="kn">from</span> <span class="nn">gqcnn.srv</span> <span class="k">import</span> <span class="n">GQCNNGraspPlanner</span><span class="p">,</span> <span class="n">GQCNNGraspPlannerBoundingBox</span>
+<span class="kn">from</span> <span class="nn">gqcnn.msg</span> <span class="kn">import</span> <span class="n">BoundingBox</span>
+<span class="kn">from</span> <span class="nn">gqcnn.srv</span> <span class="kn">import</span> <span class="n">GQCNNGraspPlanner</span><span class="p">,</span> <span class="n">GQCNNGraspPlannerBoundingBox</span>
 
 <span class="c1"># Panda_autograsp modules, msgs and srvs</span>
-<span class="kn">from</span> <span class="nn">panda_autograsp.srv</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">panda_autograsp.srv</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ComputeGrasp</span><span class="p">,</span>
     <span class="n">PlanGrasp</span><span class="p">,</span>
     <span class="n">PlanToPoint</span><span class="p">,</span>
@@ -241,7 +244,7 @@
 <span class="p">)</span>
 
 <span class="c1"># Panda_autograsp modules, msgs and srvs</span>
-<span class="kn">from</span> <span class="nn">panda_autograsp.functions</span> <span class="k">import</span> <span class="n">draw_axis</span>
+<span class="kn">from</span> <span class="nn">panda_autograsp.functions</span> <span class="kn">import</span> <span class="n">draw_axis</span>
 
 <span class="c1"># Set right matplotlib backend</span>
 <span class="c1"># Needed in order to show images inside imported modules</span>
@@ -320,7 +323,7 @@
 <span class="sd">        The translation vector of the camera/world calibration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="PandaAutograspServer.__init__"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="PandaAutograspServer.__init__"><a class="viewcode-back" href="../../api/_autosummary/panda_autograsp.panda_autograsp_server_ros.html#panda_autograsp.panda_autograsp_server_ros.PandaAutograspServer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">pose_calib_method</span><span class="o">=</span><span class="n">POSE_CALIB_METHOD</span><span class="p">,</span>
         <span class="n">gazebo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -1440,11 +1443,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, Rick Staa
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1455,7 +1466,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

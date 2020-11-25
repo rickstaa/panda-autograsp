@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Release documentation &mdash; panda_autograsp 1.0.4 documentation</title>
+  <title>Release documentation &mdash; panda_autograsp 1.0.6 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
 
   
   
@@ -17,7 +21,9 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,11 +35,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="Release package" href="release_dev.html" /> 
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> panda_autograsp
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> panda_autograsp
           
 
           
@@ -63,7 +64,7 @@
             
             
               <div class="version">
-                1.0.4
+                1.0.6
               </div>
             
           
@@ -80,6 +81,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -87,7 +89,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+              <p class="caption"><span class="caption-text">panda-autograsp package</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../info/info.html">Package information</a></li>
 </ul>
@@ -127,6 +129,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -165,7 +168,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Release documentation</li>
     
@@ -190,13 +193,14 @@
 <h1>Release documentation<a class="headerlink" href="#release-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="install-requirements">
 <h2>Install requirements<a class="headerlink" href="#install-requirements" title="Permalink to this headline">¶</a></h2>
-<p>Building <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a>’s documentation requires <a class="reference external" href="http://www.sphinx-doc.org/en/master">sphinx</a>,
-the panda_autograsp package and several plugins.
-After <a class="reference external" href="http://www.sphinx-doc.org/en/master">sphinx</a>  is installed the other required dependencies can be installed
-by going into the <code class="docutils literal notranslate"><span class="pre">panda_autograsp</span></code> directory and running the
-following commands:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install .
-pip install .<span class="o">[</span>docs<span class="o">]</span>
+<p>Building <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a>’s documentation requires <a class="reference external" href="http://www.sphinx-doc.org/en/master">sphinx</a>,
+the panda-autograsp package and several plugins. To prevent conflicts with system
+installed python packages please install them inside a virtual environment. You can
+create such an environment containing the required dependencies with the following
+command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>virtualenv --system-site-packages ~/venvs/panda_autograsp_docs
+<span class="nb">source</span> ~/venvs/panda_autograsp_docs/bin/activate
+pip install -r ./requirements/requirements_docs.txt
 </pre></div>
 </div>
 </div>
@@ -214,7 +218,7 @@ inside the <code class="docutils literal notranslate"><span class="pre">docs/bui
 <h2>Deploying<a class="headerlink" href="#deploying" title="Permalink to this headline">¶</a></h2>
 <p>To deploy documentation to the Github Pages site for the repository,
 push the documentation to the <code class="docutils literal notranslate"><span class="pre">melodic-devel</span></code> branch and run the
-<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code> command inside the <code class="docutils literal notranslate"><span class="pre">panda_autograsp/docsrc</span></code>
+<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code> command inside the <code class="docutils literal notranslate"><span class="pre">panda-autograsp/docs</span></code>
 directory.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -242,11 +246,19 @@ you will be greeted by errors.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, Rick Staa
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -257,7 +269,6 @@ you will be greeted by errors.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

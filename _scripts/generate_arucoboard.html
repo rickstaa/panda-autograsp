@@ -1,0 +1,472 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>generate_arucoboard module &mdash; panda_autograsp 1.0.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> panda_autograsp
+          
+
+          
+            
+            <img src="../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">panda-autograsp package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../info/info.html">Package information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#package-build-from-source-instructions">Package build from source instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#singularity-container-installation-instructions">Singularity Container installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html#docker-container-installation-instructions">Docker container installation instructions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html">Sensor calibration instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html#package-use-instructions">Package use instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html#singularity-container-instructions">Singularity container instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/usage.html#troubleshooting-information">Troubleshooting information</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">Python Code API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license/license.html">License</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Zone</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/release_dev.html">Release package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/doc_dev.html">Release documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">panda_autograsp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>generate_arucoboard module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_scripts/generate_arucoboard.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-generate_arucoboard">
+<span id="generate-arucoboard-module"></span><h1>generate_arucoboard module<a class="headerlink" href="#module-generate_arucoboard" title="Permalink to this headline">¶</a></h1>
+<p>This script can be used to generate a Aruco marker board. This board is used in the
+camera pose estimation.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Printing instructions:</strong></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li>Make sure Scale to fit is selected.</li>
+<li>Verify the size of the markers after the board is printed. If
+size does not match change the settings below or in the detection algorithm.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="source-code">
+<h2>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Main python packages</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">from</span> <span class="nn">cv2</span> <span class="kn">import</span> <span class="n">aruco</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="c1"># Panda_autograsp modules, msgs and srvs</span>
+<span class="kn">from</span> <span class="nn">panda_autograsp</span> <span class="kn">import</span> <span class="n">Logger</span>
+
+<span class="c1"># Get required paths</span>
+<span class="n">SAVE_DIR_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
+
+<span class="c1"># Create script logger</span>
+<span class="n">script_logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="s2">&quot;generate_arucoboard.py&quot;</span><span class="p">)</span>
+
+<span class="c1">#################################################</span>
+<span class="c1"># Script settings ###############################</span>
+<span class="c1">#################################################</span>
+
+<span class="n">MARKERS_X</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">MARKERS_Y</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">MARKER_LENGTH</span> <span class="o">=</span> <span class="mf">0.032</span>  <span class="c1"># [M]</span>
+<span class="n">MARKER_SEPARATION</span> <span class="o">=</span> <span class="mf">0.009</span>  <span class="c1"># [M]</span>
+<span class="n">ARUCO_DICT_TYPE</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">DICT_6X6_50</span>  <span class="c1"># [ROWSxCOLUMNS_LIBRARY_SIZE]</span>
+<span class="n">IM_OUT_SIZE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1100</span><span class="p">,</span> <span class="mi">1681</span><span class="p">)</span>  <span class="c1"># Pixel size == Pattern size</span>
+<span class="n">MARGIN_SIZE</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1">#################################################</span>
+<span class="c1"># Main script ###################################</span>
+<span class="c1">#################################################</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># set root logger format</span>
+    <span class="n">root_logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span>
+        <span class="n">log_file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span>
+                <span class="s2">&quot;..&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;logs/generate_arucoboard.log&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Welcome message</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;== Generate arucoboard script ==</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;This script can be used to generate &quot;</span>
+        <span class="s2">&quot;a Aruco marker board. This board is used &quot;</span>
+        <span class="s2">&quot;in the camera pose estimation.</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Save config settings</span>
+    <span class="n">config_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;MARKERS_X&quot;</span><span class="p">:</span> <span class="n">MARKERS_X</span><span class="p">,</span>
+        <span class="s2">&quot;MARKERS_Y&quot;</span><span class="p">:</span> <span class="n">MARKERS_Y</span><span class="p">,</span>
+        <span class="s2">&quot;MARKER_LENGTH&quot;</span><span class="p">:</span> <span class="mf">0.032</span><span class="p">,</span>
+        <span class="s2">&quot;MARKER_SEPARATION&quot;</span><span class="p">:</span> <span class="mf">0.009</span><span class="p">,</span>
+        <span class="s2">&quot;ARUCO_DICT_TYPE&quot;</span><span class="p">:</span> <span class="n">ARUCO_DICT_TYPE</span><span class="p">,</span>
+        <span class="s2">&quot;IM_OUT_SIZE&quot;</span><span class="p">:</span> <span class="n">IM_OUT_SIZE</span><span class="p">,</span>
+        <span class="s2">&quot;MARGIN_SIZE&quot;</span><span class="p">:</span> <span class="n">MARGIN_SIZE</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config_save_str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SAVE_DIR_PATH</span><span class="p">,</span> <span class="s2">&quot;../cfg/_cfg/aruco_config.dict&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_save_str</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_dict_file</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">config_dict</span><span class="p">,</span> <span class="n">config_dict_file</span><span class="p">)</span>
+
+    <span class="c1"># Create aruco gridboard</span>
+    <span class="n">ARUCO_DICT</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">Dictionary_get</span><span class="p">(</span><span class="n">ARUCO_DICT_TYPE</span><span class="p">)</span>
+    <span class="n">gridboard</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">GridBoard_create</span><span class="p">(</span>
+        <span class="n">markersX</span><span class="o">=</span><span class="n">MARKERS_X</span><span class="p">,</span>
+        <span class="n">markersY</span><span class="o">=</span><span class="n">MARKERS_Y</span><span class="p">,</span>
+        <span class="n">markerLength</span><span class="o">=</span><span class="n">MARKER_LENGTH</span><span class="p">,</span>
+        <span class="n">markerSeparation</span><span class="o">=</span><span class="n">MARKER_SEPARATION</span><span class="p">,</span>
+        <span class="n">dictionary</span><span class="o">=</span><span class="n">ARUCO_DICT</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Create an image from the gridboard</span>
+    <span class="n">gridboard_img</span> <span class="o">=</span> <span class="n">gridboard</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
+        <span class="n">outSize</span><span class="o">=</span><span class="n">IM_OUT_SIZE</span><span class="p">,</span> <span class="n">marginSize</span><span class="o">=</span><span class="n">MARGIN_SIZE</span><span class="p">,</span> <span class="n">borderBits</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Display and save gridboard image</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="s2">&quot;Arcu-board&quot;</span><span class="p">)</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">startWindowThread</span><span class="p">()</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;Arcu-board&quot;</span><span class="p">,</span> <span class="n">gridboard_img</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+        <span class="c1"># Break if someone presses q or esc</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">27</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">)):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Closing window&quot;</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+            <span class="k">break</span>
+
+        <span class="c1"># Break if window is closed</span>
+        <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getWindowProperty</span><span class="p">(</span><span class="s2">&quot;Arcu-board&quot;</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">WND_PROP_VISIBLE</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+
+    <span class="c1"># Save generated Arucoboard</span>
+    <span class="n">time_str</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">-%H%M%S&quot;</span><span class="p">)</span>
+    <span class="n">img_save_pth</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">SAVE_DIR_PATH</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;../data/calib/arucoboard&quot;</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">time_str</span> <span class="o">+</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">img_save_pth</span><span class="p">,</span> <span class="n">gridboard_img</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, Rick Staa
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

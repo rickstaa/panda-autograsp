@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Package information &mdash; panda_autograsp 1.0.4 documentation</title>
+  <title>Package information &mdash; panda_autograsp 1.0.6 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
 
   
   
@@ -17,7 +21,9 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,15 +35,10 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Prerequisites" href="../install/install.html" />
-    <link rel="prev" title="Welcome to panda_autograsp documentation!" href="../index.html" /> 
+    <link rel="prev" title="Welcome to panda-autograsp documentation!" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -51,7 +52,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> panda_autograsp
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> panda_autograsp
           
 
           
@@ -64,7 +65,7 @@
             
             
               <div class="version">
-                1.0.4
+                1.0.6
               </div>
             
           
@@ -81,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -88,7 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Panda_autograsp package</span></p>
+              <p class="caption"><span class="caption-text">panda-autograsp package</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Package information</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#package-overview">Package overview</a></li>
@@ -130,6 +132,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -168,7 +171,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Package information</li>
     
@@ -191,10 +194,10 @@
             
   <div class="section" id="package-information">
 <h1>Package information<a class="headerlink" href="#package-information" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://github.com/rickstaa/panda_autograsp">Panda_autograsp</a> is an autonomous ROS based grasping solution that works with the
+<p><a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> is an autonomous ROS based grasping solution that works with the
 <a class="reference external" href="https://www.franka.de/panda">Panda Emika Franka robot</a>. In this grasping solution,
 several opensource grasping solutions are implemented on the
-<a class="reference external" href="https://www.franka.de/panda">Panda Emika Franka robot</a> robot. The <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package
+<a class="reference external" href="https://www.franka.de/panda">Panda Emika Franka robot</a> robot. The <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> package
 currently contains the following grasping algorithm:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/BerkeleyAutomation/gqcnn">BerkleyAutomation/gqcnn</a></li>
@@ -204,18 +207,18 @@ currently contains the following grasping algorithm:</p>
 <p class="last">These solutions work both on a physical as well as a simulated version of the panda robot.
 A simulated version of the panda robot is shipped with this package.</p>
 </div>
-<iframe width="640" height="360" style="margin-bottom: 25px" src="https://www.youtube.com/embed/aN0zk-3kGVs" frameborder="0" allowfullscreen="1">&nbsp;</iframe><p>An video showing the panda_autograsp algorithm in action.</p>
+<iframe width="640" height="360" style="margin-bottom: 25px" src="https://www.youtube.com/embed/aN0zk-3kGVs" frameborder="0" allowfullscreen="1">&nbsp;</iframe><p>An video showing the panda-autograsp algorithm in action.</p>
 <div class="section" id="package-overview">
 <h2>Package overview<a class="headerlink" href="#package-overview" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-center" id="id2">
 <a class="reference external image-reference" href="https://user-images.githubusercontent.com/17570430/69705860-a84f7400-10f6-11ea-9018-d1be5df6e61d.png"><img alt="https://user-images.githubusercontent.com/17570430/69705860-a84f7400-10f6-11ea-9018-d1be5df6e61d.png" src="https://user-images.githubusercontent.com/17570430/69705860-a84f7400-10f6-11ea-9018-d1be5df6e61d.png" /></a>
-<p class="caption"><span class="caption-text">Flow diagram of the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> algorithm.</span></p>
+<p class="caption"><span class="caption-text">Flow diagram of the <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> algorithm.</span></p>
 </div>
 <ul class="simple">
 <li><strong>Image processing nodes (Iai_kinect2_bridge)</strong>: The image processing is performed by the <a class="reference external" href="https://github.com/code-iai/iai_kinect2">iai_kinect2</a> package.</li>
-<li><strong>panda_autograsp_server</strong>: This node is responsible for connecting all of the individual components of the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution together.</li>
-<li><strong>panda_autograsp_cli</strong>: This node is used to control the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> solution.</li>
-<li><strong>grasp_planner_server</strong>: This node computes a valid grasp out of RGB-D images it receives from the <code class="docutils literal notranslate"><span class="pre">panda_autograsp_server</span></code> node.</li>
+<li><strong>panda_autograsp_server</strong>: This node is responsible for connecting all of the individual components of the <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> solution together.</li>
+<li><strong>panda_autograsp_cli</strong>: This node is used to control the <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> solution.</li>
+<li><strong>grasp_planner_server</strong>: This node computes a valid grasp out of RGB-D images it receives from the <code class="docutils literal notranslate"><span class="pre">panda-autograsp_server</span></code> node.</li>
 <li><strong>tf2_broadcaster</strong>: This node sends the Robot eye-hand calibration results to the <code class="docutils literal notranslate"><span class="pre">/tf</span></code> node so that the scene gets updated.</li>
 <li><strong>moveit_planner_server</strong>: This node is used to control the robot using the moveit planning framework.</li>
 </ul>
@@ -242,7 +245,7 @@ randomization for sim-to-real transfer. See the ongoing
 <a class="reference external" href="https://berkeleyautomation.github.io/dex-net">Dexterity Network (Dex-Net)</a> project for more information.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>Currently, only the parallel jaw variants of the GQ-CNN and FC-GQ-CNN networks are supported by the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> package. As a result, for the GQ-CNN’s and FC-GQ-CNN, the following
+<p>Currently, only the parallel jaw variants of the GQ-CNN and FC-GQ-CNN networks are supported by the <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> package. As a result, for the GQ-CNN’s and FC-GQ-CNN, the following
 network models can be chosen:</p>
 <blockquote>
 <div><ul class="simple">
@@ -252,7 +255,7 @@ network models can be chosen:</p>
 <li><strong>FC-GQCNN-4.0-PJ</strong>: Modification of GQCNN-4.0-PJ in which a fully connected grasp quality CNN (<a class="reference external" href="https://berkeleyautomation.github.io/fcgqcnn">FC-GQ-CNN</a>) is used. This model has a faster grasp computation time and a more accurate grasp.</li>
 </ul>
 </div></blockquote>
-<p class="last">You can switch between these networks by supplying the <a class="reference external" href="https://github.com/rickstaa/panda_autograsp">panda_autograsp</a> launch file with the <code class="docutils literal notranslate"><span class="pre">model_type:=&lt;MODEL_NAME&gt;</span></code> argument.</p>
+<p class="last">You can switch between these networks by supplying the <a class="reference external" href="https://github.com/rickstaa/panda-autograsp">panda-autograsp</a> launch file with the <code class="docutils literal notranslate"><span class="pre">model_type:=&lt;MODEL_NAME&gt;</span></code> argument.</p>
 </div>
 </div>
 </div>
@@ -269,7 +272,7 @@ network models can be chosen:</p>
         <a href="../install/install.html" class="btn btn-neutral float-right" title="Prerequisites" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to panda_autograsp documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to panda-autograsp documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -278,11 +281,19 @@ network models can be chosen:</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, Rick Staa
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -293,7 +304,6 @@ network models can be chosen:</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
