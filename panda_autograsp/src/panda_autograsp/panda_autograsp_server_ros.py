@@ -137,6 +137,8 @@ class PandaAutograspServer:
         The rotation vector of the camera/world calibration.
     tvec : :py:obj:`list`
         The translation vector of the camera/world calibration.
+    sensor_base_frame : :py:obj:`str`
+        The name of the sensor base frame.
     """
 
     def __init__(
@@ -144,6 +146,7 @@ class PandaAutograspServer:
         pose_calib_method=POSE_CALIB_METHOD,
         gazebo=False,
         bounding_box_enabled=False,
+        sensor_base_frame="camera_link",
     ):
         """
         Parameters
@@ -154,6 +157,8 @@ class PandaAutograspServer:
             Specifies whether you want to use a gazebo simulation, by default false.
         bounding_box_enabled : :py:obj:`bool`, optional
             Specifies whether you want to use a bounding box for the grasp detection.
+        sensor_base_frame : :py:obj:`str`,  optional
+            The name of the sensor base frame, by default "camera_link".
         """
 
         # Get pose calib method from input
@@ -163,6 +168,9 @@ class PandaAutograspServer:
             self.pose_calib_method = POSE_CALIB_METHOD
         else:
             self.pose_calib_method = pose_calib_method
+
+        # Get camera frame names
+        self.sensor_base_frame = sensor_base_frame
 
         # Get input variables
         self.gazebo = gazebo
@@ -1174,7 +1182,7 @@ class PandaAutograspServer:
             sensor_frame_tf_msg = TransformStamped()
             sensor_frame_tf_msg.header.stamp = rospy.Time.now()
             sensor_frame_tf_msg.header.frame_id = "calib_frame"
-            sensor_frame_tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
+            sensor_frame_tf_msg.child_frame_id = self.sensor_base_frame
             sensor_frame_tf_msg.transform.translation.x = float(H[0, 3] / 1000.0)
             sensor_frame_tf_msg.transform.translation.y = float(H[1, 3] / 1000.0)
             sensor_frame_tf_msg.transform.translation.z = float(H[2, 3] / 1000.0)
@@ -1229,7 +1237,7 @@ class PandaAutograspServer:
             sensor_frame_tf_msg = TransformStamped()
             sensor_frame_tf_msg.header.stamp = rospy.Time.now()
             sensor_frame_tf_msg.header.frame_id = "calib_frame"
-            sensor_frame_tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
+            sensor_frame_tf_msg.child_frame_id = self.sensor_base_frame
             sensor_frame_tf_msg.transform.translation.x = float(H[0, 3])
             sensor_frame_tf_msg.transform.translation.y = float(H[1, 3])
             sensor_frame_tf_msg.transform.translation.z = float(H[2, 3])

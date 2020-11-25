@@ -28,8 +28,18 @@ if __name__ == "__main__":
     # Initialize TF2 broadcaster node
     rospy.init_node("tf2_broadcaster", anonymous=False)
 
+    # Get private parameters specified in the launch file
+    try:
+        sensor_base_frame = rospy.get_param("~camera_link")
+    except KeyError:
+        sensor_base_frame = "camera_link"
+    try:
+        sensor_depth_frame = rospy.get_param("~sensor_depth_frame")
+    except KeyError:
+        sensor_depth_frame = "sensor_depth_frame"
+
     # Initialize calib frame broadcaster
-    Tf2Broadcaster()
+    Tf2Broadcaster(sensor_base_frame=sensor_base_frame)
 
     # Spin forever
     rospy.spin()

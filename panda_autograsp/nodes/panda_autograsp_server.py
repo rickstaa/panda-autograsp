@@ -31,6 +31,8 @@ import rospy
 # Panda_autograsp modules, msgs and srvs
 from panda_autograsp import PandaAutograspServer
 
+# Pass in camera type
+
 #################################################
 # Main script ###################################
 #################################################
@@ -41,6 +43,10 @@ if __name__ == "__main__":
     rospy.init_node("panda_autograsp_server")
 
     # Get private parameters specified in the launch file
+    try:
+        sensor_base_frame = rospy.get_param("~camera_link")
+    except KeyError:
+        sensor_base_frame = "camera_link"
     try:  # Check calib type
         pose_Calib_method = rospy.get_param("~calib_type")
     except KeyError:
@@ -59,6 +65,7 @@ if __name__ == "__main__":
         pose_calib_method=pose_Calib_method,
         gazebo=gazebo,
         bounding_box_enabled=bounding_box_enabled,
+        sensor_base_frame=sensor_base_frame,
     )
 
     # Loop till the service is shutdown

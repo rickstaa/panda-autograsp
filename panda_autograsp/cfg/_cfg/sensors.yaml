@@ -1,0 +1,9 @@
+## Sensors configuration config
+# This file contains some information about the supported sensors
+
+kinect_v2:
+  rgb_frame: kinect2_rgb_optical_frame
+  depth_frame: kinect2_ir_optical_frame
+rs_d435i:
+  rgb_frame: sensor_color_frame
+  depth_frame: sensor_depth_frame

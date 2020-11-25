@@ -19,8 +19,6 @@
     <arg name="grasp_solution" default=""/>
     <arg name="use_bounding_box" default="false"/>
     <arg name="calib_type" default="aruco_board"/>
-    <arg name="grasp_detect_color_quality" default="sd"/>
-    <arg name="grasp_detect_depth_quality" default="sd"/>
     <arg name="gripper_center" default="true"/>
     <!-- Gripper center joint location (x: roll, y: pitch, z: yaw) -->
     <arg name="gripper_center_xyz" default="0.0 0.015 0.11"/>
@@ -76,11 +74,9 @@
         <arg name="load_gripper" value="$(arg load_gripper)"/>
     </include>
 
-    <!-- Start the Kinect processing ROS nodes
-        The IAI_kinect2 package was used for the kinect processing.
-    -->
-    <include file="$(find panda_autograsp)/launch/kinect2_bridge.launch" unless="$(arg gazebo)">
-        <arg name="output" value="$(arg output)" />
+    <!-- Start the sensor processing ROS nodes-->
+    <include file="$(find panda_autograsp)/launch/rs_bridge.launch" unless="$(arg gazebo)">
+        <arg name="gazebo" value="$(arg gazebo)" />
     </include>
 
     <!-- Load dynamic reconfigure GUI -->
@@ -95,22 +91,15 @@
     -->
     <node name="tf2_broadcaster" launch-prefix="$(arg launch_prefix)" pkg="panda_autograsp" type="tf2_broadcaster.py" args="panda_link0 calib_frame" required="true" output="$(arg output)">
         <!--Load calibration parameters-->
+        <param name="sensor_base_frame" value="camera_link"/>
         <rosparam command="load" file="$(find panda_autograsp)/cfg/calib_frames_poses.yaml"/>
     </node>
 
     <!-- Modify parameters if simulated robot is required -->
-    <arg name="image_color_topic" value="kinect2/rgb/image_raw" if="$(arg gazebo)"/>
-    <arg name="image_color_topic" value="kinect2/hd/image_color" unless="$(arg gazebo)"/>
-    <arg name="image_color_rect_topic" value="kinect2/rgb/image_raw" if="$(arg gazebo)"/>
-    <arg name="image_color_rect_topic" value="kinect2/$(arg grasp_detect_color_quality)/image_color_rect" unless="$(arg gazebo)"/>
-    <arg name="image_depth_rect_32FC1_topic" value="kinect2/depth/image_raw" if="$(arg gazebo)"/>
-    <arg name="image_depth_rect_32FC1_topic" value="kinect2/$(arg grasp_detect_depth_quality)/image_depth_rect_32FC1" unless="$(arg gazebo)"/>
-    <arg name="hd_camera_info_topic" value="kinect2/rgb/camera_info" if="$(arg gazebo)"/>
-    <arg name="hd_camera_info_topic" value="kinect2/hd/camera_info" unless="$(arg gazebo)"/>
-    <arg name="qhd_camera_info_topic" value="kinect2/rgb/camera_info" if="$(arg gazebo)"/>
-    <arg name="qhd_camera_info_topic" value="kinect2/qhd/camera_info" unless="$(arg gazebo)"/>
-    <arg name="sd_camera_info_topic" value="kinect2/rgb/camera_info" if="$(arg gazebo)"/>
-    <arg name="sd_camera_info_topic" value="kinect2/sd/camera_info" unless="$(arg gazebo)"/>
+    <arg name="image_color_topic" value="camera/color/image_raw"/>
+    <arg name="image_color_rect_topic" value="camera/color/image_raw"/>
+    <arg name="image_depth_rect_32FC1_topic" value="camera/depth/image_rect_raw"/>
+    <arg name="camera_info_topic" value="/camera/color/camera_info"/>
 
     <!-- Load panda_autograsp services
         Panda_autograsp services:
@@ -122,14 +111,15 @@
         <param name="calib_type" type="str" value="$(arg calib_type)"/>
         <param name="gazebo" type="bool" value="$(arg gazebo)"/>
         <param name="use_bounding_box" value="$(arg use_bounding_box)"/>
+        <param name="sensor_base_frame" value="camera_link"/>
         <remap from="image_color" to="$(arg image_color_topic)"/>
         <!-- Grasp detection color input quality -->
         <remap from="image_color_rect" to="$(arg image_color_rect_topic)"/>
         <!-- Grasp detection depth input quality -->
         <remap from="image_depth_rect_32FC1" to="$(arg image_depth_rect_32FC1_topic)"/>
-        <remap from="hd/camera_info" to="$(arg hd_camera_info_topic)"/>
-        <remap from="qhd/camera_info" to="$(arg qhd_camera_info_topic)"/>
-        <remap from="sd/camera_info" to="$(arg sd_camera_info_topic)"/>
+        <remap from="hd/camera_info" to="$(arg camera_info_topic)"/>
+        <remap from="qhd/camera_info" to="$(arg camera_info_topic)"/>
+        <remap from="sd/camera_info" to="$(arg camera_info_topic)"/>
     </node>
     <node name="grasp_planner_server" launch-prefix="$(arg launch_prefix)" pkg="panda_autograsp" type="grasp_planner_server.py" required="true" output="$(arg output)">
         <!-- Overload grasp solution -->

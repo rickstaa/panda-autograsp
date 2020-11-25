@@ -19,6 +19,7 @@ import geometry_msgs.msg
 # Panda_autograsp modules, msgs and srvs
 from panda_autograsp.srv import SetSensorPose
 
+
 #################################################
 # Read main config ##############################
 #################################################
@@ -68,6 +69,8 @@ class Tf2Broadcaster:
 
     Attributes
     -------
+    sensor_base_frame : :py:obj:`str`
+        The name of the sensor base frame.
     calib_frame_x_pos : :py:obj:`float`
         Calibration frame x position [m] (Relative to the 'panda_link0` frame).
     calib_frame_y_pos : :py:obj:`float`
@@ -108,7 +111,15 @@ class Tf2Broadcaster:
         Dynamic reconfigure server configuration dictionary.
     """
 
-    def __init__(self):
+    def __init__(
+        self, sensor_base_frame="camera_link",
+    ):
+        """
+        Parameters
+        ----------
+        sensor_base_frame : :py:obj:`str`, optional
+            The name of the sensor depth frame, by default "camera_link".
+        """
 
         # Register shutdown hook
         rospy.on_shutdown(self.shutdown_hook)
@@ -123,6 +134,9 @@ class Tf2Broadcaster:
         self.calib_frame_yaw = get_dynamic_param("~calib_frame_yaw")
         self.calib_frame_pitch = get_dynamic_param("~calib_frame_pitch")
         self.calib_frame_roll = get_dynamic_param("~calib_frame_roll")
+
+        # Save sensor frame names
+        self.sensor_base_frame = sensor_base_frame
 
         # Set sensor starting parameters
         self.sensor_frame_x_pos = get_dynamic_param("~sensor_frame_x_pos")
@@ -365,7 +379,7 @@ class Tf2Broadcaster:
         """
 
         #########################################
-        # Generate calib Frame msg ###########
+        # Generate calib Frame msg ##############
         #########################################
         calib_frame_tf_msg = geometry_msgs.msg.TransformStamped()
         calib_frame_tf_msg.header.stamp = rospy.Time.now()
@@ -386,39 +400,22 @@ class Tf2Broadcaster:
         calib_frame_tf_msg.transform.rotation.w = calib_quat[3]
 
         #########################################
-        # Generate sensor rgb frame msg ######
+        # Generate sensor base frame msg ########
         #########################################
-        sensor_frame_rgb_tf_msg = geometry_msgs.msg.TransformStamped()
-        sensor_frame_rgb_tf_msg.header.stamp = rospy.Time.now()
-        sensor_frame_rgb_tf_msg.header.frame_id = "calib_frame"
-        sensor_frame_rgb_tf_msg.child_frame_id = "kinect2_rgb_optical_frame"
-        sensor_frame_rgb_tf_msg.transform.translation.x = self.sensor_frame_x_pos
-        sensor_frame_rgb_tf_msg.transform.translation.y = self.sensor_frame_y_pos
-        sensor_frame_rgb_tf_msg.transform.translation.z = self.sensor_frame_z_pos
-        sensor_frame_rgb_tf_msg.transform.rotation.x = self.sensor_frame_q1
-        sensor_frame_rgb_tf_msg.transform.rotation.y = self.sensor_frame_q2
-        sensor_frame_rgb_tf_msg.transform.rotation.z = self.sensor_frame_q3
-        sensor_frame_rgb_tf_msg.transform.rotation.w = self.sensor_frame_q4
-
-        #########################################
-        # Generate sensor ir frame msg #######
-        #########################################
-        sensor_frame_ir_tf_msg = geometry_msgs.msg.TransformStamped()
-        sensor_frame_ir_tf_msg.header.stamp = rospy.Time.now()
-        sensor_frame_ir_tf_msg.header.frame_id = "calib_frame"
-        sensor_frame_ir_tf_msg.child_frame_id = "kinect2_ir_optical_frame"
-        sensor_frame_ir_tf_msg.transform.translation.x = self.sensor_frame_x_pos
-        sensor_frame_ir_tf_msg.transform.translation.y = self.sensor_frame_y_pos
-        sensor_frame_ir_tf_msg.transform.translation.z = self.sensor_frame_z_pos
-        sensor_frame_ir_tf_msg.transform.rotation.x = self.sensor_frame_q1
-        sensor_frame_ir_tf_msg.transform.rotation.y = self.sensor_frame_q2
-        sensor_frame_ir_tf_msg.transform.rotation.z = self.sensor_frame_q3
-        sensor_frame_ir_tf_msg.transform.rotation.w = self.sensor_frame_q4
+        sensor_frame_base_tf_msg = geometry_msgs.msg.TransformStamped()
+        sensor_frame_base_tf_msg.header.stamp = rospy.Time.now()
+        sensor_frame_base_tf_msg.header.frame_id = "calib_frame"
+        sensor_frame_base_tf_msg.child_frame_id = self.sensor_base_frame
+        sensor_frame_base_tf_msg.transform.translation.x = self.sensor_frame_x_pos
+        sensor_frame_base_tf_msg.transform.translation.y = self.sensor_frame_y_pos
+        sensor_frame_base_tf_msg.transform.translation.z = self.sensor_frame_z_pos
+        sensor_frame_base_tf_msg.transform.rotation.x = self.sensor_frame_q1
+        sensor_frame_base_tf_msg.transform.rotation.y = self.sensor_frame_q2
+        sensor_frame_base_tf_msg.transform.rotation.z = self.sensor_frame_q3
+        sensor_frame_base_tf_msg.transform.rotation.w = self.sensor_frame_q4
 
         # Send tf message
-        self._tf2_br.sendTransform(
-            [calib_frame_tf_msg, sensor_frame_rgb_tf_msg, sensor_frame_ir_tf_msg]
-        )
+        self._tf2_br.sendTransform([calib_frame_tf_msg, sensor_frame_base_tf_msg])
 
     def shutdown_hook(self):
         """This functions gets called when the node is shutdown. This function makes
