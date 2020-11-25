@@ -1,9 +1,0 @@
-## Python 2 package requirements
-# This file can be used to install the main package requirements when using the panda_autograsp
-# package in python 2.
-
-rospkg
-defusedxml
-empy
-catkin-pkg
-PySide2

@@ -5,6 +5,12 @@ panda\_autograsp.tf2\_broadcaster\_ros
 
    
    
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_dynamic_param
+   
    
 
    

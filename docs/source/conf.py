@@ -35,6 +35,8 @@ release = "1.0.5"
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+
+# Extensions
 extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
@@ -43,18 +45,15 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     "sphinxcontrib.yt",
-    # "breathe",
 ]
+
+# Extension settings
 autoclass_content = "class"
 autodoc_member_order = "bysource"
-autodoc_default_flags = ["members"]  # , "show-inheritance"]
+autodoc_default_flags = ["members"]
 autosummary_generate = True
 napoleon_include_special_with_doc = True
 napoleon_include_init_with_doc = True
-
-# Breathe settings
-breathe_projects = {"panda_autograsp": "../build/doxyxml"}
-breathe_default_project = "panda_autograsp"
 
 # Add mappings
 intersphinx_mapping = {
@@ -125,7 +124,6 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
 html_theme = "sphinx_rtd_theme"
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 

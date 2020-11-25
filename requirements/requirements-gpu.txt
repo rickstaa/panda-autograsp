@@ -13,7 +13,7 @@ opencv-python==4.2.0.32
 opencv-contrib-python==4.2.0.32
 scikit-image<=0.14.2
 gputil
-tensorflow==1.13.1
+tensorflow-gpu==1.13.1
 
 pylibfreenect2
 tensorflow-estimator >= 1.13.0, <1.14.0rc0

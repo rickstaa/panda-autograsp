@@ -10,7 +10,7 @@ calculates the intrinsic camera matrix and the distortion parameters.
 
 Source code
 ----------------------------
-.. literalinclude:: ../../../../panda_autograsp/scripts/chessboard_calibration.py
+.. literalinclude:: /../../panda_autograsp/scripts/chessboard_calibration.py
    :language: python
    :linenos:
    :lines: 19-

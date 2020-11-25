@@ -89,17 +89,6 @@ or `conda <https://conda.io/en/latest/>`_.
     advised to use a `Virtualenv <https://virtualenv.pypa.io/en/stable/>`_
     instead.
 
-Virtualenv instructions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-While creating the virtual python2 environment make sure you use the `--system-site-packages` flag.
-This makes sure our package can also access the required system python packages.
-
-.. code-block:: bash
-
-    virtualenv --system-site-packages panda_autograsp
-
-
 CUDA & CUDNN (NVIDIA GPUs only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Since Tensorflow needs GPU computing capabilities of your NVIDIA
@@ -144,6 +133,17 @@ Install the ROS package dependencies using the following command:
     rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys libfranka
 
 
+Create the virtual environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Since ROS melodic uses the system python we have to make sure we use the `--system-site-packages` flag while creating the
+virtual environment. This makes sure our package can also access the required system python packages. This results in the
+following command:
+
+.. code-block:: bash
+
+    virtualenv --system-site-packages ~/venvs/panda_autograsp
+
 Install python package using pip
 ----------------------------------------
 
@@ -151,6 +151,25 @@ As ``rosdep`` does not yet support specifying specific versions for
 python packages, we need to install some additional packages using
 the `pip install command`. To ease this process a ``setup.py`` file
 was created. This file can be invoked using the following commands:
+
+.. code-block:: bash
+
+    source ~/venvs/panda_autograsp/bin/activate
+    pip install -e .
+
+.. warning::
+
+    After 1-01-2020 a lot of packages have dropped python2 support. As a result the above installation method might
+    not work anymore. If this is the case you are advised to install the python requirements using the `./requirements/requirements.txt`
+    file.
+
+Install the python dependencies
+--------------------------------
+
+.. note::
+
+    The opencv-python package, that is installed by one of the python dependencies, has to be removed since
+    it conflicts with required `opencv-contrib-python` package.
 
 Build the package
 -------------------------
@@ -161,14 +180,7 @@ The catkin package can be build by executing one of the following commands:
 
     catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=<PATH_TO_LIBFRANKA>/libfranka/build -Dfreenect2_DIR=<PATH_TO_FREENECT2>/freenect2/lib/cmake/freenect2"
     cd ~/panda-autograsp
-    pip install .
-    pip uninstall opencv-python
 
-
-.. note::
-
-    The opencv-python package, that is installed by one of the python dependencies, has to be removed since
-    it conflicts with required `opencv-contrib-python` package.
 
 Singularity Container installation instructions
 ==================================================

@@ -48,7 +48,7 @@ if __name__ == "__main__":
     # Init service node
     rospy.init_node("test")
     rospy.loginfo("test")
-    test = rospy.ServiceProxy('/clear_octomap', Empty)
+    test = rospy.ServiceProxy("/clear_octomap", Empty)
     test()
 
     # Spin forever
