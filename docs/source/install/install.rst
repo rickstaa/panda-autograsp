@@ -156,6 +156,12 @@ was created. This file can be invoked using the following commands:
 
     source ~/venvs/panda_autograsp/bin/activate
     pip install -e .
+    pip uninstall opencv-python
+
+.. note::
+
+    The opencv-python package, that is installed by one of the python dependencies, has to be removed since
+    it conflicts with required `opencv-contrib-python` package.
 
 .. warning::
 
@@ -163,13 +169,6 @@ was created. This file can be invoked using the following commands:
     not work anymore. If this is the case you are advised to install the python requirements using the `./requirements/requirements.txt`
     file.
 
-Install the python dependencies
---------------------------------
-
-.. note::
-
-    The opencv-python package, that is installed by one of the python dependencies, has to be removed since
-    it conflicts with required `opencv-contrib-python` package.
 
 Build the package
 -------------------------
