@@ -10,7 +10,7 @@
 
 Source code
 ----------------------------
-.. literalinclude:: ../../../../panda_autograsp/scripts/plan_grasp.py
+.. literalinclude:: /../../panda_autograsp/scripts/plan_grasp.py
    :language: python
    :linenos:
    :lines: 19-

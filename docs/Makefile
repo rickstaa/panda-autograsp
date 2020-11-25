@@ -4,6 +4,7 @@
 # from the environment for the first two.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
+SPHINXPROJ    = panda_autograsp
 SOURCEDIR     = source
 BUILDDIR      = build
 GH_PAGES_SOURCES = docs panda_autograsp
@@ -13,10 +14,13 @@ GH_PAGES_SOURCES = docs panda_autograsp
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
+# Create make clean command
 .PHONY: clean
 clean:
 	@rm -rf $(BUILDDIR)/*
+	@echo "Build folder cleaned"
 
+# Publish gh-pages command
 .PHONY: gh-pages
 gh-pages:
 	cd .. && \
@@ -45,6 +49,7 @@ gh-pages:
 %: Makefile
 	cd .. && \
 	git submodule update --init --recursive
-	@sphinx-apidoc -f -o "${BUILDDIR}/_modules" "../panda_autograsp/src"
-	@sphinx-apidoc -f -o "${BUILDDIR}/_scripts" "../panda_autograsp/scripts"
+	@sphinx-apidoc -f -o "${SOURCEDIR}/_modules" "../panda_autograsp/src"
+	@sphinx-apidoc -f -o "${SOURCEDIR}/_scripts" "../panda_autograsp/scripts"
+	@sphinx-apidoc -f -o "${SOURCEDIR}/_nodes" "../panda_autograsp/nodes"
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

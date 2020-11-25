@@ -11,7 +11,7 @@ the Kinect camera. The images will be saved in the ``data/frames`` folder.
 
 Source code
 ----------------------------
-.. literalinclude:: ../../../../panda_autograsp/scripts/kinect_processing.py
+.. literalinclude:: /../../panda_autograsp/scripts/kinect_processing.py
    :language: python
    :linenos:
    :lines: 20-

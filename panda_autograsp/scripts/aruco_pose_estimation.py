@@ -9,7 +9,7 @@ of markers.
 
 Source code
 ----------------------------
-.. literalinclude:: ../../../../panda_autograsp/scripts/aruco_pose_estimation.py
+.. literalinclude:: /../../panda_autograsp/scripts/aruco_pose_estimation.py
    :language: python
    :linenos:
    :lines: 18-

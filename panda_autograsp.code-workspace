@@ -1,33 +1,55 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"python.autoComplete.extraPaths": [
-			"/home/rstaa/panda_autograsp_ws/devel/lib/python2.7/dist-packages",
-			"/opt/ros/melodic/lib/python2.7/dist-packages"
-		],
-		"cmake.sourceDirectory": "${workspaceFolder}/panda_autograsp",
-		"files.associations": {
-			"*.def": "shellscript",
-			".singularity_bashrc": "shellscript",
-			"*.tf-gpu-conda3-libfreenect2-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
-			"*.tf-gpu-conda3-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
-			"*.tf-gpu-conda3-ros_kinetic-moveit-cuda10-xenial": "shellscript",
-			"*.ros_kinect-cuda10-xenial": "shellscript",
-			".singularity_bash_aliases": "shellscript",
-			"*.tf_gpu-conda3-libfreenect2-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
-			"*.tf_gpu-conda3-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
-			"*.tf_gpu-conda3-ros_kinetic-moveit-cuda10-xenial": "shellscript",
-			"*.tf_gpu-opencv2-conda3-libfreenect2-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
-			"*.tf_gpu-opencv2-conda3-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
-			"*.tf_gpu-opencv2-conda3-ros_kinetic-moveit-cuda10-xenial": "shellscript",
-			".conda_wrapper": "shellscript",
-			"*.ros_melodic-cuda10-bionic": "singularity",
-			"iosfwd": "cpp",
-			"string": "cpp"
-		}
-	}
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "../../panda-openai-ros"
+    }
+  ],
+  "settings": {
+    "python.autoComplete.extraPaths": [
+      "/home/rstaa/panda_autograsp_ws/devel/lib/python2.7/dist-packages",
+      "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ],
+    "cmake.sourceDirectory": "${workspaceFolder}/panda_autograsp",
+    "files.associations": {
+      "*.def": "shellscript",
+      ".singularity_bashrc": "shellscript",
+      "*.tf-gpu-conda3-libfreenect2-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
+      "*.tf-gpu-conda3-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
+      "*.tf-gpu-conda3-ros_kinetic-moveit-cuda10-xenial": "shellscript",
+      "*.ros_kinect-cuda10-xenial": "shellscript",
+      ".singularity_bash_aliases": "shellscript",
+      "*.tf_gpu-conda3-libfreenect2-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
+      "*.tf_gpu-conda3-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
+      "*.tf_gpu-conda3-ros_kinetic-moveit-cuda10-xenial": "shellscript",
+      "*.tf_gpu-opencv2-conda3-libfreenect2-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
+      "*.tf_gpu-opencv2-conda3-ros_kinetic-libfranka-moveit-cuda10-xenial": "shellscript",
+      "*.tf_gpu-opencv2-conda3-ros_kinetic-moveit-cuda10-xenial": "shellscript",
+      ".conda_wrapper": "shellscript",
+      "*.ros_melodic-cuda10-bionic": "singularity",
+      "iosfwd": "cpp",
+      "string": "cpp"
+    },
+    "workbench.colorCustomizations": {
+      "activityBar.activeBackground": "#ca7dbd",
+      "activityBar.activeBorder": "#dde3bb",
+      "activityBar.background": "#ca7dbd",
+      "activityBar.foreground": "#15202b",
+      "activityBar.inactiveForeground": "#15202b99",
+      "activityBarBadge.background": "#dde3bb",
+      "activityBarBadge.foreground": "#15202b",
+      "tab.activeBorder": "#ca7dbd",
+      "titleBar.activeBackground": "#bb59aa",
+      "titleBar.activeForeground": "#e7e7e7",
+      "titleBar.inactiveBackground": "#bb59aa99",
+      "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#bb59aa",
+    "python.analysis.extraPaths": [
+      "/home/rstaa/panda_autograsp_ws/devel/lib/python2.7/dist-packages",
+      "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ]
+  }
 }

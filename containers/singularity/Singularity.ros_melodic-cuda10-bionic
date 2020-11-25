@@ -1,4 +1,4 @@
-## Ros melodic container for the panda_autograsp package
+## Ros melodic container for the panda-autograsp package
 # NOTE: This container is for Nvidia graphics card. A amd version
 # Will be released as soon singularity support is added.
 
@@ -23,7 +23,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
         - dconda:   Deactivate conda enviroment
         - pbuild:   Panda autograsp build build command.
 
-    For more information see https://rickstaa.github.io/panda_autograsp/.
+    For more information see https://rickstaa.github.io/panda-autograsp/.
 %labels
     Maintainer: Rick Staa
     Github: https://github.com/rickstaa

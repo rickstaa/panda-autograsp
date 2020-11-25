@@ -11,7 +11,7 @@ camera pose estimation.
 
 Source code
 ----------------------------
-.. literalinclude:: ../../../../panda_autograsp/scripts/generate_arucoboard.py
+.. literalinclude:: /../../panda_autograsp/scripts/generate_arucoboard.py
    :language: python
    :linenos:
    :lines: 20-

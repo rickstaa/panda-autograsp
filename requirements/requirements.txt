@@ -1,10 +1,35 @@
-## Python 3 package requirements
-# This file can be used to install the main package requirements when using the panda_autograsp
-# package in python 3.
+scipy
+scikit-learn
+ruamel.yaml
+multiprocess
+setproctitle
+joblib
+colorlog
 
-rospkg
-defusedxml
-empy
-catkin-pkg
-pyQt5
-PySide2
+autolab-core
+autolab-perception
+visualization
+opencv-python==4.2.0.32
+opencv-contrib-python==4.2.0.32
+scikit-image<=0.14.2
+gputil
+tensorflow==1.13.1
+
+pylibfreenect2
+tensorflow-estimator >= 1.13.0, <1.14.0rc0
+pyquaternion
+
+keras
+
+ipython==5.5.0
+scikit-video
+ffmpeg-python
+
+Pillow
+docutils
+pyserial>=3.4
+cython
+psutil
+matplotlib<=2.2.0
+numpy
+cycler
