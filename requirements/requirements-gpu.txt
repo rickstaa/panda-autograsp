@@ -9,7 +9,7 @@ colorlog
 autolab-core
 visualization
 opencv-python==4.2.0.32
-opencv-contrib-python==4.2.0.32
+opencv-contrib-python==4.4.0.46
 scikit-image<=0.14.2
 gputil
 tensorflow-gpu==1.13.1
