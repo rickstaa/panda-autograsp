@@ -20,7 +20,7 @@ pyquaternion
 
 keras
 
-ipython==5.5.0
+ipython==7.19.0
 scikit-video
 ffmpeg-python
 
