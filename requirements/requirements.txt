@@ -7,16 +7,15 @@ joblib
 colorlog
 
 autolab-core
-autolab-perception
 visualization
 opencv-python==4.2.0.32
 opencv-contrib-python==4.2.0.32
 scikit-image<=0.14.2
 gputil
-tensorflow==1.13.1
+tensorflow==1.13.0
 
 pylibfreenect2
-tensorflow-estimator >= 1.13.0, <1.14.0rc0
+tensorflow-estimator==1.13.0
 pyquaternion
 
 keras
@@ -31,5 +30,5 @@ pyserial>=3.4
 cython
 psutil
 matplotlib<=2.2.0
-numpy
+numpy==1.16.0
 cycler

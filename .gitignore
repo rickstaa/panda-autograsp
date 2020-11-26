@@ -4,11 +4,13 @@ _build/*
 build/*
 tmp/*
 dist/*
+panda_autograsp/data/calib/
 /docs/build/*
 /panda_autograsp/models/*
 !/panda_autograsp/models/coke_can
 !/panda_autograsp/models/plastic_cup
 .vscode/
+
 
 # files to ignore
 microsoft.gpg

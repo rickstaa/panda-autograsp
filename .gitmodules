@@ -1,15 +1,7 @@
-[submodule "autolab_core"]
-	path = autolab_core
-	url = git@github.com:rickstaa/autolab_core.git
-	branch = master-panda_autograsp
 [submodule "gqcnn"]
 	path = gqcnn
 	url = git@github.com:rickstaa/gqcnn
 	branch = master-panda_autograsp
-[submodule "moveit_tutorials"]
-	path = moveit_tutorials
-	url = git@github.com:ros-planning/moveit_tutorials.git
-	branch = melodic-devel
 [submodule "franka_ros"]
 	path = franka_ros
 	url = git@github.com:rickstaa/franka_ros.git
