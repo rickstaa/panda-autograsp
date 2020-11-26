@@ -41,6 +41,6 @@ docutils
 pyserial>=3.4
 cython
 psutil
-matplotlib<=2.2.0
+matplotlib<3.4.0
 numpy==1.16.0
 cycler
