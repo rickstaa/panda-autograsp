@@ -10,7 +10,7 @@ autolab-core
 visualization
 opencv-python==4.2.0.32
 opencv-contrib-python==4.2.0.32
-scikit-image<=0.14.2
+scikit-image<0.17.3
 gputil
 tensorflow-gpu==1.13.1
 
