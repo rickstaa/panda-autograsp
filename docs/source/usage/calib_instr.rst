@@ -67,7 +67,8 @@ Generate Aruco Board
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To generate the Aruco Board please run the :py:mod:`generate_arucoboard.py`
-python script. This script is found in the ``./scripts`` folder.
+python script. This script is found in the ``./scripts`` folder. After you run this script
+a aruco board can be found in the ``./data/calib`` folder.
 
 .. _panda-autograsp: https://github.com/rickstaa/panda-autograsp
 .. _iai_kinect2: https://github.com/code-iai/iai_kinect2
