@@ -2,7 +2,7 @@
 # This file specifies the poses of the frames used in the calibration.
 
 # Calibration frame position (Relative to panda_link0 frame)
-calib_frame_x_pos: 0.78 # Relative position on the x axis [m]
+calib_frame_x_pos: 0.0  # Relative position on the x axis [m]
 calib_frame_y_pos: -0.03 # Relative position on the y axis [m]
 calib_frame_z_pos: 0.015 # Relative position on the z axis [m]
 calib_frame_yaw: 0.0              # Rotation around the z axis [rad]
@@ -10,13 +10,13 @@ calib_frame_pitch: -0.065 # Rotation around the y axis [rad]
 calib_frame_roll: 0.07 # Rotation around the x axis [rad]
 
 # Sensor start frame position (Relative to calibration frame) #
-sensor_frame_x_pos: -0.5323546026851087 # Relative position on the x axis [m]
-sensor_frame_y_pos: 0.45690324763111595 # Relative position on the y axis [m]
-sensor_frame_z_pos: 0.8788124045607401 # Relative position on the z axis [m]
-sensor_frame_q1: 0.0026524368992860135 # 1st orientation quaternion [rad]
-sensor_frame_q2: 0.9756848636001649   # 2th orientation quaternion [rad]
-sensor_frame_q3: -0.2177865339364841    # 3th orientation quaternion [rad]
-sensor_frame_q4: 0.02451605914407982     # 4th orientation quaternion [rad]
+sensor_frame_x_pos: -0.44395265468001555 # Relative position on the x axis [m]
+sensor_frame_y_pos: -0.009915239068979162 # Relative position on the y axis [m]
+sensor_frame_z_pos: 0.25985685363130495 # Relative position on the z axis [m]
+sensor_frame_q1: 0.5859386465101672    # 1st orientation quaternion [rad]
+sensor_frame_q2: -0.5237503692939562  # 2th orientation quaternion [rad]
+sensor_frame_q3: 0.4314850148936119     # 3th orientation quaternion [rad]
+sensor_frame_q4: -0.44292452530034665    # 4th orientation quaternion [rad]
 sensor_frame_yaw: -2.702229876568388  # Rotation around the z axis [rad]
 sensor_frame_pitch: 0.049014849362906836   # Rotation around the y axis [rad]
 sensor_frame_roll: -3.136083359135924      # Rotation around the x axis [rad]
