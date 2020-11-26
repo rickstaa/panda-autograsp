@@ -2,9 +2,6 @@
   "folders": [
     {
       "path": "."
-    },
-    {
-      "path": "../../panda-openai-ros"
     }
   ],
   "settings": {
