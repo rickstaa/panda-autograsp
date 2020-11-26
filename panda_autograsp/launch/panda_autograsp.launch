@@ -98,8 +98,9 @@
     <!-- Modify parameters if simulated robot is required -->
     <arg name="image_color_topic" value="camera/color/image_raw"/>
     <arg name="image_color_rect_topic" value="camera/color/image_raw"/>
-    <arg name="image_depth_rect_32FC1_topic" value="camera/depth/image_rect_raw"/>
-    <arg name="camera_info_topic" value="/camera/color/camera_info"/>
+    <!-- <arg name="image_depth_rect_32FC1_topic" value="camera/depth/image_rect_raw"/> -->
+    <arg name="image_depth_rect_32FC1_topic" value="camera/depth/image_depth_rect_32FC1"/>
+    <arg name="camera_info_topic" value="camera/color/camera_info"/>
 
     <!-- Load panda_autograsp services
         Panda_autograsp services:

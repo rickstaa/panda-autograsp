@@ -13,6 +13,7 @@ panda_autograsp/data/calib/
 
 
 # files to ignore
+*.code-workspace
 microsoft.gpg
 *.pyc
 *.log

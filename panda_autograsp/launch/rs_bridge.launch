@@ -1,9 +1,28 @@
 <launch>
   <!-- GAZEBO arguments -->
-  <arg name="gazebo" default="realsense"/>
+  <arg name="gazebo" default="false"/>
+  <arg name="base_name" default="camera"/>
+  <arg name="machine" default="localhost"/>
+  <arg name="nodelet_manager" default="$(arg base_name)"/>
+  <arg name="start_manager" default="true"/>
+  <arg name="use_machine" default="true"/>
+  <arg name="respawn" default="true"/>
+
+  <machine name="localhost" address="localhost"  if="$(arg use_machine)"/>
+
+  <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager)" args="manager" if="$(arg start_manager)" machine="$(arg machine)" output="screen"/>
 
   <!-- Start Realsense processing ROS node-->
   <include file="$(find realsense2_camera)/launch/rs_camera.launch" unless="$(arg gazebo)">
     <arg name="filters" value="pointcloud" />
   </include>
+
+  <!-- Convert rectified depth images from uint16_t to 32FC1 data type -->
+  <node pkg="nodelet" type="nodelet" name="$(arg base_name)_depth_image_proc_hd" machine="$(arg machine)" args="load depth_image_proc/convert_metric $(arg nodelet_manager)" respawn="$(arg respawn)">
+    <!-- subscribes to (16 bit input image) topic -->
+    <remap from="image_raw" to="camera/depth/image_rect_raw"/>
+
+    <!-- output (32bit modified image) topic -->
+    <remap from="image" to="camera/depth/image_depth_rect_32FC1"/>
+  </node>
 </launch>
