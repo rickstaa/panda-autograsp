@@ -8,8 +8,8 @@
 
 :bulb: You are on the default kinetic-devel branch. This branch is optimized to work with the Kinect2 camera. To use the package with the RealSense cameras, see the [melodic-devel-realsense branch](https://github.com/rickstaa/panda-autograsp/tree/melodic-devel-realsense).
 
-:warning: This branch is deprecated and therefore not under active development. You are advised to use the [melodic-devel branch](https://github.com/rickstaa/panda-autograsp/tree/melodic-devel). If you really need
-the kinetic-devel branch and run into issue feel free to [open up an issue](https://github.com/rickstaa/panda-autograsp/issues).
+:warning: **This branch is deprecated and therefore not under active development. You are advised to use the [melodic-devel branch](https://github.com/rickstaa/panda-autograsp/tree/melodic-devel). If you really need
+the kinetic-devel branch and run into issue feel free to [open up an issue](https://github.com/rickstaa/panda-autograsp/issues).**
 
 ## Package Overview
 
