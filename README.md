@@ -21,9 +21,10 @@ Please see the [docs](https://rickstaa.github.io/panda-autograsp/) for the overa
 ## Known limitations
 
 -   The simulated camera is not implemented for the RealSense Camera.
+
 -   Since the package is written in python2.7 and this version already reached EOL the dependencies are
     quite fragile. The `setup.py` install method might therefore fail. if this is the case please install
-    the pendencies using the `./requirements/requirements.txt` file.
+    the pendencies using the `./requirements/requirements.txt` file. This can be solved by porting the package to ROS Noetic (see \[#163(<https://github.com/rickstaa/panda-autograsp/issues/163>)).
 
 ## LICENSE
 
