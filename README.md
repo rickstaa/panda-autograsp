@@ -6,7 +6,10 @@
 [![Python 2](https://img.shields.io/badge/python%202-2.7%20%7C%202.6%20%7C%202.5-brightgreen.svg)](https://www.python.org/)
 [![ROS versions](https://img.shields.io/badge/ROS%20versions-Melodic%20%7C%20Kinectic-brightgreen)](https://wiki.ros.org)
 
-:bulb: You are on the deafult (Kinect2) branch. This branch is optimized to work with the Kinect2 camera. To use the package with the RealSense cameras see the [melodic-devel-realsense branch](https://github.com/rickstaa/panda-autograsp/tree/melodic-devel-realsense).
+:bulb: You are on the default kinetic-devel branch. This branch is optimized to work with the Kinect2 camera. To use the package with the RealSense cameras, see the [melodic-devel-realsense branch](https://github.com/rickstaa/panda-autograsp/tree/melodic-devel-realsense).
+
+:warning: This branch is deprecated and therefore not under active development. You are advised to use the [melodic-devel branch](https://github.com/rickstaa/panda-autograsp/tree/melodic-devel). If you really need
+the kinetic-devel branch and run into issue feel free to [open up an issue](https://github.com/rickstaa/panda-autograsp/issues).
 
 ## Package Overview
 
@@ -22,9 +25,7 @@ Please see the [docs](https://rickstaa.github.io/panda-autograsp/) for installat
 
 -   There package is currently not working with the simulated camera (see [#158](https://github.com/rickstaa/panda-autograsp/issues/158).
 
--   Since the package is written in python2.7 and this version already reached EOL the dependencies are
-    quite fragile. The `setup.py` install method might therefore fail. if this is the case please install
-    the pendencies using the `./requirements/requirements.txt` file. This can be solved by porting the package to ROS Noetic (see \[#163(<https://github.com/rickstaa/panda-autograsp/issues/163>)).
+-   Since the package is written in python2.7 and this version already reached EOL, the dependencies are quite fragile. The `setup.py` install method might, therefore fail. If this is the case, please install the dependencies using the `./requirements/requirements.txt` file. This can be solved by porting the package to ROS Noetic (see \[#163(<https://github.com/rickstaa/panda-autograsp/issues/163>)).
 
 ## LICENSE
 
