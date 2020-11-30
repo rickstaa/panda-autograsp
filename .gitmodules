@@ -10,10 +10,6 @@
 	path = panda_moveit_config
 	url = git@github.com:rickstaa/panda_moveit_config.git
 	branch = melodic-devel-panda_autograsp
-[submodule "iai_kinect2"]
-	path = iai_kinect2
-	url = git@github.com:rickstaa/iai_kinect2.git
-	branch = master
 [submodule "perception"]
 	path = perception
 	url = git@github.com:rickstaa/perception.git

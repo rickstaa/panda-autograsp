@@ -34,7 +34,6 @@ TF_MAX_VERSION = "1.13.1"
 # Package requirements
 requirements = [
     "cython",
-    "pylibfreenect2",
     "tensorflow==1.13.1",
     "tensorflow-estimator==1.13.0",
     "pyquaternion",

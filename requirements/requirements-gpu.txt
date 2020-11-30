@@ -14,7 +14,6 @@ scikit-image<=0.14.2
 gputil
 tensorflow-gpu==1.13.1
 
-pylibfreenect2
 tensorflow-estimator==1.13.0
 pyquaternion
 
