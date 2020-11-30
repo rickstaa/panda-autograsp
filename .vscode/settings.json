@@ -1,0 +1,26 @@
+{
+    "python.pythonPath": "/home/ricks/venvs/panda_autograsp/bin/python",
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#f0ef7b",
+        "activityBar.activeBorder": "#14acaa",
+        "activityBar.background": "#f0ef7b",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#14acaa",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "tab.activeBorder": "#f0ef7b",
+        "titleBar.activeBackground": "#ebea4d",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#ebea4d99",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#ebea4d",
+    "python.autoComplete.extraPaths": [
+        "/home/ricks/Development/panda_autograsp_ws/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/ricks/Development/panda_autograsp_ws/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ]
+}

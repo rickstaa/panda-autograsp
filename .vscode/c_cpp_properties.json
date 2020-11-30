@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/ricks/Development/panda_autograsp_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/ricks/Development/panda_autograsp_ws/src/common-sensors/common_sensors/include/**",
+        "/home/ricks/Development/panda_autograsp_ws/src/franka_ros/franka_control/include/**",
+        "/home/ricks/Development/panda_autograsp_ws/src/franka_ros/franka_example_controllers/include/**",
+        "/home/ricks/Development/panda_autograsp_ws/src/franka_ros/franka_gripper/include/**",
+        "/home/ricks/Development/panda_autograsp_ws/src/franka_ros/franka_hw/include/**",
+        "/home/ricks/Development/panda_autograsp_ws/src/iai_kinect2/kinect2_bridge/include/**",
+        "/home/ricks/Development/panda_autograsp_ws/src/iai_kinect2/kinect2_calibration/include/**",
+        "/home/ricks/Development/panda_autograsp_ws/src/iai_kinect2/kinect2_registration/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ]
+}

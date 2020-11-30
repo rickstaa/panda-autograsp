@@ -24,12 +24,14 @@ import copy
 from pyquaternion import Quaternion
 import pickle
 from autolab_core import YamlConfig
+import math
 
 # ROS python packages
 import rospy
 from message_filters import ApproximateTimeSynchronizer, Subscriber
 from cv_bridge import CvBridge
 import tf2_ros
+import tf_conversions
 
 # ROS messages and services
 import sensor_msgs
@@ -1009,7 +1011,7 @@ class PandaAutograspServer:
                 if retval > 0:
                     aruco.drawAxis(
                         screen_img, camera_matrix, dist_coeffs, rvec, tvec, 0.2
-                    )
+                    )  # OPENCV/ROS: x = red, y = green, z = blue
 
                     # Show projection to user
                     if MAIN_CFG["vis"]["calib"]["figs"]["calib_frame"]:
@@ -1163,6 +1165,13 @@ class PandaAutograspServer:
             R = H[0:3, 0:3]
             quat = Quaternion(matrix=R)
 
+            # Correct for difference between kinect2 and realsense camera frame
+            # NOTE: Done by 90 deg pitch (y) and 90 deg roll (x)
+            quat_from_euler = tf_conversions.transformations.quaternion_from_euler(
+                0.0, math.pi / 2, math.pi / 2, axes="rzyx",
+            )
+            quat = quat * Quaternion(quat_from_euler)
+
             # Print Calibration information
             cal_pose = {
                 "x": float(H[0, 3] / 1000.0),
@@ -1218,6 +1227,13 @@ class PandaAutograspServer:
             R = H[0:3, 0:3]
             quat = Quaternion(matrix=R)
 
+            # Correct for difference between kinect2 and realsense camera frame
+            # NOTE: Done by 90 deg pitch (y) and 90 deg roll (x)
+            quat_from_euler = tf_conversions.transformations.quaternion_from_euler(
+                0.0, math.pi / 2, math.pi / 2, axes="rzyx",
+            )
+            quat = quat * Quaternion(quat_from_euler)
+
             # Print Calibration information
             cal_pose = {
                 "x": float(H[0, 3]),
@@ -1249,7 +1265,7 @@ class PandaAutograspServer:
             # Communicate sensor_frame_pose to the tf2_broadcaster node
             result = self._set_sensor_pose_srv(sensor_frame_tf_msg)
 
-            # Reset the octomap if pose was succesfully set
+            # Reset the octomap if pose was successfully set
             if result.success:
 
                 # Wait some time to give tf2_broadcaster the time to broadcast
