@@ -18,7 +18,3 @@
 	path = panda_simulation
 	url = ../panda_simulation.git
 	branch = master-panda_autograsp
-[submodule "common-sensors"]
-	path = common-sensors
-	url = ../common-sensors.git
-	branch = master-panda_autograsp
