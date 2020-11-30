@@ -6,15 +6,25 @@
 [![Python 2](https://img.shields.io/badge/python%202-2.7%20%7C%202.6%20%7C%202.5-brightgreen.svg)](https://www.python.org/)
 [![ROS versions](https://img.shields.io/badge/ROS%20versions-Melodic%20%7C%20Kinectic-brightgreen)](https://wiki.ros.org)
 
+:bulb: You are on the deafult (Kinect2) branch. This branch is optimized to work with the Kinect2 camera. To use the package with the RealSense cameras see the [melodic-devel-realsense branch](https://github.com/rickstaa/panda-autograsp/tree/melodic-devel-realsense).
+
 ## Package Overview
 
-panda-autograsp is an autonomous ROS based grasping solution that works with the [Panda Emika Franka robot](https://www.franka.de/panda/). In this grasping solution, several opensource grasping solutions are implemented on the [Panda Emika Franka robots](https://www.franka.de/panda/) robot. These solutions work both on a physical as well as a simulated version of the panda robot. A simulated version of the panda robot is already shipped with this package.
+The panda-autograsp is an autonomous ROS based grasping solution that works with the [Panda Emika Franka robot](https://www.franka.de/panda/). In this grasping solution, several opensource grasping solutions are implemented on the [Panda Emika Franka robots](https://www.franka.de/panda/) robot. These solutions work both on a physical as well as a simulated version of the panda robot. A simulated version of the panda robot is already shipped with this package.
 
 -   [BerkleyAutomation/gqcnn](https://github.com/BerkeleyAutomation/gqcnn)
 
 ## Installation and Usage
 
 Please see the [docs](https://rickstaa.github.io/panda-autograsp/) for installation and usage instructions.
+
+## Known limitations
+
+-   There package is currently not working with the simulated camera (see [#158](https://github.com/rickstaa/panda-autograsp/issues/158).
+
+-   Since the package is written in python2.7 and this version already reached EOL the dependencies are
+    quite fragile. The `setup.py` install method might therefore fail. if this is the case please install
+    the pendencies using the `./requirements/requirements.txt` file. This can be solved by porting the package to ROS Noetic (see \[#163(<https://github.com/rickstaa/panda-autograsp/issues/163>)).
 
 ## LICENSE
 

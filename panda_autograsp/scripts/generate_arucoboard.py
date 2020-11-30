@@ -101,28 +101,28 @@ if __name__ == "__main__":
     )
 
     # Display and save gridboard image
-    cv2.namedWindow("Arcu-board")
-    cv2.startWindowThread()
-    cv2.imshow("Arcu-board", gridboard_img)
+    cv2.namedWindow("aruco-board")
+    cv2.imshow("aruco-board", gridboard_img)
     while True:
         k = cv2.waitKey(100)
 
         # Break if someone presses q or esc
         if (k == 27) or (k == ord("q")):
             print("Closing window")
-            cv2.destroyAllWindows()
             break
 
         # Break if window is closed
-        if cv2.getWindowProperty("Arcu-board", cv2.WND_PROP_VISIBLE) < 1:
+        if cv2.getWindowProperty("aruco-board", cv2.WND_PROP_VISIBLE) < 1:
             break
     cv2.destroyAllWindows()
 
     # Save generated Arucoboard
     time_str = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    img_save_dir = os.path.abspath(os.path.join(SAVE_DIR_PATH, ("../data/calib")))
     img_save_pth = os.path.abspath(
-        os.path.join(
-            SAVE_DIR_PATH, ("../data/calib/arucoboard" + "_" + time_str + ".jpg")
-        )
+        os.path.join(img_save_dir, "arucoboard" + "_" + time_str + ".jpg")
     )
+    if not os.path.exists(img_save_dir):
+        os.makedirs(img_save_dir)
     cv2.imwrite(img_save_pth, gridboard_img)
+    print("Aruco board saved to %s" % img_save_pth)
