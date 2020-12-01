@@ -9,7 +9,9 @@ panda_autograsp/data/calib/
 /panda_autograsp/models/*
 !/panda_autograsp/models/coke_can
 !/panda_autograsp/models/plastic_cup
-.vscode/w
+.vscode/
+common-sensors/
+iai_kinect2/
 
 
 # files to ignore
