@@ -20,4 +20,4 @@
 	branch = master-panda_autograsp
 [submodule "realsense-ros-gazebo"]
 	path = realsense-ros-gazebo
-	url = git@github.com:rickstaa/realsense-ros-gazebo.git
+	url = ../realsense-ros-gazebo.git
