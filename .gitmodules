@@ -17,7 +17,7 @@
 [submodule "perception"]
 	path = perception
 	url = ../perception.git
-	branch = master-panda_autograsp
+	branch = main-panda_autograsp
 [submodule "panda_simulation"]
 	path = panda_simulation
 	url = ../panda_simulation.git
