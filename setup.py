@@ -46,6 +46,7 @@ install_requirements = ["scipy", "numpy", "cython"]
 # Package requirements
 if sys.version_info > (3, 0):  # Py 2 requirements
     requirements = [
+        "pyglet==1.4.11",
         "scipy",
         "scikit-learn",
         "ruamel.yaml",
@@ -78,6 +79,7 @@ if sys.version_info > (3, 0):  # Py 2 requirements
     ]
 else:  # Py 3 requirements
     requirements = [
+        "pyglet==1.4.11",
         "scipy",
         "scikit-learn",
         "ruamel.yaml",
