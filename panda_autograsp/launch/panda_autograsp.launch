@@ -72,6 +72,10 @@
         <arg name="headless" value="$(arg headless)"/>
         <arg name="debug" value="$(arg debug)"/>
         <arg name="load_gripper" value="$(arg load_gripper)"/>
+        <arg name="name" default="camera"/>
+        <arg name="topics_ns" default="camera"/>
+        <arg name="add_plug" default="false"/>
+        <arg name="publish_pointcloud" default="true"/>
     </include>
 
     <!-- Start the sensor processing ROS nodes-->

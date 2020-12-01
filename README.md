@@ -16,7 +16,7 @@ The panda-autograsp package is an autonomous ROS based grasping solution that wo
 
 ## Installation and Usage
 
-Please see the [docs](https://rickstaa.github.io/panda-autograsp/) for the overall installation and usage instructions. This documentation is however, writer for [the default (Kinect2) branch](https://github.com/rickstaa/panda-autograsp). As a result, you can skip [the libfreenect installation](https://github.com/OpenKinect/libfreenect) step.
+Please see the [docs](https://rickstaa.github.io/panda-autograsp/) for the overall installation and usage instructions. This documentation is however, writer for [the default (Kinect2) branch](https://github.com/rickstaa/panda-autograsp). As a result, you can skip [the libfreenect installation](https://github.com/OpenKinect/libfreenect) step. Instead, have to make sure you installed the required Realsense libraries. A guide on how this is done can be found in [the realsense documentation](https://www.intelrealsense.com/get-started/).
 
 ## Known limitations
 

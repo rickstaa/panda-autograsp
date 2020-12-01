@@ -5,6 +5,7 @@ multiprocess
 setproctitle
 joblib
 colorlog
+pyglet==1.4.11
 
 autolab-core
 visualization
@@ -12,7 +13,7 @@ opencv-python==4.2.0.32
 opencv-contrib-python==4.2.0.32
 scikit-image<=0.14.2
 gputil
-tensorflow==1.13.0
+tensorflow==1.13.1
 
 tensorflow-estimator==1.13.0
 pyquaternion

@@ -5,6 +5,7 @@ multiprocess
 setproctitle
 joblib
 colorlog
+pyglet==1.4.11
 
 autolab-core
 visualization

@@ -3,21 +3,21 @@
 
 # Calibration frame position (Relative to panda_link0 frame)
 calib_frame_x_pos: 0.3  # Relative position on the x axis [m]
-calib_frame_y_pos: -0.03 # Relative position on the y axis [m]
+calib_frame_y_pos: -0.6  # Relative position on the y axis [m]
 calib_frame_z_pos: 0.015 # Relative position on the z axis [m]
 calib_frame_yaw: 0.0                  # Rotation around the z axis [rad]
 calib_frame_pitch: 0.0               # Rotation around the y axis [rad]
 calib_frame_roll: 0.0                # Rotation around the x axis [rad]
 
 # Sensor start frame position (Relative to calibration frame) #
-sensor_frame_x_pos: 0.052253043575496975 # Relative position on the x axis [m]
-sensor_frame_y_pos: -0.4808043350026767   # Relative position on the y axis [m]
-sensor_frame_z_pos: 0.6605327857108133  # Relative position on the z axis [m]
-sensor_frame_q1: 0.232811053868441     # 1st orientation quaternion [rad]
-sensor_frame_q2: -0.1981809357311739  # 2th orientation quaternion [rad]
-sensor_frame_q3: -0.7132844472141844    # 3th orientation quaternion [rad]
-sensor_frame_q4: -0.6306731540756572     # 4th orientation quaternion [rad]
-sensor_frame_yaw: -0.013450575349075936 # Rotation around the z axis [rad]
-sensor_frame_pitch: 0.6213037978342418     # Rotation around the y axis [rad]
-sensor_frame_roll: 1.6892608738508141      # Rotation around the x axis [rad]
+sensor_frame_x_pos: 0.2                  # Relative position on the x axis [m]
+sensor_frame_y_pos: -0.2                  # Relative position on the y axis [m]
+sensor_frame_z_pos: 0.2852244283285317  # Relative position on the z axis [m]
+sensor_frame_q1: 0.23889524841637472   # 1st orientation quaternion [rad]
+sensor_frame_q2: -0.18451107122654387 # 2th orientation quaternion [rad]
+sensor_frame_q3: -0.8052000785223676    # 3th orientation quaternion [rad]
+sensor_frame_q4: -0.5104287985865263     # 4th orientation quaternion [rad]
+sensor_frame_yaw: 0.06503485947712011   # Rotation around the z axis [rad]
+sensor_frame_pitch: 0.610255027667676      # Rotation around the y axis [rad]
+sensor_frame_roll: 2.032113203927424       # Rotation around the x axis [rad]
 
