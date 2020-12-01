@@ -21,3 +21,4 @@
 [submodule "realsense-ros-gazebo"]
 	path = realsense-ros-gazebo
 	url = ../realsense-ros-gazebo.git
+	branch = main

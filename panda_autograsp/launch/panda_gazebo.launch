@@ -14,7 +14,7 @@
     <arg name="topics_ns" default="camera"/>
     <arg name="add_plug" default="false"/>
     <arg name="publish_pointcloud" default="true"/>
-    <arg name="model" default="$(find realsense2_description)/urdf/test_d435i_camera.urdf.xacro"/>
+    <arg name="model" default="$(find panda_simulation)/models/realsense.urdf.xacro"/>
 
     <!--launch GAZEBO with own world configuration -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -42,9 +42,9 @@
     <!-- launch robot control node for moveit motion planning -->
     <node pkg="panda_simulation" type="robot_control_node" name="robot_control_node" />
 
-    <!-- Launch kinect sensor -->
+    <!-- Launch realsense sensor -->
     <param name="realsense_description" command="$(find xacro)/xacro --inorder $(arg model) use_nominal_extrinsics:=true publish_pointcloud:=$(arg publish_pointcloud) add_plug:=$(arg add_plug) name:=$(arg name) topics_ns:=$(arg topics_ns)" />
-    <node name="spawn_kinect" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model realsense -param realsense_description"/>
+    <node name="spawn_realsense" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model realsense -param realsense_description"/>
 
     <!-- spawn coffe cup -->
     <param name="coffee_cup_description" textfile="$(find panda_autograsp)/models/coke_can/model.sdf"/>
