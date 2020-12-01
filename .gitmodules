@@ -10,10 +10,6 @@
 	path = panda_moveit_config
 	url = ../panda_moveit_config.git
 	branch = melodic-devel-panda_autograsp
-[submodule "perception"]
-	path = perception
-	url = ../perception.git
-	branch = master-panda_autograsp
 [submodule "panda_simulation"]
 	path = panda_simulation
 	url = ../panda_simulation.git
@@ -22,3 +18,7 @@
 	path = realsense-ros-gazebo
 	url = ../realsense-ros-gazebo.git
 	branch = main
+[submodule "perception"]
+	path = perception
+	url = ../perception.git
+	branch = main-panda_autograsp
