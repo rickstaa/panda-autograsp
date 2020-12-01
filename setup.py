@@ -38,78 +38,49 @@ SUB_MOD_REQ_INSTALL_METHOD = 1
 IS_ROS_PACKAGE = True  # If true the submodules themself will not be installed
 
 # General setup.py parameters
-TF_MAX_VERSION = "1.13.1"
+TF_MAX_VERSION = "1.15.0"
 
 # Pre-install requirements (Installed before the install class is run)
-install_requirements = ["scipy", "numpy", "cython"]
+install_requirements = ["scipy", "numpy==1.17.4", "cython"]
 
 # Package requirements
-if sys.version_info > (3, 0):  # Py 2 requirements
-    requirements = [
-        "pyglet==1.4.11",
-        "scipy",
-        "scikit-learn",
-        "ruamel.yaml",
-        "multiprocess",
-        "setproctitle",
-        "joblib",
-        "colorlog",
-        "autolab-core",
-        "visualization",
-        "opencv-python==4.2.0.32",
-        "opencv-contrib-python==4.2.0.32",
-        "scikit-image<=0.14.2",
-        "gputil",
-        "pylibfreenect2",
-        "tensorflow==1.13.1",
-        "tensorflow-estimator==1.13.0",
-        "pyquaternion",
-        "keras",
-        "ipython==5.5.0",
-        "scikit-video",
-        "ffmpeg-python",
-        "Pillow",
-        "docutils",
-        "pyserial>=3.4",
-        "cython",
-        "psutil",
-        "matplotlib<=2.2.0",
-        "numpy==1.16.0",
-        "cycler",
-    ]
-else:  # Py 3 requirements
-    requirements = [
-        "pyglet==1.4.11",
-        "scipy",
-        "scikit-learn",
-        "ruamel.yaml",
-        "multiprocess",
-        "setproctitle",
-        "joblib",
-        "colorlog",
-        "autolab-core",
-        "visualization",
-        "opencv-python==4.2.0.32",
-        "opencv-contrib-python==4.2.0.32",
-        "scikit-image<=0.14.2",
-        "gputil",
-        "pylibfreenect2",
-        "tensorflow==1.13.1",
-        "tensorflow-estimator==1.13.0",
-        "pyquaternion",
-        "keras",
-        "ipython==5.5.0",
-        "scikit-video",
-        "ffmpeg-python",
-        "Pillow",
-        "docutils",
-        "pyserial>=3.4",
-        "cython",
-        "psutil",
-        "matplotlib<=2.2.0",
-        "numpy==1.16.0",
-        "cycler",
-    ]
+requirements = [
+    "tensorflow==1.15.0",
+    "pyglet",
+    "scipy",
+    "scikit-learn",
+    "ruamel.yaml",
+    "multiprocess",
+    "setproctitle",
+    "joblib",
+    "colorlog",
+    "autolab-core",
+    "visualization",
+    "opencv-python",
+    "opencv-contrib-python",
+    "scikit-image",
+    "gputil",
+    "pylibfreenect2",
+    "tensorflow",
+    "tensorflow-estimator",
+    "pyquaternion",
+    "keras",
+    "ipython",
+    "scikit-video",
+    "ffmpeg-python",
+    "Pillow",
+    "docutils",
+    "pyserial",
+    "cython",
+    "psutil",
+    "matplotlib",
+    "numpy",
+    "cycler",
+    "rospkg",
+    "defusedxml",
+    "PySide2",
+    "netifaces",
+]
 
 # Set up logger.
 logger = logging.getLogger(__name__)
@@ -122,6 +93,37 @@ logger.addHandler(handler)
 #################################################
 # Setup functions################################
 #################################################
+def get_tf_dep():
+    """Check whether or not the Nvidia driver and GPUs are available and add the
+    corresponding Tensorflow dependency."""
+
+    # Find the right tensorflow version to install
+    tf_dep = "tensorflow<={}".format(TF_MAX_VERSION)
+    try:
+        gpus = (
+            subprocess.check_output(
+                ["nvidia-smi", "--query-gpu=gpu_name", "--format=csv"]
+            )
+            .decode()
+            .strip()
+            .split("\n")[1:]
+        )
+        if len(gpus) > 0:
+            tf_dep = "tensorflow-gpu<={}".format(TF_MAX_VERSION)
+        else:
+            no_device_msg = (
+                "Found Nvidia device driver but no"
+                " devices...installing Tensorflow for CPU."
+            )
+            logger.warning(no_device_msg)
+    except OSError:
+        no_driver_msg = (
+            "Could not find Nvidia device driver...installing" " Tensorflow for CPU."
+        )
+        logger.warning(no_driver_msg)
+    return tf_dep
+
+
 def get_git_submods():
     """Returns a list containing the git submodules.
 
@@ -318,6 +320,21 @@ class DevelopCmd(develop):
     def run(self):
         """Overload the :py:meth:`setuptools.command.develop.develop.run` method."""
 
+        # Install Tensorflow dependency.
+        if not self.docker:
+            tf_dep = get_tf_dep()
+            subprocess.Popen([sys.executable, "-m", "pip", "install", tf_dep]).wait()
+        else:
+            # If we're using Docker, this will already have been installed
+            # explicitly through the correct `{cpu/gpu}_requirements.txt`;
+            # there is no way to check for CUDA/GPUs at Docker build time
+            # because there is no easy way to set the Nvidia runtime.
+            # TODO(vsatish): Figure out why this isn't printed.
+            skip_tf_msg = (
+                "Omitting Tensorflow dependency because of Docker" " installation."
+            )
+            logger.warning(skip_tf_msg)
+
         # Install submodules
         global sub_mods
         if SUB_MOD_REQ_INSTALL_METHOD == 2:
@@ -360,6 +377,21 @@ class InstallCmd(install, object):
 
     def run(self):
         """Overload the :py:meth:`setuptools.command.install.install.run` method."""
+
+        # Install Tensorflow dependency.
+        if not self.docker:
+            tf_dep = get_tf_dep()
+            subprocess.Popen([sys.executable, "-m", "pip", "install", tf_dep]).wait()
+        else:
+            # If we're using Docker, this will already have been installed
+            # explicitly through the correct `{cpu/gpu}_requirements.txt`;
+            # there is no way to check for CUDA/GPUs at Docker build time
+            # because there is no easy way to set the Nvidia runtime.
+            # TODO (vsatish): Figure out why this isn't printed.
+            skip_tf_msg = (
+                "Omitting Tensorflow dependency because of Docker" " installation."
+            )
+            logger.warning(skip_tf_msg)
 
         # Install submodules
         global sub_mods

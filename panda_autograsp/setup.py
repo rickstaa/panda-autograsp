@@ -29,16 +29,17 @@ relative_site_packages = get_python_lib().split(sys.prefix + os.sep)[1]
 date_files_relative_path = os.path.join(relative_site_packages, "panda_autograsp")
 
 # General setup.py parameters
-TF_MAX_VERSION = "1.13.1"
+TF_MAX_VERSION = "1.15.0"
 
 # Package requirements
 requirements = [
     "cython",
-    "tensorflow==1.13.1",
-    "tensorflow-estimator==1.13.0",
     "pyquaternion",
     "ruamel.yaml",
     "opencv-contrib-python",
+    "rospkg",
+    "defusedxml",
+    "PySide2",
 ]
 
 # Set up logger
@@ -153,18 +154,18 @@ class DevelopCmd(develop):
         """Overload the :py:meth:`setuptools.command.develop.develop.run` method."""
 
         # Install Tensorflow dependency.
-        if not self.docker and not self.sing:
-            tf_dep = get_tf_dep()
-            subprocess.Popen([sys.executable, "-m", "pip", "install", tf_dep]).wait()
-        else:
-            # If we're using a Docker or singularity container, the right
-            # tensoflow version is specified in the recipe file. This is
-            # done since there is no way to check for CUDA/AMD GPU's at
-            # container build time.
-            skip_tf_msg = (
-                "Omitting Tensorflow dependency because of Docker" " installation."
-            )
-            logger.warning(skip_tf_msg)
+        # if not self.docker and not self.sing:
+        #     tf_dep = get_tf_dep()
+        #     subprocess.Popen([sys.executable, "-m", "pip", "install", tf_dep]).wait()
+        # else:
+        #     # If we're using a Docker or singularity container, the right
+        #     # tensoflow version is specified in the recipe file. This is
+        #     # done since there is no way to check for CUDA/AMD GPU's at
+        #     # container build time.
+        #     skip_tf_msg = (
+        #         "Omitting Tensorflow dependency because of Docker" " installation."
+        #     )
+        #     logger.warning(skip_tf_msg)
 
         # Run installation.
         develop.run(self)

@@ -1,0 +1,4 @@
+python==3.7
+virtualenv -p python3.7 --system-site-packages ~/venvs/panda_autograsp
+rtree system install
+update setuptools
