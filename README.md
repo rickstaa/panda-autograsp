@@ -22,7 +22,7 @@ Please see the [docs](https://rickstaa.github.io/panda-autograsp/) for installat
 
 -   There package is currently not working with the simulated camera (see [#158](https://github.com/rickstaa/panda-autograsp/issues/158).
 
--   Since the package is written in python2.7 and this version already reached EOL, the dependencies are quite fragile. The `setup.py` install method might, therefore fail. If this is the case, please install the dependencies using the `./requirements/requirements.txt` file. This can be solved by porting the package to ROS Noetic (see \[#163(<https://github.com/rickstaa/panda-autograsp/issues/163>)).
+-   Since the package is written in python2.7 and this version already reached EOL, the dependencies are quite fragile. The `setup.py` install method might, therefore fail. If this is the case, please install the dependencies using the `./requirements/requirements.txt` file. This can be solved by porting the package to ROS Noetic (see [#163](<https://github.com/rickstaa/panda-autograsp/issues/163>)).
 
 ## LICENSE
 
