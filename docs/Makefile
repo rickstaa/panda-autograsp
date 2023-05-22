@@ -51,5 +51,7 @@ gh-pages:
 	git submodule update --init --recursive
 	@sphinx-apidoc -f -o "${SOURCEDIR}/_modules" "../panda_autograsp/src"
 	@sphinx-apidoc -f -o "${SOURCEDIR}/_scripts" "../panda_autograsp/scripts"
+	cat "${SOURCEDIR}/_scripts/modules.rst" | sed -e 's/scripts//g' | sed -e 's/=*//g' | sed -e 's/\.\. toctree:://g' | sed -e 's/:maxdepth: 4//g' | tail -n +6 >> "${SOURCEDIR}/_modules/modules.rst" 
 	@sphinx-apidoc -f -o "${SOURCEDIR}/_nodes" "../panda_autograsp/nodes"
+	cat "${SOURCEDIR}/_nodes/modules.rst" | sed -e 's/scripts//g' | sed -e 's/=*//g' | sed -e 's/\.\. toctree:://g' | sed -e 's/:maxdepth: 4//g' | tail -n +6 >> "${SOURCEDIR}/_modules/modules.rst" 
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
