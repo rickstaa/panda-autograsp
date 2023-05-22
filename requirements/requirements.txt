@@ -8,6 +8,7 @@ colorlog
 pyglet==1.4.0b1
 imageio==2.6.1
 pyrender==0.1.20
+shapely
 
 autolab-core==0.0.14
 visualization==0.1.4

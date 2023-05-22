@@ -77,7 +77,8 @@ if sys.version_info > (3, 0):  # Py 3 requirements
         "numpy==1.16.0",
         "cycler",
         "imageio==2.6.1",
-        "pyrender==0.1.20"
+        "pyrender==0.1.20",
+        "shapely"
     ]
 else:  # Py 2    requirements
     requirements = [
@@ -112,7 +113,8 @@ else:  # Py 2    requirements
         "numpy==1.16.0",
         "cycler",
         "imageio==2.6.1",
-        "pyrender==0.1.20"
+        "pyrender==0.1.20",
+        "shapely"
     ]
 
 # Set up logger.
