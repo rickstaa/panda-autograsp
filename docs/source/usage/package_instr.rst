@@ -43,7 +43,7 @@ second terminal window:
 
 .. code-block:: bash
 
-    rosrun panda_autograsp panda_autograsp_cli.launch
+    rosrun panda_autograsp panda_autograsp_cli.py
 
 .. note::
 
