@@ -10,6 +10,7 @@ panda_autograsp/data/calib/
 !/panda_autograsp/models/coke_can
 !/panda_autograsp/models/plastic_cup
 .vscode/
+realsense-ros-gazebo/
 
 
 # files to ignore

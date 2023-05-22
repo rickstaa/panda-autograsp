@@ -5,9 +5,12 @@ multiprocess
 setproctitle
 joblib
 colorlog
+pyglet==1.4.0b1
+imageio==2.6.1
+pyrender==0.1.20
 
-autolab-core
-visualization
+autolab-core==0.0.14
+visualization==0.1.4
 opencv-python==4.2.0.32
 opencv-contrib-python==4.2.0.32
 scikit-image<=0.14.2

@@ -44,8 +44,9 @@ TF_MAX_VERSION = "1.13.1"
 install_requirements = ["scipy", "numpy", "cython"]
 
 # Package requirements
-if sys.version_info > (3, 0):  # Py 2 requirements
+if sys.version_info > (3, 0):  # Py 3 requirements
     requirements = [
+        "pyglet==1.4.0b1",
         "scipy",
         "scikit-learn",
         "ruamel.yaml",
@@ -53,8 +54,8 @@ if sys.version_info > (3, 0):  # Py 2 requirements
         "setproctitle",
         "joblib",
         "colorlog",
-        "autolab-core",
-        "visualization",
+        "autolab-core==0.0.14",
+        "visualization==0.1.4",
         "opencv-python==4.2.0.32",
         "opencv-contrib-python==4.2.0.32",
         "scikit-image<=0.14.2",
@@ -75,9 +76,12 @@ if sys.version_info > (3, 0):  # Py 2 requirements
         "matplotlib<=2.2.0",
         "numpy==1.16.0",
         "cycler",
+        "imageio==2.6.1",
+        "pyrender==0.1.20"
     ]
-else:  # Py 3 requirements
+else:  # Py 2    requirements
     requirements = [
+        "pyglet==1.4.0b1",
         "scipy",
         "scikit-learn",
         "ruamel.yaml",
@@ -85,8 +89,8 @@ else:  # Py 3 requirements
         "setproctitle",
         "joblib",
         "colorlog",
-        "autolab-core",
-        "visualization",
+        "autolab-core==0.0.14",
+        "visualization==0.1.4",
         "opencv-python==4.2.0.32",
         "opencv-contrib-python==4.2.0.32",
         "scikit-image<=0.14.2",
@@ -107,6 +111,8 @@ else:  # Py 3 requirements
         "matplotlib<=2.2.0",
         "numpy==1.16.0",
         "cycler",
+        "imageio==2.6.1",
+        "pyrender==0.1.20"
     ]
 
 # Set up logger.
