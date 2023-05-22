@@ -1,93 +1,47 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>chessboard_calibration module &mdash; panda_autograsp 1.0.6 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
-
-  
-  
-  
-  
-
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>chessboard_calibration module &mdash; panda_autograsp 1.0.6 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> panda_autograsp
           
-
-          
-            
-            <img src="../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
-          
+          <a href="../index.html" class="icon icon-home">
+            panda_autograsp
+              <img src="../_static/panda_autograsp.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 1.0.6
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">panda-autograsp package</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../info/info.html">Package information</a></li>
@@ -120,69 +74,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../dev/doc_dev.html">Release documentation</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">panda_autograsp</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>chessboard_calibration module</li>
-    
-    
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">chessboard_calibration module</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../_sources/_scripts/chessboard_calibration.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="module-chessboard_calibration">
 <span id="chessboard-calibration-module"></span><h1>chessboard_calibration module<a class="headerlink" href="#module-chessboard_calibration" title="Permalink to this headline">¶</a></h1>
 <p>This script can be used to calibrate the kinect camera using a chessboard.
@@ -726,7 +641,7 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
 525
 526
 527</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Main python packages</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -747,8 +662,8 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
 <span class="c1">#################################################</span>
 
 <span class="c1"># General settings</span>
-<span class="n">FULL_SCREEN</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># full screen</span>
-<span class="n">FACTORY</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Use libfreenect2 factory camera parameters</span>
+<span class="n">FULL_SCREEN</span> <span class="o">=</span> <span class="bp">True</span>  <span class="c1"># full screen</span>
+<span class="n">FACTORY</span> <span class="o">=</span> <span class="bp">True</span>  <span class="c1"># Use libfreenect2 factory camera parameters</span>
 
 <span class="c1"># Calibration settings</span>
 <span class="n">criteria</span> <span class="o">=</span> <span class="p">(</span>
@@ -794,7 +709,7 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
     <span class="p">)</span>
 
     <span class="c1"># Welcome message</span>
-    <span class="nb">print</span><span class="p">(</span>
+    <span class="k">print</span><span class="p">(</span>
         <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">== Chessboard calibration script ==</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;This script can be used to calibrate the &quot;</span>
         <span class="s2">&quot;calculates the intrinsic camera matrix and &quot;</span>
@@ -863,15 +778,15 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
         <span class="c1"># Get a number of images</span>
         <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">frame</span> <span class="o">&lt;</span> <span class="n">N_FRAMES</span><span class="p">:</span>
 
                 <span class="c1"># Visualize current image</span>
-                <span class="n">color_im</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ir_im</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">frames</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">color_im</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ir_im</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">frames</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
                 <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">color_im</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
 
                 <span class="c1"># Find the chess board corners</span>
-                <span class="n">ret</span><span class="p">,</span> <span class="n">corners</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findChessboardCorners</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="p">(</span><span class="n">N_ROWS</span><span class="p">,</span> <span class="n">N_COLMNS</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">ret</span><span class="p">,</span> <span class="n">corners</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findChessboardCorners</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="p">(</span><span class="n">N_ROWS</span><span class="p">,</span> <span class="n">N_COLMNS</span><span class="p">),</span> <span class="bp">None</span><span class="p">)</span>
 
                 <span class="c1"># If found, add object points, image points (after refining them)</span>
                 <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
@@ -1069,7 +984,7 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
 
         <span class="c1"># Perform calibration</span>
         <span class="n">ret</span><span class="p">,</span> <span class="n">color_mtx</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">rvecs</span><span class="p">,</span> <span class="n">tvecs</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calibrateCamera</span><span class="p">(</span>
-            <span class="n">objpoints</span><span class="p">,</span> <span class="n">imgpoints</span><span class="p">,</span> <span class="n">gray</span><span class="o">.</span><span class="n">shape</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="n">objpoints</span><span class="p">,</span> <span class="n">imgpoints</span><span class="p">,</span> <span class="n">gray</span><span class="o">.</span><span class="n">shape</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
         <span class="p">)</span>
 
         <span class="c1"># Retrieve intr parameters out of camera matrix</span>
@@ -1088,12 +1003,12 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
 
         <span class="c1"># Print information</span>
         <span class="c1"># NOTE: Skew is set to 0 in opencv2</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Calibration results ==&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reprojection error RMS: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ret</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distortion parameters:&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Camera matrix:&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">color_mtx</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;=== Calibration results ==&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Reprojection error RMS: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ret</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Distortion parameters:&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Camera matrix:&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">color_mtx</span><span class="p">)</span>
 
         <span class="c1"># Calculate re-projection error</span>
         <span class="n">tot_error</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1105,7 +1020,7 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
                 <span class="n">imgpoints2</span>
             <span class="p">)</span>
             <span class="n">tot_error</span> <span class="o">+=</span> <span class="n">error</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean error: &quot;</span><span class="p">,</span> <span class="n">tot_error</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">objpoints</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Mean error: &quot;</span><span class="p">,</span> <span class="n">tot_error</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">objpoints</span><span class="p">))</span>
 
         <span class="c1">##################################################</span>
         <span class="c1"># Save camera matrix and distortion coefficients #</span>
@@ -1144,7 +1059,7 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
             <span class="n">script_logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Camera parameters could not be loaded.&quot;</span><span class="p">)</span>
 
     <span class="c1"># Print information</span>
-    <span class="nb">print</span><span class="p">(</span>
+    <span class="k">print</span><span class="p">(</span>
         <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">To determine the camera/world external matrix put&quot;</span>
         <span class="s2">&quot;the chessboard in the upper left corner of the robot&quot;</span>
         <span class="s2">&quot;table. Following click [s] to save the calibration&quot;</span>
@@ -1157,10 +1072,10 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
         <span class="n">cv2</span><span class="o">.</span><span class="n">setWindowProperty</span><span class="p">(</span><span class="s2">&quot;Pose&quot;</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">WND_PROP_FULLSCREEN</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">WINDOW_FULLSCREEN</span><span class="p">)</span>
 
     <span class="c1"># Show results</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
 
         <span class="c1"># Get color image</span>
-        <span class="n">color_im</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">frames</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">color_im</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">frames</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
         <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">color_im</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
 
         <span class="c1"># Create screen display image</span>
@@ -1208,7 +1123,7 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
         <span class="p">)</span>
 
         <span class="c1"># Find the chess board corners</span>
-        <span class="n">ret</span><span class="p">,</span> <span class="n">corners</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findChessboardCorners</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="p">(</span><span class="n">N_ROWS</span><span class="p">,</span> <span class="n">N_COLMNS</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">ret</span><span class="p">,</span> <span class="n">corners</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findChessboardCorners</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="p">(</span><span class="n">N_ROWS</span><span class="p">,</span> <span class="n">N_COLMNS</span><span class="p">),</span> <span class="bp">None</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
             <span class="n">corners2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cornerSubPix</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">criteria</span><span class="p">)</span>
@@ -1259,49 +1174,30 @@ calculates the intrinsic camera matrix and the distortion parameters.</p>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        
-        &copy; Copyright 2019, Rick Staa
-
-    </p>
+    <p>&#169; Copyright 2019, Rick Staa.</p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

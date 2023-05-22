@@ -121,7 +121,7 @@ Clone or download the `panda-autograsp`_ catkin package from Github:
     bash -c "mkdir -p ~/panda_autograsp_ws \
     && cd ~/panda_autograsp_ws \
     && source /opt/ros/melodic/setup.sh \
-    && git clone --recursive https://github.com/rickstaa/panda-autograsp.git src
+    && git clone --recursive https://github.com/rickstaa/panda-autograsp.git src"
 
 Install the ROS system and python dependencies
 ------------------------------------------------------
@@ -155,6 +155,8 @@ was created. This file can be invoked using the following commands:
 .. code-block:: bash
 
     source ~/venvs/panda_autograsp/bin/activate
+    cd src
+    export LIBFREENECT2_INSTALL_PREFIX="<PATH_TO_FREENECT2>"
     pip install -e .
     pip uninstall opencv-python
 
@@ -178,8 +180,6 @@ The catkin package can be build by executing one of the following commands:
 .. code-block:: bash
 
     catkin build -j4 -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=<PATH_TO_LIBFRANKA>/libfranka/build -Dfreenect2_DIR=<PATH_TO_FREENECT2>/freenect2/lib/cmake/freenect2"
-    cd ~/panda-autograsp
-
 
 Singularity Container installation instructions
 ==================================================
